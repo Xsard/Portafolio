@@ -14,7 +14,7 @@
         <Grid HorizontalAlignment="Center" Height="256"  VerticalAlignment="Center" Width="260" Background="#4CFFFFFF">
             <TextBox x:Name="email_txt" HorizontalAlignment="Center" Margin="0,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" CaretBrush="#FF0A73FF" SelectionBrush="#FF0A73FF" BorderBrush="#FF0A73FF" SelectionTextBrush="#FF0A73FF"/>
             <PasswordBox x:Name="pass_txt" HorizontalAlignment="Center" Margin="0,133,0,0"  VerticalAlignment="Top" Width="220" CaretBrush="#FF0A73FF" SelectionBrush="#FF0A73FF" BorderBrush="#FF0A73FF" SelectionTextBrush="#FF0A73FF"/>
-            <Button x:Name="Ingresar_button" Content="Ingresar" HorizontalAlignment="Left" VerticalAlignment="Top"  FontSize="14" FontWeight="Normal" Width="104" Margin="21,198,0,0" Background="#FF0A73FF" BorderBrush="#FF0A73FF"/>
+            <Button x:Name="Ingresar_button" Click="Ingresar_button_Click" Content="Ingresar" HorizontalAlignment="Left" VerticalAlignment="Top"  FontSize="14" FontWeight="Normal" Width="104" Margin="21,198,0,0" Background="#FF0A73FF" BorderBrush="#FF0A73FF"/>
             <Button x:Name="Registrar_button" Content="Registrarse" HorizontalAlignment="Left"  VerticalAlignment="Top"  FontSize="14" Width="104" Margin="130,198,0,0" BorderBrush="#FF0A73FF" Background="#FF0A73FF"/>
             <Label Content="Ingresar email" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Margin="20,19,0,0"/>
             <Label Content="Ingresar contraseña" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Margin="20,99,0,0"/>
