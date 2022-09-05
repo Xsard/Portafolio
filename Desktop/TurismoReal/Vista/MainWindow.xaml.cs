@@ -29,9 +29,21 @@ namespace Vista
 
         private void Ingresar_button_Click(object sender, RoutedEventArgs e)
         {
-            CUsuario usuario = new CUsuario();
-            DataSet ds = usuario.Autientificar("1","1");
-            MessageBox.Show(ds.Tables[0].ToString());
+            string email = email_txt.Text;
+            string psw = pass_txt.Password.ToString();
+            CUsuario cUsuario = new();
+            DataTable dt = cUsuario.Autientificar(email, psw);
+            if (dt.Rows.Count != 0)
+            {
+                if (dt.Rows[0][1].Equals("Administrador"))
+                {
+                    MessageBox.Show("Bienvenid@ administrador(a) " + dt.Rows[0][0].ToString());
+                }
+                else if(dt.Rows[0][1].Equals("Funcionario"))
+                {
+                    MessageBox.Show("Bienvenid@ Funcionari@ "+ dt.Rows[0][0].ToString());
+                }
+            }
         }
     }
 }

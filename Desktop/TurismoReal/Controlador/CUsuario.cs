@@ -1,72 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlTypes;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Modelo;
 using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 
 namespace Controlador
 {
     public class CUsuario
     {
-        public DataSet Autientificar(string email, string psw)
+
+        public DataTable Autientificar(string email, string psw)
         {
-            DataSet ds = new();
-            OracleDataAdapter da = new();
-            OracleCommand cmd = new();
-            OracleConnection? con = Conexion.getInstance().ConexionDB();
-            try
+            DataTable dataTable = new DataTable();
+            using (OracleConnection con = Conexion.getInstance().ConexionDB())
             {
+                OracleCommand cmd = new ();
+                OracleDataAdapter da = new OracleDataAdapter();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "AUTENTIFICAR";
-                cmd.Parameters.Add("email_aut", OracleDbType.Varchar2, 254).Value = email;
-                cmd.Parameters.Add("psw_aut", OracleDbType.Varchar2, 30).Value = psw;
-                cmd.Connection = con;
-
+                cmd.CommandText = "login_desk.AUTENTIFICAR";
+                cmd.Parameters.Add("usr_con", OracleDbType.RefCursor, ParameterDirection.ReturnValue);
+                cmd.Parameters.Add("email_aut", OracleDbType.Varchar2, ParameterDirection.Input).Value = email;
+                cmd.Parameters.Add("psw_aut", OracleDbType.Varchar2, ParameterDirection.Input).Value = psw;
+                
                 con.Open();
                 cmd.ExecuteReader();
                 da.SelectCommand = cmd;
-                da.Fill(ds);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            finally
-            {
+                da.Fill(dataTable);
                 con.Close();
             }
-            return ds;
-        }
-        public DataSet Prueba()
-        {
-            DataSet ds = new();
-            OracleDataAdapter da = new();
-            OracleCommand cmd = new();
-            OracleConnection? con = Conexion.getInstance().ConexionDB();
-            try
-            {
-                cmd.CommandText = "Select * from USUARIO";
-                cmd.Connection = con;
-
-                con.Open();
-                cmd.ExecuteReader();
-                da.SelectCommand = cmd;
-                da.Fill(ds);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            finally
-            {
-                con.Close();
-            }
-            return ds;
+            return dataTable;
         }
     }
 }
