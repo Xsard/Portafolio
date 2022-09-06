@@ -1,0 +1,118 @@
+﻿<Window x:Class="Vista.MenuAdmin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:Vista"
+        mc:Ignorable="d"
+        Title="Window1" Height="800" Width="1220" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <CollectionViewSource x:Key="comunas"/>
+    </Window.Resources>
+    <Grid Background="#f2f2f2">
+        <!--#region Vista principal -->
+        <Grid Margin="96,0,96,0" Visibility="Collapsed" x:Name="grdMainMenu">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="224"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Background="#FF0099CC" HorizontalAlignment="Center" Height="100" Margin="0,45,0,0" Width="734" Grid.ColumnSpan="3">
+
+            </Grid>
+            <Button x:Name="btn_Dpto_Crud" Grid.Column="0" Grid.Row="1" Click="btn_Dpto_Crud_Click" Content="Departamentos" HorizontalAlignment="Left"  VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FFCC3300" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" Width="234" Margin="147,0,0,0"/>
+            <Button Content="Disponibilidad" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FFB6496D" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" IsCancel="True" Width="234"/>
+            <Button Content="Usuarios" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FFBC57DD" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" Width="234" Margin="21,0,0,0"/>
+            <Button Content="Servicios&#xD;&#xA;extras" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FF532853" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" Width="234" Margin="147,0,0,0"/>
+            <Button Content="Departamentos" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FF517C7C" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" Width="234"/>
+            <Button Content="Usuarios" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FFFFC062" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" Width="234" Margin="21,0,0,0"/>
+        </Grid>
+        <!--#endregion-->
+        <Grid x:Name="grdAgregar" Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Margin="40,0" Grid.Row="0">
+                <Label Content="Departamentos" VerticalAlignment="Bottom" FontSize="40" Foreground="#FFCC3300"/>
+                <Line Fill="#FFCC3300" VerticalAlignment="Bottom" Height="1" Stroke="#FFCC3300" X1="1140" Y1="1"/>
+            </Grid>
+            <Grid Margin="40,0" Grid.Row="1">
+                <Button x:Name="btnAbrirAgregarDpto" Width="150" HorizontalAlignment="Right" Content="Agregar" Click="btnAbrirAgregarDpto_Click"/>
+            </Grid>
+            <Grid Grid.Row="2" Margin="40,0">
+                <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgDptos">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Path=IdDepto}" Width="*"/>
+                        <DataGridTextColumn Header="Tarifa Diaria" Binding="{Binding Path=TarifaDiara}" Width="*"/>
+                        <DataGridTextColumn Header="Dirección" Binding="{Binding Path=Direccion}" Width="*"/>
+                        <DataGridTextColumn Header="Número departamento" Binding="{Binding Path=NroDpto}" Width="*"/>
+                        <DataGridTemplateColumn Header="Capacidad" Width="*" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Path=Capacidad}" KeyDown="TextBox_KeyDown"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Comuna" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox IsSynchronizedWithCurrentItem="False" ItemsSource="{Binding Source={StaticResource comunas}}" SelectedItem="{Binding Comuna, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="IdComuna" SelectedValue="{Binding Comuna.IdComuna}" DisplayMemberPath="NombreComuna"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button>
+                                        <materialDesign:PackIcon Kind="Delete"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhDpto_ag" BorderBrush="{DynamicResource MaterialDesignDivider}">
+                <materialDesign:DialogHost.DialogContent>
+                    <Grid Height="350" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Height="39">
+                                <materialDesign:PackIcon Kind="Money" Width="20" Height="20" Foreground="{Binding ElementName=txt_tarifa_ag, Path=BorderBrush}" VerticalAlignment="Bottom"/>
+                                <TextBox materialDesign:HintAssist.Hint="Tarifa" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_tarifa_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                                <materialDesign:PackIcon Kind="AddressMarker" Width="20" Height="20" Foreground="{Binding ElementName=txt_direccion_ag, Path=BorderBrush}" VerticalAlignment="Bottom"/>
+                                <TextBox materialDesign:HintAssist.Hint="Dirección" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_direccion_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                                <materialDesign:PackIcon Kind="Numeric" Width="20" Height="20" Foreground="{Binding ElementName=txt_nro_ag, Path=BorderBrush}" VerticalAlignment="Bottom"/>
+                                <TextBox materialDesign:HintAssist.Hint="Número departamento" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_nro_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                                <materialDesign:PackIcon Kind="Group" Width="20" Height="20" Foreground="{Binding ElementName=txt_cap_ag, Path=BorderBrush}" VerticalAlignment="Bottom"/>
+                                <TextBox materialDesign:HintAssist.Hint="Capacidad" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_cap_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                                <materialDesign:PackIcon Kind="Place" Width="20" Height="20" Foreground="{Binding ElementName=cbo_comuna_ag, Path=BorderBrush}" VerticalAlignment="Bottom"/>
+                                <ComboBox materialDesign:HintAssist.Hint="Comuna" Style="{StaticResource MaterialDesignFloatingHintComboBox}" x:Name="cbo_comuna_ag" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,20,0,0" HorizontalAlignment="Center">
+                                <Button x:Name="btn_Agregar_Dpto" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Click="btn_Agregar_Dpto_Click" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0"/>
+                                <Button x:Name="btn_Cancelar_Ag" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}" Click="btn_Cancelar_Ag_Click" VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:DialogHost.DialogContent>
+            </materialDesign:DialogHost>
+
+        </Grid>
+    </Grid>
+</Window>

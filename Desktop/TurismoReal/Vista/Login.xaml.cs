@@ -30,14 +30,15 @@ namespace Vista
         private void Ingresar_button_Click(object sender, RoutedEventArgs e)
         {
             string email = email_txt.Text;
-            string psw = pass_txt.Password.ToString();
-            CUsuario cUsuario = new();
-            DataTable dt = cUsuario.Autientificar(email, psw);
+            string psw = pass_txt.Password.ToString();            
+            DataTable dt = CUsuario.Autientificar(email, psw);
             if (dt.Rows.Count != 0)
             {
                 if (dt.Rows[0][1].Equals("Administrador"))
                 {
-                    MessageBox.Show("Bienvenid@ administrador(a) " + dt.Rows[0][0].ToString());
+                    MenuAdmin menuAdmin = new();
+                    menuAdmin.Show();
+                    this.Close();
                 }
                 else if(dt.Rows[0][1].Equals("Funcionario"))
                 {

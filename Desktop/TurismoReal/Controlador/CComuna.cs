@@ -1,34 +1,29 @@
-﻿using System;
+﻿using Modelo;
+using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlTypes;
 using System.Linq;
-using System.Reflection;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
-using Modelo;
-using Oracle.ManagedDataAccess.Client;
-using Oracle.ManagedDataAccess.Types;
 
 namespace Controlador
 {
-    public static class CUsuario
+    public static class CComuna
     {
-        public static DataTable Autientificar(string email, string psw)
+        public static List<Comuna> ListarComuna()
         {
-            DataTable dataTable = new DataTable();
+            List<Comuna> comunas;
             using (OracleConnection con = Conexion.getInstance().ConexionDB())
             {
                 OracleCommand cmd = new()
                 {
                     Connection = con,
                     CommandType = CommandType.StoredProcedure,
-                    CommandText = "login_desk.AUTENTIFICAR"
+                    CommandText = "Ubicacion.listar_comunas"
                 };
-                cmd.Parameters.Add("usr_con", OracleDbType.RefCursor, ParameterDirection.ReturnValue);
-                cmd.Parameters.Add("email_aut", OracleDbType.Varchar2, ParameterDirection.Input).Value = email;
-                cmd.Parameters.Add("psw_aut", OracleDbType.Varchar2, ParameterDirection.Input).Value = psw;
-
+                cmd.Parameters.Add("Comunas", OracleDbType.RefCursor, ParameterDirection.ReturnValue);
                 try
                 {
                     con.Open();
@@ -37,7 +32,16 @@ namespace Controlador
                     {
                         SelectCommand = cmd
                     };
-                    da.Fill(dataTable);
+                    DataTable resultado = new();
+
+                    da.Fill(resultado);
+
+                    comunas = (from rw in resultado.AsEnumerable()
+                                 select new Comuna()
+                                 {
+                                     IdComuna = Convert.ToInt32(rw[0]),
+                                     NombreComuna = Convert.ToString(rw[1])
+                                 }).ToList();
                 }
                 catch (Exception)
                 {
@@ -48,9 +52,8 @@ namespace Controlador
                 {
                     con.Close();
                 }
-
             }
-            return dataTable;
+            return comunas;
         }
     }
 }
