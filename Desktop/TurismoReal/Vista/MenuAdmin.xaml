@@ -11,8 +11,46 @@
         <CollectionViewSource x:Key="comunas"/>
     </Window.Resources>
     <Grid Background="#f2f2f2">
+        <!--#menu desplegable -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border CornerRadius="8 0 0 8" Background="Gray">
+                <Grid x:Name="gridMenu" Width="60">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <!--#boton -->
+                    <ToggleButton x:Name="btnMenu"  HorizontalAlignment="Right" BorderThickness="0" Background="Transparent" VerticalAlignment="Center" Margin="0 0 15 0" Cursor="Hand">
+                        <ToggleButton.Triggers>
+                            <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                                <BeginStoryboard>
+                                    <Storyboard x:Name="HideStackPanel">
+                                        <DoubleAnimation Storyboard.TargetName="gridMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="200" To="60" Duration="0:0:0.3">
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="ToggleButton.Checked">
+                                <BeginStoryboard>
+                                    <Storyboard x:Name="ShowStackPanel">
+                                        <DoubleAnimation Storyboard.TargetName="gridMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="60" To="200" Duration="0:0:0.3">
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ToggleButton.Triggers>
+                    </ToggleButton>
+                </Grid>
+            </Border>
+        </Grid>
         <!--#region Vista principal -->
-        <Grid Margin="96,0,96,0" Visibility="Visible" x:Name="grdMainMenu">
+        <Grid Margin="274,0,0,0" Visibility="Visible" x:Name="grdMainMenu">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="224"/>
@@ -26,10 +64,10 @@
             <Grid Background="#FF0099CC" HorizontalAlignment="Center" Height="100" Margin="0,45,0,0" Width="734" Grid.ColumnSpan="3">
 
             </Grid>
-            <Button x:Name="btn_Dpto_Crud" Grid.Column="0" Grid.Row="1" Click="btn_Dpto_Crud_Click" Content="Departamentos" HorizontalAlignment="Left"  VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FFCC3300" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" Width="234" Margin="147,0,0,0"/>
+            <Button x:Name="btn_Dpto_Crud" Grid.Column="0" Grid.Row="1" Click="btn_Dpto_Crud_Click" Content="Departamentos" HorizontalAlignment="Left"  VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FFCC3300" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" Width="234" Margin="106,0,0,0"/>
             <Button Content="Disponibilidad" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FFB6496D" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" IsCancel="True" Width="234"/>
             <Button Content="Usuarios" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FFBC57DD" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" Width="234" Margin="21,0,0,0"/>
-            <Button Content="Servicios&#xD;&#xA;extras" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FF532853" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" Width="234" Margin="147,0,0,0"/>
+            <Button Content="Servicios&#xD;&#xA;extras" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FF532853" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" Width="234" Margin="106,0,0,0"/>
             <Button Content="Departamentos" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FF517C7C" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" Width="234"/>
             <Button Content="Usuarios" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FFFFC062" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" Width="234" Margin="21,0,0,0"/>
         </Grid>

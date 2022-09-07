@@ -25,7 +25,7 @@ namespace Vista
         public MenuAdmin()
         {
             InitializeComponent();
-            ListarComunas();
+            //ListarComunas();
         }
 
         #region Ubicacion
