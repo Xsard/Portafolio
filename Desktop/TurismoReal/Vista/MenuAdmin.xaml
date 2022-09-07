@@ -12,7 +12,7 @@
     </Window.Resources>
     <Grid Background="#f2f2f2">
         <!--#region Vista principal -->
-        <Grid Margin="96,0,96,0" Visibility="Collapsed" x:Name="grdMainMenu">
+        <Grid Margin="96,0,96,0" Visibility="Visible" x:Name="grdMainMenu">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="224"/>
@@ -34,7 +34,7 @@
             <Button Content="Usuarios" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="White" Height="118" Foreground="#FFFFC062" FontSize="18" FontWeight="Bold" FontStretch="Normal" FontStyle="Normal" Width="234" Margin="21,0,0,0"/>
         </Grid>
         <!--#endregion-->
-        <Grid x:Name="grdAgregar" Visibility="Visible">
+        <Grid x:Name="grdAgregar" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="50"/>
@@ -50,28 +50,52 @@
             <Grid Grid.Row="2" Margin="40,0">
                 <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgDptos">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Path=IdDepto}" Width="*"/>
-                        <DataGridTextColumn Header="Tarifa Diaria" Binding="{Binding Path=TarifaDiara}" Width="*"/>
-                        <DataGridTextColumn Header="Dirección" Binding="{Binding Path=Direccion}" Width="*"/>
-                        <DataGridTextColumn Header="Número departamento" Binding="{Binding Path=NroDpto}" Width="*"/>
+                        <DataGridTemplateColumn Header="Id" Width="45">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Path=IdDepto}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Tarifa Diaria" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Path=TarifaDiara, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgDptosUpdate_KeyDown"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Dirección"  Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Path=Direccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgDptosUpdate_KeyDown"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Número departamento" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Path=NroDpto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgDptosUpdate_KeyDown"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="Capacidad" Width="*" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox Text="{Binding Path=Capacidad}" KeyDown="TextBox_KeyDown"/>
+                                    <TextBox Text="{Binding Path=Capacidad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgDptosUpdate_KeyDown"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="Comuna" Width="*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox IsSynchronizedWithCurrentItem="False" ItemsSource="{Binding Source={StaticResource comunas}}" SelectedItem="{Binding Comuna, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="IdComuna" SelectedValue="{Binding Comuna.IdComuna}" DisplayMemberPath="NombreComuna"/>
+                                    <ComboBox IsSynchronizedWithCurrentItem="False" ItemsSource="{Binding Source={StaticResource comunas}}" SelectedItem="{Binding Comuna, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="IdComuna" SelectedValue="{Binding Comuna.IdComuna}" DisplayMemberPath="NombreComuna" SelectionChanged="DtgDptosUpdate_SelectionChanged"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Width="*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button>
+                                    <Button Click="DtgDptoDelete_Click">
                                         <materialDesign:PackIcon Kind="Delete"/>
                                     </Button>
                                 </DataTemplate>
@@ -102,7 +126,7 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                                 <materialDesign:PackIcon Kind="Place" Width="20" Height="20" Foreground="{Binding ElementName=cbo_comuna_ag, Path=BorderBrush}" VerticalAlignment="Bottom"/>
-                                <ComboBox materialDesign:HintAssist.Hint="Comuna" Style="{StaticResource MaterialDesignFloatingHintComboBox}" x:Name="cbo_comuna_ag" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" />
+                                <ComboBox DisplayMemberPath="NombreComuna" materialDesign:HintAssist.Hint="Comuna" Style="{StaticResource MaterialDesignFloatingHintComboBox}" x:Name="cbo_comuna_ag" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,20,0,0" HorizontalAlignment="Center">
                                 <Button x:Name="btn_Agregar_Dpto" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Click="btn_Agregar_Dpto_Click" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0"/>
