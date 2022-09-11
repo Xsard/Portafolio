@@ -1,0 +1,125 @@
+﻿<Page x:Class="Vista.Pages.MantenedorDpto"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:Vista.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="785" d:DesignWidth="1140"
+      Title="MantenedorDpto">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="comunas"/>
+    </Page.Resources>    
+    
+    <Grid x:Name="grdDpto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Margin="12,0" Grid.Row="0">
+            <Label Content="Departamentos" VerticalAlignment="Bottom" FontSize="40" Foreground="#FFCC3300"/>
+            <Line Fill="#FFCC3300" VerticalAlignment="Bottom" Height="1" Stroke="#FFCC3300" X1="1152" Y1="1"/>
+        </Grid>
+        <Grid Margin="12,0" Grid.Row="1">
+            <Button x:Name="btnAbrirAgregarDpto" Width="150" HorizontalAlignment="Right" Content="Agregar" BorderBrush="#FF0099CC" Background="#FF0099CC" Click="btnAbrirAgregarDpto_Click"/>
+        </Grid>
+        <Grid Grid.Row="2" Margin="12,0">
+            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgDptos">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Id" Width="0.35*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Path=IdDepto}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Tarifa Diaria" Width="0.7*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Path=TarifaDiara, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgDptosUpdate_KeyDown"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Dirección" Width="2*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Path=Direccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgDptosUpdate_KeyDown"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Número departamento" Width="1.3*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Path=NroDpto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgDptosUpdate_KeyDown"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Capacidad" Width="*" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Path=Capacidad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgDptosUpdate_KeyDown"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Comuna" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox IsSynchronizedWithCurrentItem="False" ItemsSource="{Binding Source={StaticResource comunas}}" SelectedItem="{Binding Comuna, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="IdComuna" SelectedValue="{Binding Comuna.IdComuna}" DisplayMemberPath="NombreComuna" SelectionChanged="DtgDptosUpdate_SelectionChanged"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="1.2*" Header="Acciones">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Padding="0" Click="DtgDptoDetalles_Click" Width="80" Margin="0,0,10,0" Content="Inventario" Background="#C0392B" BorderBrush="#C0392B" />
+                                    <Button Padding="0" Click="DtgDptoDelete_Click" Width="40" Background="#C0392B" BorderBrush="#C0392B">
+                                        <materialDesign:PackIcon Kind="Delete"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhDpto_ag" >
+            <materialDesign:DialogHost.DialogContent>
+                <Grid Height="470" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
+                        <Label Content="Agregar Departamento" FontSize="20"/>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
+                            <materialDesign:PackIcon Kind="Money" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_tarifa_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox materialDesign:HintAssist.Hint="Tarifa" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_tarifa_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="AddressMarker" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_direccion_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox materialDesign:HintAssist.Hint="Dirección" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_direccion_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="Numeric" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nro_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox materialDesign:HintAssist.Hint="Número departamento" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_nro_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="Group" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_cap_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox materialDesign:HintAssist.Hint="Capacidad" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_cap_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="Place" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=cbo_comuna_ag}" VerticalAlignment="Bottom"/>
+                            <ComboBox DisplayMemberPath="NombreComuna" Margin="10,0,0,0" materialDesign:HintAssist.Hint="Comuna" Style="{StaticResource MaterialDesignFloatingHintComboBox}" x:Name="cbo_comuna_ag" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
+                            <Button x:Name="btn_Agregar_Dpto" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Click="btn_Agregar_Dpto_Click" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0"/>
+                            <Button x:Name="btn_Cancelar_Ag" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}" Click="btn_Cancelar_Ag_Click" VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+
+    </Grid>
+
+</Page>

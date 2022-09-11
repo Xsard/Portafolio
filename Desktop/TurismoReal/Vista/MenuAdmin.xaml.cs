@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Vista.Pages;
 
 namespace Vista
 {
@@ -22,147 +23,34 @@ namespace Vista
     /// </summary>
     public partial class MenuAdmin : Window
     {
-        public MenuAdmin()
+        private DataTable dt;
+        public MenuAdmin(DataTable admin)
         {
             InitializeComponent();
-            //ListarComunas();
+            dt = admin;
+            Default();
         }
-
-        #region Ubicacion
-        public void ListarComunas()
+        #region Barra de navegación
+        private void Default()
         {
-            try
-            {
-                List<Comuna> comunas = CComuna.ListarComuna();
-                if (comunas != null)
-                {
-                    (Resources["comunas"] as CollectionViewSource).Source = comunas;
-                    cbo_comuna_ag.ItemsSource = comunas;
-                }
-            }
-            catch (Exception)
-            {
+            MainMenu mainMenu = new(dt);
+            PagesNavigation.Navigate(mainMenu);
+        }
+        private void btnHome_Click(object sender, RoutedEventArgs e)
+        {
+            MainMenu mainMenu = new(dt);
+            PagesNavigation.Navigate(mainMenu);
+        }
+        private void btnDpto_Click(object sender, RoutedEventArgs e)
+        {
+            PagesNavigation.Navigate(new System.Uri("Pages/MantenedorDpto.xaml", UriKind.RelativeOrAbsolute));
 
-                throw;
-            }
-
+        }
+        private void btnServE_Click(object sender, RoutedEventArgs e)
+        {
+            PagesNavigation.Navigate(new System.Uri("Pages/MantenedorServExtras.xaml", UriKind.RelativeOrAbsolute));
         }
         #endregion
-        #region Departamento 
-        private void btn_Dpto_Crud_Click(object sender, RoutedEventArgs e)
-        {
-            grdMainMenu.Visibility = Visibility.Collapsed;
-            grdAgregar.Visibility = Visibility.Visible;
-            ListarDpto();
-        }
-        private void ListarDpto()
-        {
-            try
-            {
-                DataTable dataTable = CDepartamento.ListarDpto();
-                if (dataTable != null)
-                {
-                    var Dptos = (from rw in dataTable.AsEnumerable()
-                                 select new Departamento()
-                                 {
-                                     IdDepto = Convert.ToInt32(rw[0]),
-                                     TarifaDiara = Convert.ToInt32(rw[1]),
-                                     Direccion = rw[2].ToString(),
-                                     NroDpto = Convert.ToInt32(rw[3]),
-                                     Capacidad = Convert.ToInt32(rw[4]),
-                                     Comuna = new Comuna { IdComuna = Convert.ToInt32(rw[5]), 
-                                         NombreComuna = rw[7].ToString() }
-                                 }).ToList();
-                    dtgDptos.ItemsSource = Dptos;
-                }
-            }
-            catch (Exception)
-            {
 
-                throw;
-            }
-        }
-        private void btnAbrirAgregarDpto_Click(object sender, RoutedEventArgs e)
-        {
-            dhDpto_ag.IsOpen = true;
-        }
-        private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
-        {
-            dhDpto_ag.IsOpen = false;
-        }
-        private void btn_Agregar_Dpto_Click(object sender, RoutedEventArgs e)
-        {
-            if (int.TryParse(txt_tarifa_ag.Text, out int tarifa))
-            {
-                if (int.TryParse(txt_nro_ag.Text, out int nro))
-                {
-                    if (int.TryParse(txt_cap_ag.Text, out int capacidad))
-                    {
-                        if (cbo_comuna_ag.SelectedItem != null)
-                        {
-                            string direccion = txt_direccion_ag.Text;
-                            Comuna comuna = (Comuna)cbo_comuna_ag.SelectedItem;
-                            Departamento dpto = new Departamento
-                            {
-                                TarifaDiara = tarifa,
-                                Capacidad = capacidad,
-                                Direccion = direccion,
-                                NroDpto = nro,
-                                Comuna = comuna
-                            };
-                            int estado = CDepartamento.CrearDepto(dpto);
-                            MessageBox.Show(estado.ToString());
-                        }
-
-                    }
-                }
-            }
-        }
-        private void DtgDptosUpdate_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                Departamento departamento = (Departamento)dtgDptos.SelectedItem;
-                try
-                {
-                    int estado = CDepartamento.ActualizarDepto(departamento);
-                    MessageBox.Show(estado.ToString());
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-        }
-        private void DtgDptosUpdate_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Departamento departamento = (Departamento)dtgDptos.SelectedItem;
-            if (departamento != null)
-            {
-                try
-                {
-                    int estado = CDepartamento.ActualizarDepto(departamento);
-                    MessageBox.Show(estado.ToString());
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-        }
-        private void DtgDptoDelete_Click(object sender, RoutedEventArgs e)
-        {
-            Departamento departamento = (Departamento)dtgDptos.SelectedItem;
-            try
-            {
-                int estado = CDepartamento.EliminarDpto(departamento.IdDepto);                
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        #endregion
     }
 }

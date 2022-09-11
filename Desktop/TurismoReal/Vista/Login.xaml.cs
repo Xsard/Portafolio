@@ -29,10 +29,6 @@ namespace Vista
 
         private void Ingresar_button_Click(object sender, RoutedEventArgs e)
         {
-            MenuAdmin menuAdmin = new();
-            menuAdmin.Show();
-            this.Close();
-
             string email = email_txt.Text;
             string psw = pass_txt.Password.ToString();            
             DataTable dt = CUsuario.Autientificar(email, psw);
@@ -40,7 +36,9 @@ namespace Vista
             {
                 if (dt.Rows[0][1].Equals("Administrador"))
                 {
-
+                    MenuAdmin menuAdmin = new(dt);
+                    menuAdmin.Show();
+                    this.Close();
                 }
                 else if(dt.Rows[0][1].Equals("Funcionario"))
                 {
