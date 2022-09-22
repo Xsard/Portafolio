@@ -50,7 +50,8 @@ namespace Vista.Pages
                                 ValorServicioExtra = precio
                             };
                             int estado = CServicioExtra.IngresarServicio(servicioExtra);
-                            MessageBox.Show(estado.ToString());
+                            MessageBox.Show("Servicio agregado");
+                            ListarSvE();
                         }
                         catch (Exception)
                         {
@@ -102,7 +103,8 @@ namespace Vista.Pages
                 try
                 {
                     int estado = CServicioExtra.ActualizarServicio(servicioExtra);
-                    MessageBox.Show(estado.ToString());
+                    MessageBox.Show("Servicio actualizado");
+                    ListarSvE();
                 }
                 catch (Exception)
                 {
@@ -116,6 +118,9 @@ namespace Vista.Pages
             try
             {
                 int estado = CServicioExtra.EliminarServicio(servicioExtra.IdServicioExtra);
+                MessageBox.Show("Servicio eliminado");
+                ListarSvE();
+
             }
             catch (Exception)
             {

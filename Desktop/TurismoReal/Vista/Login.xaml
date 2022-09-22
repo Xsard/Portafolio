@@ -26,9 +26,9 @@
                             <materialDesign:PackIcon Kind="Password" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=pass_txt}" VerticalAlignment="Bottom"/>
                             <PasswordBox materialDesign:HintAssist.Hint="Contraseña" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" x:Name="pass_txt" HorizontalAlignment="Center" Margin="0,0,0,0"  VerticalAlignment="Top" Width="220" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="20,12,20,0" Height="20">
+                        <StackPanel Orientation="Horizontal" Margin="20,12,0,0" Height="20">
                             <CheckBox Content="Recordar contraseña" VerticalContentAlignment="Center" Style="{StaticResource MaterialDesignCheckBox}" FontSize="10" Foreground="#FF9B9A9A" Padding="0"/>
-                            <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="12,0,0,0" ToolTip="Si no recuerdas tus datos de ingreso recupera tu contraseña" Content="Recuperar contaseña" FontSize="7" Height="20" Foreground="#FF0A73FF" Width="100"/>
+                            <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="37,0,0,0" HorizontalContentAlignment="Right" ToolTip="Si no recuerdas tus datos de ingreso recupera tu contraseña" Content="Recuperar contraseña" FontSize="7" Height="20" Padding="0" Foreground="#FF0A73FF"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">

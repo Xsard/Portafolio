@@ -29,12 +29,13 @@ namespace Vista.Pages
             InitializeComponent();
             departamento = depto;
             ListarObjetos();
+            lblNombreDpto.Content = "Departamento " + departamento.Direccion;
         }
         private void ListarObjetos()
         {
             try
             {
-                DataTable dataTable = CInventario.ListarInventario();
+                DataTable dataTable = CInventario.ListarInventario(departamento.IdDepto);
                 if (dataTable != null)
                 {
                     var Objetos = (from rw in dataTable.AsEnumerable()
@@ -77,7 +78,8 @@ namespace Vista.Pages
                             ValorUnitarioObjeto = valor
                         };
                         int estado = CInventario.CrearInventario(objeto, departamento.IdDepto);
-                        MessageBox.Show(estado.ToString());
+                        MessageBox.Show("Objeto agregado al inventario");
+                        ListarObjetos();
                     }
                 }
             }
@@ -89,7 +91,8 @@ namespace Vista.Pages
             try
             {
                 int estado = CInventario.EliminarObjeto(objeto.IdObjeto);
-                MessageBox.Show(estado.ToString());
+                MessageBox.Show("Objeto eliminado del inventario");
+                ListarObjetos();
             }
             catch (Exception)
             {
@@ -106,7 +109,9 @@ namespace Vista.Pages
                 try
                 {
                     int estado = CInventario.ActualizarInventario(objeto);
-                    MessageBox.Show(estado.ToString());
+                    MessageBox.Show("Inventario actualizado");
+                    ListarObjetos();
+
                 }
                 catch (Exception)
                 {

@@ -86,7 +86,7 @@ namespace Controlador
             return resultado;
         }
 
-        public static DataTable ListarInventario()
+        public static DataTable ListarInventario(int idDepto)
         {
             DataTable resultado = new();
             using (OracleConnection con = Conexion.getInstance().ConexionDB())
@@ -98,6 +98,7 @@ namespace Controlador
                     CommandText = "Mantener_Inventario_Dpto.listar_inventario"
                 };
                 cmd.Parameters.Add("Inventario", OracleDbType.RefCursor, ParameterDirection.ReturnValue);
+                cmd.Parameters.Add("id_Dpto", OracleDbType.Int32, ParameterDirection.Input).Value = idDepto;
                 try
                 {
                     con.Open();

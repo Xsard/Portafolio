@@ -20,7 +20,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Margin="12,0" Grid.Row="0" Grid.ColumnSpan="2">
-            <Label Content="" VerticalAlignment="Bottom" FontSize="40" Foreground="#FFCC3300"/>
+            <Label x:Name="lblNombreDpto" Content="" VerticalAlignment="Bottom" FontSize="40" Foreground="#FFCC3300"/>
             <Line Fill="#FFCC3300" VerticalAlignment="Bottom" Height="1" Stroke="#FFCC3300" X1="1152" Y1="1"/>
         </Grid>
         <Grid Margin="12,0,12,0" Grid.Row="1" Grid.Column="1">

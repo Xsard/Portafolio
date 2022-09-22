@@ -109,7 +109,8 @@ namespace Vista.Pages
                                 Comuna = comuna
                             };
                             int estado = CDepartamento.CrearDepto(dpto);
-                            MessageBox.Show(estado.ToString());
+                            MessageBox.Show("Departamento agregado");
+                            ListarDpto();
                         }
 
                     }
@@ -123,8 +124,9 @@ namespace Vista.Pages
                 Departamento departamento = (Departamento)dtgDptos.SelectedItem;
                 try
                 {
-                    int estado = CDepartamento.ActualizarDepto(departamento);
-                    MessageBox.Show(estado.ToString());
+                    int estado = CDepartamento.ActualizarDepto(departamento); 
+                    MessageBox.Show("Departamento actualizado");
+
                 }
                 catch (Exception)
                 {
@@ -140,7 +142,8 @@ namespace Vista.Pages
                 try
                 {
                     int estado = CDepartamento.ActualizarDepto(departamento);
-                    MessageBox.Show(estado.ToString());
+                    MessageBox.Show("Departamento actualizado");
+                    ListarDpto();
                 }
                 catch (Exception)
                 {
@@ -154,6 +157,9 @@ namespace Vista.Pages
             try
             {
                 int estado = CDepartamento.EliminarDpto(departamento.IdDepto);
+                MessageBox.Show("Deparamento eliminado");
+                ListarDpto();
+
             }
             catch (Exception)
             {

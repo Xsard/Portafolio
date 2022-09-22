@@ -32,21 +32,21 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Tarifa Diaria" Width="120">
+                    <DataGridTemplateColumn Header="Servicio" Width="120">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding Path=NombreServicioExtra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgServUpdate_KeyDown"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Dirección"  Width="*">
+                    <DataGridTemplateColumn Header="Descripción"  Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding Path=DescripcionServicioExtra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgServUpdate_KeyDown"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Número departamento" Width="180">
+                    <DataGridTemplateColumn Header="Valor servicio" Width="180">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding Path=ValorServicioExtra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgServUpdate_KeyDown"/>

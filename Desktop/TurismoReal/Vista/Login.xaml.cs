@@ -45,6 +45,10 @@ namespace Vista
                     MessageBox.Show("Bienvenid@ Funcionari@ "+ dt.Rows[0][0].ToString());
                 }
             }
+            else
+            {
+                MessageBox.Show("Email o contraseña no válidos");
+            }
         }
     }
 }
