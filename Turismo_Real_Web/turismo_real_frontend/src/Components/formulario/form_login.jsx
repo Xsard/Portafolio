@@ -21,6 +21,9 @@ export const FormularioLogin = () => {
       <Button variant="primary" type="submit">
         Acceder
       </Button>
+      <Button variant="primary" type="submit">
+        Registrarse
+      </Button>
     </Form>
     );
 } 
