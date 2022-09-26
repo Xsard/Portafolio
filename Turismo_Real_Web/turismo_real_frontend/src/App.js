@@ -4,16 +4,18 @@ import  ClienteComponent  from "./Components/ClienteComponent/ClienteComponente"
 import { Inicio } from "./Pages/Inicio";
 import { FormularioLogin } from "./Components/formulario/form_login";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { FormularioRegistrarse } from './Components/formulario/form_registrarse';
+import Footer from './Components/Footer/footer';
 
 function App() {
   return (
     <>
     <Router>
       <Navigation />
-      <ClienteComponent />
       <Routes>
         <Route path="/Inicio" element={<Inicio />}></Route>
         <Route path="/Login" element={<FormularioLogin/>}></Route>
+        <Route path="/Registrarse" element={<FormularioRegistrarse/>}></Route>
       </Routes>
     </Router>
     </>
