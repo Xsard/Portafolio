@@ -6,5 +6,10 @@ import com.turismo.backend_turismo_real.modelo.Cliente;
 
 public interface ClienteServicio {
 
-	List<Cliente> GetAllUser();
+	void GetAllUser();
+	
+	String putito();
+	
+	int nose();
+
 }

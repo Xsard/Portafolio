@@ -1,11 +1,25 @@
 package com.turismo.backend_turismo_real.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 
 @Entity
+
+@NamedStoredProcedureQueries({
+	@NamedStoredProcedureQuery(
+			name = "Spring_Procedure_name",
+			procedureName = "test1",
+			parameters = {
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="p_id", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.OUT, name="p_nombre", type=String.class)	
+			}
+	)
+})
+
 @Table(name = "Cliente")
-public class Cliente {
+public class Cliente implements Serializable{
 	
 	@Id
 	@Column(name = "Id_Cliente")

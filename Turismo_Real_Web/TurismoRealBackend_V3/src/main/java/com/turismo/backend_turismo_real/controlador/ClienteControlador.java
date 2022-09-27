@@ -22,7 +22,17 @@ public class ClienteControlador {
 	
 	//obtener todos los clientes
 	@GetMapping("/clientes")
-	public List<Cliente> GetAllUser(){
-		return serv.GetAllUser();
+	public void GetAllUser(){
+		serv.GetAllUser();
 	}
+	@GetMapping("/putito")
+	public String putito() {
+		return serv.putito();
+	}
+	
+	@GetMapping("/nose")
+	public int nose() {
+		return serv.nose();
+	}
+	
 }
