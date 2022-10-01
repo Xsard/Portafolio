@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import NavbarBrand from "react-bootstrap/esm/NavbarBrand";
+import '../navbar/navbar.css'
 
 export const Navigation = () => {
   return (
@@ -11,7 +12,7 @@ export const Navigation = () => {
       className="sticky-top"
       collapseOnSelect
       expand="lg"
-      bg="dark"
+      bg=""
       variant="dark"
     >
       <Container>

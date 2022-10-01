@@ -25,7 +25,6 @@ export const FormularioLogin = () => {
           </Button>
         </Form>
       </div>
-      <Footer />
     </>
   );
 } 

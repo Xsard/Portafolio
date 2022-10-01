@@ -1,6 +1,7 @@
 import Card from "react-bootstrap/Card";
 import { Button, Col } from "react-bootstrap";
 import { Row } from "react-bootstrap";
+import '../Cards/cards.css'
 
 export const CardComponent = ({ NumeroDepto, capacidad, tarifa, direccion, comuna }) => {
   return (
@@ -8,7 +9,7 @@ export const CardComponent = ({ NumeroDepto, capacidad, tarifa, direccion, comun
       <Card className="card-style mx-auto mb-3">
         <Card.Body className="card-body">
           <Row>
-            <Card.Header><h2>Departamento</h2></Card.Header>
+            <Card.Header><h2>Departamento en arriendo</h2></Card.Header>
             <Col>
               <br />
               <Card.Text><h4>Numero departamento: {NumeroDepto}</h4></Card.Text>

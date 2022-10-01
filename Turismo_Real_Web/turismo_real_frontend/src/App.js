@@ -1,6 +1,5 @@
 import './App.css';
 import { Navigation } from "./Components/navbar/navbar";
-import DeptoComponent from './Components/DeptoComponent/DeptoComponente';
 import { Inicio } from "./Pages/Inicio";
 import { FormularioLogin } from "./Components/formulario/form_login";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -12,7 +11,6 @@ function App() {
     <>
     <Router>
       <Navigation />
-      <DeptoComponent></DeptoComponent>
       <Routes>
         <Route path="/Inicio" element={<Inicio />}></Route>
         <Route path="/Login" element={<FormularioLogin/>}></Route>

@@ -34,6 +34,7 @@ const Footer = () => {
                     {/*columna 3*/}
                     <div className="col">
                         <h4>Texto de relleno</h4>
+                        <h2>Preguntas Frecuentes</h2>
                     </div>
                 </div>
                 <div className="row">
