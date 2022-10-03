@@ -13,6 +13,7 @@ function App() {
       <Navigation />
       <Routes>
         <Route path="/Inicio" element={<Inicio />}></Route>
+        <Route path="/" element={<Inicio />}></Route>
         <Route path="/Login" element={<FormularioLogin/>}></Route>
         <Route path="/Registrarse" element={<FormularioRegistrarse/>}></Route>
       </Routes>

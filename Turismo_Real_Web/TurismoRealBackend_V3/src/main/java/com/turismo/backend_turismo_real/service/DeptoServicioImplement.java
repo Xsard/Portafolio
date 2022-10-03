@@ -24,4 +24,9 @@ public class DeptoServicioImplement implements DeptoServicio{
 				.orElseThrow();
 		return ResponseEntity.ok(depto);
 	}
+	
+	@Override
+	public String QueryDepto(){
+		return repodepto.QueryDepto();
+	}
 }

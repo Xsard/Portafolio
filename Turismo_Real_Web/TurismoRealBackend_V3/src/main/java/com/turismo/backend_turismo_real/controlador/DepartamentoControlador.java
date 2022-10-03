@@ -29,4 +29,9 @@ public class DepartamentoControlador {
 	public ResponseEntity<Departamento> obtenerDeptoId(@PathVariable Integer id){
 		return deptoServ.obtenerDeptoId(id);
 	}
+	
+	@GetMapping("/QueryTest")
+	public String QueryDepto(){
+		return deptoServ.QueryDepto();
+	}
 }

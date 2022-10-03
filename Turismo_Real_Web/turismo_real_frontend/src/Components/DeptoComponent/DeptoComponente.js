@@ -1,6 +1,5 @@
 import React from "react";
 import DeptoService from "../../services/DeptoService";
-import Button from 'react-bootstrap/Button';
 import { CardComponent } from "../Cards/CardComp";
 import {Row} from "react-bootstrap";
 
@@ -22,7 +21,7 @@ class DeptoComponent extends React.Component {
     render() {
         return (
             <>
-                <div>
+                <div className="">
                     <Row className="mx-auto mt-5" style={{ width: "80%" }}>
                         {
                             this.state.deptos.map(

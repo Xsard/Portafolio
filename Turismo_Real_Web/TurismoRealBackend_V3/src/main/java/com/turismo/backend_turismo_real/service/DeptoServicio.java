@@ -11,4 +11,6 @@ public interface DeptoServicio {
 	List<Departamento> ObtenerDepto();
 
 	public ResponseEntity<Departamento> obtenerDeptoId(Integer id);
+	
+	String QueryDepto();
 }
