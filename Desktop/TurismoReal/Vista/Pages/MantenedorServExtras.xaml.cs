@@ -52,15 +52,21 @@ namespace Vista.Pages
                             int estado = CServicioExtra.IngresarServicio(servicioExtra);
                             MessageBox.Show("Servicio agregado");
                             ListarSvE();
+                            Limpiar();
                         }
                         catch (Exception)
                         {
-
                             throw;
                         }
                     }
                 }
             }
+        }
+        private void Limpiar()
+        {
+            txt_nombre_ag.Clear();
+            txt_desc_ag.Clear();
+            txt_precio_ag.Clear();
         }
 
         private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
@@ -86,11 +92,9 @@ namespace Vista.Pages
                                 }).ToList();
                     dtgServE.ItemsSource = Serv;
                 }
-
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -120,11 +124,9 @@ namespace Vista.Pages
                 int estado = CServicioExtra.EliminarServicio(servicioExtra.IdServicioExtra);
                 MessageBox.Show("Servicio eliminado");
                 ListarSvE();
-
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

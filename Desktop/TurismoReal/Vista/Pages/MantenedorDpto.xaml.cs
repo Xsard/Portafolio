@@ -4,17 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Vista.Pages
 {
@@ -29,6 +23,15 @@ namespace Vista.Pages
             ListarComunas();
             ListarDpto();
         }
+
+        private void ItemError(object sender, ValidationErrorEventArgs e)
+        {
+            if (e.Action == ValidationErrorEventAction.Added)
+            {
+                MessageBox.Show(e.Error.ErrorContent.ToString());
+            }
+        }
+
         #region Ubicacion
         public void ListarComunas()
         {
@@ -41,10 +44,9 @@ namespace Vista.Pages
                     cbo_comuna_ag.ItemsSource = comunas;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show(ex.Message);
             }
 
         }
@@ -74,10 +76,9 @@ namespace Vista.Pages
                     dtgDptos.ItemsSource = Dptos;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show(ex.Message);
             }
         }
         private void btnAbrirAgregarDpto_Click(object sender, RoutedEventArgs e)
@@ -90,47 +91,67 @@ namespace Vista.Pages
         }
         private void btn_Agregar_Dpto_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(txt_tarifa_ag.Text, out int tarifa))
-            {
-                if (int.TryParse(txt_nro_ag.Text, out int nro))
-                {
-                    if (int.TryParse(txt_cap_ag.Text, out int capacidad))
-                    {
-                        if (cbo_comuna_ag.SelectedItem != null)
-                        {
-                            string direccion = txt_direccion_ag.Text;
-                            Comuna comuna = (Comuna)cbo_comuna_ag.SelectedItem;
-                            Departamento dpto = new Departamento
-                            {
-                                TarifaDiara = tarifa,
-                                Capacidad = capacidad,
-                                Direccion = direccion,
-                                NroDpto = nro,
-                                Comuna = comuna
-                            };
-                            int estado = CDepartamento.CrearDepto(dpto);
-                            MessageBox.Show("Departamento agregado");
-                            ListarDpto();
-                        }
 
-                    }
+            try
+            {
+                
+                if(txt_tarifa_ag.Text == string.Empty || txt_cap_ag.Text == string.Empty || txt_direccion_ag.Text == string.Empty || 
+                    txt_nro_ag.Text == string.Empty || cbo_comuna_ag.Text == string.Empty)
+                {
+                    this.MensajeError("Falta ingresar algunos datos");
                 }
+                else
+                {                    
+                    Departamento dpto = new Departamento
+                    {
+                        TarifaDiara = Int32.Parse(txt_tarifa_ag.Text.Trim()),
+                        Capacidad = Int32.Parse(txt_cap_ag.Text.Trim()),
+                        Direccion = txt_direccion_ag.Text.Trim(),
+                        NroDpto = Int32.Parse(txt_nro_ag.Text.Trim()),
+                        Comuna = (Comuna)cbo_comuna_ag.SelectedItem
+                    };
+
+                    int estado = CDepartamento.CrearDepto(dpto);
+                    MensajeOk("Departamento agregado");
+                    ListarDpto();
+                    Limpiar();
+                }                          
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.StackTrace);
+            }                       
         }
+        private void Limpiar()
+        {
+            txt_tarifa_ag.Clear();
+            txt_direccion_ag.Clear();
+            txt_nro_ag.Clear();
+            txt_cap_ag.Clear();
+            cbo_comuna_ag.SelectedIndex = -1;
+        }
+        private void MensajeError(string Mensaje)
+        {
+            MessageBox.Show(Mensaje, "Departamentos", MessageBoxButton.OK, MessageBoxImage.Error);
+        }        
+        private void MensajeOk(string Mensaje)
+        {
+            MessageBox.Show(Mensaje, "Departamentos", MessageBoxButton.OK, MessageBoxImage.Information);
+        }        
         private void DtgDptosUpdate_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
+                MessageBox.Show("Ignacio Bolsonaro");
                 Departamento departamento = (Departamento)dtgDptos.SelectedItem;
                 try
                 {
                     int estado = CDepartamento.ActualizarDepto(departamento); 
-                    MessageBox.Show("Departamento actualizado");
-
+                    MensajeOk("Departamento actualizado");
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -142,12 +163,12 @@ namespace Vista.Pages
                 try
                 {
                     int estado = CDepartamento.ActualizarDepto(departamento);
-                    MessageBox.Show("Departamento actualizado");
+                    MensajeOk("Departamento actualizado");
                     ListarDpto();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -156,15 +177,17 @@ namespace Vista.Pages
             Departamento departamento = (Departamento)dtgDptos.SelectedItem;
             try
             {
-                int estado = CDepartamento.EliminarDpto(departamento.IdDepto);
-                MessageBox.Show("Deparamento eliminado");
-                ListarDpto();
-
+                MessageBoxResult result = MessageBox.Show("Estás seguro de querer eliminar este departamento y su inventario?", "Departamentos", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    int estado = CDepartamento.EliminarDpto(departamento.IdDepto);
+                    MensajeOk("Departamento eliminado");
+                    ListarDpto();
+                }                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show(ex.Message);
             }
         }
         private void DtgDptoDetalles_Click(object sender, RoutedEventArgs e)
@@ -175,5 +198,10 @@ namespace Vista.Pages
             ns.Navigate(perfilDepto);
         }
         #endregion
+
+        private void grdDpto_Error(object sender, ValidationErrorEventArgs e)
+        {
+
+        }
     }
 }

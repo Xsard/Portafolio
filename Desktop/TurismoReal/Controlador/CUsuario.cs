@@ -14,7 +14,7 @@ namespace Controlador
 {
     public static class CUsuario
     {
-        public static DataTable Autientificar(string email, string psw)
+        public static DataTable Autentificar(string email, string psw)
         {
             DataTable dataTable = new DataTable();
             using (OracleConnection con = Conexion.getInstance().ConexionDB())

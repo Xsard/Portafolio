@@ -111,7 +111,6 @@ namespace Controlador
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
                 finally

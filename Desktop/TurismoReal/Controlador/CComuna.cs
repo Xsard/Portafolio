@@ -41,7 +41,7 @@ namespace Controlador
                                  {
                                      IdComuna = Convert.ToInt32(rw[0]),
                                      NombreComuna = Convert.ToString(rw[1])
-                                 }).ToList();
+                                 }).OrderBy(comuna => comuna.NombreComuna).ToList();
                 }
                 catch (Exception)
                 {

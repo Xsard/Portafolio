@@ -51,7 +51,6 @@ namespace Vista.Pages
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -80,11 +79,17 @@ namespace Vista.Pages
                         int estado = CInventario.CrearInventario(objeto, departamento.IdDepto);
                         MessageBox.Show("Objeto agregado al inventario");
                         ListarObjetos();
+                        Limpiar();
                     }
                 }
             }
         }
-
+        private void Limpiar()
+        {
+            txt_objeto_ag.Clear();
+            txt_cantidad_ag.Clear();
+            txt_precio_unitario.Clear();
+        }
         private void BtnEliminarObj_Click(object sender, RoutedEventArgs e)
         {
             Objeto objeto = (Objeto)dtgInventario.SelectedItem;

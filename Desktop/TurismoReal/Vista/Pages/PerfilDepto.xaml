@@ -28,7 +28,7 @@
             <Button x:Name="btnAbrirAgregarObj" Width="150" HorizontalAlignment="Right" Content="Agregar" BorderBrush="#FF0099CC" Background="#FF0099CC" Click="btnAbrirAgregarObj_Click"/>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="2">
-            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgInventario" Margin="12,0,12,12">
+            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" x:Name="dtgInventario" Margin="12,0,12,12">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Id">
                         <DataGridTemplateColumn.CellTemplate>

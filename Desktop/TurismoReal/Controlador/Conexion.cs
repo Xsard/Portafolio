@@ -9,7 +9,7 @@ namespace Controlador
 {
     class Conexion
     {
-        private string connectionString = "User Id=c##turismo_real; Password=TurismoReal22; Data Source=localhost:1521/orcl";
+        private string connectionString = "User Id=c##turismo_real; Password=TurismoReal22; Data Source=localhost:1521/ORCLCDB";
         private static Conexion Con = null;
 
         public OracleConnection ConexionDB()
@@ -19,7 +19,7 @@ namespace Controlador
             {
                 con.ConnectionString = connectionString;
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
                 throw;
             }
