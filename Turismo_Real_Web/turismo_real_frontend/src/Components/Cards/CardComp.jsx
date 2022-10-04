@@ -2,7 +2,7 @@ import '../Cards/cards.css'
 import img_test from '../../Img/depto_test.jpg'
 import { Col } from 'react-bootstrap';
 
-export const CardComponent = ({ NumeroDepto, capacidad, tarifa, direccion, comuna }) => {
+export const CardComponent = ({idDepto, NumeroDepto, capacidad, tarifa, direccion, comuna }) => {
   return (
     <>
     <Col>
@@ -16,7 +16,7 @@ export const CardComponent = ({ NumeroDepto, capacidad, tarifa, direccion, comun
             Numero Departamento: {NumeroDepto} <br />
             Comuna: {comuna}  <br />
             <br />
-            <a href="Inicio" class="btn btn-primary"> Reservar</a>
+            <a href={`/customer/${idDepto}`} class="btn btn-primary"> Reservar</a>
           </p>
         </div>
       </div>
