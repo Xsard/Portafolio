@@ -2,7 +2,7 @@ import React from "react";
 import DeptoService from "../../services/DeptoService";
 import { CardComponent } from "../Cards/CardComp";
 import { Row } from "react-bootstrap";
-
+import "./DeptoComponente.css"
 class DeptoComponent extends React.Component {
 
     constructor(props) {
@@ -22,7 +22,7 @@ class DeptoComponent extends React.Component {
         return (
             <>
                 <center>
-                    <Row className="mt-5 gx-0" style={{ width: "80%" }}>
+                    <Row className="mx-auto gx-0 cards" style={{ width: "80%" }}>
                         {
                             this.state.deptos.map(
                                 deptos =>

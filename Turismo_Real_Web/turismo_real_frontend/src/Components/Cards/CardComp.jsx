@@ -1,13 +1,12 @@
 import '../Cards/cards.css'
 import img_test from '../../Img/depto_test.jpg'
-import "../Cards/cards.css"
 import { Col } from 'react-bootstrap';
 
 export const CardComponent = ({ NumeroDepto, capacidad, tarifa, direccion, comuna }) => {
   return (
     <>
     <Col>
-      <div className="card mt-3" style={{ width: "27rem" }}>
+      <div className="card mt-3">
         <img src={img_test} alt=".." class="card-img-top" />
         <div class="card-body text text-right">
           <h5>{direccion}</h5>
