@@ -25,9 +25,9 @@ namespace Controlador
                     CommandType = CommandType.StoredProcedure,
                     CommandText = "login_desk.AUTENTIFICAR"
                 };
-                cmd.Parameters.Add("usr_con", OracleDbType.RefCursor, ParameterDirection.ReturnValue);
                 cmd.Parameters.Add("email_aut", OracleDbType.Varchar2, ParameterDirection.Input).Value = email;
                 cmd.Parameters.Add("psw_aut", OracleDbType.Varchar2, ParameterDirection.Input).Value = psw;
+                cmd.Parameters.Add("usr_con", OracleDbType.RefCursor, ParameterDirection.Output);
 
                 try
                 {

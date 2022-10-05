@@ -423,8 +423,3 @@ INSERT INTO Comuna VALUES (14,'Puerto Varas', 14);
 INSERT INTO Comuna VALUES (15,'Aysén', 15);
 INSERT INTO Comuna VALUES (16,'Punta Arenas', 16);
 /**/
-INSERT INTO Usuario VALUES (1, 'test@gmail.com', 'test123', 123456789, null, null, null);
-INSERT INTO Administrador values(1, '20441631-1', 'Test', 'Iteración', 1);
-UPDATE Usuario SET id_admin = 1 WHERE id_usuario = 1;
-INSERT INTO DEPARTAMENTO VALUES(9,1,1,1,1,1);
-COMMIT;
