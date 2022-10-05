@@ -32,6 +32,8 @@ class DeptoComponent extends React.Component {
                                         tarifa={deptos.tarifaDiaria}
                                         direccion={deptos.direccion}
                                         comuna={deptos.idComuna}
+                                        idDepto={deptos.idDepto}
+
                                     />
                             )
                         }
