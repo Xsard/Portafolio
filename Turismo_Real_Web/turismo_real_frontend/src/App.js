@@ -9,16 +9,20 @@ import Footer from './Components/Footer/footer';
 function App() {
   return (
     <>
-    <Router>
-      <Navigation />
-      <Routes>
-        <Route path="/Inicio" element={<Inicio />}></Route>
-        <Route path="/" element={<Inicio />}></Route>
-        <Route path="/Login" element={<FormularioLogin/>}></Route>
-        <Route path="/Registrarse" element={<FormularioRegistrarse/>}></Route>
-      </Routes>
-      <Footer></Footer>
-    </Router>
+      <div className='page-container'>
+        <Router>
+          <div className='content-warp'>
+            <Navigation />
+            <Routes>
+              <Route path="/Inicio" element={<Inicio />}></Route>
+              <Route path="/" element={<Inicio />}></Route>
+              <Route path="/Login" element={<FormularioLogin />}></Route>
+              <Route path="/Registrarse" element={<FormularioRegistrarse />}></Route>
+            </Routes>
+          </div>
+        </Router>
+        <Footer/>
+      </div>
     </>
   );
 }

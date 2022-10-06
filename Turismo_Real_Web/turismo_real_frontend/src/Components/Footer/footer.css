@@ -3,6 +3,6 @@
       background-color: #240046;
       bottom: 0;
       width: 100%;
-      position: relative;
+      position: static;
   }
 
