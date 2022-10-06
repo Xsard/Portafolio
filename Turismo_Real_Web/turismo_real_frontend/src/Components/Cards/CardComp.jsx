@@ -16,7 +16,7 @@ export const CardComponent = ({idDepto, NumeroDepto, capacidad, tarifa, direccio
             Numero Departamento: {NumeroDepto} <br />
             Comuna: {comuna}  <br />
             <br />
-            <a href={`/customer/${idDepto}`} class="btn btn-primary"> Reservar</a>
+            <a href={`/ReservaDepto/${idDepto}`} class="btn btn-primary"> Reservar</a>
           </p>
         </div>
       </div>
