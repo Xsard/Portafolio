@@ -44,7 +44,7 @@
                     <Label Content="Disponibilidad" FontSize="9" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <Button Width="80" Height="60" Padding="0" Grid.Row="3" Background="{x:Null}" BorderThickness="0">
+            <Button x:Name="btnUsuario" Click="btnUsuario_Click" Width="80" Height="60" Padding="0" Grid.Row="3" Background="{x:Null}" BorderThickness="0">
                 <StackPanel>
                     <materialDesign:PackIcon Kind="User" Width="40" Height="40" HorizontalAlignment="Center"/>
                     <Label Content="Usuarios" FontSize="9" HorizontalAlignment="Center"/> 

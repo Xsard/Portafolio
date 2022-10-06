@@ -50,7 +50,10 @@ namespace Vista
         {
             PagesNavigation.Navigate(new System.Uri("Pages/MantenedorServExtras.xaml", UriKind.RelativeOrAbsolute));
         }
+        private void btnUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            PagesNavigation.Navigate(new System.Uri("Pages/MantenedorUsuario.xaml", UriKind.RelativeOrAbsolute));
+        }
         #endregion
-
     }
 }
