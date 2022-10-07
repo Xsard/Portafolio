@@ -1,17 +1,15 @@
 set serveroutput on 
 /
 CREATE OR REPLACE PACKAGE login_web AS
-    FUNCTION CREAR_USUARIO(email_c USUARIO.EMAIL%TYPE, pass USUARIO.CONTRASEÑA%TYPE, fono USUARIO.TELEFONO%TYPE, rut CLIENTE.RUT_CLIENTE%TYPE, nombre CLIENTE.NOMBRES_CLIENTE%TYPE, apellido CLIENTE.APELLIDOS_CLIENTE%TYPE)
-    RETURN INTEGER;
-    FUNCTION AUTENTIFICAR(email_aut USUARIO.email%type, psw_aut USUARIO.contraseña%type)
-    RETURN SYS_REFCURSOR;
+    PROCEDURE CREAR_USUARIO(email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
+        rut IN CLIENTE.RUT_CLIENTE%TYPE, nombre IN CLIENTE.NOMBRES_CLIENTE%TYPE, apellidoIN  CLIENTE.APELLIDOS_CLIENTE%TYPE, R OUT INT);
+    PROCEDURE AUTENTIFICAR(email_aut IN USUARIO.email%type, psw_aut IN USUARIO.contraseña%type, R OUT INT);
 END login_web;
 /
 CREATE OR REPLACE PACKAGE BODY login_web AS
-    FUNCTION CREAR_USUARIO(email_c USUARIO.EMAIL%TYPE, pass USUARIO.CONTRASEÑA%TYPE, fono USUARIO.TELEFONO%TYPE, rut CLIENTE.RUT_CLIENTE%TYPE, nombre CLIENTE.NOMBRES_CLIENTE%TYPE, apellido CLIENTE.APELLIDOS_CLIENTE%TYPE)
-    RETURN INTEGER  
+    PROCEDURE CREAR_USUARIO(email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
+        rut IN CLIENTE.RUT_CLIENTE%TYPE, nombre IN CLIENTE.NOMBRES_CLIENTE%TYPE, apellidoIN  CLIENTE.APELLIDOS_CLIENTE%TYPE, R OUT INT) 
     IS 
-        r integer;
         id_col rowid;
         identificador_usr USUARIO.ID_USUARIO%TYPE;
         identificador_cli CLIENTE.ID_CLIENTE%TYPE;
@@ -38,22 +36,19 @@ CREATE OR REPLACE PACKAGE BODY login_web AS
         ELSE
             RAISE error_crear_usuario;
         END IF;
-        RETURN r;
     EXCEPTION
         WHEN DUP_VAL_ON_INDEX THEN
             ROLLBACK TO A;
-            RETURN -1;
+            R:= -1;
         WHEN error_crear_usuario THEN 
             ROLLBACK TO A;
-            RETURN -20001;
+            R:= -20001;
         WHEN error_crear_cliente THEN
             ROLLBACK TO A;
-            RETURN -20101;
+            R:= -20101;
     END;
-        FUNCTION AUTENTIFICAR(email_aut USUARIO.email%type, psw_aut USUARIO.contraseña%type)
-    RETURN SYS_REFCURSOR
+    PROCEDURE AUTENTIFICAR(email_aut IN USUARIO.email%type, psw_aut IN USUARIO.contraseña%type, R OUT INT)
     IS
-    usr_con SYS_REFCURSOR;
     v_count number;
     v_pass VARCHAR2(40);
     BEGIN 
@@ -62,11 +57,10 @@ CREATE OR REPLACE PACKAGE BODY login_web AS
             SELECT * 
             FROM CLIENTE cli JOIN USUARIO USR ON(cli.id_usuario = usr.id_usuario)
                 WHERE usr.email = email_aut and usr.contraseña = v_pass;
-        RETURN usr_con;
     EXCEPTION 
         WHEN No_Data_Found THEN
             DBMS_OUTPUT.PUT_LINE('EL USUARIO NO EXISTE');
-            RETURN NULL;
+            R:= NULL;
     END;
 END login_web;
 
