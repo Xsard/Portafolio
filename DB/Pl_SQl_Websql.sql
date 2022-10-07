@@ -2,13 +2,13 @@ set serveroutput on
 /
 CREATE OR REPLACE PACKAGE login_web AS
     PROCEDURE CREAR_USUARIO(email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
-        rut IN CLIENTE.RUT_CLIENTE%TYPE, nombre IN CLIENTE.NOMBRES_CLIENTE%TYPE, apellidoIN  CLIENTE.APELLIDOS_CLIENTE%TYPE, R OUT INT);
+        rut IN CLIENTE.RUT_CLIENTE%TYPE, nombre IN CLIENTE.NOMBRES_CLIENTE%TYPE, apellido IN  CLIENTE.APELLIDOS_CLIENTE%TYPE, R OUT INT);
     PROCEDURE AUTENTIFICAR(email_aut IN USUARIO.email%type, psw_aut IN USUARIO.contraseña%type, R OUT INT);
 END login_web;
 /
 CREATE OR REPLACE PACKAGE BODY login_web AS
     PROCEDURE CREAR_USUARIO(email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
-        rut IN CLIENTE.RUT_CLIENTE%TYPE, nombre IN CLIENTE.NOMBRES_CLIENTE%TYPE, apellidoIN  CLIENTE.APELLIDOS_CLIENTE%TYPE, R OUT INT) 
+        rut IN CLIENTE.RUT_CLIENTE%TYPE, nombre IN CLIENTE.NOMBRES_CLIENTE%TYPE, apellido IN  CLIENTE.APELLIDOS_CLIENTE%TYPE, R OUT INT) 
     IS 
         id_col rowid;
         identificador_usr USUARIO.ID_USUARIO%TYPE;
@@ -53,8 +53,7 @@ CREATE OR REPLACE PACKAGE BODY login_web AS
     v_pass VARCHAR2(40);
     BEGIN 
         v_pass:=GENERAR_CON(email_aut, psw_aut);
-        OPEN usr_con FOR
-            SELECT * 
+        SELECT usr.ID_USUARIO INTO R
             FROM CLIENTE cli JOIN USUARIO USR ON(cli.id_usuario = usr.id_usuario)
                 WHERE usr.email = email_aut and usr.contraseña = v_pass;
     EXCEPTION 
