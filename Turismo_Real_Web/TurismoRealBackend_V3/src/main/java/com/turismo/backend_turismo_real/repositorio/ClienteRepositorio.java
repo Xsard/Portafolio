@@ -12,16 +12,13 @@ import com.turismo.backend_turismo_real.modelo.Cliente;
 
 @Repository
 public interface ClienteRepositorio extends JpaRepository<Cliente, Integer>{
-
-	//se crea una funcion para llamar al procedure
-	//para poder ocupar cualquier nombre en los procedures se hace lo siguiente
-	@Query(value = "{call test1}", nativeQuery = true)
-	void ListaProcedure();
 	
-	@Procedure(name="Spring_Procedure_name")
-	String procedureName(@Param("p_id") int p_id);
-	
-	@Query(value = "SELECT test1 FROM DUAL", nativeQuery = true)
-	int nose();
+	@Procedure(name="crear_usuario")
+	int registrarse(@Param("email_c") String email_c, @Param("pass") String pass,
+			@Param("fono") int fono, @Param("rut") String rut, @Param("nombre") String nombre,
+			@Param("apellido") String apellido);
 
+
+	@Procedure(name="iniciar_sesion")
+	int login(@Param("email_aut") String email_aut, @Param("psw_aut") String psw_aut);
 }

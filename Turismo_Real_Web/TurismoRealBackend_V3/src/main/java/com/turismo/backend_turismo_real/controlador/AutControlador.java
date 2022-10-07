@@ -22,7 +22,7 @@ public class AutControlador {
 	
 	@PostMapping("/AutRegistrarse")
 	public AutentificarCliente guardarAutentificar(@RequestBody AutentificarCliente autCli) {
-		AutServ.SendEmail(autCli.getEmail(),"Validacion de correo" , "Hola, su numero de validacion es :" + autCli.getCode());
+		AutServ.SendEmail(autCli.getEmail(),"Validacion de correo" , "Hola, su numero de validacion es : " + autCli.getCode());
 		return AutServ.guardarAutentificar(autCli);
 		
 	}

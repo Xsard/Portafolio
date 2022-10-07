@@ -5,11 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.turismo.backend_turismo_real.modelo.AutentificarCliente;
 import com.turismo.backend_turismo_real.modelo.Cliente;
+import com.turismo.backend_turismo_real.modelo.Supercliente;
 import com.turismo.backend_turismo_real.repositorio.ClienteRepositorio;
+import com.turismo.backend_turismo_real.service.AutentificarServicioImplement;
 import com.turismo.backend_turismo_real.service.ClienteServicioImplement;
 
 @RestController
@@ -20,19 +25,14 @@ public class ClienteControlador {
 	@Autowired
 	private ClienteServicioImplement serv;
 	
-	//obtener todos los clientes
-	@GetMapping("/clientes")
-	public void GetAllUser(){
-		serv.GetAllUser();
-	}
-	@GetMapping("/putito")
-	public String putito() {
-		return serv.putito();
+	@PostMapping("/registrarse" )
+	public int registrarse(@RequestBody Supercliente cli) {	
+		return serv.registrarse(cli.getEmail(), cli.getPass(), cli.getFono(),
+				cli.getRut(), cli.getNombre(), cli.getApellido());
 	}
 	
-	@GetMapping("/nose")
-	public int nose() {
-		return serv.nose();
+	@GetMapping("/login")
+	public int login(@RequestBody Supercliente cli) {
+		return serv.login(cli.getEmail(), cli.getPass());
 	}
-	
 }
