@@ -37,5 +37,11 @@ namespace Vista.Pages
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new System.Uri("Pages/MantenedorServExtras.xaml", UriKind.RelativeOrAbsolute));
         }
+
+        private void btn_Usuarios_Crud_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new System.Uri("Pages/MantenedorUsuario.xaml", UriKind.RelativeOrAbsolute));
+        }
     }
 }
