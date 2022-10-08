@@ -31,7 +31,7 @@ public class ClienteControlador {
 				cli.getRut(), cli.getNombre(), cli.getApellido());
 	}
 	
-	@GetMapping("/login")
+	@PostMapping("/login")
 	public int login(@RequestBody Supercliente cli) {
 		return serv.login(cli.getEmail(), cli.getPass());
 	}
