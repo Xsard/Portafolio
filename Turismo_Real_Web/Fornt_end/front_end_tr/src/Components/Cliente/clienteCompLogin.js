@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import Form from 'react-bootstrap/Form';
 const url = "http://localhost:8080/api/v1/login"
@@ -45,6 +46,9 @@ const Login = () => {
                 <button type='submit' className='btn btn-primary'>
                     Iniciar Sesion
                 </button>
+                <Button variant="primary" type="submit" className='text mx-3' href='Registrarse'>
+            Registrarse
+          </Button>
             </form>
         </div>
     );

@@ -7,6 +7,7 @@ export const FormularioRegistrarse = () => {
     return (
         <>
             <Registrarse></Registrarse>
+            
         </>
     );
 }
