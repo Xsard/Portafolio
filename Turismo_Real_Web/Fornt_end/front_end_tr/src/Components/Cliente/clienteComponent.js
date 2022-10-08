@@ -14,6 +14,7 @@ const Registrarse = () => {
     const [contraseña, setContraseña] = useState('');
     const [repContraseña, setRepContraseña] = useState('');
     const [code, setCode] = useState('');
+    const [repCode, setRepCode] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,14 +30,21 @@ const Registrarse = () => {
     }
     const handleVerificar = async (e) => {
         e.preventDefault();
-        try {
-            const resp = await axios.post(url_autentificar, {
-                email: correo, code:123
-            })
-            console.log(resp.data)
-        } catch (error) {
-            console.log(error.response)
+        if (contraseña === repContraseña) {
+            console.log("paso")
+            try {
+                const resp = await axios.post(url_autentificar, {
+                    email: correo, code: 123
+                })
+                console.log(resp.data)
+            } catch (error) {
+                console.log(error.response)
+            }
         }
+        else{
+            console.log("no paso")
+        }
+
     }
     return (
         <>
@@ -130,10 +138,19 @@ const Registrarse = () => {
                                 </div>
                                 <div class="modal-body">
                                     <p>Para completar el registro, debe ingresar el codigo que fue enviado a su correo</p>
-                                    
+                                    <div className="form-row mb-3">
+                                        <Form.Group className="form-input mb-3"
+                                            type="text"
+                                            id="repCode"
+                                            value={repCode}
+                                            onChange={(e) => setRepCode(e.target.value)}>
+                                            <Form.Label>Ingresar codigo de verificación</Form.Label>
+                                            <Form.Control type="password" placeholder="ej: 123456" />
+                                        </Form.Group>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-primary">Comprobar</button>
                                 </div>
                             </div>
                         </div>
