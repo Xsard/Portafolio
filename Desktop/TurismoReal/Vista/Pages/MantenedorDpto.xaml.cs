@@ -140,19 +140,26 @@ namespace Vista.Pages
         }        
         private void DtgDptosUpdate_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            try
             {
-                MessageBox.Show("Ignacio Bolsonaro");
-                Departamento departamento = (Departamento)dtgDptos.SelectedItem;
-                try
+                if (e.Key == Key.Enter)
                 {
-                    int estado = CDepartamento.ActualizarDepto(departamento); 
-                    MensajeOk("Departamento actualizado");
+                    MessageBox.Show("Arreglar controlador depto Actualizar");
+                    Departamento departamento = (Departamento)dtgDptos.SelectedItem;
+                    try
+                    {
+                        int estado = CDepartamento.ActualizarDepto(departamento);
+                        MensajeOk("Departamento actualizado");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.StackTrace);
             }
         }
         private void DtgDptosUpdate_SelectionChanged(object sender, SelectionChangedEventArgs e)

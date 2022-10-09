@@ -2,9 +2,9 @@
 using System.Globalization;
 using System.Windows.Controls;
 
-namespace Vista.Pages.ValidacionesDepto
+namespace Vista.Pages.Validaciones
 {
-    public class TarifaEsNumeroPositivo : ValidationRule
+    internal class CapacidadEsPositivo : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -14,13 +14,13 @@ namespace Vista.Pages.ValidacionesDepto
 
                 if (numero <= 0)
                 {
-                    return new ValidationResult(false, "La tarifa debe ser un número positivo");
+                    return new ValidationResult(false, "La capacidad debe ser un número positivo");
                 }
                 return ValidationResult.ValidResult;
             }
             catch (Exception)
             {
-                return new ValidationResult(false, "La tarifa debe ser un número");
+                return new ValidationResult(false, "La capacidad debe ser un número");
             }
         }
     }

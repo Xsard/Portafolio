@@ -4,15 +4,38 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:local="clr-namespace:Vista.Pages"
-      xmlns:local1="clr-namespace:Vista.Pages.ValidacionesDepto"
+      xmlns:local="clr-namespace:Vista.Pages" xmlns:local1="clr-namespace:Vista.Pages.Validaciones"
       mc:Ignorable="d" 
       d:DesignHeight="785" d:DesignWidth="1140"
       Title="MantenedorDpto">
 
     <Page.Resources>
         <CollectionViewSource x:Key="comunas"/>
-    </Page.Resources>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBoxBase}">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <AdornedElementPlaceholder x:Name="placeholder"/>
+                            <TextBlock Foreground="Red" Margin="3 0 0 0" Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <!--<Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#111111"/>
+                </Trigger>-->
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                    <Setter Property="Margin" Value="0 0 0 20"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type ToolTip}">
+            <Setter Property="Foreground" Value="Red"/>
+        </Style>
+    </Page.Resources>    
 
     <Grid x:Name="grdDpto" Validation.Error="ItemError">
         <Grid.RowDefinitions>
@@ -40,11 +63,11 @@
                     <DataGridTemplateColumn Header="Tarifa Diaria" Width="0.7*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox>
+                                <TextBox KeyDown="DtgDptosUpdate_KeyDown">
                                     <TextBox.Text>
-                                        <Binding Path="TarifaDiara" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True" >
+                                        <Binding Path="TarifaDiara"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules >
-                                                <local1:TarifaEsNumeroPositivo/>
+                                                <local1:TarifaEsNroPositivo/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -55,21 +78,45 @@
                     <DataGridTemplateColumn Header="Dirección" Width="2*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Path=Direccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" KeyDown="DtgDptosUpdate_KeyDown" />
+                                <TextBox KeyDown="DtgDptosUpdate_KeyDown">
+                                    <TextBox.Text >
+                                        <Binding Path="Direccion" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules >
+                                                <local1:DirHasta/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Número departamento" Width="1.3*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Path=NroDpto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" KeyDown="DtgDptosUpdate_KeyDown" />
+                                <TextBox KeyDown="DtgDptosUpdate_KeyDown">
+                                    <TextBox.Text >
+                                        <Binding Path="NroDpto"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules >
+                                                <local1:NroDeptoEsPositivo/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Capacidad" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Path=Capacidad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" KeyDown="DtgDptosUpdate_KeyDown" />
+                                <TextBox KeyDown="DtgDptosUpdate_KeyDown">
+                                    <TextBox.Text >
+                                        <Binding Path="Capacidad"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules >
+                                                <local1:CapacidadEsPositivo/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
