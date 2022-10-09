@@ -5,10 +5,17 @@ import { FormularioLogin } from "./Components/formulario/form_login";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { FormularioRegistrarse } from './Components/formulario/form_registrarse';
 import Footer from './Components/Footer/footer';
+import clienteContext from './Contexts/ClienteContext';
+import { useState } from 'react';
 
 function App() {
+  const usuarioLogin = null
+
+  const [usuario, setUsuario] = useState(usuarioLogin)
+  const data = { usuario, setUsuario }
   return (
     <>
+    <clienteContext.Provider value={data}>
       <div className='page-container'>
         <Router>
           <div className='content-warp'>
@@ -23,6 +30,7 @@ function App() {
         </Router>
         <Footer/>
       </div>
+      </clienteContext.Provider>
     </>
   );
 }

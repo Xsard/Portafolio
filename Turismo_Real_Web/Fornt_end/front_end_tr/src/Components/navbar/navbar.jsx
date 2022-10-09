@@ -5,8 +5,12 @@ import { NavLink } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import NavbarBrand from "react-bootstrap/esm/NavbarBrand";
 import '../navbar/navbar.css'
+import { useContext } from "react";
+import clienteContext from "../../Contexts/ClienteContext";
 
 export const Navigation = () => {
+
+  const { usuario, setUsuario } = useContext(clienteContext);
   return (
     <Navbar
       className="sticky-top"
@@ -22,9 +26,20 @@ export const Navigation = () => {
           <Nav className="me-auto">
           </Nav>
           <Nav>
-            <NavLink className="nav-link" to="/Login">
-              Iniciar sesión
-            </NavLink>
+
+            {usuario
+              ? <NavDropdown
+                title={usuario.correo}
+                id="collasible-nav-dropdown"
+              >
+                <NavDropdown.Item href="#">Reservas</NavDropdown.Item>
+                <NavDropdown.Item href="#">Cerrar Sesion</NavDropdown.Item>
+              </NavDropdown>
+
+              : <NavLink className="nav-link" to="/Login">
+                Iniciar sesión
+              </NavLink>
+            }
           </Nav>
         </Navbar.Collapse>
       </Container>
