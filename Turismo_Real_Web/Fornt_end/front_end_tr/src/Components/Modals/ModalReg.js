@@ -156,9 +156,14 @@ function Example() {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
+
+                <Button  variant="primary" onClick={handleValidar}>
+                        Reenviar Codigo
+                    </Button>
                     <Button variant="primary" onClick={HandleCodigo} >
                         Comprobar
                     </Button>
+
                 </Modal.Footer>
             </Modal>
         </>
