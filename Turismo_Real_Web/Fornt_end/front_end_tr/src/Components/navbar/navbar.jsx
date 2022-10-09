@@ -10,7 +10,7 @@ import clienteContext from "../../Contexts/ClienteContext";
 
 export const Navigation = () => {
 
-  const { usuario, setUsuario } = useContext(clienteContext);
+  const {usuario, setUsuario} = useContext(clienteContext);
   return (
     <Navbar
       className="sticky-top"
@@ -29,7 +29,7 @@ export const Navigation = () => {
 
             {usuario
               ? <NavDropdown
-                title={usuario.correo}
+                title={usuario}
                 id="collasible-nav-dropdown"
               >
                 <NavDropdown.Item href="#">Reservas</NavDropdown.Item>

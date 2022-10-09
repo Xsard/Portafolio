@@ -25,8 +25,9 @@ class DeptoComponent extends React.Component {
                     <Row className="mx-auto gx-0 cards" style={{ width: "80%" }}>
                         {
                             this.state.deptos.map(
-                                deptos =>
+                                deptos => 
                                     <CardComponent
+                                    key={deptos.idDepto}
                                         NumeroDepto={deptos.nroDepto}
                                         capacidad={deptos.capacidad}
                                         tarifa={deptos.tarifaDiaria}

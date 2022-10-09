@@ -7,16 +7,16 @@ export const CardComponent = ({idDepto, NumeroDepto, capacidad, tarifa, direccio
     <>
     <Col>
       <div className="card mt-3">
-        <img src={img_test} alt=".." class="card-img-top" />
-        <div class="card-body text text-right">
+        <img src={img_test} alt=".." className="card-img-top" />
+        <div className="card-body text text-right">
           <h5>{direccion}</h5>
-          <p class="card-text">
+          <p className="card-text">
             Capacidad: {capacidad} <br />
             Tarifa: {tarifa} <br />
             Numero Departamento: {NumeroDepto} <br />
             Comuna: {comuna}  <br />
             <br />
-            <a href={`/ReservaDepto/${idDepto}`} class="btn btn-primary"> Reservar</a>
+            <a href={`/ReservaDepto/${idDepto}`} className="btn btn-primary"> Reservar</a>
           </p>
         </div>
       </div>

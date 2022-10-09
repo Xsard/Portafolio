@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import Form from 'react-bootstrap/Form';
+import clienteContext from "../../Contexts/ClienteContext";
 
 
 const url = "http://localhost:8080/api/v1/login"
 
 const Login = () => {
+    const {usuario, setUsuario} = useContext(clienteContext);
 
     const [correo, setCorreo] = useState('');
     const [contraseña, setContraseña] = useState('');
-
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,7 +24,10 @@ const Login = () => {
             } else {
                 console.log("si sapo algo");
                 console.log(correo)
-                window.location.replace('/Inicio'); 
+                setUsuario(correo)
+                console.log(usuario)
+                //window.location.replace('/Inicio');
+                 
 
             }
         } catch (error) {
