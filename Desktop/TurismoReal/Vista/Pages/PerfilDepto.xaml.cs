@@ -1,4 +1,5 @@
 ﻿using Controlador;
+using Microsoft.Win32;
 using Modelo;
 using System;
 using System.Collections.Generic;
@@ -122,6 +123,36 @@ namespace Vista.Pages
                 {
                     throw;
                 }
+            }
+        }
+
+        private void btnAgregarImagen_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new();
+            ofd.Filter = "Image names|*.jpg;*.png";
+            ofd.Multiselect = false;
+            ofd.FilterIndex = 1;
+            if (ofd.ShowDialog() == true) 
+            {
+                string ext = System.IO.Path.GetExtension(ofd.FileName);
+                MessageBox.Show(ext);
+                string path = System.IO.Directory.GetCurrentDirectory();
+                path = path.Substring(0, path.LastIndexOf("Desktop"));
+                path = string.Concat(path,"Imagenes_Dpto");
+                Fotografia fotografia = new()
+                {
+                    Id_dpto = departamento.IdDepto,
+                    Path_img = "segs",
+                    Alt = "segs"
+                };
+                MessageBox.Show(departamento.IdDepto.ToString() + fotografia.Path_img+ fotografia.Alt);
+                string r = CFotografia.InsertarImagen(fotografia, ext);
+                if(r.Length > 0)
+                {   
+                    r = System.IO.Path.Combine(path,r);
+                    System.IO.File.Copy(ofd.FileName, r, true);
+                    MessageBox.Show(r);
+                }                
             }
         }
     }

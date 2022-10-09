@@ -24,8 +24,10 @@
             <Line Fill="#FFCC3300" VerticalAlignment="Bottom" Height="1" Stroke="#FFCC3300" X1="1152" Y1="1"/>
         </Grid>
         <Grid Margin="12,0,12,0" Grid.Row="1" Grid.Column="1">
-            <Label HorizontalAlignment="Left"/>
             <Button x:Name="btnAbrirAgregarObj" Width="150" HorizontalAlignment="Right" Content="Agregar" BorderBrush="#FF0099CC" Background="#FF0099CC" Click="btnAbrirAgregarObj_Click"/>
+        </Grid>
+        <Grid Margin="12,0" Grid.Row="1" >
+            <Button x:Name="btnAgregarImagen" Width="150" HorizontalAlignment="Right" Content="Agregar" BorderBrush="#FF0099CC" Background="#FF0099CC" Click="btnAgregarImagen_Click"/>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="2">
             <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" x:Name="dtgInventario" Margin="12,0,12,12">

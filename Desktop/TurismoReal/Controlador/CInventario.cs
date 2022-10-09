@@ -22,11 +22,11 @@ namespace Controlador
                     CommandType = CommandType.StoredProcedure,
                     CommandText = "Mantener_Inventario_Dpto.insertar_objeto"
                 };
-                cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.ReturnValue);
                 cmd.Parameters.Add("id_Dpto", OracleDbType.Int32, ParameterDirection.Input).Value = idDepto;
                 cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = objeto.NombreObjeto;
                 cmd.Parameters.Add("cantidad", OracleDbType.Int32, ParameterDirection.Input).Value = objeto.CantidadObjeto;
                 cmd.Parameters.Add("valor", OracleDbType.Int32, ParameterDirection.Input).Value = objeto.ValorUnitarioObjeto;
+                cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
 
                 try
                 {
@@ -59,11 +59,11 @@ namespace Controlador
                     CommandType = CommandType.StoredProcedure,
                     CommandText = "Mantener_Inventario_Dpto.actualizar_objeto"
                 };
-                cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.ReturnValue);
                 cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = objeto.IdObjeto;
                 cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = objeto.NombreObjeto;
                 cmd.Parameters.Add("cantidad", OracleDbType.Int32, ParameterDirection.Input).Value = objeto.CantidadObjeto;
                 cmd.Parameters.Add("valor", OracleDbType.Int32, ParameterDirection.Input).Value = objeto.ValorUnitarioObjeto;
+                cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
 
                 try
                 {
@@ -97,8 +97,8 @@ namespace Controlador
                     CommandType = CommandType.StoredProcedure,
                     CommandText = "Mantener_Inventario_Dpto.listar_inventario"
                 };
-                cmd.Parameters.Add("Inventario", OracleDbType.RefCursor, ParameterDirection.ReturnValue);
                 cmd.Parameters.Add("id_Dpto", OracleDbType.Int32, ParameterDirection.Input).Value = idDepto;
+                cmd.Parameters.Add("R", OracleDbType.RefCursor, ParameterDirection.Output);
                 try
                 {
                     con.Open();
@@ -132,8 +132,8 @@ namespace Controlador
                     CommandType = CommandType.StoredProcedure,
                     CommandText = "Mantener_Inventario_Dpto.eliminar_objeto"
                 };
-                cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.ReturnValue);
                 cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = idObejto;
+                cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
                 try
                 {
                     cmd.Connection.Open();
