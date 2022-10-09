@@ -2,17 +2,26 @@ import { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import Form from 'react-bootstrap/Form';
+import { withRouter } from 'react-router-dom';
+
 const url = "http://localhost:8080/api/v1/login"
+
 
 const Login = () => {
     const [correo, setCorreo] = useState('');
     const [contraseña, setContraseña] = useState('');
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const resp = await axios.post(url, { email: correo, pass: contraseña })
-            console.log(resp.data)
+                const resp = await axios.post(url, { email: correo, pass: contraseña })
+                console.log(resp.data)
+                if(!resp.data === 0){
+                    console.log("no sapa na")
+                }else{
+                    console.log("si sapo algo");
+                    window.location.replace('/Inicio'); 
+                }
         } catch (error) {
             console.log(error.response)
         }
