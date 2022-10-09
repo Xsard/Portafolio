@@ -31,7 +31,7 @@ namespace Vista
         {
             string email = "test@gmail.com"; //email_txt.Text;
             string psw = "test123"; //pass_txt.Password.ToString();
-            DataTable dt = CUsuario.Autientificar(email, psw);
+            DataTable dt = CUsuario.Autentificar(email, psw);
             if (dt.Rows.Count != 0)
             {
                 if (dt.Rows[0][1].Equals("Administrador"))

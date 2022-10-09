@@ -22,10 +22,11 @@ namespace Controlador
                     CommandType = System.Data.CommandType.StoredProcedure,
                     CommandText = "Mantener_Servicios_Extras.insertar_svextra"
                 };
-                cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.ReturnValue);
                 cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = servicioExtra.NombreServicioExtra;
                 cmd.Parameters.Add("descripcion", OracleDbType.Varchar2, ParameterDirection.Input).Value = servicioExtra.DescripcionServicioExtra;
                 cmd.Parameters.Add("valor", OracleDbType.Int32, ParameterDirection.Input).Value = servicioExtra.ValorServicioExtra;
+                cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
+
 
                 try
                 {
@@ -57,11 +58,11 @@ namespace Controlador
                     CommandType = System.Data.CommandType.StoredProcedure,
                     CommandText = "Mantener_Servicios_Extras.actualizar_svextra"
                 };
-                cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.ReturnValue);
                 cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = servicioExtra.IdServicioExtra;
                 cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = servicioExtra.NombreServicioExtra;
                 cmd.Parameters.Add("descripcion", OracleDbType.Varchar2, ParameterDirection.Input).Value = servicioExtra.DescripcionServicioExtra;
                 cmd.Parameters.Add("valor", OracleDbType.Int32, ParameterDirection.Input).Value = servicioExtra.ValorServicioExtra;
+                cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
 
                 try
                 {
@@ -93,7 +94,7 @@ namespace Controlador
                     CommandType = CommandType.StoredProcedure,
                     CommandText = "Mantener_Servicios_Extras.listar_svextra"
                 };
-                cmd.Parameters.Add("Servicios_Ex", OracleDbType.RefCursor, ParameterDirection.ReturnValue);
+                cmd.Parameters.Add("Servicios_Ex", OracleDbType.RefCursor, ParameterDirection.Output);
                 try
                 {
                     con.Open();
@@ -127,9 +128,9 @@ namespace Controlador
                     Connection = con,
                     CommandType = CommandType.StoredProcedure,
                     CommandText = "Mantener_Servicios_Extras.eliminar_svextra"
-                };
-                cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.ReturnValue);
+                };                
                 cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = idServ;
+                cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
                 try
                 {
                     cmd.Connection.Open();

@@ -23,7 +23,7 @@ namespace Controlador
                     CommandType = CommandType.StoredProcedure,
                     CommandText = "Ubicacion.listar_comunas"
                 };
-                cmd.Parameters.Add("Comunas", OracleDbType.RefCursor, ParameterDirection.ReturnValue);
+                cmd.Parameters.Add("Comunas", OracleDbType.RefCursor, ParameterDirection.Output);
                 try
                 {
                     con.Open();
