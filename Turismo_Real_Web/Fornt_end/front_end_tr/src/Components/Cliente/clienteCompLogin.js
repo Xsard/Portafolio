@@ -26,7 +26,7 @@ const Login = () => {
                 console.log(correo)
                 setUsuario(correo)
                 console.log(usuario)
-                //window.location.replace('/Inicio');
+                window.location.replace('/Inicio');
                  
 
             }

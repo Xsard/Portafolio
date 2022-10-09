@@ -16,23 +16,24 @@ function App() {
   const data = { usuario, setUsuario }
   return (
     <>
-      <clienteContext.Provider value={data}>
-        <div className='page-container'>
-          <Router>
+      <div className='page-container'>
+        <Router>
+          <clienteContext.Provider value={data}>
             <div className='content-warp'>
               <Navigation />
               <Routes>
-                <Route path='/Inicio' element={<Inicio/>}></Route> 
+                <Route path='/Inicio' element={<Inicio />}></Route>
+                <Route path='/' exact element={<Inicio />}></Route>
                 <Route path="/Login" element={<FormularioLogin />}></Route>
                 <Route path="/Registrarse" element={<FormularioRegistrarse />}></Route>
               </Routes>
+              <Footer />
             </div>
-          </Router>
-          <Footer />
-        </div>
-      </clienteContext.Provider>
+          </clienteContext.Provider>
+        </Router >
+      </div>
+
     </>
   );
 }
-
 export default App;
