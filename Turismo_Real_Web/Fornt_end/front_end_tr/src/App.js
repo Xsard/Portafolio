@@ -6,14 +6,29 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { FormularioRegistrarse } from './Components/formulario/form_registrarse';
 import Footer from './Components/Footer/footer';
 import clienteContext from './Contexts/ClienteContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const initialUsuario = null
+const getData = () => {
+  return localStorage.getItem('correo_usuario')
+}
 
+const initialUsuario = null;
 function App() {
+
+  useEffect(() => {
+    setUsuario(getData())
+  }, [])
+
+  const logout = () => {
+    localStorage.removeItem('correo_usuario')
+    setUsuario(null);
+  }
+
   const [usuario, setUsuario] = useState(initialUsuario)
 
-  const data = { usuario, setUsuario }
+  const data = { usuario, setUsuario, logout }
+
+
   return (
     <>
       <div className='page-container'>

@@ -1,11 +1,13 @@
 package com.turismo.backend_turismo_real.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.turismo.backend_turismo_real.modelo.Cliente;
+import com.turismo.backend_turismo_real.modelo.Supercliente;
 import com.turismo.backend_turismo_real.repositorio.ClienteRepositorio;
 
 @Service
@@ -22,6 +24,11 @@ public class ClienteServicioImplement implements ClienteServicio{
 	@Override
 	public int login(String email_aut, String psw_aut) {
 		return repo.login(email_aut, psw_aut);
+	}
+
+	@Override
+	public String loginConfirmed(int id) {
+		return repo.loginConfirmed(id);
 	}
 	
 }

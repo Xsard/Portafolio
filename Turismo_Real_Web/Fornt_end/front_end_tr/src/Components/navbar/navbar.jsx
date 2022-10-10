@@ -10,7 +10,7 @@ import clienteContext from "../../Contexts/ClienteContext";
 
 export const Navigation = () => {
 
-  const {usuario, setUsuario} = useContext(clienteContext);
+  const {usuario, logout} = useContext(clienteContext);
   return (
     <Navbar
       className="sticky-top"
@@ -32,8 +32,8 @@ export const Navigation = () => {
                 title={usuario}
                 id="collasible-nav-dropdown"
               >
-                <NavDropdown.Item href="#">Reservas</NavDropdown.Item>
-                <NavDropdown.Item href="#">Cerrar Sesion</NavDropdown.Item>
+                <NavDropdown.Item >Reservas</NavDropdown.Item>
+                <NavDropdown.Item onClick={logout}>Cerrar Sesion</NavDropdown.Item>
               </NavDropdown>
 
               : <NavLink className="nav-link" to="/Login">

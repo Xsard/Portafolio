@@ -1,18 +1,21 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import Form from 'react-bootstrap/Form';
 import clienteContext from "../../Contexts/ClienteContext";
-
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const url = "http://localhost:8080/api/v1/login"
+const url_confirm = "http://localhost:8080/api/v1/loginConfirmed/"
 
 const Login = () => {
-    const {usuario, setUsuario} = useContext(clienteContext);
+    const { usuario, setUsuario } = useContext(clienteContext);
 
     const [correo, setCorreo] = useState('');
     const [contraseña, setContraseña] = useState('');
-    
+
+    const MySwal = withReactContent(Swal);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,11 +26,16 @@ const Login = () => {
                 console.log("no sapa na")
             } else {
                 console.log("si sapo algo");
-                console.log(correo)
+                const usuariobd = await axios.get(`${url_confirm}${resp.data}`);
                 setUsuario(correo)
-                console.log(usuario)
-                window.location.replace('/Inicio');
-                 
+                localStorage.setItem('correo_usuario', usuariobd.data)
+                MySwal.fire({ 
+                    title: "pichula test" 
+                }).then((respuesta)=>{
+                    if(respuesta.isConfirmed){
+                        window.location.replace('/Inicio');
+                    }
+                })
 
             }
         } catch (error) {
@@ -48,7 +56,7 @@ const Login = () => {
                             value={correo}
                             onChange={(e) => setCorreo(e.target.value)}>
                             <Form.Label>Correo</Form.Label>
-                            <Form.Control type="email" placeholder="Ingrese un correo" id="correo_login"/>
+                            <Form.Control type="email" placeholder="Ingrese un correo" id="correo_login" />
                         </Form.Group>
                     </div>
                     <div className="form-row mb-3">
