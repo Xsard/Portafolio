@@ -31,7 +31,7 @@
                 <Image x:Name="imgMain"/>
             </Grid>
             <Grid>
-                <StackPanel Orientation="Horizontal" x:Name="StkOtrasImg">
+                <StackPanel Margin="0,390,0,0" Orientation="Horizontal" x:Name="StkOtrasImg">
                     
                 </StackPanel>
             </Grid>

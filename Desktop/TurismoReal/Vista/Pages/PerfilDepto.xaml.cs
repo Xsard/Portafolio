@@ -150,6 +150,7 @@ namespace Vista.Pages
                 {   
                     r = System.IO.Path.Combine(path,r);
                     System.IO.File.Copy(ofd.FileName, r, true);
+                    ListarImg();
                 }                
             }
         }
@@ -168,22 +169,31 @@ namespace Vista.Pages
                                        Path_img = rw[2].ToString(),
                                        Alt = rw[3].ToString()
                                    }).ToList();
-                    MessageBox.Show(fotografias[0].Path_img);
                     imgMain.Source = new BitmapImage(new Uri(fotografias[0].Path_img));
                     StkOtrasImg.Children.Clear();
                     try
                     {
-                        for (int i = 1; i < fotografias.Count-1 ; i++)
+                        for (int i = 1; i <= fotografias.Count-1 ; i++)
                         {
+
                             try
                             {
+                                StkOtrasImg.UnregisterName("imgDpto" + fotografias[i].Id_foto);
 
                             }
                             catch (Exception)
                             {
 
-                                throw;
                             }
+                            Image image = new()
+                            {
+                                Source = new BitmapImage(new Uri(fotografias[i].Path_img)),
+                                Name = "imgDpto" + fotografias[i].Id_foto,
+                                Height = 100,
+                                Width = 100
+                            };
+                            StkOtrasImg.RegisterName(image.Name, image);
+                            StkOtrasImg.Children.Add(image);
                         }
                     }
                     catch (Exception)
