@@ -3,12 +3,13 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Form } from "react-bootstrap";
 import * as clienteServicio from "../../services/ClienteService";
-import { redirect } from "react-router-dom";
-import { Alert } from "react-bootstrap";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 
 function Example() {
-
-
+    const MySwal = withReactContent(Swal);
+    let timerInterval;
     const [rut, setRut] = useState('');
     const [nombres, setNombres] = useState('');
     const [apellidos, setApellidos] = useState('');
@@ -34,19 +35,42 @@ function Example() {
             setCode(code)
             clienteServicio.ValidarLogin(correo, code)
         } else {
-            console.log("las contraseñas no coinciden")
-            console.log();
+            MySwal.fire({
+                title: "Las contraseñas no coinciden",
+                icon: "error" 
+            })
         }
 
     }
 
     const HandleCodigo = () => {
         if (code === parseInt(repCode)) {
-            console.log("son iwale")
             clienteServicio.ingresarUsuario(correo, contraseña, telefono, rut, nombres, apellidos)
+            MySwal.fire({
+                title: "Usuario creado, Volviendo a la pagina de inicio...",
+                icon: "success",
+                timer: "2500",
+                showCancelButton: false,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                didOpen: () => {
+                  Swal.showLoading()
+                  const b = Swal.getHtmlContainer().querySelector('b')
+                  timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                  }, 100)
+                },
+                willClose: () => {
+                  clearInterval(timerInterval)
+                  window.location.replace('/Inicio');
+                }
+              })
 
         } else {
-            console.log("no son iwale");
+            MySwal.fire({
+                title: "El codigo de verificacion no coincide",
+                icon: "error" 
+            })
         }
     }
 
@@ -140,7 +164,7 @@ return (
             keyboard={false}
         >
             <Modal.Header closeButton>
-                <Modal.Title>Modal title</Modal.Title>
+                <Modal.Title>Verificacion de correo</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <p>Para completar el registro, debe ingresar el codigo que fue enviado a su correo</p>

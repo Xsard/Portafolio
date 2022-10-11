@@ -23,14 +23,17 @@ const Login = () => {
             const resp = await axios.post(url, { email: correo, pass: contraseña })
             console.log(resp.data)
             if (!resp.data === 0) {
-                console.log("no sapa na")
+                MySwal.fire({ 
+                    title: "Error en el inicio de sesión, verifica tus datos",
+                    icon: "error" 
+                })
             } else {
-                console.log("si sapo algo");
                 const usuariobd = await axios.get(`${url_confirm}${resp.data}`);
                 setUsuario(correo)
                 localStorage.setItem('correo_usuario', usuariobd.data)
                 MySwal.fire({ 
-                    title: "pichula test" 
+                    title: "Inicio de sesión correcto",
+                    icon: "success" 
                 }).then((respuesta)=>{
                     if(respuesta.isConfirmed){
                         window.location.replace('/Inicio');

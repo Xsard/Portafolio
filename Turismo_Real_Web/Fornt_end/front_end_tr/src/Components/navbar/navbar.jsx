@@ -7,10 +7,44 @@ import NavbarBrand from "react-bootstrap/esm/NavbarBrand";
 import '../navbar/navbar.css'
 import { useContext } from "react";
 import clienteContext from "../../Contexts/ClienteContext";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 
 export const Navigation = () => {
+  let timerInterval
+  const MySwal = withReactContent(Swal);
 
-  const {usuario, logout} = useContext(clienteContext);
+  const handleSwal = () => {
+    MySwal.fire({
+      title: "¿Desea cerrar sesión?",
+      showDenyButton: true,
+      confirmButtonText: 'Si',
+      denyButtonText: `No`,
+    }).then((respuesta) => {
+      if (respuesta.isConfirmed) {
+        MySwal.fire({
+          title: "Cerrando Sesion...",
+          timer: "3000",
+          showCancelButton: false,
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+            const b = Swal.getHtmlContainer().querySelector('b')
+            timerInterval = setInterval(() => {
+              b.textContent = Swal.getTimerLeft()
+            }, 100)
+          },
+          willClose: () => {
+            clearInterval(timerInterval)
+          }
+        })
+        logout()
+      }
+    })
+  }
+  const { usuario, logout } = useContext(clienteContext);
   return (
     <Navbar
       className="sticky-top"
@@ -33,7 +67,7 @@ export const Navigation = () => {
                 id="collasible-nav-dropdown"
               >
                 <NavDropdown.Item >Reservas</NavDropdown.Item>
-                <NavDropdown.Item onClick={logout}>Cerrar Sesion</NavDropdown.Item>
+                <NavDropdown.Item onClick={handleSwal}>Cerrar Sesion</NavDropdown.Item>
               </NavDropdown>
 
               : <NavLink className="nav-link" to="/Login">
