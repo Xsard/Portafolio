@@ -30,6 +30,7 @@ namespace Vista.Pages
             InitializeComponent();
             departamento = depto;
             ListarObjetos();
+            ListarImg();
             lblNombreDpto.Content = "Departamento " + departamento.Direccion;
         }
         private void ListarObjetos()
@@ -135,24 +136,66 @@ namespace Vista.Pages
             if (ofd.ShowDialog() == true) 
             {
                 string ext = System.IO.Path.GetExtension(ofd.FileName);
-                MessageBox.Show(ext);
                 string path = System.IO.Directory.GetCurrentDirectory();
                 path = path.Substring(0, path.LastIndexOf("Desktop"));
-                path = string.Concat(path,"Imagenes_Dpto");
+                path = string.Concat(path,"Imagenes_Dpto\\");
                 Fotografia fotografia = new()
                 {
                     Id_dpto = departamento.IdDepto,
-                    Path_img = "segs",
+                    Path_img = path,
                     Alt = "segs"
                 };
-                MessageBox.Show(departamento.IdDepto.ToString() + fotografia.Path_img+ fotografia.Alt);
                 string r = CFotografia.InsertarImagen(fotografia, ext);
                 if(r.Length > 0)
                 {   
                     r = System.IO.Path.Combine(path,r);
                     System.IO.File.Copy(ofd.FileName, r, true);
-                    MessageBox.Show(r);
                 }                
+            }
+        }
+        private void ListarImg()
+        {
+            try
+            {
+                DataTable dataTable = CFotografia.ListarImagenes(departamento.IdDepto);
+                if (dataTable.Rows.Count > 0)
+                {
+                    var fotografias = (from rw in dataTable.AsEnumerable()
+                                   select new Fotografia()
+                                   {
+                                       Id_foto = Convert.ToInt32(rw[0]),
+                                       Id_dpto = Convert.ToInt32(rw[1]),
+                                       Path_img = rw[2].ToString(),
+                                       Alt = rw[3].ToString()
+                                   }).ToList();
+                    MessageBox.Show(fotografias[0].Path_img);
+                    imgMain.Source = new BitmapImage(new Uri(fotografias[0].Path_img));
+                    StkOtrasImg.Children.Clear();
+                    try
+                    {
+                        for (int i = 1; i < fotografias.Count-1 ; i++)
+                        {
+                            try
+                            {
+
+                            }
+                            catch (Exception)
+                            {
+
+                                throw;
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

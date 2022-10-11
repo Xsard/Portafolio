@@ -54,5 +54,40 @@ namespace Controlador
             }
             return path;
         }
+        public static DataTable ListarImagenes(int idDepto)
+        {
+            DataTable resultado = new();
+            using (OracleConnection con = Conexion.getInstance().ConexionDB())
+            {
+                OracleCommand cmd = new()
+                {
+                    Connection = con,
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "Mantener_Img.Listar_Img"
+                };
+                cmd.Parameters.Add("id_Dpto", OracleDbType.Int32, ParameterDirection.Input).Value = idDepto;
+                cmd.Parameters.Add("R", OracleDbType.RefCursor, ParameterDirection.Output);
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteReader();
+                    OracleDataAdapter da = new()
+                    {
+                        SelectCommand = cmd
+                    };
+                    da.Fill(resultado);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                    cmd.Dispose();
+                }
+            }
+            return resultado;
+        }
     }
 }
