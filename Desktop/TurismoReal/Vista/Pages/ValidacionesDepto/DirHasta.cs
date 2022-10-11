@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Controls;
 
-namespace Vista.Pages.Validaciones
+namespace Vista.Pages.ValidacionesDepto
 {
     public class DirHasta : ValidationRule
     {

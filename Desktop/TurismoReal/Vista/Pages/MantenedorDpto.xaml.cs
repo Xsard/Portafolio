@@ -144,7 +144,6 @@ namespace Vista.Pages
             {
                 if (e.Key == Key.Enter)
                 {
-                    MessageBox.Show("Arreglar controlador depto Actualizar");
                     Departamento departamento = (Departamento)dtgDptos.SelectedItem;
                     try
                     {

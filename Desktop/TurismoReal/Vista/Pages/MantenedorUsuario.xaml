@@ -88,7 +88,42 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        
-
+        <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhUsuario_ag" Placement="Center" >
+            <materialDesign:DialogHost.DialogContent>
+                <Grid Height="500" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
+                        <Label Content="Agregar Usuario" FontSize="20"/>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
+                            <materialDesign:PackIcon Kind="IdentificationCard" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_rut_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_rut_ag" materialDesign:HintAssist.Hint="Rut" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="IdentificationCardOutline" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombres_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_nombres_ag" materialDesign:HintAssist.Hint="Nombres" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="IdentificationCardOutline" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_apellidos_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_apellidos_ag" materialDesign:HintAssist.Hint="Apellidos" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="EmailAdd" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_email_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_email_ag" materialDesign:HintAssist.Hint="Email" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="PasswordAdd" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_password_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_password_ag" materialDesign:HintAssist.Hint="Contraseña" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="Worker" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_rol_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_rol_ag" materialDesign:HintAssist.Hint="Rol" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
+                            <Button x:Name="btn_Agregar_Usuario" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Click="btn_Agregar_Usuario_Click" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0"/>
+                            <Button x:Name="btn_Cancelar_Ag" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}" Click="btn_Cancelar_Ag_Click" VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>      
     </Grid>
 </Page>

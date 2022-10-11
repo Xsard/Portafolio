@@ -1,23 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Vista.Pages
 {
-    /// <summary>
-    /// Lógica de interacción para MantenedorUsuario.xaml
-    /// </summary>
     public partial class MantenedorUsuario : Page
     {
         public MantenedorUsuario()
@@ -32,12 +18,40 @@ namespace Vista.Pages
 
         private void btnAbrirAgregarUsuario_Click(object sender, RoutedEventArgs e)
         {
-
+            dhUsuario_ag.IsOpen = true;
+        }
+        private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
+        {
+            dhUsuario_ag.IsOpen = false;
+        }
+        private void Limpiar()
+        {
+            txt_rut_ag.Clear();
+            txt_nombres_ag.Clear();
+            txt_apellidos_ag.Clear();
+            txt_email_ag.Clear();
+            txt_password_ag.Clear();
+            txt_rol_ag.Clear();
+        }
+        private void MensajeError(string Mensaje)
+        {
+            MessageBox.Show(Mensaje, "Usuarios", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        private void MensajeOk(string Mensaje)
+        {
+            MessageBox.Show(Mensaje, "Usuarios", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void DtgUsuariosDelete_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
+        private void btn_Agregar_Usuario_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        
     }
 }

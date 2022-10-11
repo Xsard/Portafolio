@@ -3,13 +3,39 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Vista.Pages"
+      xmlns:local="clr-namespace:Vista.Pages" xmlns:local1="clr-namespace:Vista.Pages.ValidacionesServExtra"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="785" d:DesignWidth="1140"
       Title="MantenedorServExtras">
+    <Page.Resources>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBoxBase}">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <AdornedElementPlaceholder x:Name="placeholder"/>
+                            <TextBlock Foreground="Red" Margin="3 0 0 0" Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <!--<Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#111111"/>
+                </Trigger>-->
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                    <Setter Property="Margin" Value="0 0 0 20"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type ToolTip}">
+            <Setter Property="Foreground" Value="Red"/>
+        </Style>
+    </Page.Resources>
 
-    <Grid x:Name="grdSevEx">
+    <Grid x:Name="grdSevEx" Validation.Error="ItemError">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="50"/>
@@ -35,21 +61,45 @@
                     <DataGridTemplateColumn Header="Servicio" Width="120">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Path=NombreServicioExtra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgServUpdate_KeyDown"  />
+                                <TextBox KeyDown="DtgServUpdate_KeyDown">
+                                    <TextBox.Text>
+                                        <Binding Path="NombreServicioExtra"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local1:NombreHasta/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Descripción"  Width="*">
+                    <DataGridTemplateColumn Header="Descripción" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Path=DescripcionServicioExtra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgServUpdate_KeyDown" />
+                                <TextBox KeyDown="DtgServUpdate_KeyDown" TextWrapping="Wrap">
+                                    <TextBox.Text >
+                                        <Binding Path="DescripcionServicioExtra"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local1:DescripcionHasta/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Valor servicio" Width="180">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Path=ValorServicioExtra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="DtgServUpdate_KeyDown" />
+                                <TextBox KeyDown="DtgServUpdate_KeyDown">
+                                    <TextBox.Text >
+                                        <Binding Path="ValorServicioExtra"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local1:ValorEsNroPositivo/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
