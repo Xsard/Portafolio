@@ -242,6 +242,89 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Img AS
     END;
 END Mantener_Img;
 /
+CREATE OR REPLACE PACKAGE Mantener_Usuario_Admin AS
+    PROCEDURE Agregar_Admin(email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
+        rut IN ADMINISTRADOR.RUT_ADMIN%TYPE, nombre IN ADMINISTRADOR.NOMBRES_ADMIN%TYPE, apellido IN  ADMINISTRADOR.APELLIDOS_ADMIN%TYPE, R OUT INT);
+    PROCEDURE Actualizar_Admin(id_usr IN USUARIO.ID_USUARIO%TYPE, email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
+        rut IN ADMINISTRADOR.RUT_ADMIN%TYPE, nombre IN ADMINISTRADOR.NOMBRES_ADMIN%TYPE, apellido IN  ADMINISTRADOR.APELLIDOS_ADMIN%TYPE, R OUT INT);
+    PROCEDURE Eliminar_Admin(id_usr IN USUARIO.ID_USUARIO%TYPE, R OUT INT);
+    PROCEDURE Listar_Admin(Administradores OUT SYS_REFCURSOR);
+END Mantener_Usuario_Admin;
+/
+CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Admin AS
+    PROCEDURE Agregar_Admin(email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
+        rut IN ADMINISTRADOR.RUT_ADMIN%TYPE, nombre IN ADMINISTRADOR.NOMBRES_ADMIN%TYPE, apellido IN  ADMINISTRADOR.APELLIDOS_ADMIN%TYPE, R OUT INT)
+    IS
+        id_col rowid;
+        identificador_usr USUARIO.ID_USUARIO%TYPE;
+        identificador_admin ADMINISTRADOR.ID_ADMIN%TYPE;
+        v_pass VARCHAR2(40);
+        error_crear_usuario EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_crear_usuario, -20001);
+        error_crear_admin EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_crear_admin, -20201);
+    BEGIN 
+        SAVEPOINT A;
+        v_pass:=GENERAR_CON(email_c, pass);
+        INSERT INTO USUARIO(EMAIL, CONTRASEÑA, TELEFONO) VALUES(email_c, v_pass , fono) RETURNING rowid, ID_USUARIO INTO id_col, identificador_usr;
+        IF id_col IS NOT NULL THEN
+            INSERT INTO ADMINISTRADOR(RUT_ADMIN,NOMBRES_ADMIN,APELLIDOS_ADMIN,ID_USUARIO) VALUES(rut, nombre, apellido, identificador_usr) 
+                RETURNING rowid,ID_ADMIN INTO id_col,identificador_admin;
+            IF id_col IS NOT NULL THEN
+                UPDATE USUARIO SET ID_ADMIN = identificador_admin WHERE ID_USUARIO = identificador_usr RETURNING 1 INTO r;
+                IF r = 1 THEN
+                    COMMIT;        
+                END IF;
+            ELSE 
+                RAISE error_crear_admin;
+            END IF;
+        ELSE
+            RAISE error_crear_usuario;
+        END IF;
+    EXCEPTION
+        WHEN DUP_VAL_ON_INDEX THEN
+            ROLLBACK TO A;
+            R:= -1;
+        WHEN error_crear_usuario THEN 
+            ROLLBACK TO A;
+            R:= -20001;
+        WHEN error_crear_admin THEN
+            ROLLBACK TO A;
+            R:= -20101;
+    END;
+    PROCEDURE Actualizar_Admin(id_usr IN USUARIO.ID_USUARIO%TYPE, email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
+        rut IN ADMINISTRADOR.RUT_ADMIN%TYPE, nombre IN ADMINISTRADOR.NOMBRES_ADMIN%TYPE, apellido IN  ADMINISTRADOR.APELLIDOS_ADMIN%TYPE, R OUT INT)
+    IS
+        v_pass VARCHAR2(40);
+    BEGIN
+        SAVEPOINT A;
+        v_pass:=GENERAR_CON(email_c, pass);
+        UPDATE USUARIO SET EMAIL = email_c, CONTRASEÑA = v_pass, TELEFONO = fono WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
+        IF R = 1 THEN
+            UPDATE ADMINISTRADOR SET NOMBRES_ADMIN = nombre, APELLIDOS_ADMIN = apellido WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
+            IF R = 1 THEN
+                COMMIT;
+            END IF;
+        END IF;
+    END;
+    PROCEDURE Eliminar_Admin(id_usr IN USUARIO.ID_USUARIO%TYPE, R OUT INT)
+    IS
+    BEGIN
+        SAVEPOINT A;
+        DELETE FROM USUARIO WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
+        IF R = 1 THEN
+            COMMIT;        
+        END IF;
+    END;
+    PROCEDURE Listar_Admin(Administradores OUT SYS_REFCURSOR)
+    IS
+    BEGIN
+        OPEN Administradores FOR
+            SELECT * FROM USUARIO USR JOIN ADMINISTRADOR ADM ON(USR.ID_USUARIO = ADM.ID_USUARIO);
+    END;
+            
+END Mantener_Usuario_Admin;
+/
 DECLARE
     v_pass VARCHAR2(40);
 BEGIN
