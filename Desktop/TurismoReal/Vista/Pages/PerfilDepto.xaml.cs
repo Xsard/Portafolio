@@ -138,7 +138,7 @@ namespace Vista.Pages
                 string ext = System.IO.Path.GetExtension(ofd.FileName);
                 string path = System.IO.Directory.GetCurrentDirectory();
                 path = path.Substring(0, path.LastIndexOf("Desktop"));
-                path = string.Concat(path,"Imagenes_Dpto\\");
+                path = string.Concat(path, "Turismo_Real_Web\\Fornt_end\\front_end_tr\\src\\imagenes_Dpto\\");
                 Fotografia fotografia = new()
                 {
                     Id_dpto = departamento.IdDepto,
