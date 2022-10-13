@@ -43,5 +43,11 @@ namespace Vista.Pages
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new System.Uri("Pages/MantenedorUsuario.xaml", UriKind.RelativeOrAbsolute));
         }
+
+        private void btn_Disponibilidad_Crud_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new System.Uri("Pages/MantenedorDisponibilidad.xaml", UriKind.RelativeOrAbsolute));
+        }
     }
 }

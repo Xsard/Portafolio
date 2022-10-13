@@ -1,0 +1,94 @@
+﻿<Page x:Class="Vista.Pages.MantenedorDisponibilidad"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:Vista.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="785" d:DesignWidth="1140"
+      Title="MantenedorDisponibilidad">
+
+    <Grid x:Name="grdDisponibilidad">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Margin="12,0" Grid.Row="0">
+            <Label Content="Usuarios" VerticalAlignment="Bottom" FontSize="40" Foreground="#FFCC3300"/>
+            <Line Fill="#FFCC3300" VerticalAlignment="Bottom" Height="1" Stroke="#FFCC3300" X1="1152" Y1="1"/>
+        </Grid>
+        <Grid Margin="12,0" Grid.Row="1">
+            <Button x:Name="btnVerDisponibilidad" Width="150" HorizontalAlignment="Right" Content="Ver disponibilidad" BorderBrush="#FF0099CC" Background="#FF0099CC" Click="btnVerDisponibilidad_Click"/>
+        </Grid>
+        <Grid Grid.Row="2" Margin="12,0">
+            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgUsuarios">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Id" Width="0.5*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Path=IdUsuarios}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Rut" Width="0.5*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Path=Rut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="0.1*" Header="Acciones">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Padding="0" Width="40" Background="#C0392B" BorderBrush="#C0392B">
+                                        <materialDesign:PackIcon Kind="Delete"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhUsuario_ag" Placement="Center" >
+            <materialDesign:DialogHost.DialogContent>
+                <Grid Height="500" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
+                        <Label Content="Agregar Usuario" FontSize="20"/>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
+                            <materialDesign:PackIcon Kind="IdentificationCard" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_rut_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_rut_ag" materialDesign:HintAssist.Hint="Rut" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="IdentificationCardOutline" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombres_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_nombres_ag" materialDesign:HintAssist.Hint="Nombres" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="IdentificationCardOutline" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_apellidos_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_apellidos_ag" materialDesign:HintAssist.Hint="Apellidos" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="EmailAdd" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_email_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_email_ag" materialDesign:HintAssist.Hint="Email" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="PasswordAdd" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_password_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_password_ag" materialDesign:HintAssist.Hint="Contraseña" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="Worker" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_rol_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_rol_ag" materialDesign:HintAssist.Hint="Rol" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
+                            <Button x:Name="btn_Agregar_Usuario" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0"/>
+                            <Button x:Name="btn_Cancelar_Ag" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}"  VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+    </Grid>
+</Page>
