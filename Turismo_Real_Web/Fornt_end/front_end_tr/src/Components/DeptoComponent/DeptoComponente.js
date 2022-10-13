@@ -33,6 +33,7 @@ class DeptoComponent extends React.Component {
                                         tarifa={deptos.tarifaDiaria}
                                         direccion={deptos.direccion}
                                         comuna={deptos.nombre_comuna}
+                                        foto_path={deptos.foto_path}
                                     />
                             )
 
