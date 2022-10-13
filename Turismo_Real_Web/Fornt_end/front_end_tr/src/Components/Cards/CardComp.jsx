@@ -1,26 +1,26 @@
 import '../Cards/cards.css'
-import img_test from '../../Img/depto_test.jpg'
 import { Col } from 'react-bootstrap';
 
-export const CardComponent = ({idDepto, NumeroDepto, capacidad, tarifa, direccion, comuna }) => {
+export const CardComponent = ({ idDepto, NumeroDepto, capacidad, tarifa, direccion, comuna, foto_path }) => {
+
   return (
     <>
-    <Col>
-      <div className="card mt-3">
-        <img src={img_test} alt=".." className="card-img-top" />
-        <div className="card-body text text-right">
-          <h5>{direccion}</h5>
-          <p className="card-text">
-            Capacidad: {capacidad} <br />
-            Tarifa: {tarifa} <br />
-            Numero Departamento: {NumeroDepto} <br />
-            Comuna: {comuna}  <br />
-            <br />
-            <a href={`/ReservaDepto/${idDepto}`} className="btn btn-primary"> Reservar</a>
-          </p>
+      <Col>
+        <div className="card mt-3" >
+          <img src={require(`../../imagenes_Dpto/${foto_path}.jpg`)} alt=".." className="card-img-top" />
+          <div className="card-body text text-right">
+            <h5>{direccion}</h5>
+            <p className="card-text">
+              Capacidad: {capacidad} <br />
+              Tarifa: {tarifa} <br />
+              Numero Departamento: {NumeroDepto} <br />
+              Comuna: {comuna}  <br />
+              <br />
+              <a className="btn btn-primary"> Reservar</a>
+            </p>
+          </div>
         </div>
-      </div>
-    </Col>
+      </Col>
     </>
   );
 };

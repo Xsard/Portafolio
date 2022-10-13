@@ -425,3 +425,5 @@ INSERT INTO Comuna VALUES (16,'Punta Arenas', 16);
 /**/
 INSERT INTO DEPARTAMENTO VALUES(5,1,1,1,1,1);
 COMMIT;
+select id_dpto, tarifa_diaria, direccion, nro_dpto, capacidad, nombre_comuna, 
+REPLACE((select foto_path from fotografia_dpto ft where ft.id_dpto = dpto.id_dpto and rownum = 1),'\', '/') as foto from departamento dpto join comuna cmn on dpto.id_comuna = cmn.id_comuna;
