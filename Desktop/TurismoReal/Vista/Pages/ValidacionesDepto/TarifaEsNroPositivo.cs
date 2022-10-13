@@ -8,20 +8,16 @@ namespace Vista.Pages.ValidacionesDepto
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            try
+            if (int.TryParse(value.ToString(), out int tarifaDiara))
             {
-                var numero = Convert.ToInt32(value);
-
-                if (numero <= 0)
+                if (tarifaDiara <= 0)
                 {
                     return new ValidationResult(false, "La tarifa debe ser un número positivo");
                 }
                 return ValidationResult.ValidResult;
+
             }
-            catch (Exception)
-            {
-                return new ValidationResult(false, "La tarifa debe ser un número");
-            }
+            return new ValidationResult(false, "La tarifa debe ser un número");
         }
     }
 }
