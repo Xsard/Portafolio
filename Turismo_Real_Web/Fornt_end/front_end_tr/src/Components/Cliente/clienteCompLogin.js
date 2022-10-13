@@ -22,7 +22,7 @@ const Login = () => {
         try {
             const resp = await axios.post(url, { email: correo, pass: contraseña })
             console.log(resp.data)
-            if (!resp.data === 0) {
+            if (resp.data === 0) {
                 MySwal.fire({ 
                     title: "Error en el inicio de sesión, verifica tus datos",
                     icon: "error" 

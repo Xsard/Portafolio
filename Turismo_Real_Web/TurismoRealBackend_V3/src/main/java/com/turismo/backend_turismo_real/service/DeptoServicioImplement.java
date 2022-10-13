@@ -26,7 +26,12 @@ public class DeptoServicioImplement implements DeptoServicio{
 	}
 	
 	@Override
-	public String QueryDepto(){
+	public List<Departamento> QueryDepto(){
 		return repodepto.QueryDepto();
+	}
+
+	@Override
+	public String id_foto() {
+		return repodepto.id_foto();
 	}
 }
