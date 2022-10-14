@@ -32,16 +32,14 @@ namespace Controlador
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
                 finally
                 {
                     con.Close();
                 }
-
             }
             return dataTable;
-        }
+        }        
     }
 }
