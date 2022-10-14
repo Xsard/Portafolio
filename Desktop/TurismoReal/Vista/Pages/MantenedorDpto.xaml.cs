@@ -12,9 +12,6 @@ using System.Windows.Navigation;
 
 namespace Vista.Pages
 {
-    /// <summary>
-    /// Interaction logic for Mantenedor_Dpto.xaml
-    /// </summary>
     public partial class MantenedorDpto : Page
     {
         public MantenedorDpto()
