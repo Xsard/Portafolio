@@ -14,7 +14,7 @@ namespace Vista.Pages
         private void btnVistaAdmin_Click(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new System.Uri("Pages/MantenedorAdmin.xaml", UriKind.RelativeOrAbsolute));
+            ns.Navigate(new Uri("Pages/MantenedorAdmin.xaml", UriKind.RelativeOrAbsolute));
         }
 
         private void btnVistaFuncionarios_Click(object sender, RoutedEventArgs e)

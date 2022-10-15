@@ -2,6 +2,7 @@
 {
     public class Administrador
     {
+        private int idUsuario;
         private string rut;
         private string nombres;
         private string apellidos;
@@ -15,5 +16,6 @@
         public string Email { get => email; set => email = value; }
         public int Telefono { get => telefono; set => telefono = value; }
         public string Contraseña { get => contraseña; set => contraseña = value; }
+        public int IdUsuario { get => idUsuario; set => idUsuario = value; }
     }
 }

@@ -11,7 +11,7 @@
 
     <Page.Resources>
         <CollectionViewSource x:Key="comunas"/>
-        <Style TargetType="{x:Type TextBox}" >
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBoxBase}">
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>
                     <ControlTemplate>

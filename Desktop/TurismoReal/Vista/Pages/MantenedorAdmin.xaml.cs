@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Vista.Pages
 {
@@ -32,6 +33,7 @@ namespace Vista.Pages
                     var admin = (from rw in dataTable.AsEnumerable()
                                  select new Administrador()
                                  {
+                                     IdUsuario = Convert.ToInt32(rw[0]),
                                      Rut = rw[8].ToString(),
                                      Nombres = rw[9].ToString(),
                                      Apellidos = rw[10].ToString(),
@@ -45,40 +47,6 @@ namespace Vista.Pages
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-        private void Limpiar()
-        {
-            txt_email_ag.Clear();
-            txt_pass_ag.Clear();
-            txt_passConfirm_ag.Clear();
-            txt_fono_ag.Clear();
-            txt_rut_ag.Clear();
-            txt_nombres_ag.Clear();
-            txt_apellidos_ag.Clear();
-        }
-        private void btnAbrirAgregarAdmin_Click(object sender, RoutedEventArgs e)
-        {
-            dhAdmin_ag.IsOpen = true;
-        }
-        private void DtgAdminUpdate_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-
-        }
-        private void DtgAdminDelete_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void DtgAdminDetalles_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void MensajeError(string Mensaje)
-        {
-            MessageBox.Show(Mensaje, "Administradores", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        private void MensajeOk(string Mensaje)
-        {
-            MessageBox.Show(Mensaje, "Administradores", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void btn_Agregar_Admin_Click(object sender, RoutedEventArgs e)
         {
@@ -112,10 +80,75 @@ namespace Vista.Pages
                 MessageBox.Show(ex.Message, ex.StackTrace);
             }
         }
-
+        private void DtgAdminUpdate_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.Key == Key.Enter)
+                {
+                    Administrador userAdmin = (Administrador)dtgAdmin.SelectedItem;
+                    try
+                    {
+                        int estado = CAdmin.ActualizarAdmin(userAdmin);
+                        MensajeOk("Administrador actualizado");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.StackTrace);
+            }
+        }
+        private void DtgAdminDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Administrador admin = (Administrador)dtgAdmin.SelectedItem;
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Estás seguro de querer eliminar este usuario administrador?", "Administrador", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    int estado = CAdmin.EliminarAdmin(admin.IdUsuario);
+                    MensajeOk("Administrador eliminado");
+                    ListarAdmin();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void Limpiar()
+        {
+            txt_email_ag.Clear();
+            txt_pass_ag.Clear();
+            txt_passConfirm_ag.Clear();
+            txt_fono_ag.Clear();
+            txt_rut_ag.Clear();
+            txt_nombres_ag.Clear();
+            txt_apellidos_ag.Clear();
+        }
+        private void btnAbrirAgregarAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            dhAdmin_ag.IsOpen = true;
+        }
         private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
         {
             dhAdmin_ag.IsOpen = false;
+        }       
+        private void MensajeError(string Mensaje)
+        {
+            MessageBox.Show(Mensaje, "Administradores", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+        private void MensajeOk(string Mensaje)
+        {
+            MessageBox.Show(Mensaje, "Administradores", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        
+
+        
     }
 }

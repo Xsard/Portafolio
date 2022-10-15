@@ -3,14 +3,14 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Vista.Pages" 
+      xmlns:local="clr-namespace:Vista.Pages" xmlns:local1="clr-namespace:Vista.Pages.ValidacionesUsuario"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MantenedorAdmin">
 
     <Page.Resources>
-        <Style TargetType="{x:Type TextBox}" >
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBoxBase}">
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>
                     <ControlTemplate>
@@ -55,20 +55,20 @@
         <Grid Grid.Row="2" Margin="12,0">
             <DataGrid x:Name="dtgAdmin" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" >
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Id" Width="0.35*">
+                    <DataGridTemplateColumn Header="Id Usuario" Width="0.99*" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Label Content="{Binding Path=IdAdmin}"/>
+                                <Label Content="{Binding Path=IdUsuario}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Rut" Width="0.7*">
+                    <DataGridTemplateColumn Header="Rut" Width="0.7*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgAdminUpdate_KeyDown">
+                                <TextBox KeyDown="DtgAdminUpdate_KeyDown" IsReadOnly="True">
                                     <TextBox.Text>
                                         <Binding Path="Rut"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules >
+                                            <Binding.ValidationRules>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -82,7 +82,8 @@
                                 <TextBox KeyDown="DtgAdminUpdate_KeyDown">
                                     <TextBox.Text >
                                         <Binding Path="Nombres" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules >
+                                            <Binding.ValidationRules>
+                                                <local1:NombreHasta/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -97,6 +98,7 @@
                                     <TextBox.Text >
                                         <Binding Path="Apellidos"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
+                                                <local1:ApellidoHasta/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -111,6 +113,7 @@
                                     <TextBox.Text >
                                         <Binding Path="Telefono"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
+                                                <local1:TelefonoEsNroPositivo/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -125,6 +128,7 @@
                                     <TextBox.Text >
                                         <Binding Path="Email"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
+                                                <local1:EmailHasta/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
