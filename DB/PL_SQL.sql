@@ -402,11 +402,94 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Cliente AS
     PROCEDURE Listar_Cliente(Clientes OUT SYS_REFCURSOR)
     IS
     BEGIN
-        OPEN CLientes FOR
+        OPEN Clientes FOR
             SELECT * FROM USUARIO USR JOIN CLIENTE CLI ON(USR.ID_USUARIO = CLI.ID_USUARIO);
     END;
             
 END Mantener_Usuario_Cliente;
+/
+CREATE OR REPLACE PACKAGE Mantener_Usuario_Funcionario AS
+    PROCEDURE Agregar_Funcionario(email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
+        rut IN FUNCIONARIO.RUT_FUNCIONARIO%TYPE, nombre IN FUNCIONARIO.NOMBRES_FUNCIONARIO%TYPE, apellido IN  FUNCIONARIO.APELLIDOS_FUNCIONARIO%TYPE, R OUT INT);
+    PROCEDURE Actualizar_Funcionario(id_usr IN USUARIO.ID_USUARIO%TYPE, email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
+        nombre IN FUNCIONARIO.NOMBRES_FUNCIONARIO%TYPE, apellido IN  FUNCIONARIO.APELLIDOS_FUNCIONARIO%TYPE, R OUT INT);
+    PROCEDURE Eliminar_Funcionario(id_usr IN USUARIO.ID_USUARIO%TYPE, R OUT INT);
+    PROCEDURE Listar_Funcionario(Funcionarios OUT SYS_REFCURSOR);
+END Mantener_Usuario_Funcionario;
+/
+CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Funcionario AS
+    PROCEDURE Agregar_Funcionario(email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
+        rut IN FUNCIONARIO.RUT_FUNCIONARIO%TYPE, nombre IN FUNCIONARIO.NOMBRES_FUNCIONARIO%TYPE, apellido IN  FUNCIONARIO.APELLIDOS_FUNCIONARIO%TYPE, R OUT INT)
+    IS
+        id_col rowid;
+        identificador_usr USUARIO.ID_USUARIO%TYPE;
+        identificador_funcionario FUNCIONARIO.ID_FUNCIONARIO%TYPE;
+        v_pass VARCHAR2(40);
+        error_crear_usuario EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_crear_usuario, -20001);
+        error_crear_funcionario EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_crear_funcionario, -20201);
+    BEGIN 
+        SAVEPOINT A;
+        v_pass:=GENERAR_CON(email_c, pass);
+        INSERT INTO USUARIO(EMAIL, CONTRASEÑA, TELEFONO) VALUES(email_c, v_pass , fono) RETURNING rowid, ID_USUARIO INTO id_col, identificador_usr;
+        IF id_col IS NOT NULL THEN
+            INSERT INTO FUNCIONARIO(RUT_FUNCIONARIO,NOMBRES_FUNCIONARIO,APELLIDOS_FUNCIONARIO,ID_USUARIO) VALUES(rut, nombre, apellido, identificador_usr) 
+                RETURNING rowid,ID_FUNCIONARIO INTO id_col,identificador_funcionario;
+            IF id_col IS NOT NULL THEN
+                UPDATE USUARIO SET ID_FUNCIONARIO = identificador_funcionario WHERE ID_USUARIO = identificador_usr RETURNING 1 INTO r;
+                IF r = 1 THEN
+                    COMMIT;        
+                END IF;
+            ELSE 
+                RAISE error_crear_funcionario;
+            END IF;
+        ELSE
+            RAISE error_crear_usuario;
+        END IF;
+    EXCEPTION
+        WHEN DUP_VAL_ON_INDEX THEN
+            ROLLBACK TO A;
+            R:= -1;
+        WHEN error_crear_usuario THEN 
+            ROLLBACK TO A;
+            R:= -20001;
+        WHEN error_crear_funcionario THEN
+            ROLLBACK TO A;
+            R:= -20101;
+    END;
+    PROCEDURE Actualizar_Funcionario(id_usr IN USUARIO.ID_USUARIO%TYPE, email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
+        nombre IN FUNCIONARIO.NOMBRES_FUNCIONARIO%TYPE, apellido IN  FUNCIONARIO.APELLIDOS_FUNCIONARIO%TYPE, R OUT INT)
+    IS
+        v_pass VARCHAR2(40);
+    BEGIN
+        SAVEPOINT A;
+        v_pass:=GENERAR_CON(email_c, pass);
+        UPDATE USUARIO SET EMAIL = email_c, CONTRASEÑA = v_pass, TELEFONO = fono WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
+        IF R = 1 THEN
+            UPDATE FUNCIONARIO SET NOMBRES_FUNCIONARIO = nombre, APELLIDOS_FUNCIONARIO = apellido WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
+            IF R = 1 THEN
+                COMMIT;
+            END IF;
+        END IF;
+    END;
+    PROCEDURE Eliminar_Funcionario(id_usr IN USUARIO.ID_USUARIO%TYPE, R OUT INT)
+    IS
+    BEGIN
+        SAVEPOINT A;
+        DELETE FROM USUARIO WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
+        IF R = 1 THEN
+            COMMIT;        
+        END IF;
+    END;
+    PROCEDURE Listar_Funcionario(Funcionarios OUT SYS_REFCURSOR)
+    IS
+    BEGIN
+        OPEN Funcionarios FOR
+            SELECT * FROM USUARIO USR JOIN FUNCIONARIO FUN ON(USR.ID_USUARIO = FUN.ID_USUARIO);
+    END;
+            
+END Mantener_Usuario_Funcionario;
 /
 DECLARE
     v_pass VARCHAR2(40);

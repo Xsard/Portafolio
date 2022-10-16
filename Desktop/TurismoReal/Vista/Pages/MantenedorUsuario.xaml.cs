@@ -19,7 +19,8 @@ namespace Vista.Pages
 
         private void btnVistaFuncionarios_Click(object sender, RoutedEventArgs e)
         {
-            
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Pages/MantenedorFuncionario.xaml", UriKind.RelativeOrAbsolute));
         }
 
         private void btnVistaClientes_Click(object sender, RoutedEventArgs e)
