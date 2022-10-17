@@ -9,13 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\ValidacionesUsuario\**" />
-    <EmbeddedResource Remove="Pages\ValidacionesUsuario\**" />
-    <None Remove="Pages\ValidacionesUsuario\**" />
-    <Page Remove="Pages\ValidacionesUsuario\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Img\background.png" />
   </ItemGroup>
 
