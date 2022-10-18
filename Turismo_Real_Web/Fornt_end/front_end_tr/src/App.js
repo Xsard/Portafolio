@@ -7,6 +7,7 @@ import { FormularioRegistrarse } from './Components/formulario/form_registrarse'
 import Footer from './Components/Footer/footer';
 import clienteContext from './Contexts/ClienteContext';
 import { useEffect, useState } from 'react';
+import DeptoVista from './Components/DeptoComponent/DeptoCompVista';
 
 const getData = () => {
   return localStorage.getItem('correo_usuario')
@@ -25,7 +26,7 @@ function App() {
   }
 
   const [usuario, setUsuario] = useState(initialUsuario)
-
+ 
   const data = { usuario, setUsuario, logout }
 
 
@@ -39,6 +40,7 @@ function App() {
               <Routes>
                 <Route path='/Inicio' element={<Inicio />}></Route>
                 <Route path='/' exact element={<Inicio />}></Route>
+                <Route path='/ReservaDepto/:id_depto' element={<DeptoVista />}></Route> 
                 <Route path="/Login" element={<FormularioLogin />}></Route>
                 <Route path="/Registrarse" element={<FormularioRegistrarse />}></Route>
               </Routes>

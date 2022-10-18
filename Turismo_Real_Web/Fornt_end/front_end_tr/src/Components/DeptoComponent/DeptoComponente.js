@@ -29,6 +29,7 @@ class DeptoComponent extends React.Component {
                                     <CardComponent
                                         key={deptos.idDepto}
                                         NumeroDepto={deptos.nroDepto}
+                                        idDepto={deptos.idDepto}
                                         capacidad={deptos.capacidad}
                                         tarifa={deptos.tarifaDiaria}
                                         direccion={deptos.direccion}

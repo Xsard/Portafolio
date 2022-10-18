@@ -54,7 +54,7 @@ export const Navigation = () => {
       variant="dark"
     >
       <Container>
-        <NavbarBrand href="Inicio"> Turismo Real</NavbarBrand>
+        <NavbarBrand href="/Inicio"> Turismo Real</NavbarBrand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
