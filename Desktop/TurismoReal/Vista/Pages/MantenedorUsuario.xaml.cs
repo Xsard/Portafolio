@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace Vista.Pages
 {
@@ -10,48 +11,22 @@ namespace Vista.Pages
         {
             InitializeComponent();
         }
-
-        private void DtgUsuariosUpdate_KeyDown(object sender, KeyEventArgs e)
+        private void btnVistaAdmin_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Pages/MantenedorAdmin.xaml", UriKind.RelativeOrAbsolute));
         }
 
-        private void btnAbrirAgregarUsuario_Click(object sender, RoutedEventArgs e)
+        private void btnVistaFuncionarios_Click(object sender, RoutedEventArgs e)
         {
-            dhUsuario_ag.IsOpen = true;
-        }
-        private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
-        {
-            dhUsuario_ag.IsOpen = false;
-        }
-        private void Limpiar()
-        {
-            txt_rut_ag.Clear();
-            txt_nombres_ag.Clear();
-            txt_apellidos_ag.Clear();
-            txt_email_ag.Clear();
-            txt_password_ag.Clear();
-            txt_rol_ag.Clear();
-        }
-        private void MensajeError(string Mensaje)
-        {
-            MessageBox.Show(Mensaje, "Usuarios", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        private void MensajeOk(string Mensaje)
-        {
-            MessageBox.Show(Mensaje, "Usuarios", MessageBoxButton.OK, MessageBoxImage.Information);
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Pages/MantenedorFuncionario.xaml", UriKind.RelativeOrAbsolute));
         }
 
-        private void DtgUsuariosDelete_Click(object sender, RoutedEventArgs e)
+        private void btnVistaClientes_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Pages/MantenedorCliente.xaml", UriKind.RelativeOrAbsolute));
         }
-
-        private void btn_Agregar_Usuario_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        
     }
 }
