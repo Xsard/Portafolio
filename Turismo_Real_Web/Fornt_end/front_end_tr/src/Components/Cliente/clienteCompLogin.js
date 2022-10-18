@@ -11,6 +11,7 @@ const url_confirm = "http://localhost:8080/api/v1/loginConfirmed/"
 
 const Login = () => {
     const { usuario, setUsuario } = useContext(clienteContext);
+    const { id, setId } = useContext(clienteContext);
 
     const [correo, setCorreo] = useState('');
     const [contraseña, setContraseña] = useState('');
@@ -31,6 +32,9 @@ const Login = () => {
                 const usuariobd = await axios.get(`${url_confirm}${resp.data}`);
                 setUsuario(correo)
                 localStorage.setItem('correo_usuario', usuariobd.data)
+                console.log(resp.data)
+                setId(resp.data)
+                localStorage.setItem('id_cliente', resp.data)
                 MySwal.fire({ 
                     title: "Inicio de sesión correcto",
                     icon: "success" 

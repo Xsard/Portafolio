@@ -25,9 +25,9 @@ public class Reserva {
 	@Column(name = "estado_pago")
 	String estado_pago;
 	@Column(name = "check_in")
-	String check_in;
+	Date check_in;
 	@Column(name = "check_out")
-	String check_out;
+	Date check_out;
 	@Column(name = "firma")
 	int firma;
 	@Column(name = "valor_total")
@@ -62,16 +62,16 @@ public class Reserva {
 	public void setEstado_pago(String estado_pago) {
 		this.estado_pago = estado_pago;
 	}
-	public String getCheck_in() {
+	public Date getCheck_in() {
 		return check_in;
 	}
-	public void setCheck_in(String check_in) {
+	public void setCheck_in(Date check_in) {
 		this.check_in = check_in;
 	}
-	public String getCheck_out() {
+	public Date getCheck_out() {
 		return check_out;
 	}
-	public void setCheck_out(String check_out) {
+	public void setCheck_out(Date check_out) {
 		this.check_out = check_out;
 	}
 	public int getFirma() {
@@ -87,7 +87,7 @@ public class Reserva {
 		this.valor_total = valor_total;
 	}
 	public Reserva(int id_reserva, int id_dpto, int id_cliente, String estado_reserva, String estado_pago,
-			String check_in, String check_out, int firma, int valor_total) {
+			Date check_in, Date check_out, int firma, int valor_total) {
 		super();
 		this.id_reserva = id_reserva;
 		this.id_dpto = id_dpto;

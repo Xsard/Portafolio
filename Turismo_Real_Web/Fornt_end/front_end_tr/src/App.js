@@ -12,22 +12,30 @@ import DeptoVista from './Components/DeptoComponent/DeptoCompVista';
 const getData = () => {
   return localStorage.getItem('correo_usuario')
 }
+const getDataid = () => {
+  return  localStorage.getItem('id_cliente')
+}
 
 const initialUsuario = null;
+
 function App() {
 
   useEffect(() => {
     setUsuario(getData())
+    setId(getDataid())
   }, [])
 
   const logout = () => {
     localStorage.removeItem('correo_usuario')
+    localStorage.removeItem('id_cliente')
     setUsuario(null);
+    setId(null)
   }
 
   const [usuario, setUsuario] = useState(initialUsuario)
- 
-  const data = { usuario, setUsuario, logout }
+  const [id, setId] = useState(initialUsuario)
+
+  const data = { usuario, setUsuario, id, setId,  logout }
 
 
   return (

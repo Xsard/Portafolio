@@ -8,24 +8,29 @@ import foto_alt from "../../Img/alt.jpg"
 import { Form } from "react-bootstrap";
 import { useContext } from "react";
 import clienteContext from "../../Contexts/ClienteContext";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 
 const DeptoVista = () => {
     const { id_depto } = useParams()
     const url = `http://localhost:8080/api/v1/test/${id_depto}`;
 
-    const { usuario} = useContext(clienteContext);
+    const { usuario, id } = useContext(clienteContext);
 
     const [idDepto, setIdDepto] = useState('');
     const [NumeroDepto, setNumeroDepto] = useState('');
     const [capacidad, setCapacidad] = useState('');
     const [tarifa, setTarifa] = useState('');
-    const [direccion, setDireccion] = useState('ola');
+    const [direccion, setDireccion] = useState('');
     const [id_comuna, setComuna] = useState('');
     const [nombreComuna, setnombreComuna] = useState('');
 
     const [fechaIda, setFechaIda] = useState('');
     const [fechaVuelta, setFechaVuelta] = useState('');
     const [cantAcompañantes, setAcompañantes] = useState('');
+
+    const MySwal = withReactContent(Swal);
 
     const handleOnLoad = async (e) => {
         e.preventDefault();
@@ -45,12 +50,32 @@ const DeptoVista = () => {
         }
     }
 
-    const handlePostReserva = () => {
-        console.log(usuario)
+    const handlePostReserva = async (e) => {
+        e.preventDefault();
+        try {
+            if (id === null) {
+                MySwal.fire({
+                    title: "Debes iniciar sesion para continuar con la reserva",
+                    icon: "error"
+                }).then((respuesta) => {
+                    if (respuesta.isConfirmed) {
+                        window.location.replace('/Login');
+                    }
+                })
+            } else {
+                const resp = await axios.post('http://localhost:8080/api/v1/guardarReserva', {
+                    id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
+                    check_out: fechaVuelta, firma: 0, valor_total: 20000
+                })
+            }
+        }
+        catch (error) {
+            console.log(error.response)
+        }
     }
 
     const handleTest = () => {
-        console.log(fechaIda, fechaVuelta, cantAcompañantes)
+        console.log(id)
     }
 
     return (
