@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.turismo.backend_turismo_real.modelo.AutentificarCliente;
 import com.turismo.backend_turismo_real.modelo.Departamento;
+import com.turismo.backend_turismo_real.modelo.superDepto;
 import com.turismo.backend_turismo_real.service.DeptoServicioImplement;
 
 @RestController

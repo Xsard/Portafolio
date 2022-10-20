@@ -7,26 +7,35 @@ import { FormularioRegistrarse } from './Components/formulario/form_registrarse'
 import Footer from './Components/Footer/footer';
 import clienteContext from './Contexts/ClienteContext';
 import { useEffect, useState } from 'react';
+import DeptoVista from './Components/DeptoComponent/DeptoCompVista';
 
 const getData = () => {
   return localStorage.getItem('correo_usuario')
 }
+const getDataid = () => {
+  return  localStorage.getItem('id_cliente')
+}
 
 const initialUsuario = null;
+
 function App() {
 
   useEffect(() => {
     setUsuario(getData())
+    setId(getDataid())
   }, [])
 
   const logout = () => {
     localStorage.removeItem('correo_usuario')
+    localStorage.removeItem('id_cliente')
     setUsuario(null);
+    setId(null)
   }
 
   const [usuario, setUsuario] = useState(initialUsuario)
+  const [id, setId] = useState(initialUsuario)
 
-  const data = { usuario, setUsuario, logout }
+  const data = { usuario, setUsuario, id, setId,  logout }
 
 
   return (
@@ -39,6 +48,7 @@ function App() {
               <Routes>
                 <Route path='/Inicio' element={<Inicio />}></Route>
                 <Route path='/' exact element={<Inicio />}></Route>
+                <Route path='/ReservaDepto/:id_depto' element={<DeptoVista />}></Route> 
                 <Route path="/Login" element={<FormularioLogin />}></Route>
                 <Route path="/Registrarse" element={<FormularioRegistrarse />}></Route>
               </Routes>

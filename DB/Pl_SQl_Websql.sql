@@ -53,7 +53,7 @@ CREATE OR REPLACE PACKAGE BODY login_web AS
     v_pass VARCHAR2(40);
     BEGIN 
         v_pass:=GENERAR_CON(email_aut, psw_aut);
-        SELECT usr.ID_USUARIO INTO R
+        SELECT cli.id_cliente INTO R
             FROM CLIENTE cli JOIN USUARIO USR ON(cli.id_usuario = usr.id_usuario)
                 WHERE usr.email = email_aut and usr.contraseña = v_pass;
     EXCEPTION 

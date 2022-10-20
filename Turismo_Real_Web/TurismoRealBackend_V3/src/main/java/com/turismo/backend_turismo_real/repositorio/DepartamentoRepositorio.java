@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.turismo.backend_turismo_real.modelo.Departamento;
+import com.turismo.backend_turismo_real.modelo.superDepto;
 
 @Repository
 public interface DepartamentoRepositorio extends JpaRepository<Departamento, Integer>, JpaSpecificationExecutor<Departamento>{

@@ -22,6 +22,6 @@ public interface ClienteRepositorio extends JpaRepository<Cliente, Integer>{
 	@Procedure(name="iniciar_sesion")
 	int login(@Param("email_aut") String email_aut, @Param("psw_aut") String psw_aut);
 	
-	@Query(nativeQuery = true, value= "SELECT EMAIL FROM Usuario WHERE id_usuario= :id")
+	@Query(nativeQuery = true, value= "SELECT EMAIL FROM USUARIO WHERE id_cliente= :id")
 	String loginConfirmed(@Param("id") int id);
 }
