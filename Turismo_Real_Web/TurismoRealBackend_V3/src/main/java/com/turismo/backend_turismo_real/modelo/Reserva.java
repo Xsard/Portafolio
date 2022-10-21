@@ -1,5 +1,6 @@
 package com.turismo.backend_turismo_real.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,11 +8,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
+
+@NamedStoredProcedureQueries({
+	@NamedStoredProcedureQuery(
+			name = "add_reserva",
+			procedureName = "AGREGAR_RESERVA",
+			parameters = {
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="idDepto", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="idCli", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="estadoRes", type=char.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="estadoPag", type=char.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="checkIn", type=Date.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="checkOut", type=Date.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="firmaRes", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="valorTotal", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.OUT, name="R", type=int.class)	
+			})
+	})
 
 @Entity
 @Table(name = "Reserva")
-public class Reserva {
+public class Reserva implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +43,9 @@ public class Reserva {
 	@Column(name = "id_cliente")
 	int id_cliente;
 	@Column(name = "estado_reserva")
-	String estado_reserva;
+	char estado_reserva;
 	@Column(name = "estado_pago")
-	String estado_pago;
+	char estado_pago;
 	@Column(name = "check_in")
 	Date check_in;
 	@Column(name = "check_out")
@@ -32,6 +54,7 @@ public class Reserva {
 	int firma;
 	@Column(name = "valor_total")
 	int valor_total;
+	
 	public int getId_reserva() {
 		return id_reserva;
 	}
@@ -50,16 +73,16 @@ public class Reserva {
 	public void setId_cliente(int id_cliente) {
 		this.id_cliente = id_cliente;
 	}
-	public String getEstado_reserva() {
+	public char getEstado_reserva() {
 		return estado_reserva;
 	}
-	public void setEstado_reserva(String estado_reserva) {
+	public void setEstado_reserva(char estado_reserva) {
 		this.estado_reserva = estado_reserva;
 	}
-	public String getEstado_pago() {
+	public char getEstado_pago() {
 		return estado_pago;
 	}
-	public void setEstado_pago(String estado_pago) {
+	public void setEstado_pago(char estado_pago) {
 		this.estado_pago = estado_pago;
 	}
 	public Date getCheck_in() {
@@ -86,7 +109,7 @@ public class Reserva {
 	public void setValor_total(int valor_total) {
 		this.valor_total = valor_total;
 	}
-	public Reserva(int id_reserva, int id_dpto, int id_cliente, String estado_reserva, String estado_pago,
+	public Reserva(int id_reserva, int id_dpto, int id_cliente, char estado_reserva, char estado_pago,
 			Date check_in, Date check_out, int firma, int valor_total) {
 		super();
 		this.id_reserva = id_reserva;
