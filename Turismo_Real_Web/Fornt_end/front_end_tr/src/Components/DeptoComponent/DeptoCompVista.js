@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { Col, Row } from "react-bootstrap";
 import foto_test from "../../imagenes_Dpto/22.jpg"
 import '../DeptoComponent/deptovista.css'
 import foto_alt from "../../Img/alt.jpg"
@@ -10,13 +9,20 @@ import { useContext } from "react";
 import clienteContext from "../../Contexts/ClienteContext";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { Modal, Button } from "react-bootstrap";
 
 
 const DeptoVista = () => {
     const { id_depto } = useParams()
     const url = `http://localhost:8080/api/v1/test/${id_depto}`;
 
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     const { usuario, id } = useContext(clienteContext);
+
+    const [idReserva, setIdReserva] = useState('');
 
     const [idDepto, setIdDepto] = useState('');
     const [NumeroDepto, setNumeroDepto] = useState('');
@@ -63,10 +69,10 @@ const DeptoVista = () => {
                     }
                 })
             } else {
-                const resp = await axios.post('http://localhost:8080/api/v1/guardarReserva', {
-                    id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
-                    check_out: fechaVuelta, firma: 0, valor_total: 20000
-                })
+                //const resp = await axios.post('http://localhost:8080/api/v1/guardarReserva', {
+                    //id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
+                    //check_out: fechaVuelta, firma: 0, valor_total: 20000
+                //})
             }
         }
         catch (error) {
@@ -75,7 +81,8 @@ const DeptoVista = () => {
     }
 
     const handleTest = () => {
-        console.log(id)
+        handleShow()
+        
     }
 
     return (
@@ -140,13 +147,13 @@ const DeptoVista = () => {
                                         <Form.Control type="text" placeholder="Ingrese acompañantes" />
                                     </Form.Group>
                                     <br></br>
-                                    <button className="btn btn-primary" onClick={handlePostReserva}>Reserva ahora</button>
+                                    <button className="btn btn-primary" onClick={handleTest}>Reserva ahora</button>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>  
         </>
     )
 }

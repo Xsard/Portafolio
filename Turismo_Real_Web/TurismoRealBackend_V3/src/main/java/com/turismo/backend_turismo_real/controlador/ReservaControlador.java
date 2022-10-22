@@ -27,6 +27,6 @@ public class ReservaControlador {
 	public int agregar_reserva(@RequestBody Reserva reserv) {
 		return servReserva.agregar_reserva(reserv.getId_dpto(), reserv.getId_cliente(),
 				reserv.getEstado_reserva(), reserv.getEstado_pago(), reserv.getCheck_in(), reserv.getCheck_out(),
-				reserv.getFirma(), reserv.getValor_total());
+				reserv.getFirma(), reserv.getValor_total(), reserv.getCantidad_acompañantes());
 	}
 }

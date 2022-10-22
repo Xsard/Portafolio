@@ -22,7 +22,15 @@ public class superDepto {
 	int Capacidad;
 	@Column(name = "id_comuna")
 	int id_comuna;
+	@Column(name = "nombre_dpto")
+	String nombre_dpto;
 	
+	public String getNombre_dpto() {
+		return nombre_dpto;
+	}
+	public void setNombre_dpto(String nombre_dpto) {
+		this.nombre_dpto = nombre_dpto;
+	}
 	public int getIdDepto() {
 		return IdDepto;
 	}
@@ -59,7 +67,9 @@ public class superDepto {
 	public void setId_comuna(int id_comuna) {
 		this.id_comuna = id_comuna;
 	}
-	public superDepto(int idDepto, int tarifaDiaria, String direccion, int nroDepto, int capacidad, int id_comuna) {
+	
+	public superDepto(int idDepto, int tarifaDiaria, String direccion, int nroDepto, int capacidad, int id_comuna,
+			String nombre_dpto) {
 		super();
 		IdDepto = idDepto;
 		TarifaDiaria = tarifaDiaria;
@@ -67,8 +77,8 @@ public class superDepto {
 		NroDepto = nroDepto;
 		Capacidad = capacidad;
 		this.id_comuna = id_comuna;
+		this.nombre_dpto = nombre_dpto;
 	}
-	
 	public superDepto() {
 		
 	}

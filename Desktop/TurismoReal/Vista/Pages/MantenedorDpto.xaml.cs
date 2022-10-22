@@ -60,14 +60,15 @@ namespace Vista.Pages
                                  select new Departamento()
                                  {
                                      IdDepto = Convert.ToInt32(rw[0]),
-                                     TarifaDiara = Convert.ToInt32(rw[1]),
-                                     Direccion = rw[2].ToString(),
-                                     NroDpto = Convert.ToInt32(rw[3]),
-                                     Capacidad = Convert.ToInt32(rw[4]),
+                                     NombreDpto = rw[1].ToString(),
+                                     TarifaDiara = Convert.ToInt32(rw[2]),
+                                     Direccion = rw[3].ToString(),
+                                     NroDpto = Convert.ToInt32(rw[4]),
+                                     Capacidad = Convert.ToInt32(rw[5]),
                                      Comuna = new Comuna
                                      {
-                                         IdComuna = Convert.ToInt32(rw[5]),
-                                         NombreComuna = rw[7].ToString()
+                                         IdComuna = Convert.ToInt32(rw[6]),
+                                         NombreComuna = rw[8].ToString()
                                      }
                                  }).ToList();
                     dtgDptos.ItemsSource = Dptos;

@@ -27,6 +27,7 @@ import javax.persistence.Table;
 				@StoredProcedureParameter(mode= ParameterMode.IN, name="checkOut", type=Date.class),
 				@StoredProcedureParameter(mode= ParameterMode.IN, name="firmaRes", type=int.class),
 				@StoredProcedureParameter(mode= ParameterMode.IN, name="valorTotal", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="cant_acomp", type=int.class),
 				@StoredProcedureParameter(mode= ParameterMode.OUT, name="R", type=int.class)	
 			})
 	})
@@ -54,7 +55,17 @@ public class Reserva implements Serializable{
 	int firma;
 	@Column(name = "valor_total")
 	int valor_total;
+	@Column(name = "cantidad_acompañantes")
+	int cantidad_acompañantes;
 	
+	
+	
+	public int getCantidad_acompañantes() {
+		return cantidad_acompañantes;
+	}
+	public void setCantidad_acompañantes(int cantidad_acompañantes) {
+		this.cantidad_acompañantes = cantidad_acompañantes;
+	}
 	public int getId_reserva() {
 		return id_reserva;
 	}
@@ -109,8 +120,11 @@ public class Reserva implements Serializable{
 	public void setValor_total(int valor_total) {
 		this.valor_total = valor_total;
 	}
-	public Reserva(int id_reserva, int id_dpto, int id_cliente, char estado_reserva, char estado_pago,
-			Date check_in, Date check_out, int firma, int valor_total) {
+	
+	
+	
+	public Reserva(int id_reserva, int id_dpto, int id_cliente, char estado_reserva, char estado_pago, Date check_in,
+			Date check_out, int firma, int valor_total, int cantidad_acompañantes) {
 		super();
 		this.id_reserva = id_reserva;
 		this.id_dpto = id_dpto;
@@ -121,6 +135,7 @@ public class Reserva implements Serializable{
 		this.check_out = check_out;
 		this.firma = firma;
 		this.valor_total = valor_total;
+		this.cantidad_acompañantes = cantidad_acompañantes;
 	}
 	public Reserva() {
 		

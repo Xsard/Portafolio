@@ -17,5 +17,5 @@ public interface ReservaRepositorio extends JpaRepository<Reserva, Integer>{
 	int agregar_reserva(@Param("idDepto") int id_depto, @Param("idCli") int id_cli,
 			@Param("estadoRes") char estado_reserva, @Param("estadoPag") char estado_pago, 
 			@Param("checkIn") Date check_in,@Param("checkOut") Date check_out ,@Param("firmaRes") int firma_res,
-			@Param("valorTotal") int valor_total);
+			@Param("valorTotal") int valor_total, @Param("cant_acomp") int cantidad_acomp);
 }
