@@ -70,13 +70,13 @@ CREATE TABLE AUT_CLI(
 );
 /
 CREATE OR REPLACE PROCEDURE AGREGAR_RESERVA(idDepto IN RESERVA.ID_DPTO%TYPE, idCli RESERVA.ID_CLIENTE%TYPE,  estadoRes RESERVA.ESTADO_RESERVA%TYPE, 
-        estadoPag RESERVA.ESTADO_PAGO%TYPE, checkIn RESERVA.CHECK_IN%TYPE, checkOut RESERVA.CHECK_OUT%TYPE, firmaRes RESERVA.FIRMA%TYPE, valorTotal RESERVA.VALOR_TOTAL%TYPE, R OUT INTEGER)
+        estadoPag RESERVA.ESTADO_PAGO%TYPE, checkIn RESERVA.CHECK_IN%TYPE, checkOut RESERVA.CHECK_OUT%TYPE, firmaRes RESERVA.FIRMA%TYPE, cant_acomp RESERVA.CANTIDAD_ACOMPAÑANTES%TYPE, valorTotal RESERVA.VALOR_TOTAL%TYPE, R OUT INTEGER)
     IS
         id_col rowid;
         identificador_RES RESERVA.ID_RESERVA%TYPE;
     BEGIN
-        INSERT INTO RESERVA(ID_DPTO, ID_CLIENTE, ESTADO_RESERVA, ESTADO_PAGO, CHECK_IN, CHECK_OUT, FIRMA, VALOR_TOTAL) 
-            VALUES(idDepto, idCli, estadoRes, estadoPag, checkIn, checkOut, firmaRes, valorTotal) RETURNING rowid, ID_RESERVA INTO id_col, identificador_RES;
+        INSERT INTO RESERVA(ID_DPTO, ID_CLIENTE, ESTADO_RESERVA, ESTADO_PAGO, CHECK_IN, CHECK_OUT, FIRMA, CANTIDAD_ACOMPAÑANTES, VALOR_TOTAL) 
+            VALUES(idDepto, idCli, estadoRes, estadoPag, checkIn, checkOut, firmaRes, cant_acomp, valorTotal) RETURNING rowid, ID_RESERVA INTO id_col, identificador_RES;
         IF id_col IS NOT NULL THEN
             r:= identificador_RES;
             COMMIT;        
