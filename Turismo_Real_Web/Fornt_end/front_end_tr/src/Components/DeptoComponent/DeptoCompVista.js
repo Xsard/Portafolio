@@ -24,6 +24,7 @@ const DeptoVista = () => {
 
     const [idReserva, setIdReserva] = useState('');
 
+    const [nombre_dpto, setNombreDepto] = useState('');
     const [idDepto, setIdDepto] = useState('');
     const [NumeroDepto, setNumeroDepto] = useState('');
     const [capacidad, setCapacidad] = useState('');
@@ -44,6 +45,7 @@ const DeptoVista = () => {
             const resp = await axios.get(url)
             setDireccion(resp.data.direccion)
             setIdDepto(resp.data.idDepto)
+            setNombreDepto(resp.data.nombre_dpto)
             setCapacidad(resp.data.capacidad)
             setNumeroDepto(resp.data.nroDepto)
             setTarifa(resp.data.tarifaDiaria)
@@ -105,7 +107,7 @@ const DeptoVista = () => {
                     <div className="row text ">
                         <div className="card mt-3 cardsinfo" >
                             <div className="card-body">
-                                <h3>Información departamento</h3>
+                                <h3>Departamento: {nombre_dpto}</h3>
                                 <p className="card-text">
                                     <b>Numero departamento: </b>{NumeroDepto}<br />
                                     <b>Capacidad: </b>{capacidad}<br />

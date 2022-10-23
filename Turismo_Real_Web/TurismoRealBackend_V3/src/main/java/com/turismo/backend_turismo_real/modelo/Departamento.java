@@ -24,9 +24,17 @@ public class Departamento {
 	String nombre_comuna;
 	@Column(name = "foto")
 	String foto_path;
+	@Column(name = "nombre_dpto")
+	String nombre_dpto;
 	
 	
 	
+	public String getNombre_dpto() {
+		return nombre_dpto;
+	}
+	public void setNombre_dpto(String nombre_dpto) {
+		this.nombre_dpto = nombre_dpto;
+	}
 	public String getNombre_comuna() {
 		return nombre_comuna;
 	}
@@ -70,10 +78,8 @@ public class Departamento {
 		Capacidad = capacidad;
 	}
 	
-	
-	
 	public Departamento(int idDepto, int tarifaDiaria, String direccion, int nroDepto, int capacidad,
-			String nombre_comuna, String foto_path) {
+			String nombre_comuna, String foto_path, String nombre_dpto) {
 		super();
 		IdDepto = idDepto;
 		TarifaDiaria = tarifaDiaria;
@@ -82,7 +88,9 @@ public class Departamento {
 		Capacidad = capacidad;
 		this.nombre_comuna = nombre_comuna;
 		this.foto_path = foto_path;
+		this.nombre_dpto = nombre_dpto;
 	}
+	
 	public Departamento() {
 		
 	}
