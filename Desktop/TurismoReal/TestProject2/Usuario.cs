@@ -7,10 +7,6 @@ namespace Pruebas
         [Fact]
         public void TestAutentificar()
         {
-            Modelo.Usuario usuario = new()
-            {
-                
-            };
             //Arrange
             /*int resEsperado = 1;
             int resObtenido;

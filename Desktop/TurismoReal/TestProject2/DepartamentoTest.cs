@@ -18,9 +18,9 @@ namespace Pruebas
             Departamento departamento = new()
             {
                 TarifaDiara = 30000,
-                Direccion = "Avenida las tulas",
-                NroDpto = 69,
-                Capacidad = 11,
+                Direccion = "Avenida San Benito",
+                NroDpto = 608,
+                Capacidad = 4,
                 Comuna = comuna
             };
 
@@ -44,10 +44,10 @@ namespace Pruebas
             Departamento departamento = new()
             {
                 IdDepto = 65, 
-                TarifaDiara = 3000,
-                Direccion = "Avenida la tula",
-                NroDpto = 6,
-                Capacidad = 1,
+                TarifaDiara = 25000,
+                Direccion = "Avenida San Pablo",
+                NroDpto = 607,
+                Capacidad = 5,
                 Comuna = comuna
             };
 
