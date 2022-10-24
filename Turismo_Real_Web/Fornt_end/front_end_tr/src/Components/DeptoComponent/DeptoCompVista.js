@@ -93,7 +93,7 @@ const DeptoVista = () => {
                             denyButtonText: `No`
                         }).then((respuesta) => {
                             if (respuesta.isConfirmed) {
-                                console.log("its works")
+                                console.log("agregar servicio extra")
                             }
                             else {
                                 let fecha1 = new Date(fechaIda).getTime();
