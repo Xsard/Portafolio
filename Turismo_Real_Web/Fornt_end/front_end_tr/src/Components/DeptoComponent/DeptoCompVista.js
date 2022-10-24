@@ -71,10 +71,57 @@ const DeptoVista = () => {
                     }
                 })
             } else {
-                //const resp = await axios.post('http://localhost:8080/api/v1/guardarReserva', {
-                    //id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
-                    //check_out: fechaVuelta, firma: 0, valor_total: 20000
-                //})
+                if (fechaIda === '' && fechaVuelta === '') {
+                    MySwal.fire({
+                        title: "Debe rellenar las fechas",
+                        icon: "error"
+                    })
+                }
+                else {             
+                    if(cantAcompañantes === '' || cantAcompañantes > capacidad){
+                        MySwal.fire({
+                            title: "Debe rellenar los acompañantes o no superar la cantidad maxima de la capacidad del departamento",
+                            icon: "error"
+                        })
+                    }
+                    else{
+                        MySwal.fire({
+                            title: "¿Desea agregar servicios extras?",
+                            icon: "info",
+                            showDenyButton: true,
+                            confirmButtonText: 'Si',
+                            denyButtonText: `No`
+                        }).then((respuesta) => {
+                            if (respuesta.isConfirmed) {
+                                console.log("its works")
+                            }
+                            else {
+                                let fecha1 = new Date(fechaIda).getTime();
+                                let fecha2 = new Date(fechaVuelta).getTime();
+                                let diff = fecha2 - fecha1;
+    
+                                console.log(diff / (1000 * 60 * 60 * 24))
+    
+                                let valorTotal = tarifa * diff / (1000 * 60 * 60 * 24)
+                                console.log(valorTotal)
+    
+                                const resp = axios.post('http://localhost:8080/api/v1/reserva_pl', {
+                                    id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
+                                    check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes
+                                })
+    
+                                MySwal.fire({
+                                    title: "Reserva Exitosa",
+                                    icon: "success"
+                                }).then((respuesta) => {
+                                    if (respuesta.isConfirmed) {
+                                        window.location.replace('/Inicio');
+                                    }
+                                })
+                            }
+                        })
+                    }
+                }
             }
         }
         catch (error) {
@@ -84,7 +131,7 @@ const DeptoVista = () => {
 
     const handleTest = () => {
         handleShow()
-        
+
     }
 
     return (
@@ -149,13 +196,13 @@ const DeptoVista = () => {
                                         <Form.Control type="text" placeholder="Ingrese acompañantes" />
                                     </Form.Group>
                                     <br></br>
-                                    <button className="btn btn-primary" onClick={handleTest}>Reserva ahora</button>
+                                    <button className="btn btn-primary" onClick={handlePostReserva}>Reserva ahora</button>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
         </>
     )
 }
