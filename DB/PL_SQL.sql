@@ -491,6 +491,28 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Funcionario AS
             
 END Mantener_Usuario_Funcionario;
 /
+CREATE OR REPLACE PACKAGE Mantener_Mantenimiento
+AS
+    PROCEDURE Agregar_Mantenimiento(id_depto MANTENIMIENTO.ID_DPTO%TYPE, nombre MANTENIMIENTO.NOMBRE_MANT%TYPE, descripcion MANTENIMIENTO.DESC_MANT%TYPE,
+        fecha_ini MANTENIMIENTO.FECHA_INICIO%TYPE, fecha_fin MANTENIMIENTO.FECHAR_TERMINO%TYPE, estado MANTENIMIENTO.ESTADO%TYPE, costo MANTENIMIENTO.COSTO_MANTENCION%TYPE, R OUT INTEGER);
+END Mantener_Mantenimiento;
+/
+CREATE OR REPLACE PACKAGE BODY Mantener_Mantenimiento
+AS 
+    PROCEDURE Agregar_Mantenimiento(id_depto IN MANTENIMIENTO.ID_DPTO%TYPE, nombre IN MANTENIMIENTO.NOMBRE_MANT%TYPE, descripcion IN MANTENIMIENTO.DESC_MANT%TYPE,
+        fecha_ini IN MANTENIMIENTO.FECHA_INICIO%TYPE, fecha_fin IN MANTENIMIENTO.FECHAR_TERMINO%TYPE, estado IN MANTENIMIENTO.ESTADO%TYPE, costo IN MANTENIMIENTO.COSTO_MANTENCION%TYPE, R OUT INTEGER)
+    IS
+        id_col rowid;
+        identificador_mant MANTENIMIENTO.ID_MANT%TYPE;
+    BEGIN
+        INSERT INTO MANTENIMIENTO(ID_DPTO, NOMBRE_MANT, DESC_MANT, FECHA_INICIO, FECHAR_TERMINO, ESTADO, COSTO_MANTENCION) 
+            VALUES(id_depto, nombre, descripcion, fecha_ini, fecha_fin, estado, costo) RETURNING rowid INTO id_col;
+        IF id_col IS NOT NULL THEN
+            R:=1;
+        END IF;
+    END;
+END Mantener_Mantenimiento;
+/
 DECLARE 
     r integer;
 BEGIN
