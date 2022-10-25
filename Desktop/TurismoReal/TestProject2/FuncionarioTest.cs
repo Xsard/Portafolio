@@ -5,56 +5,49 @@ namespace Pruebas
     public class FuncionarioTest
     {
         [Fact]
-        //Agregar departamento
+        //Agregar funcionario
         public void TestAgregarFuncionario()
         {
-            ////Arrange
-            //int resEsperado = 1;
-            //int resObtenido;
-            //Comuna comuna = new()
-            //{
-            //    IdComuna = 1
-            //};
-            //Departamento departamento = new()
-            //{
-            //    TarifaDiara = 30000,
-            //    Direccion = "Avenida las tulas",
-            //    NroDpto = 69,
-            //    Capacidad = 11,
-            //    Comuna = comuna
-            //};
+            //Arrange
+            int resEsperado = 1;
+            int resObtenido;
+            Funcionario funcionario = new()
+            {
+                Rut = "17836278-3",
+                Nombres = "Felipe Esteban",
+                Apellidos = "Diaz Jara",
+                Email = "fdiazjara@gmail.com",
+                Contraseña = "felipe1234",
+                Telefono = 973287367
+            };
 
-            ////Act
-            //resObtenido = Controlador.CDepartamento.CrearDepto(departamento);
+            //Act
+            resObtenido = Controlador.CFuncionario.CrearUsuarioFuncionario(funcionario);
 
-            //Assert.Equal(resEsperado, resObtenido);
+            Assert.Equal(resEsperado, resObtenido);
         }
 
         [Fact]
         //Actualizar funcionario
         public void TestActualizarFuncionario()
         {
-        //    //Arrange
-        //    int resEsperado = 1;
-        //    int resObtenido;
-        //    Comuna comuna = new()
-        //    {
-        //        IdComuna = 1
-        //    };
-        //    Departamento departamento = new()
-        //    {
-        //        IdDepto = 65,
-        //        TarifaDiara = 3000,
-        //        Direccion = "Avenida la tula",
-        //        NroDpto = 6,
-        //        Capacidad = 1,
-        //        Comuna = comuna
-        //    };
+            //Arrange
+            int resEsperado = 1;
+            int resObtenido;
+            Funcionario funcionario = new()
+            {
+                Rut = "17836278-3",
+                Nombres = "Felipe Simón",
+                Apellidos = "Diaz Jara",
+                Email = "fdiazjara@gmail.com",
+                Contraseña = "felipe1234",
+                Telefono = 973287367
+            };
 
-        //    //Act
-        //    resObtenido = Controlador.CDepartamento.ActualizarDepto(departamento);
+            //Act
+            resObtenido = Controlador.CFuncionario.ActualizarFuncionario(funcionario);
 
-        //    Assert.Equal(resEsperado, resObtenido);
+            Assert.Equal(resEsperado, resObtenido);
         }
 
         //[Fact]
@@ -65,15 +58,15 @@ namespace Pruebas
         //Eliminar funcionario
         public void TestEliminarFuncionario()
         {
-            ////Arrange
-            //int resEsperado = 1;
-            //int resObtenido;
-            //Departamento departamento = new();
+            //Arrange
+            int resEsperado = 1;
+            int resObtenido;
+            Funcionario funcionario = new();
 
-            ////Act   se usa el ID a eliminar
-            //resObtenido = Controlador.CDepartamento.EliminarDpto(67);
+            //Act   se usa el ID a eliminar
+            resObtenido = Controlador.CFuncionario.EliminarFuncionario(67);
 
-            //Assert.Equal(resEsperado, resObtenido);
+            Assert.Equal(resEsperado, resObtenido);
         }
     }
 }

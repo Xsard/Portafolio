@@ -5,29 +5,25 @@ namespace Pruebas
     public class InventarioTest
     {
         [Fact]
-        //Agregar departamento
+        //Agregar inventario
         public void TestCrearInventario()
         {
-            ////Arrange
-            //int resEsperado = 1;
-            //int resObtenido;
-            //Comuna comuna = new()
-            //{
-            //    IdComuna = 1
-            //};
-            //Departamento departamento = new()
-            //{
-            //    TarifaDiara = 30000,
-            //    Direccion = "Avenida las tulas",
-            //    NroDpto = 69,
-            //    Capacidad = 11,
-            //    Comuna = comuna
-            //};
+            //Arrange
+            int resEsperado = 1;
+            int resObtenido;
+            Objeto objeto = new()
+            {
+                IdObjeto = 1
+            };
+            Inventario inventario = new()
+            {
+                ValorTotal = 150000
+            };
 
-            ////Act
-            //resObtenido = Controlador.CDepartamento.CrearDepto(departamento);
+            //Act
+            resObtenido = Controlador.CInventario.CrearInventario(inventario,1);
 
-            //Assert.Equal(resEsperado, resObtenido);
+            Assert.Equal(resEsperado, resObtenido);
         }
 
         [Fact]

@@ -8,53 +8,40 @@ namespace Pruebas
         //Insertar servicio 
         public void TestIngresarServicio()
         {
-            ////Arrange
-            //int resEsperado = 1;
-            //int resObtenido;
-            //Comuna comuna = new()
-            //{
-            //    IdComuna = 1
-            //};
-            //Departamento departamento = new()
-            //{
-            //    TarifaDiara = 30000,
-            //    Direccion = "Avenida las tulas",
-            //    NroDpto = 69,
-            //    Capacidad = 11,
-            //    Comuna = comuna
-            //};
+            //Arrange
+            int resEsperado = 1;
+            int resObtenido;
+            ServicioExtra servicioExtra = new()
+            {
+                NombreServicioExtra = "Desayuno",
+                DescripcionServicioExtra = "Servicio de desayuno",
+                ValorServicioExtra = 10000
+            };
 
-            ////Act
-            //resObtenido = Controlador.CDepartamento.CrearDepto(departamento);
+            //Act
+            resObtenido = Controlador.CServicioExtra.IngresarServicio(servicioExtra);
 
-            //Assert.Equal(resEsperado, resObtenido);
+            Assert.Equal(resEsperado, resObtenido);
         }
 
         [Fact]
         //Actualizar servicio
         public void TestActualizarServicio()
         {
-            ////Arrange
-            //int resEsperado = 1;
-            //int resObtenido;
-            //Comuna comuna = new()
-            //{
-            //    IdComuna = 1
-            //};
-            //Departamento departamento = new()
-            //{
-            //    IdDepto = 65,
-            //    TarifaDiara = 3000,
-            //    Direccion = "Avenida la tula",
-            //    NroDpto = 6,
-            //    Capacidad = 1,
-            //    Comuna = comuna
-            //};
+            //Arrange
+            int resEsperado = 1;
+            int resObtenido;
+            ServicioExtra servicioExtra = new()
+            {
+                NombreServicioExtra = "Desayuno premium",
+                DescripcionServicioExtra = "Servicio de desayuno premium",
+                ValorServicioExtra = 15000
+            };
 
-            ////Act
-            //resObtenido = Controlador.CDepartamento.ActualizarDepto(departamento);
+            //Act
+            resObtenido = Controlador.CServicioExtra.ActualizarServicio(servicioExtra);
 
-            //Assert.Equal(resEsperado, resObtenido);
+            Assert.Equal(resEsperado, resObtenido);
         }
 
         //[Fact]
@@ -65,15 +52,15 @@ namespace Pruebas
         //Eliminar servicio
         public void TestEliminarServicio()
         {
-            ////Arrange
-            //int resEsperado = 1;
-            //int resObtenido;
-            //Departamento departamento = new();
+            //Arrange
+            int resEsperado = 1;
+            int resObtenido;
+            ServicioExtra servicioExtra = new();
 
-            ////Act   se usa el ID a eliminar
-            //resObtenido = Controlador.CDepartamento.EliminarDpto(67);
+            //Act   se usa el ID a eliminar
+            resObtenido = Controlador.CServicioExtra.EliminarServicio(67);
 
-            //Assert.Equal(resEsperado, resObtenido);
+            Assert.Equal(resEsperado, resObtenido);
         }
     }
 }
