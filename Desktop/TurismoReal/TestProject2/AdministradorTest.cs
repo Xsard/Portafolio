@@ -18,7 +18,7 @@ namespace Pruebas
                 Apellidos = "Gallardo Fuentes",
                 Email = "admin2@gmail.com",
                 Telefono = 965163393,
-                Contraseña = "uwu123"
+                Contraseña = "contraseña123"
             };
 
             //Act

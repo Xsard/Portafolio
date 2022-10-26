@@ -59,7 +59,25 @@ namespace Pruebas
 
         //[Fact]
         //Listar departamento
-        
+        public void TestListarDepto()
+        {
+            //Arrange
+            int resEsperado = 1;
+            int resObtenido;
+            Comuna comuna = new()
+            {
+                IdComuna = 1
+            };
+            Departamento departamento = new()
+            {
+                
+            };
+
+            ////Act
+            //resObtenido = Controlador.CDepartamento.ListarDpto();
+
+            //Assert.Equal(resEsperado, resObtenido);
+        }
 
         [Fact]
         //Eliminar departamento

@@ -4,27 +4,27 @@ namespace Pruebas
 {
     public class InventarioTest
     {
-        [Fact]
-        //Agregar inventario
-        public void TestCrearInventario()
-        {
-            //Arrange
-            int resEsperado = 1;
-            int resObtenido;
-            Objeto objeto = new()
-            {
-                IdObjeto = 1
-            };
-            Inventario inventario = new()
-            {
-                ValorTotal = 150000
-            };
+        //[Fact]
+        ////Agregar inventario
+        //public void TestCrearInventario()
+        //{
+        //    //Arrange
+        //    int resEsperado = 1;
+        //    int resObtenido;
+        //    Objeto objeto = new()
+        //    {
+        //        IdObjeto = 1
+        //    };
+        //    Inventario inventario = new()
+        //    {
+        //        ValorTotal = 150000
+        //    };
 
-            //Act
-            resObtenido = Controlador.CInventario.CrearInventario(inventario,1);
+        //    //Act
+        //    resObtenido = Controlador.CInventario.CrearInventario(inventario,1);
 
-            Assert.Equal(resEsperado, resObtenido);
-        }
+        //    Assert.Equal(resEsperado, resObtenido);
+        //}
 
         [Fact]
         //Actualizar inventario
