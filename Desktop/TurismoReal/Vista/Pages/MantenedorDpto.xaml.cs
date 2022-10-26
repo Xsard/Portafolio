@@ -89,7 +89,6 @@ namespace Vista.Pages
         }
         private void btn_Agregar_Dpto_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 
@@ -206,6 +205,14 @@ namespace Vista.Pages
         private void grdDpto_Error(object sender, ValidationErrorEventArgs e)
         {
 
+        }
+
+        private void DtgDptoMantencion_Click(object sender, RoutedEventArgs e)
+        {
+            Departamento departamento = (Departamento)dtgDptos.SelectedItem;
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            MantenedorMantenimientoDpto mantenedorMantenimientoDpto = new(departamento);
+            ns.Navigate(mantenedorMantenimientoDpto);                        
         }
     }
 }
