@@ -1,4 +1,6 @@
+using Controlador;
 using Modelo;
+using System.Data;
 
 namespace Pruebas
 {
@@ -57,26 +59,21 @@ namespace Pruebas
             Assert.Equal(resEsperado, resObtenido);
         }
 
-        //[Fact]
+        [Fact]
         //Listar departamento
         public void TestListarDepto()
         {
             //Arrange
             int resEsperado = 1;
             int resObtenido;
-            Comuna comuna = new()
-            {
-                IdComuna = 1
-            };
-            Departamento departamento = new()
-            {
-                
-            };
+            DataTable departamento;
 
-            ////Act
-            //resObtenido = Controlador.CDepartamento.ListarDpto();
-
-            //Assert.Equal(resEsperado, resObtenido);
+            //Act
+            departamento = CDepartamento.ListarDpto();
+            resObtenido = departamento.Rows.Count;
+            
+            //Assert
+            Assert.Equal(resEsperado, resObtenido);
         }
 
         [Fact]
