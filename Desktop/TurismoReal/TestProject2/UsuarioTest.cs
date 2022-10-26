@@ -2,7 +2,7 @@
 
 namespace Pruebas
 {
-    public class Usuario
+    public class UsuarioTest
     {
         [Fact]
         public void TestAutentificar()
