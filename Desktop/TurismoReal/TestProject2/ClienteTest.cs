@@ -1,4 +1,6 @@
-﻿using Modelo;
+﻿using Controlador;
+using Modelo;
+using System.Data;
 
 namespace Pruebas
 {
@@ -50,9 +52,22 @@ namespace Pruebas
             Assert.Equal(resEsperado, resObtenido);
         }
 
-        //[Fact]
+        [Fact]
         //Listar cliente
+        public void TestListarCliente()
+        {
+            //Arrange
+            int resEsperado = 1;
+            int resObtenido;
+            DataTable cliente;
 
+            //Act
+            cliente = CCliente.ListarCliente();
+            resObtenido = cliente.Rows.Count;
+
+            //Assert
+            Assert.Equal(resEsperado, resObtenido);
+        }
 
         [Fact]
         //Eliminar cliente

@@ -1,4 +1,6 @@
-﻿using Modelo;
+﻿using Controlador;
+using Modelo;
+using System.Data;
 
 namespace Pruebas
 {
@@ -18,7 +20,7 @@ namespace Pruebas
                 Apellidos = "Gallardo Fuentes",
                 Email = "admin2@gmail.com",
                 Telefono = 965163393,
-                Contraseña = "uwu123"
+                Contraseña = "contraseña123"
             };
 
             //Act
@@ -50,9 +52,22 @@ namespace Pruebas
             Assert.Equal(resEsperado, resObtenido);
         }
 
-        //[Fact]
+        [Fact]
         //Listar administrador
+        public void TestListarAdministrador()
+        {
+            //Arrange
+            int resEsperado = 1;
+            int resObtenido;
+            DataTable administrador;
 
+            //Act
+            administrador = CAdmin.ListarAdmin();
+            resObtenido = administrador.Rows.Count;
+
+            //Assert
+            Assert.Equal(resEsperado, resObtenido);
+        }
 
         [Fact]
         //Eliminar administrador

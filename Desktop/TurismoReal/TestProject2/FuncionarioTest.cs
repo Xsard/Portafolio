@@ -1,4 +1,6 @@
-﻿using Modelo;
+﻿using Controlador;
+using Modelo;
+using System.Data;
 
 namespace Pruebas
 {
@@ -50,9 +52,22 @@ namespace Pruebas
             Assert.Equal(resEsperado, resObtenido);
         }
 
-        //[Fact]
+        [Fact]
         //Listar funcionario
+        public void TestListarFuncionario()
+        {
+            //Arrange
+            int resEsperado = 1;
+            int resObtenido;
+            DataTable funcionario;
 
+            //Act
+            funcionario = CFuncionario.ListarFuncionario();
+            resObtenido = funcionario.Rows.Count;
+
+            //Assert
+            Assert.Equal(resEsperado, resObtenido);
+        }
 
         [Fact]
         //Eliminar funcionario

@@ -4,20 +4,19 @@ using System.Data;
 
 namespace Pruebas
 {
-    public class ComunaTest
+    public class UsuarioTest
     {
         [Fact]
-        //Listar comuna
-        public void TestListarComuna()
+        public void TestAutentificar()
         {
             //Arrange
             int resEsperado = 1;
             int resObtenido;
-            List<Comuna> comuna;
+            DataTable login;
 
             //Act
-            comuna = CComuna.ListarComuna();
-            resObtenido = comuna.Count;
+            login = CUsuario.Autentificar("desktop@gmail.com","123");
+            resObtenido = login.Rows.Count;
 
             //Assert
             Assert.Equal(resEsperado, resObtenido);
