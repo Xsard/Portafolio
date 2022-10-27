@@ -1,4 +1,6 @@
-﻿using Modelo;
+﻿using Controlador;
+using Modelo;
+using System.Data;
 
 namespace Pruebas
 {
@@ -27,7 +29,21 @@ namespace Pruebas
             //Assert.Equal(resEsperado, resObtenido);
         }
 
-        //[Fact]
+        [Fact]
         //Listar imágenes
+        public void TestListarImagenes()
+        {
+            //Arrange
+            int resEsperado = 1;
+            int resObtenido;
+            DataTable fotografia;
+
+            //Act
+            fotografia = CFotografia.ListarImagenes(2);
+            resObtenido = fotografia.Rows.Count;
+
+            //Assert
+            Assert.Equal(resEsperado, resObtenido);
+        }
     }
 }
