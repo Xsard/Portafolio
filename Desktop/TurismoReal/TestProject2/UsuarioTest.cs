@@ -1,32 +1,25 @@
-﻿using Modelo;
+﻿using Controlador;
+using Modelo;
+using System.Data;
 
 namespace Pruebas
 {
     public class UsuarioTest
     {
-        [Fact]
+        //[Fact]
         public void TestAutentificar()
         {
             //Arrange
-            /*int resEsperado = 1;
+            int resEsperado = 1;
             int resObtenido;
-            Comuna comuna = new()
-            {
-                IdComuna = 1
-            };
-            Departamento departamento = new()
-            {
-                TarifaDiara = 30000,
-                Direccion = "Avenida las tulas",
-                NroDpto = 69,
-                Capacidad = 11,
-                Comuna = comuna
-            };
+            DataTable login;
 
             //Act
-            resObtenido = Controlador.CDepartamento.CrearDepto(departamento);
+            login = CUsuario.Autentificar("desktop@gmail.com","123");
+            resObtenido = login.Rows.Count;
 
-            Assert.Equal(resEsperado, resObtenido);*/
+            //Assert
+            Assert.Equal(resEsperado, resObtenido);
         }
     }
 }
