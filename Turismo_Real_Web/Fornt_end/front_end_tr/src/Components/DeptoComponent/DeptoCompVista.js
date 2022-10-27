@@ -10,7 +10,8 @@ import clienteContext from "../../Contexts/ClienteContext";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { Modal, Button } from "react-bootstrap";
-
+import ServExtraComponente from "../ServicioExtraComponent/ServExtraComponent";
+import { ReactDOM } from "react";
 
 const DeptoVista = () => {
     const { id_depto } = useParams()
@@ -58,6 +59,30 @@ const DeptoVista = () => {
         }
     }
 
+
+    const handleServExtra = () => {
+        <Modal
+            show={show}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+        >
+            <Modal.Header closeButton>
+                <Modal.Title>Modal title</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                I will not close if you click outside me. Don't even try to press
+                escape key.
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary">Understood</Button>
+            </Modal.Footer>
+        </Modal>
+    }
+
     const handlePostReserva = async (e) => {
         e.preventDefault();
         try {
@@ -77,14 +102,14 @@ const DeptoVista = () => {
                         icon: "error"
                     })
                 }
-                else {             
-                    if(cantAcompañantes === '' || cantAcompañantes > capacidad){
+                else {
+                    if (cantAcompañantes === '' || cantAcompañantes > capacidad) {
                         MySwal.fire({
                             title: "Debe rellenar los acompañantes o no superar la cantidad maxima de la capacidad del departamento",
                             icon: "error"
                         })
                     }
-                    else{
+                    else {
                         MySwal.fire({
                             title: "¿Desea agregar servicios extras?",
                             icon: "info",
@@ -93,23 +118,24 @@ const DeptoVista = () => {
                             denyButtonText: `No`
                         }).then((respuesta) => {
                             if (respuesta.isConfirmed) {
-                                console.log("agregar servicio extra")
+                                console.log("agregar servicio extra");
+                                handleServExtra()
                             }
                             else {
                                 let fecha1 = new Date(fechaIda).getTime();
                                 let fecha2 = new Date(fechaVuelta).getTime();
                                 let diff = fecha2 - fecha1;
-    
+
                                 console.log(diff / (1000 * 60 * 60 * 24))
-    
+
                                 let valorTotal = tarifa * diff / (1000 * 60 * 60 * 24)
                                 console.log(valorTotal)
-    
+
                                 const resp = axios.post('http://localhost:8080/api/v1/reserva_pl', {
                                     id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
                                     check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes
                                 })
-    
+
                                 MySwal.fire({
                                     title: "Reserva Exitosa",
                                     icon: "success"
