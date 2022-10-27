@@ -6,7 +6,7 @@ namespace Pruebas
 {
     public class UsuarioTest
     {
-        //[Fact]
+        [Fact]
         public void TestAutentificar()
         {
             //Arrange
