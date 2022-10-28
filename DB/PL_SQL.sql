@@ -498,7 +498,7 @@ AS
     PROCEDURE Actualizar_Mantenimiento(id_mantenimiento MANTENIMIENTO.ID_MANT%TYPE, nombre MANTENIMIENTO.NOMBRE_MANT%TYPE, descripcion MANTENIMIENTO.DESC_MANT%TYPE,
         fecha_ini MANTENIMIENTO.FECHA_INICIO%TYPE, fecha_fin MANTENIMIENTO.FECHAR_TERMINO%TYPE, estado_man MANTENIMIENTO.ESTADO%TYPE, costo MANTENIMIENTO.COSTO_MANTENCION%TYPE, R OUT INTEGER);
     PROCEDURE Eliminar_Mantenimiento(id_mantenimiento MANTENIMIENTO.ID_MANT%TYPE,R OUT INTEGER);
-    PROCEDURE Listar_Mantenimientos(id_mantenimiento MANTENIMIENTO.ID_MANT%TYPE,Mantenimientos OUT SYS_REFCURSOR);    
+    PROCEDURE Listar_Mantenimientos(id_depto MANTENIMIENTO.ID_DPTO%TYPE,Mantenimientos OUT SYS_REFCURSOR);    
 END Mantener_Mantenimiento;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Mantenimiento
@@ -533,11 +533,11 @@ AS
             COMMIT;
         END IF;
     END;
-    PROCEDURE Listar_Mantenimientos(id_mantenimiento MANTENIMIENTO.ID_MANT%TYPE, Mantenimientos OUT SYS_REFCURSOR)
+    PROCEDURE Listar_Mantenimientos(id_depto MANTENIMIENTO.ID_DPTO%TYPE, Mantenimientos OUT SYS_REFCURSOR)
     IS
     BEGIN
         OPEN Mantenimientos FOR
-            SELECT * FROM MANTENIMIENTO WHERE ID_MANT = id_mantenimiento;
+        SELECT id_mant, nombre_mant,desc_mant,to_char(fecha_inicio, 'dd/MM/yyyy'), to_char(fechar_termino, 'dd/MM/yyyy'), costo_mantencion, estado FROM MANTENIMIENTO WHERE ID_DPTO = id_depto;
     END;
 END Mantener_Mantenimiento;
 /

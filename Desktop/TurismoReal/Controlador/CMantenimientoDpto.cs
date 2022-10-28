@@ -43,7 +43,7 @@ namespace Controlador
             }
             return resultado;
         }
-        public static int ActualizarDepto(Departamento dpto)
+        public static int ActualizarDepto(Mantencion mant, int IdDepto)
         {
             int resultado = 0;
             using (OracleConnection con = Conexion.getInstance().ConexionDB())
@@ -52,15 +52,16 @@ namespace Controlador
                 {
                     Connection = con,
                     CommandType = CommandType.StoredProcedure,
-                    CommandText = "Mantener_Dpto.actualizar_dpto"
+                    CommandText = "Mantener_Mantenimiento.Actualizar_Mantenimiento"
                 };
-                cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = dpto.NombreDpto;
-                cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.IdDepto;
-                cmd.Parameters.Add("tarifa", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.TarifaDiara;
-                cmd.Parameters.Add("DIREC", OracleDbType.Varchar2, ParameterDirection.Input).Value = dpto.Direccion;
-                cmd.Parameters.Add("NRO", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.NroDpto;
-                cmd.Parameters.Add("CAP", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.Capacidad;
-                cmd.Parameters.Add("COMUNA", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.Comuna.IdComuna;
+                cmd.Parameters.Add("id_mantenimiento", OracleDbType.Int32, ParameterDirection.Input).Value = mant.IdMantencion;
+                cmd.Parameters.Add("id_depto", OracleDbType.Int32, ParameterDirection.Input).Value = IdDepto;
+                cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = mant.NombreMantenimiento;
+                cmd.Parameters.Add("descripcion", OracleDbType.Varchar2, ParameterDirection.Input).Value = mant.DescripcionMantenimiento;
+                cmd.Parameters.Add("fecha_ini", OracleDbType.Date, ParameterDirection.Input).Value = mant.FechaInicio;
+                cmd.Parameters.Add("fecha_fin", OracleDbType.Date, ParameterDirection.Input).Value = mant.FechaTermino;
+                cmd.Parameters.Add("estado_man", OracleDbType.Char, ParameterDirection.Input).Value = mant.Estado;
+                cmd.Parameters.Add("costo", OracleDbType.Int32, ParameterDirection.Input).Value = mant.CostoMantencion;
                 cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
 
                 try
@@ -92,9 +93,10 @@ namespace Controlador
                 {
                     Connection = con,
                     CommandType = CommandType.StoredProcedure,
-                    CommandText = "Mantener_Dpto.listar_dpto"
+                    CommandText = "Mantener_Mantenimiento.Listar_Mantenimientos"
                 };
-                cmd.Parameters.Add("Deptos", OracleDbType.RefCursor, ParameterDirection.Output);
+                cmd.Parameters.Add("Deptos", OracleDbType.Int32, ParameterDirection.Input).Value = idDepto;
+                cmd.Parameters.Add("Mantenimientos", OracleDbType.RefCursor, ParameterDirection.Output);
                 try
                 {
                     con.Open();

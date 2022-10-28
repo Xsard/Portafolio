@@ -101,7 +101,7 @@
                             <DataTemplate>
                                 <TextBox KeyDown="DtgMantDptosUpdate_KeyDown">
                                     <TextBox.Text >
-                                        <Binding Path="FechaInicio"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                        <Binding Path="FechaInicio" StringFormat="dd/MM/yyyy"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
                                             </Binding.ValidationRules>
                                         </Binding>
@@ -115,7 +115,7 @@
                             <DataTemplate>
                                 <TextBox KeyDown="DtgMantDptosUpdate_KeyDown">
                                     <TextBox.Text >
-                                        <Binding Path="FechaTermino"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                        <Binding Path="FechaTermino" StringFormat="dd/MM/yyyy" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
                                             </Binding.ValidationRules>
                                         </Binding>

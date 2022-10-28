@@ -73,11 +73,12 @@ namespace Vista.Pages
                                  select new Mantencion()
                                  {
                                      IdMantencion = Convert.ToInt32(rw[0]),
-                                     NombreMantenimiento = rw[2].ToString(),
-                                     DescripcionMantenimiento = rw[3].ToString(),
-                                     FechaInicio = DateTime.Parse(rw[4].ToString()),
-                                     FechaTermino = DateTime.Parse(rw[5].ToString()),
-                                     CostoMantencion = Convert.ToInt32(rw[7]),
+                                     IdDepto = Convert.ToInt32(rw[7]),
+                                     NombreMantenimiento = rw[1].ToString(),
+                                     DescripcionMantenimiento = rw[2].ToString(),
+                                     FechaInicio = DateTime.Parse(rw[3].ToString()),
+                                     FechaTermino = DateTime.Parse(rw[4].ToString()),
+                                     CostoMantencion = Convert.ToInt32(rw[5]),
                                      Estado = rw[6].ToString()                                    
                                  }).ToList();
                     dtgMantDptos.ItemsSource = mantenciones;

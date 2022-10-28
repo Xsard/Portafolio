@@ -3,6 +3,7 @@
     public class Mantencion
     {
         private int idMantencion;
+        private int idDepto;
         private string nombreMantenimiento;
         private string descripcionMantenimiento;
         private DateTime fechaInicio;
@@ -17,5 +18,6 @@
         public DateTime FechaTermino { get => fechaTermino; set => fechaTermino = value; }
         public string Estado { get => estado; set => estado = value; }
         public int CostoMantencion { get => costoMantencion; set => costoMantencion = value; }
+        public int IdDepto { get => idDepto; set => idDepto = value; }
     }
 }
