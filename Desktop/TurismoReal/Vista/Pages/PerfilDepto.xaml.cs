@@ -4,9 +4,11 @@ using Modelo;
 using System;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Vista.Pages
@@ -118,30 +120,46 @@ namespace Vista.Pages
 
         private void btnAgregarImagen_Click(object sender, RoutedEventArgs e)
         {
+            dhFotos.IsOpen = true;
+        }
+        private void btnSubirFoto_Click(object sender, RoutedEventArgs e)
+        {
             OpenFileDialog ofd = new();
             ofd.Filter = "Image names|*.jpg;*.png";
             ofd.Multiselect = false;
             ofd.FilterIndex = 1;
-            if (ofd.ShowDialog() == true) 
+            if (ofd.ShowDialog() == true)
             {
-                string ext = System.IO.Path.GetExtension(ofd.FileName);
-                string path = System.IO.Directory.GetCurrentDirectory();
-                path = path.Substring(0, path.LastIndexOf("Desktop"));
-                path = string.Concat(path, "Turismo_Real_Web\\Fornt_end\\front_end_tr\\src\\imagenes_Dpto\\");
-                Fotografia fotografia = new()
-                {
-                    Id_dpto = departamento.IdDepto,
-                    Path_img = path,
-                    Alt = "segs"
-                };
-                string r = CFotografia.InsertarImagen(fotografia, ext);
-                if(r.Length > 0)
-                {   
-                    r = System.IO.Path.Combine(path,r);
-                    System.IO.File.Copy(ofd.FileName, r, true);
-                    ListarImg();
-                }                
+                txtPathFoto.Text = ofd.FileName;
+                imgFoto.Source = new BitmapImage(new Uri(ofd.FileName));
+                MessageBox.Show(ofd.FileName);
             }
+        }
+        private void btn_Agregar_Img_Click(object sender, RoutedEventArgs e)
+        {
+            string ext = System.IO.Path.GetExtension(txtPathFoto.Text);
+            string path = System.IO.Directory.GetCurrentDirectory();
+            path = path.Substring(0, path.LastIndexOf("Desktop"));
+            path = string.Concat(path, "Turismo_Real_Web\\Fornt_end\\front_end_tr\\src\\imagenes_Dpto\\");
+
+            Fotografia fotografia = new()
+            {
+                Id_dpto = departamento.IdDepto,
+                Path_img = path,
+                Alt = txtAltFoto.Text
+            };
+            string r = CFotografia.InsertarImagen(fotografia, ext);
+            if (r.Length > 0)
+            {
+                r = System.IO.Path.Combine(path, r);
+                System.IO.File.Copy(txtPathFoto.Text, r, true);
+                dhFotos.IsOpen = false;
+                ListarImg();
+            }
+        }
+        private void btn_Cancelar_AgImg_Click(object sender, RoutedEventArgs e)
+        {
+            dhFotos.IsOpen = false;
         }
         private void ListarImg()
         {
@@ -183,6 +201,7 @@ namespace Vista.Pages
                             };
                             StkOtrasImg.RegisterName(image.Name, image);
                             StkOtrasImg.Children.Add(image);
+                            image.MouseLeftButtonUp += delegate (object sender, MouseButtonEventArgs e) { CambiarImagen(sender, e); };
                         }
                     }
                     catch (Exception)
@@ -197,5 +216,17 @@ namespace Vista.Pages
                 throw;
             }
         }
+        private void CambiarImagen(object sender, MouseButtonEventArgs e)
+        {
+            Image img = (Image)sender;
+            ImageSource mainPath = imgMain.Source;
+            imgMain.Source = img.Source;
+            int s1 = mainPath.ToString().LastIndexOf("/") + 1;
+            int s2 = mainPath.ToString().LastIndexOf(".");
+            string idFoto = mainPath.ToString()[s1..s2];
+            img.Name = "imgDpto" + idFoto;
+            img.Source = mainPath;
+        }
+
     }
 }

@@ -13,7 +13,7 @@ namespace Controlador
     {
         public static string InsertarImagen(Fotografia foto, string ext)
         { 
-            int resultado = 0;
+            int resultado;
             string path = null;
             using (OracleConnection con = Conexion.getInstance().ConexionDB())
             {
