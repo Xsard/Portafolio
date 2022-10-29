@@ -73,7 +73,7 @@ namespace Vista.Pages
                                  select new Mantencion()
                                  {
                                      IdMantencion = Convert.ToInt32(rw[0]),
-                                     IdDepto = Convert.ToInt32(rw[7]),
+                                     IdDepto = departamento.IdDepto,
                                      NombreMantenimiento = rw[1].ToString(),
                                      DescripcionMantenimiento = rw[2].ToString(),
                                      FechaInicio = DateTime.Parse(rw[3].ToString()),
@@ -113,6 +113,7 @@ namespace Vista.Pages
                     int estado = CMantenimientoDpto.CrearMantDepto(mant, departamento.IdDepto);
                     MensajeOk("Mantención agregada");
                     Limpiar();
+                    ListarMantencion();
                 }
             }
             catch (Exception ex)

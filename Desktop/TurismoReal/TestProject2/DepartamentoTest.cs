@@ -45,7 +45,7 @@ namespace Pruebas
             };
             Departamento departamento = new()
             {
-                IdDepto = 65, 
+                IdDepto = 2, 
                 TarifaDiara = 25000,
                 Direccion = "Avenida San Pablo",
                 NroDpto = 607,
@@ -83,10 +83,9 @@ namespace Pruebas
             //Arrange
             int resEsperado = 1;
             int resObtenido;
-            Departamento departamento = new();
 
             //Act   se usa el ID a eliminar
-            resObtenido = Controlador.CDepartamento.EliminarDpto(67);
+            resObtenido = Controlador.CDepartamento.EliminarDpto(2);
 
             Assert.Equal(resEsperado, resObtenido);
         }

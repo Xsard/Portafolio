@@ -6,6 +6,7 @@ namespace Pruebas
 {
     public class AdministradorTest
     {
+        private int id= 3;
         [Fact]
         //Agregar administrador
         public void TestAgregarAdministrador()
@@ -38,7 +39,7 @@ namespace Pruebas
             int resObtenido;
             Administrador administrador = new()
             {
-                Rut = "19830180-9",
+                IdUsuario = 3, 
                 Nombres = "Camilo Sebastian",
                 Apellidos = "Gallardo Fuentes",
                 Email = "admin2@gmail.com",
@@ -57,16 +58,13 @@ namespace Pruebas
         public void TestListarAdministrador()
         {
             //Arrange
-            int resEsperado = 1;
-            int resObtenido;
             DataTable administrador;
 
             //Act
             administrador = CAdmin.ListarAdmin();
-            resObtenido = administrador.Rows.Count;
 
             //Assert
-            Assert.Equal(resEsperado, resObtenido);
+            Assert.NotNull(administrador.Rows[0]);
         }
 
         [Fact]
@@ -76,10 +74,9 @@ namespace Pruebas
             //Arrange
             int resEsperado = 1;
             int resObtenido;
-            Administrador administrador = new();
 
             //Act   se usa el ID a eliminar
-            resObtenido = Controlador.CAdmin.EliminarAdmin(67);
+            resObtenido = Controlador.CAdmin.EliminarAdmin(3);
 
             Assert.Equal(resEsperado, resObtenido);
         }

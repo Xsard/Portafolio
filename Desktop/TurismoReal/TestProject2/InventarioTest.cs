@@ -6,8 +6,8 @@ namespace Pruebas
 {
     public class InventarioTest
     {
-        //[Fact]
-        ////Agregar inventario
+        [Fact]
+        //Agregar inventario
         public void TestCrearInventario()
         {
             //Arrange
@@ -16,10 +16,6 @@ namespace Pruebas
             Objeto objeto = new()
             {
                 IdObjeto = 1
-            };
-            Inventario inventario = new()
-            {
-                ValorTotal = 150000
             };
 
             //Act   se coloca ID Depto al final
