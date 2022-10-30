@@ -6,6 +6,7 @@ namespace Pruebas
 {
     public class ClienteTest
     {
+        private int id = 4;
         [Fact]
         //Agregar cliente
         public void TestAgregarCliente()
@@ -37,8 +38,8 @@ namespace Pruebas
             int resEsperado = 1;
             int resObtenido;
             Cliente cliente = new()
-            {
-                Rut = "19837402-7",
+            { 
+                IdUsuario = 4,
                 Nombres = "Emilia Sofia",
                 Apellidos = "Fernandez Acuña",
                 Email = "emfernandez@gmail.com",
@@ -57,16 +58,13 @@ namespace Pruebas
         public void TestListarCliente()
         {
             //Arrange
-            int resEsperado = 1;
-            int resObtenido;
             DataTable cliente;
 
             //Act
             cliente = CCliente.ListarCliente();
-            resObtenido = cliente.Rows.Count;
 
             //Assert
-            Assert.Equal(resEsperado, resObtenido);
+            Assert.NotNull(cliente.Rows[0]);
         }
 
         [Fact]
@@ -76,11 +74,11 @@ namespace Pruebas
             //Arrange
             int resEsperado = 1;
             int resObtenido;
-            Cliente cliente = new();
 
-            //Act   se usa el ID a eliminar
-            resObtenido = Controlador.CCliente.EliminarCliente(01);
+            //Act   ;se usa el ID a eliminar
+            resObtenido = Controlador.CCliente.EliminarCliente(4);
 
+            //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
     }

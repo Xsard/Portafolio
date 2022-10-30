@@ -6,8 +6,9 @@ namespace Pruebas
 {
     public class InventarioTest
     {
+
         [Fact]
-        //Agregar inventario
+        //Agregar objeto
         public void TestCrearInventario()
         {
             //Arrange
@@ -15,17 +16,21 @@ namespace Pruebas
             int resObtenido;
             Objeto objeto = new()
             {
-                IdObjeto = 1
+                IdObjeto = 1,
+                NombreObjeto = "Mesa",
+                CantidadObjeto = 2,
+                ValorUnitarioObjeto = 30990
             };
 
             //Act   se coloca ID Depto al final
             resObtenido = Controlador.CInventario.CrearInventario(objeto, 1);
 
+            //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
 
         [Fact]
-        //Actualizar inventario
+        //Actualizar objeto
         public void TestActualizarInventario()
         {
             //Arrange
@@ -33,49 +38,45 @@ namespace Pruebas
             int resObtenido;
             Objeto objeto = new()
             {
-                IdObjeto = 3
-            };
-            Inventario inventario = new()
-            {
-                ValorTotal = 150000
+                IdObjeto = 1,
+                NombreObjeto = "Silla",
+                CantidadObjeto = 2,
+                ValorUnitarioObjeto = 20990
             };
 
-            //Act   se coloca ID Depto al final
+            //Act   
             resObtenido = Controlador.CInventario.ActualizarInventario(objeto);
-
-            Assert.Equal(resEsperado, resObtenido);
-        }
-
-        [Fact]
-        //Listar inventario
-        public void TestListarInventario()
-        {
-            //Arrange
-            int resEsperado = 1;
-            int resObtenido;
-            DataTable inventario;
-
-            //Act   se coloca ID de departamento
-            inventario = CInventario.ListarInventario(1);
-            resObtenido = inventario.Rows.Count;
 
             //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
 
         [Fact]
-        //Eliminar inventario
+        //Listar objetos
+        public void TestListarInventario()
+        {
+            //Arrange
+            DataTable inventario;
+
+            //Act   ;se usa id Depto 
+            inventario = CInventario.ListarInventario(1);
+
+            //Assert
+            Assert.NotNull(inventario.Rows[0]);
+        }
+
+        [Fact]
+        //Eliminar objeto
         public void TestEliminarInventario()
         {
             //Arrange
             int resEsperado = 1;
             int resObtenido;
-            Objeto objeto = new();
-            Inventario inventario = new();
 
-            //Act   se usa el ID a eliminar
+            //Act   ;se usa el ID del objeto a eliminar
             resObtenido = Controlador.CInventario.EliminarObjeto(1);
 
+            //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
     }

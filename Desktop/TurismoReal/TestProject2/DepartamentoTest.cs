@@ -6,6 +6,7 @@ namespace Pruebas
 {
     public class DepartamentoTest
     {
+        private int id = 2;
         [Fact]
         //Agregar departamento
         public void TestAgregarDepto()
@@ -19,6 +20,8 @@ namespace Pruebas
             };
             Departamento departamento = new()
             {
+                IdDepto = 2,
+                NombreDpto = "Las golondrinas",
                 TarifaDiara = 30000,
                 Direccion = "Avenida San Benito",
                 NroDpto = 608,
@@ -29,6 +32,7 @@ namespace Pruebas
             //Act
             resObtenido = Controlador.CDepartamento.CrearDepto(departamento);
 
+            //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
 
@@ -46,6 +50,7 @@ namespace Pruebas
             Departamento departamento = new()
             {
                 IdDepto = 2, 
+                NombreDpto= "Las perdices",
                 TarifaDiara = 25000,
                 Direccion = "Avenida San Pablo",
                 NroDpto = 607,
@@ -56,6 +61,7 @@ namespace Pruebas
             //Act
             resObtenido = Controlador.CDepartamento.ActualizarDepto(departamento);
 
+            //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
 
@@ -64,16 +70,13 @@ namespace Pruebas
         public void TestListarDepto()
         {
             //Arrange
-            int resEsperado = 1;
-            int resObtenido;
             DataTable departamento;
 
             //Act
             departamento = CDepartamento.ListarDpto();
-            resObtenido = departamento.Rows.Count;
-            
+
             //Assert
-            Assert.Equal(resEsperado, resObtenido);
+            Assert.NotNull(departamento.Rows[0]);
         }
 
         [Fact]
@@ -84,9 +87,10 @@ namespace Pruebas
             int resEsperado = 1;
             int resObtenido;
 
-            //Act   se usa el ID a eliminar
-            resObtenido = Controlador.CDepartamento.EliminarDpto(2);
+            //Act   ;se usa el ID a eliminar
+            resObtenido = Controlador.CDepartamento.EliminarDpto(4);
 
+            //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
     }

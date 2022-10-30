@@ -7,7 +7,7 @@ namespace Pruebas
     public class ServicioExtraTest
     {
         [Fact]
-        //Insertar servicio 
+        //Agregar servicio 
         public void TestIngresarServicio()
         {
             //Arrange
@@ -15,6 +15,7 @@ namespace Pruebas
             int resObtenido;
             ServicioExtra servicioExtra = new()
             {
+                IdServicioExtra = 1,
                 NombreServicioExtra = "Desayuno",
                 DescripcionServicioExtra = "Servicio de desayuno",
                 ValorServicioExtra = 10000
@@ -23,6 +24,7 @@ namespace Pruebas
             //Act
             resObtenido = Controlador.CServicioExtra.IngresarServicio(servicioExtra);
 
+            //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
 
@@ -35,6 +37,7 @@ namespace Pruebas
             int resObtenido;
             ServicioExtra servicioExtra = new()
             {
+                IdServicioExtra = 1,
                 NombreServicioExtra = "Desayuno premium",
                 DescripcionServicioExtra = "Servicio de desayuno premium",
                 ValorServicioExtra = 15000
@@ -43,6 +46,7 @@ namespace Pruebas
             //Act
             resObtenido = Controlador.CServicioExtra.ActualizarServicio(servicioExtra);
 
+            //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
 
@@ -51,16 +55,13 @@ namespace Pruebas
         public void TestListarDServicio()
         {
             //Arrange
-            int resEsperado = 1;
-            int resObtenido;
             DataTable servicioExtra;
 
             //Act
             servicioExtra = CServicioExtra.ListarServicios();
-            resObtenido = servicioExtra.Rows.Count;
 
             //Assert
-            Assert.Equal(resEsperado, resObtenido);
+            Assert.NotNull(servicioExtra.Rows[0]);
         }
 
         [Fact]
@@ -70,11 +71,11 @@ namespace Pruebas
             //Arrange
             int resEsperado = 1;
             int resObtenido;
-            ServicioExtra servicioExtra = new();
 
-            //Act   se usa el ID a eliminar
-            resObtenido = Controlador.CServicioExtra.EliminarServicio(67);
+            //Act   ;se usa el ID a eliminar
+            resObtenido = Controlador.CServicioExtra.EliminarServicio(1);
 
+            //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
     }

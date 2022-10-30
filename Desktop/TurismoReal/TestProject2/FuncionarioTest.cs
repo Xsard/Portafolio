@@ -6,6 +6,7 @@ namespace Pruebas
 {
     public class FuncionarioTest
     {
+        private int id = 5;
         [Fact]
         //Agregar funcionario
         public void TestAgregarFuncionario()
@@ -26,6 +27,7 @@ namespace Pruebas
             //Act
             resObtenido = Controlador.CFuncionario.CrearUsuarioFuncionario(funcionario);
 
+            //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
 
@@ -38,7 +40,7 @@ namespace Pruebas
             int resObtenido;
             Funcionario funcionario = new()
             {
-                Rut = "17836278-3",
+                IdUsuario = 5,
                 Nombres = "Felipe Simón",
                 Apellidos = "Diaz Jara",
                 Email = "fdiazjara@gmail.com",
@@ -49,6 +51,7 @@ namespace Pruebas
             //Act
             resObtenido = Controlador.CFuncionario.ActualizarFuncionario(funcionario);
 
+            //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
 
@@ -57,16 +60,13 @@ namespace Pruebas
         public void TestListarFuncionario()
         {
             //Arrange
-            int resEsperado = 1;
-            int resObtenido;
             DataTable funcionario;
 
             //Act
             funcionario = CFuncionario.ListarFuncionario();
-            resObtenido = funcionario.Rows.Count;
 
             //Assert
-            Assert.Equal(resEsperado, resObtenido);
+            Assert.NotNull(funcionario.Rows[0]);
         }
 
         [Fact]
@@ -76,11 +76,11 @@ namespace Pruebas
             //Arrange
             int resEsperado = 1;
             int resObtenido;
-            Funcionario funcionario = new();
 
-            //Act   se usa el ID a eliminar
-            resObtenido = Controlador.CFuncionario.EliminarFuncionario(67);
+            //Act   ;se usa el ID a eliminar
+            resObtenido = Controlador.CFuncionario.EliminarFuncionario(5);
 
+            //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
     }

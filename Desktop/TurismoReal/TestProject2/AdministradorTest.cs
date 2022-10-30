@@ -75,9 +75,10 @@ namespace Pruebas
             int resEsperado = 1;
             int resObtenido;
 
-            //Act   se usa el ID a eliminar
+            //Act   ;se usa el ID a eliminar
             resObtenido = Controlador.CAdmin.EliminarAdmin(3);
 
+            //Assert
             Assert.Equal(resEsperado, resObtenido);
         }
     }
