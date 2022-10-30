@@ -30,9 +30,8 @@ namespace Controlador
                     cmd.ExecuteReader();
                     resultado = int.Parse(cmd.Parameters["r"].Value.ToString());
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-
                     throw;
                 }
                 finally
@@ -40,7 +39,6 @@ namespace Controlador
                     con.Close();
                     cmd.Dispose();
                 }
-
             }
             return resultado;
         }
@@ -54,9 +52,9 @@ namespace Controlador
                     Connection = con,
                     CommandType = CommandType.StoredProcedure,
                     CommandText = "Mantener_Dpto.actualizar_dpto"
-                };
-                cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = dpto.NombreDpto;
+                };                
                 cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.IdDepto;
+                cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = dpto.NombreDpto;
                 cmd.Parameters.Add("tarifa", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.TarifaDiara;
                 cmd.Parameters.Add("DIREC", OracleDbType.Varchar2, ParameterDirection.Input).Value = dpto.Direccion;
                 cmd.Parameters.Add("NRO", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.NroDpto;
@@ -70,9 +68,8 @@ namespace Controlador
                     cmd.ExecuteReader();
                     resultado = int.Parse(cmd.Parameters["r"].Value.ToString());
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-
                     throw;
                 }
                 finally
@@ -80,7 +77,6 @@ namespace Controlador
                     con.Close();
                     cmd.Dispose();
                 }
-
             }
             return resultado;
         }
@@ -108,7 +104,6 @@ namespace Controlador
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
                 finally
@@ -137,11 +132,9 @@ namespace Controlador
                     cmd.Connection.Open();
                     cmd.ExecuteReader();
                     resultado = int.Parse(cmd.Parameters["r"].Value.ToString());
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
                 finally

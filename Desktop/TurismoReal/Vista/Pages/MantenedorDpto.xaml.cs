@@ -201,12 +201,6 @@ namespace Vista.Pages
             ns.Navigate(perfilDepto);
         }
         #endregion
-
-        private void grdDpto_Error(object sender, ValidationErrorEventArgs e)
-        {
-
-        }
-
         private void DtgDptoMantencion_Click(object sender, RoutedEventArgs e)
         {
             Departamento departamento = (Departamento)dtgDptos.SelectedItem;
