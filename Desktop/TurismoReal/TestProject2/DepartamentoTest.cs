@@ -88,7 +88,7 @@ namespace Pruebas
             int resObtenido;
 
             //Act   ;se usa el ID a eliminar
-            resObtenido = Controlador.CDepartamento.EliminarDpto(4);
+            resObtenido = Controlador.CDepartamento.EliminarDpto(2);
 
             //Assert
             Assert.Equal(resEsperado, resObtenido);
