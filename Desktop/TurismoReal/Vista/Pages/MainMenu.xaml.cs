@@ -16,25 +16,36 @@ namespace Vista.Pages
         private void btn_Dpto_Crud_Click(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new System.Uri("Pages/MantenedorDpto.xaml", UriKind.RelativeOrAbsolute));
+            ns.Navigate(new Uri("Pages/MantenedorDpto.xaml", UriKind.RelativeOrAbsolute));
         }
 
         private void btn_ServE_Crud_Click(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new System.Uri("Pages/MantenedorServExtras.xaml", UriKind.RelativeOrAbsolute));
+            ns.Navigate(new Uri("Pages/MantenedorServExtras.xaml", UriKind.RelativeOrAbsolute));
         }
 
         private void btn_Usuarios_Crud_Click(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new System.Uri("Pages/MantenedorUsuario.xaml", UriKind.RelativeOrAbsolute));
+            ns.Navigate(new Uri("Pages/MantenedorUsuario.xaml", UriKind.RelativeOrAbsolute));
         }
 
         private void btn_Disponibilidad_Crud_Click(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new System.Uri("Pages/MantenedorDisponibilidad.xaml", UriKind.RelativeOrAbsolute));
+            ns.Navigate(new Uri("Pages/MantenedorDisponibilidad.xaml", UriKind.RelativeOrAbsolute));
+        }
+
+        private void btn_Tours_Crud_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Pages/MantenedorTours.xaml", UriKind.RelativeOrAbsolute));
+        }
+
+        private void btn_ServDeptos_Crud_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

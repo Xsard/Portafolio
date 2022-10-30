@@ -9,9 +9,6 @@ using System.Windows.Input;
 
 namespace Vista.Pages
 {
-    /// <summary>
-    /// Interaction logic for MantenedorServExtras.xaml
-    /// </summary>
     public partial class MantenedorServExtras : Page
     {
         public MantenedorServExtras()

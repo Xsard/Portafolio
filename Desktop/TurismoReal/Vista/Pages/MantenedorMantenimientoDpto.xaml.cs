@@ -33,7 +33,20 @@ namespace Vista.Pages
 
         private void DtgMantDptosUpdate_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.Key == Key.Enter)
+            {
+                Mantencion mantencion = (Mantencion)dtgMantDptos.SelectedItem;
+                try
+                {
+                    int estado = CMantenimientoDpto.ActualizarMantDepto(mantencion);
+                    MessageBox.Show("Mantención actualizada");
+                    ListarMantencion();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
 
         private void DtgMantDptoDelete_Click(object sender, RoutedEventArgs e)
@@ -45,7 +58,7 @@ namespace Vista.Pages
                 if (result == MessageBoxResult.Yes)
                 {
                     int estado = CMantenimientoDpto.EliminarMantDpto(mantencion.IdMantencion);
-                    MensajeOk("Departamento eliminado");
+                    MensajeOk("Mantención eliminada");
                     ListarMantencion();
                 }
             }

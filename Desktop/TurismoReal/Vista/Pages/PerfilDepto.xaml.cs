@@ -4,7 +4,6 @@ using Modelo;
 using System;
 using System.Data;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -94,7 +93,6 @@ namespace Vista.Pages
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -109,7 +107,6 @@ namespace Vista.Pages
                     int estado = CInventario.ActualizarInventario(objeto);
                     MessageBox.Show("Inventario actualizado");
                     ListarObjetos();
-
                 }
                 catch (Exception)
                 {
