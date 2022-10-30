@@ -107,6 +107,7 @@ END Mantener_Dpto;
 CREATE OR REPLACE PACKAGE Ubicacion 
     AS
     PROCEDURE listar_comunas(Comunas out SYS_REFCURSOR);
+    PROCEDURE listar_regiones(Regiones out SYS_REFCURSOR);
 END Ubicacion;
 /
 CREATE OR REPLACE PACKAGE BODY Ubicacion
@@ -116,6 +117,12 @@ CREATE OR REPLACE PACKAGE BODY Ubicacion
     BEGIN
         OPEN Comunas FOR
             SELECT * FROM COMUNA;
+    END;
+    PROCEDURE listar_regiones(Regiones out SYS_REFCURSOR)
+    IS
+    BEGIN
+        OPEN Regiones FOR
+            SELECT * FROM REGION;
     END;
 END Ubicacion;
 /
@@ -540,6 +547,55 @@ AS
         SELECT id_mant, nombre_mant,desc_mant,to_char(fecha_inicio, 'dd/MM/yyyy'), to_char(fechar_termino, 'dd/MM/yyyy'), costo_mantencion, estado FROM MANTENIMIENTO WHERE ID_DPTO = id_depto;
     END;
 END Mantener_Mantenimiento;
+/
+CREATE OR REPLACE PACKAGE Mantener_Tours
+    AS
+    PROCEDURE insertar_tour(nombre IN TOUR_PLAN.NOMBRE_TOUR%TYPE, descripcion IN TOUR_PLAN.DESC_TOUR%TYPE, valor IN TOUR_PLAN.VALOR_TOUR%TYPE, region IN TOUR_PLAN.ID_REGION%TYPE, R OUT INTEGER);
+    PROCEDURE actualizar_tour(identificador IN TOUR_PLAN.ID_TOUR%TYPE, nombre IN TOUR_PLAN.NOMBRE_TOUR%TYPE, descripcion IN TOUR_PLAN.DESC_TOUR%TYPE, 
+    valor IN TOUR_PLAN.VALOR_TOUR%TYPE, region IN TOUR_PLAN.ID_REGION%TYPE, R OUT INTEGER);
+    PROCEDURE eliminar_tour(identificador TOUR_PLAN.ID_TOUR%TYPE, R OUT INTEGER);
+    PROCEDURE listar_tour(Tours OUT SYS_REFCURSOR);
+
+END Mantener_Tours;
+/
+CREATE OR REPLACE PACKAGE BODY Mantener_Tours
+    AS
+    PROCEDURE insertar_tour(nombre IN TOUR_PLAN.NOMBRE_TOUR%TYPE, descripcion IN TOUR_PLAN.DESC_TOUR%TYPE, valor IN TOUR_PLAN.VALOR_TOUR%TYPE, region IN TOUR_PLAN.ID_REGION%TYPE, R OUT INTEGER)
+    IS
+        id_col rowid;
+    BEGIN
+        INSERT INTO TOUR_PLAN(NOMBRE_TOUR, DESC_TOUR, VALOR_TOUR, ID_REGION) VALUES(nombre, descripcion, valor, region) RETURNING rowid INTO id_col;
+        IF id_col IS NOT NULL THEN
+            r:=1;
+            COMMIT;
+        END IF;
+    END;
+    PROCEDURE actualizar_tour(identificador IN TOUR_PLAN.ID_TOUR%TYPE, nombre IN TOUR_PLAN.NOMBRE_TOUR%TYPE, descripcion IN TOUR_PLAN.DESC_TOUR%TYPE, 
+    valor IN TOUR_PLAN.VALOR_TOUR%TYPE, region IN TOUR_PLAN.ID_REGION%TYPE, R OUT INTEGER)
+    IS
+    BEGIN
+        UPDATE TOUR_PLAN 
+            SET NOMBRE_TOUR = nombre, DESC_TOUR = descripcion, VALOR_TOUR = valor, ID_REGION = region
+        WHERE ID_TOUR = identificador RETURNING 1 INTO R;
+        IF r = 1 THEN
+            COMMIT;
+        END IF;
+    END;
+    PROCEDURE eliminar_tour(identificador TOUR_PLAN.ID_TOUR%TYPE, R OUT INTEGER)
+    IS 
+    BEGIN 
+        DELETE FROM TOUR_PLAN WHERE ID_TOUR =  identificador RETURNING 1 INTO r;
+        IF r = 1 THEN
+            COMMIT;
+        END IF;
+    END;
+    PROCEDURE listar_tour(Tours OUT SYS_REFCURSOR)
+    IS
+    BEGIN
+        OPEN Tours FOR
+            SELECT * FROM TOUR_PLAN TP JOIN REGION R ON(R.id_region=TP.id_region);
+    END;
+END Mantener_Tours;
 /
 DECLARE 
     r integer;

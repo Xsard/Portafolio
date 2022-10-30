@@ -4,9 +4,9 @@ using System.Data;
 
 namespace Controlador
 {
-    public class CMantenimientoDpto
+    public class CTour
     {
-        public static int CrearMantDepto(Mantencion mant, int IdDepto)
+        public static int IngresarTour(Tour tour)
         {
             int resultado = 0;
             using (OracleConnection con = Conexion.getInstance().ConexionDB())
@@ -15,35 +15,34 @@ namespace Controlador
                 {
                     Connection = con,
                     CommandType = CommandType.StoredProcedure,
-                    CommandText = "Mantener_Mantenimiento.Agregar_Mantenimiento"
+                    CommandText = "Mantener_Tours.insertar_tour"
                 };
-                cmd.Parameters.Add("id_depto", OracleDbType.Int32, ParameterDirection.Input).Value = IdDepto;
-                cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = mant.NombreMantenimiento;
-                cmd.Parameters.Add("descripcion", OracleDbType.Varchar2, ParameterDirection.Input).Value = mant.DescripcionMantenimiento;
-                cmd.Parameters.Add("fecha_ini", OracleDbType.Date, ParameterDirection.Input).Value = mant.FechaInicio;
-                cmd.Parameters.Add("fecha_fin", OracleDbType.Date, ParameterDirection.Input).Value = mant.FechaTermino;
-                cmd.Parameters.Add("estado_man", OracleDbType.Char, ParameterDirection.Input).Value = mant.Estado;
-                cmd.Parameters.Add("costo", OracleDbType.Int32, ParameterDirection.Input).Value = mant.CostoMantencion;
+                cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = tour.NombreTour;
+                cmd.Parameters.Add("descripcion", OracleDbType.Varchar2, ParameterDirection.Input).Value = tour.DescripcionTour;
+                cmd.Parameters.Add("valor", OracleDbType.Int32, ParameterDirection.Input).Value = tour.ValorTour;
+                cmd.Parameters.Add("region", OracleDbType.Int32, ParameterDirection.Input).Value = tour.Region.IdRegion;
                 cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
+
                 try
                 {
-                    con.Open();
+                    cmd.Connection.Open();
                     cmd.ExecuteReader();
                     resultado = int.Parse(cmd.Parameters["r"].Value.ToString());
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
+
                     throw;
                 }
                 finally
                 {
-                    con.Close();
+                    cmd.Connection.Close();
                     cmd.Dispose();
                 }
             }
             return resultado;
         }
-        public static int ActualizarMantDepto(Mantencion mant)
+        public static int ActualizarTour(Tour tour)
         {
             int resultado = 0;
             using (OracleConnection con = Conexion.getInstance().ConexionDB())
@@ -51,21 +50,19 @@ namespace Controlador
                 OracleCommand cmd = new()
                 {
                     Connection = con,
-                    CommandType = CommandType.StoredProcedure,
-                    CommandText = "Mantener_Mantenimiento.Actualizar_Mantenimiento"
+                    CommandType = System.Data.CommandType.StoredProcedure,
+                    CommandText = "Mantener_Tours.actualizar_tour"
                 };
-                cmd.Parameters.Add("id_mantenimiento", OracleDbType.Int32, ParameterDirection.Input).Value = mant.IdMantencion;
-                cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = mant.NombreMantenimiento;
-                cmd.Parameters.Add("descripcion", OracleDbType.Varchar2, ParameterDirection.Input).Value = mant.DescripcionMantenimiento;
-                cmd.Parameters.Add("fecha_ini", OracleDbType.Date, ParameterDirection.Input).Value = mant.FechaInicio;
-                cmd.Parameters.Add("fecha_fin", OracleDbType.Date, ParameterDirection.Input).Value = mant.FechaTermino;
-                cmd.Parameters.Add("estado_man", OracleDbType.Char, ParameterDirection.Input).Value = mant.Estado;
-                cmd.Parameters.Add("costo", OracleDbType.Int32, ParameterDirection.Input).Value = mant.CostoMantencion;
+                cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = tour.IdTour;
+                cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = tour.NombreTour;
+                cmd.Parameters.Add("descripcion", OracleDbType.Varchar2, ParameterDirection.Input).Value = tour.DescripcionTour;
+                cmd.Parameters.Add("valor", OracleDbType.Int32, ParameterDirection.Input).Value = tour.ValorTour;
+                cmd.Parameters.Add("region", OracleDbType.Int32, ParameterDirection.Input).Value = tour.Region.IdRegion;
                 cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
 
                 try
                 {
-                    con.Open();
+                    cmd.Connection.Open();
                     cmd.ExecuteReader();
                     resultado = int.Parse(cmd.Parameters["r"].Value.ToString());
                 }
@@ -75,13 +72,13 @@ namespace Controlador
                 }
                 finally
                 {
-                    con.Close();
+                    cmd.Connection.Close();
                     cmd.Dispose();
                 }
             }
             return resultado;
         }
-        public static DataTable ListarMantenimiento(int idDepto)
+        public static DataTable ListarTours()
         {
             DataTable resultado = new();
             using (OracleConnection con = Conexion.getInstance().ConexionDB())
@@ -90,10 +87,9 @@ namespace Controlador
                 {
                     Connection = con,
                     CommandType = CommandType.StoredProcedure,
-                    CommandText = "Mantener_Mantenimiento.Listar_Mantenimientos"
+                    CommandText = "Mantener_Tours.listar_tour"
                 };
-                cmd.Parameters.Add("Deptos", OracleDbType.Int32, ParameterDirection.Input).Value = idDepto;
-                cmd.Parameters.Add("Mantenimientos", OracleDbType.RefCursor, ParameterDirection.Output);
+                cmd.Parameters.Add("Tours", OracleDbType.RefCursor, ParameterDirection.Output);
                 try
                 {
                     con.Open();
@@ -106,7 +102,6 @@ namespace Controlador
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
                 finally
@@ -117,7 +112,7 @@ namespace Controlador
             }
             return resultado;
         }
-        public static int EliminarMantDpto(int idMantenimiento)
+        public static int EliminarTour(int idTour)
         {
             int resultado = 0;
             using (OracleConnection con = Conexion.getInstance().ConexionDB())
@@ -126,9 +121,9 @@ namespace Controlador
                 {
                     Connection = con,
                     CommandType = CommandType.StoredProcedure,
-                    CommandText = "Mantener_Mantenimiento.Eliminar_Mantenimiento"
+                    CommandText = "Mantener_Tours.eliminar_tour"
                 };
-                cmd.Parameters.Add("id_mantenimiento", OracleDbType.Int32, ParameterDirection.Input).Value = idMantenimiento;
+                cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = idTour;
                 cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
                 try
                 {
@@ -139,7 +134,6 @@ namespace Controlador
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
                 finally
