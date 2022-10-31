@@ -9,6 +9,7 @@
         private int nroDpto;
         private int capacidad;
         private Comuna comuna;
+        private string disponibilidad;
 
         public int IdDepto { get => idDepto; set => idDepto = value; }
         public int TarifaDiara { get => tarifaDiara; set => tarifaDiara = value; }
@@ -17,5 +18,6 @@
         public int Capacidad { get => capacidad; set => capacidad = value; }
         public Comuna Comuna { get => comuna; set => comuna = value; }
         public string NombreDpto { get => nombreDpto; set => nombreDpto = value; }
+        public string Disponibilidad { get => disponibilidad; set => disponibilidad = value; }
     }
 }

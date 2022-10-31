@@ -45,7 +45,6 @@ namespace Vista.Pages
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
         #endregion
         #region Departamento 
@@ -68,8 +67,9 @@ namespace Vista.Pages
                                      Comuna = new Comuna
                                      {
                                          IdComuna = Convert.ToInt32(rw[6]),
-                                         NombreComuna = rw[8].ToString()
-                                     }
+                                         NombreComuna = rw[9].ToString()
+                                     },
+                                     Disponibilidad = rw[7].ToString()
                                  }).ToList();
                     dtgDptos.ItemsSource = Dptos;
                 }
@@ -90,22 +90,23 @@ namespace Vista.Pages
         private void btn_Agregar_Dpto_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
-                
+            {                
                 if(txt_tarifa_ag.Text == string.Empty || txt_cap_ag.Text == string.Empty || txt_direccion_ag.Text == string.Empty || 
                     txt_nro_ag.Text == string.Empty || cbo_comuna_ag.Text == string.Empty)
                 {
                     this.MensajeError("Falta ingresar algunos datos");
                 }
                 else
-                {                    
+                {
                     Departamento dpto = new Departamento
                     {
+                        NombreDpto = txt_nombre_ag.Text.Trim(),
                         TarifaDiara = Int32.Parse(txt_tarifa_ag.Text.Trim()),
                         Capacidad = Int32.Parse(txt_cap_ag.Text.Trim()),
                         Direccion = txt_direccion_ag.Text.Trim(),
                         NroDpto = Int32.Parse(txt_nro_ag.Text.Trim()),
-                        Comuna = (Comuna)cbo_comuna_ag.SelectedItem
+                        Comuna = (Comuna)cbo_comuna_ag.SelectedItem,
+                        Disponibilidad = "D"
                     };
 
                     int estado = CDepartamento.CrearDepto(dpto);
@@ -174,7 +175,7 @@ namespace Vista.Pages
                     MessageBox.Show(ex.Message);
                 }
             }
-        }
+        }       
         private void DtgDptoDelete_Click(object sender, RoutedEventArgs e)
         {
             Departamento departamento = (Departamento)dtgDptos.SelectedItem;

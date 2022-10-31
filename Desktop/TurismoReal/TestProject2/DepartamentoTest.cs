@@ -5,8 +5,7 @@ using System.Data;
 namespace Pruebas
 {
     public class DepartamentoTest
-    {
-        private int id = 2;
+    {        
         [Fact]
         //Agregar departamento
         public void TestAgregarDepto()
@@ -26,11 +25,12 @@ namespace Pruebas
                 Direccion = "Avenida San Benito",
                 NroDpto = 608,
                 Capacidad = 4,
-                Comuna = comuna
+                Comuna = comuna,
+                Disponibilidad = "D"
             };
 
             //Act
-            resObtenido = Controlador.CDepartamento.CrearDepto(departamento);
+            resObtenido = CDepartamento.CrearDepto(departamento);
 
             //Assert
             Assert.Equal(resEsperado, resObtenido);
@@ -55,11 +55,12 @@ namespace Pruebas
                 Direccion = "Avenida San Pablo",
                 NroDpto = 607,
                 Capacidad = 5,
-                Comuna = comuna
+                Comuna = comuna,
+                Disponibilidad = "O"
             };
 
             //Act
-            resObtenido = Controlador.CDepartamento.ActualizarDepto(departamento);
+            resObtenido = CDepartamento.ActualizarDepto(departamento);
 
             //Assert
             Assert.Equal(resEsperado, resObtenido);
@@ -88,7 +89,7 @@ namespace Pruebas
             int resObtenido;
 
             //Act   ;se usa el ID a eliminar
-            resObtenido = Controlador.CDepartamento.EliminarDpto(2);
+            resObtenido = CDepartamento.EliminarDpto(2);
 
             //Assert
             Assert.Equal(resEsperado, resObtenido);
