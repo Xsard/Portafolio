@@ -33,7 +33,7 @@ const Footer = () => {
                     </div>
                     {/*columna 3*/}
                     <div className="col">
-                        <h4>Texto de relleno</h4>
+                        <h4>Comunidad</h4>
                         <h2>Preguntas Frecuentes</h2>
                     </div>
                 </div>

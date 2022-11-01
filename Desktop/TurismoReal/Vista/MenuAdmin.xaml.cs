@@ -28,7 +28,6 @@ namespace Vista
         private void btnDpto_Click(object sender, RoutedEventArgs e)
         {
             PagesNavigation.Navigate(new System.Uri("Pages/MantenedorDpto.xaml", UriKind.RelativeOrAbsolute));
-
         }
         private void btnServE_Click(object sender, RoutedEventArgs e)
         {
@@ -38,10 +37,20 @@ namespace Vista
         {
             PagesNavigation.Navigate(new System.Uri("Pages/MantenedorUsuario.xaml", UriKind.RelativeOrAbsolute));
         }
-        private void btnDisponibilidad_Click(object sender, RoutedEventArgs e)
+        private void btnServDpto_Click(object sender, RoutedEventArgs e)
         {
-            PagesNavigation.Navigate(new System.Uri("Pages/MantenedorDisponibilidad.xaml", UriKind.RelativeOrAbsolute));
+            PagesNavigation.Navigate(new System.Uri("Pages/MantenedorServDpto.xaml", UriKind.RelativeOrAbsolute));
+        }
+        private void btnTransporte_Click(object sender, RoutedEventArgs e)
+        {
+            PagesNavigation.Navigate(new System.Uri("Pages/PlanificarTransporte.xaml", UriKind.RelativeOrAbsolute));
+        }
+        private void btnTour_Click(object sender, RoutedEventArgs e)
+        {
+            PagesNavigation.Navigate(new System.Uri("Pages/MantenedorTours.xaml", UriKind.RelativeOrAbsolute));
         }
         #endregion
+
+
     }
 }

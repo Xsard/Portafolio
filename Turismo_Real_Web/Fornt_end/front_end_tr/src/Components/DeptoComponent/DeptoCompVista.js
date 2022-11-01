@@ -97,26 +97,60 @@ const DeptoVista = () => {
                                 console.log("agregar servicio extra");
                             }
                             else {
-                                let fecha1 = new Date(fechaIda).getTime();
-                                let fecha2 = new Date(fechaVuelta).getTime();
-                                let diff = fecha2 - fecha1;
-
-                                console.log(diff / (1000 * 60 * 60 * 24))
-
-                                let valorTotal = tarifa * diff / (1000 * 60 * 60 * 24)
-                                console.log(valorTotal)
-
-                                const resp = axios.post('http://localhost:8080/api/v1/reserva_pl', {
-                                    id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
-                                    check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes, transporte: "N"
-                                })
-
                                 MySwal.fire({
-                                    title: "Reserva Exitosa",
-                                    icon: "success"
+                                    title: "¿Desea agregar transporte?",
+                                    icon: "info",
+                                    showDenyButton: true,
+                                    confirmButtonText: 'Si',
+                                    denyButtonText: `No`
                                 }).then((respuesta) => {
                                     if (respuesta.isConfirmed) {
-                                        window.location.replace('/Inicio');
+                                        let fecha1 = new Date(fechaIda).getTime();
+                                        let fecha2 = new Date(fechaVuelta).getTime();
+                                        let diff = fecha2 - fecha1;
+
+                                        console.log(diff / (1000 * 60 * 60 * 24))
+
+                                        let valorTotal = tarifa * diff / (1000 * 60 * 60 * 24)
+                                        console.log(valorTotal)
+
+                                        const resp = axios.post('http://localhost:8080/api/v1/reserva_pl', {
+                                            id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
+                                            check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes, transporte: "S"
+                                        })
+
+                                        MySwal.fire({
+                                            title: "Reserva Exitosa",
+                                            icon: "success"
+                                        }).then((respuesta) => {
+                                            if (respuesta.isConfirmed) {
+                                                window.location.replace('/Inicio');
+                                            }
+                                        })
+                                    }
+                                    else {
+                                        let fecha1 = new Date(fechaIda).getTime();
+                                        let fecha2 = new Date(fechaVuelta).getTime();
+                                        let diff = fecha2 - fecha1;
+
+                                        console.log(diff / (1000 * 60 * 60 * 24))
+
+                                        let valorTotal = tarifa * diff / (1000 * 60 * 60 * 24)
+                                        console.log(valorTotal)
+
+                                        const resp = axios.post('http://localhost:8080/api/v1/reserva_pl', {
+                                            id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
+                                            check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes, transporte: "N"
+                                        })
+
+                                        MySwal.fire({
+                                            title: "Reserva Exitosa",
+                                            icon: "success"
+                                        }).then((respuesta) => {
+                                            if (respuesta.isConfirmed) {
+                                                window.location.replace('/Inicio');
+                                            }
+                                        })
                                     }
                                 })
                             }
