@@ -612,6 +612,55 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
     END;
 END Mantener_Reserva;
 /
+CREATE OR REPLACE PACKAGE Mantener_Servicios_Dpto
+    AS
+    PROCEDURE insertar_svdpto(nombre IN SERVICIO.NOMBRE_SERV%TYPE, descripcion IN SERVICIO.DESC_SERV%TYPE, R OUT INTEGER);
+    PROCEDURE actualizar_svdpto(identificador IN SERVICIO.ID_SERVICIO%TYPE, nombre IN SERVICIO.NOMBRE_SERV%TYPE,
+        descripcion IN SERVICIO.DESC_SERV%TYPE, R OUT INTEGER);
+    PROCEDURE eliminar_svdpto(identificador SERVICIO.ID_SERVICIO%TYPE, R OUT INTEGER);
+    PROCEDURE listar_svdpto(Servicios_dpto OUT SYS_REFCURSOR);
+
+END Mantener_Servicios_Dpto;
+/
+CREATE OR REPLACE PACKAGE BODY Mantener_Servicios_Dpto
+    AS
+    PROCEDURE insertar_svdpto(nombre IN SERVICIO.NOMBRE_SERV%TYPE, descripcion IN SERVICIO.DESC_SERV%TYPE, R OUT INTEGER)
+    IS
+        id_col rowid;
+    BEGIN
+        INSERT INTO SERVICIO(NOMBRE_SERV, DESC_SERV) VALUES(nombre, descripcion) RETURNING rowid INTO id_col;
+        IF id_col IS NOT NULL THEN
+            r:=1;
+            COMMIT;
+        END IF;
+    END;
+    PROCEDURE actualizar_svdpto(identificador IN SERVICIO.ID_SERVICIO%TYPE, nombre IN SERVICIO.NOMBRE_SERV%TYPE,
+        descripcion IN SERVICIO.DESC_SERV%TYPE, R OUT INTEGER)
+    IS
+    BEGIN
+        UPDATE SERVICIO 
+            SET NOMBRE_SERV = nombre, DESC_SERV = descripcion
+        WHERE ID_SERVICIO = identificador RETURNING 1 INTO R;
+        IF r = 1 THEN
+            COMMIT;
+        END IF;
+    END;
+    PROCEDURE eliminar_svdpto(identificador SERVICIO.ID_SERVICIO%TYPE, R OUT INTEGER)
+    IS 
+    BEGIN 
+        DELETE FROM SERVICIO WHERE ID_SERVICIO =  identificador RETURNING 1 INTO r;
+        IF r = 1 THEN
+            COMMIT;
+        END IF;
+    END;
+    PROCEDURE listar_svdpto(Servicios_dpto OUT SYS_REFCURSOR)
+    IS
+    BEGIN
+        OPEN Servicios_dpto FOR
+            SELECT * FROM SERVICIO;
+    END;
+END Mantener_Servicios_Dpto;
+/
 DECLARE 
     r integer;
 BEGIN

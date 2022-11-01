@@ -39,7 +39,8 @@ namespace Vista.Pages
 
         private void btn_ServDeptos_Crud_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Pages/MantenedorServDpto.xaml", UriKind.RelativeOrAbsolute));
         }
 
         private void btn_PlanTransporte_Crud_Click(object sender, RoutedEventArgs e)

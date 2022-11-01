@@ -38,9 +38,9 @@
                     <Label Content="Departamentos" FontSize="9" HorizontalAlignment="Center" Padding="0"/>
                 </StackPanel>
             </Button>
-            <Button x:Name="btnDisponibilidad"  Width="80" Height="60" Padding="0" Grid.Row="2" Background="{x:Null}" BorderThickness="0" Click="btnDisponibilidad_Click">
+            <Button x:Name="btnServDpto" Click="btnServDpto_Click" Width="80" Height="60" Padding="0" Grid.Row="2" Background="{x:Null}" BorderThickness="0">
                 <StackPanel>
-                    <materialDesign:PackIcon Kind="Schedule" Width="40" Height="40" HorizontalAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="ServiceToolbox" Width="40" Height="40" HorizontalAlignment="Center"/>
                     <Label Content="Servicios Departamento" FontSize="9" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Button>
@@ -54,6 +54,18 @@
                 <StackPanel>
                     <materialDesign:PackIcon Kind="RoomServiceOutline" Width="40" Height="40" HorizontalAlignment="Center"/>
                     <Label Content="Servicios Extras" FontSize="9" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="btnTour" Click="btnTour_Click" Width="80" Height="60" Padding="0" Grid.Row="5" Background="{x:Null}" BorderThickness="0">
+                <StackPanel>
+                    <materialDesign:PackIcon Kind="Voyager" Width="40" Height="40" HorizontalAlignment="Center"/>
+                    <Label Content="Tours" FontSize="9" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="btnTransporte" Click="btnTransporte_Click" Width="80" Height="60" Padding="0" Grid.Row="6" Background="{x:Null}" BorderThickness="0">
+                <StackPanel>
+                    <materialDesign:PackIcon Kind="Transportation" Width="40" Height="40" HorizontalAlignment="Center"/>
+                    <Label Content="Planificar Transporte" FontSize="9" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Button>
         </Grid>
