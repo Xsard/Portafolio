@@ -21,13 +21,14 @@ import javax.persistence.Table;
 			parameters = {
 				@StoredProcedureParameter(mode= ParameterMode.IN, name="idDepto", type=int.class),
 				@StoredProcedureParameter(mode= ParameterMode.IN, name="idCli", type=int.class),
-				@StoredProcedureParameter(mode= ParameterMode.IN, name="estadoRes", type=char.class),
-				@StoredProcedureParameter(mode= ParameterMode.IN, name="estadoPag", type=char.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="estadoRes", type=String.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="estadoPag", type=String.class),
 				@StoredProcedureParameter(mode= ParameterMode.IN, name="checkIn", type=Date.class),
 				@StoredProcedureParameter(mode= ParameterMode.IN, name="checkOut", type=Date.class),
 				@StoredProcedureParameter(mode= ParameterMode.IN, name="firmaRes", type=int.class),
 				@StoredProcedureParameter(mode= ParameterMode.IN, name="valorTotal", type=int.class),
 				@StoredProcedureParameter(mode= ParameterMode.IN, name="cant_acomp", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="transporte_reserva", type=String.class),
 				@StoredProcedureParameter(mode= ParameterMode.OUT, name="R", type=int.class)	
 			})
 	})
@@ -44,9 +45,9 @@ public class Reserva implements Serializable{
 	@Column(name = "id_cliente")
 	int id_cliente;
 	@Column(name = "estado_reserva")
-	char estado_reserva;
+	String estado_reserva;
 	@Column(name = "estado_pago")
-	char estado_pago;
+	String estado_pago;
 	@Column(name = "check_in")
 	Date check_in;
 	@Column(name = "check_out")
@@ -57,9 +58,16 @@ public class Reserva implements Serializable{
 	int valor_total;
 	@Column(name = "cantidad_acompañantes")
 	int cantidad_acompañantes;
+	@Column(name = "transporte")
+	String transporte;
 	
 	
-	
+	public String getTransporte() {
+		return transporte;
+	}
+	public void setTransporte(String transporte) {
+		this.transporte = transporte;
+	}
 	public int getCantidad_acompañantes() {
 		return cantidad_acompañantes;
 	}
@@ -84,16 +92,16 @@ public class Reserva implements Serializable{
 	public void setId_cliente(int id_cliente) {
 		this.id_cliente = id_cliente;
 	}
-	public char getEstado_reserva() {
+	public String getEstado_reserva() {
 		return estado_reserva;
 	}
-	public void setEstado_reserva(char estado_reserva) {
+	public void setEstado_reserva(String estado_reserva) {
 		this.estado_reserva = estado_reserva;
 	}
-	public char getEstado_pago() {
+	public String getEstado_pago() {
 		return estado_pago;
 	}
-	public void setEstado_pago(char estado_pago) {
+	public void setEstado_pago(String estado_pago) {
 		this.estado_pago = estado_pago;
 	}
 	public Date getCheck_in() {
@@ -122,9 +130,8 @@ public class Reserva implements Serializable{
 	}
 	
 	
-	
-	public Reserva(int id_reserva, int id_dpto, int id_cliente, char estado_reserva, char estado_pago, Date check_in,
-			Date check_out, int firma, int valor_total, int cantidad_acompañantes) {
+	public Reserva(int id_reserva, int id_dpto, int id_cliente, String estado_reserva, String estado_pago, Date check_in,
+			Date check_out, int firma, int valor_total, int cantidad_acompañantes, String transporte) {
 		super();
 		this.id_reserva = id_reserva;
 		this.id_dpto = id_dpto;
@@ -136,6 +143,7 @@ public class Reserva implements Serializable{
 		this.firma = firma;
 		this.valor_total = valor_total;
 		this.cantidad_acompañantes = cantidad_acompañantes;
+		this.transporte = transporte;
 	}
 	public Reserva() {
 		

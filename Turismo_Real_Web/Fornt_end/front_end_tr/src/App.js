@@ -8,6 +8,7 @@ import Footer from './Components/Footer/footer';
 import clienteContext from './Contexts/ClienteContext';
 import { useEffect, useState } from 'react';
 import DeptoVista from './Components/DeptoComponent/DeptoCompVista';
+import ReservaComponente from './Components/ReservaComponent/ReservaComponente';
 
 const getData = () => {
   return localStorage.getItem('correo_usuario')
@@ -46,6 +47,7 @@ function App() {
             <div className='content-warp'>
               <Navigation />
               <Routes>
+                <Route path='/ListaReserva' element={<ReservaComponente />}></Route>
                 <Route path='/Inicio' element={<Inicio />}></Route>
                 <Route path='/' exact element={<Inicio />}></Route>
                 <Route path='/ReservaDepto/:id_depto' element={<DeptoVista />}></Route> 

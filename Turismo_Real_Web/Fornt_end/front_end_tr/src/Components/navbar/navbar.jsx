@@ -66,7 +66,7 @@ export const Navigation = () => {
                 title={usuario}
                 id="collasible-nav-dropdown"
               >
-                <NavDropdown.Item >Reservas</NavDropdown.Item>
+                <NavDropdown.Item href="/ListaReserva">Reservas</NavDropdown.Item>
                 <NavDropdown.Item onClick={handleSwal}>Cerrar Sesion</NavDropdown.Item>
               </NavDropdown>
 

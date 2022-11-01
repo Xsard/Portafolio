@@ -1,6 +1,7 @@
 package com.turismo.backend_turismo_real.controlador;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,9 @@ public class superReservaControlador {
 	@Autowired
 	private superReservaServImple servreserva;
 	
-	@GetMapping("/lista_reserva/{id_cliente}")
-	public List<superReserva> reserva_cliente(@PathVariable Integer id_cliente){
-		return servreserva.reserva_cliente(id_cliente);
+	@GetMapping("/lista_reserva/{id}")
+	public List<superReserva> reserva_cliente(@PathVariable Integer id){
+		return servreserva.reserva_cliente(id);
 	}
+
 }

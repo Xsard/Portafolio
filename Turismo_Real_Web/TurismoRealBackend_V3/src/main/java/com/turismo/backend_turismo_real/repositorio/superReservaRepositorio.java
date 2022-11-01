@@ -8,12 +8,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
+import com.turismo.backend_turismo_real.modelo.Cliente;
 import com.turismo.backend_turismo_real.modelo.Reserva;
 import com.turismo.backend_turismo_real.modelo.superReserva;
 
 @Repository
-public interface superReservaRepositorio extends JpaRepository<Reserva, Integer>{
+public interface superReservaRepositorio extends JpaRepository<superReserva, Integer>{
 
-	@Query(nativeQuery = true, value= "SELECT NOMBRE_DPTO, CHECK_IN, CHECK_OUT, ESTADO_PAGO, VALOR_TOTAL FROM RESERVA RES JOIN DEPARTAMENTO DPTO USING(ID_DPTO) WHERE ID_CLIENTE= :id_cliente")
-	List<superReserva> reserva_cliente(@Param("id_cliente") Integer id_cliente);
+	@Query(nativeQuery = true, value= "SELECT VALOR_TOTAL, id_reserva, nombre_dpto, check_in, check_out, estado_pago, valor_total FROM RESERVA RES JOIN DEPARTAMENTO DPTO ON (RES.ID_DPTO = DPTO.ID_DPTO) WHERE ID_CLIENTE =:id_cliente AND ESTADO_RESERVA = 'I' OR ESTADO_RESERVA ='T'")
+	List<superReserva> reserva_cliente(@Param("id_cliente") Integer id);
+	
+	@Query(nativeQuery = true, value= "SELECT * FROM RESERVA WHERE ID_CLIENTE= :id_cliente")
+	List<superReserva> allReserva(@Param("id_cliente") Integer id);
 }

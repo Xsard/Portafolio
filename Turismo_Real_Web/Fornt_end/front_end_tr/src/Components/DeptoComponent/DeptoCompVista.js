@@ -10,7 +10,6 @@ import clienteContext from "../../Contexts/ClienteContext";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { Modal, Button } from "react-bootstrap";
-import ServExtraComponente from "../ServicioExtraComponent/ServExtraComponent";
 import { ReactDOM } from "react";
 
 const DeptoVista = () => {
@@ -60,29 +59,6 @@ const DeptoVista = () => {
     }
 
 
-    const handleServExtra = () => {
-        <Modal
-            show={show}
-            onHide={handleClose}
-            backdrop="static"
-            keyboard={false}
-        >
-            <Modal.Header closeButton>
-                <Modal.Title>Modal title</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                I will not close if you click outside me. Don't even try to press
-                escape key.
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary">Understood</Button>
-            </Modal.Footer>
-        </Modal>
-    }
-
     const handlePostReserva = async (e) => {
         e.preventDefault();
         try {
@@ -119,7 +95,6 @@ const DeptoVista = () => {
                         }).then((respuesta) => {
                             if (respuesta.isConfirmed) {
                                 console.log("agregar servicio extra");
-                                handleServExtra()
                             }
                             else {
                                 let fecha1 = new Date(fechaIda).getTime();
@@ -133,7 +108,7 @@ const DeptoVista = () => {
 
                                 const resp = axios.post('http://localhost:8080/api/v1/reserva_pl', {
                                     id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
-                                    check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes
+                                    check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes, transporte: "N"
                                 })
 
                                 MySwal.fire({
