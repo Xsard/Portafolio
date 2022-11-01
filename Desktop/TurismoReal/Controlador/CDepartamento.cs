@@ -23,7 +23,7 @@ namespace Controlador
                 cmd.Parameters.Add("NRO", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.NroDpto;
                 cmd.Parameters.Add("CAP", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.Capacidad;
                 cmd.Parameters.Add("COMUNA", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.Comuna.IdComuna;
-                cmd.Parameters.Add("disponibilidad", OracleDbType.Char, ParameterDirection.Input).Value = dpto.Disponibilidad;
+                cmd.Parameters.Add("disponibilidad", OracleDbType.Char, ParameterDirection.Input).Value = Convert.ToInt32(dpto.Disponibilidad);
                 cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
                 try
                 {
@@ -61,7 +61,7 @@ namespace Controlador
                 cmd.Parameters.Add("NRO", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.NroDpto;
                 cmd.Parameters.Add("CAP", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.Capacidad;
                 cmd.Parameters.Add("COMUNA", OracleDbType.Int32, ParameterDirection.Input).Value = dpto.Comuna.IdComuna;
-                cmd.Parameters.Add("disp", OracleDbType.Char, ParameterDirection.Input).Value = dpto.Disponibilidad;
+                cmd.Parameters.Add("disp", OracleDbType.Char, ParameterDirection.Input).Value = Convert.ToInt32(dpto.Disponibilidad);
                 cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
 
                 try

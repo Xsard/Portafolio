@@ -606,5 +606,5 @@ END;
 DECLARE 
     R INTEGER;
 BEGIN
-    Mantener_Dpto.insertar_dpto('Transilvania', 59000, 'Franklin 231', 1, 5, 1, 'D', R);
+    Mantener_Dpto.insertar_dpto('Transilvania', 59000, 'Franklin 231', 1, 5, 1, 0, R);
 END;

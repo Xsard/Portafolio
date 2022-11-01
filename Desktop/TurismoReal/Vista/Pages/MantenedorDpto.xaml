@@ -147,14 +147,8 @@
                     <DataGridTemplateColumn Header="Disponibilidad" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgDptosUpdate_KeyDown">
-                                    <TextBox.Text >
-                                        <Binding Path="Disponibilidad"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules >
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                <CheckBox IsChecked="{Binding Path= Disponibilidad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="CheckBoxEstado_Click" >
+                                </CheckBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

@@ -69,7 +69,7 @@ namespace Vista.Pages
                                          IdComuna = Convert.ToInt32(rw[6]),
                                          NombreComuna = rw[9].ToString()
                                      },
-                                     Disponibilidad = rw[7].ToString()
+                                     Disponibilidad = Convert.ToBoolean(rw[7])
                                  }).ToList();
                     dtgDptos.ItemsSource = Dptos;
                 }
@@ -106,7 +106,7 @@ namespace Vista.Pages
                         Direccion = txt_direccion_ag.Text.Trim(),
                         NroDpto = Int32.Parse(txt_nro_ag.Text.Trim()),
                         Comuna = (Comuna)cbo_comuna_ag.SelectedItem,
-                        Disponibilidad = "D"
+                        Disponibilidad = false
                     };
 
                     int estado = CDepartamento.CrearDepto(dpto);
@@ -166,6 +166,7 @@ namespace Vista.Pages
             {
                 try
                 {
+                    MessageBox.Show(departamento.Disponibilidad.ToString());
                     int estado = CDepartamento.ActualizarDepto(departamento);
                     MensajeOk("Departamento actualizado");
                     ListarDpto();
@@ -175,7 +176,24 @@ namespace Vista.Pages
                     MessageBox.Show(ex.Message);
                 }
             }
-        }       
+        }
+        private void CheckBoxEstado_Click(object sender, RoutedEventArgs e)
+        {
+            Departamento departamento = (Departamento)dtgDptos.SelectedItem;
+            if (departamento != null)
+            {
+                try
+                {
+                    int estado = CDepartamento.ActualizarDepto(departamento);
+                    MensajeOk("Departamento actualizado");
+                    ListarDpto();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
         private void DtgDptoDelete_Click(object sender, RoutedEventArgs e)
         {
             Departamento departamento = (Departamento)dtgDptos.SelectedItem;
@@ -209,5 +227,6 @@ namespace Vista.Pages
             MantenedorMantenimientoDpto mantenedorMantenimientoDpto = new(departamento);
             ns.Navigate(mantenedorMantenimientoDpto);                        
         }
+
     }
 }
