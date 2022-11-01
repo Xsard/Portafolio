@@ -16,7 +16,7 @@ public class DeptoServicioImplement implements DeptoServicio{
 	
 	@Override
 	public List<Departamento> ObtenerDepto(){
-		return repodepto.findAll();
+		return repodepto.ObtenerDepto();
 	}
 	
 	@Override
