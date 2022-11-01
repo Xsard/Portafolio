@@ -31,12 +31,6 @@ namespace Vista.Pages
             ns.Navigate(new Uri("Pages/MantenedorUsuario.xaml", UriKind.RelativeOrAbsolute));
         }
 
-        private void btn_Disponibilidad_Crud_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new Uri("Pages/MantenedorDisponibilidad.xaml", UriKind.RelativeOrAbsolute));
-        }
-
         private void btn_Tours_Crud_Click(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
@@ -46,6 +40,12 @@ namespace Vista.Pages
         private void btn_ServDeptos_Crud_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btn_PlanTransporte_Crud_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Pages/PlanificarTransporte.xaml", UriKind.RelativeOrAbsolute));
         }
     }
 }

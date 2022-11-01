@@ -41,7 +41,7 @@
             <Button x:Name="btnDisponibilidad"  Width="80" Height="60" Padding="0" Grid.Row="2" Background="{x:Null}" BorderThickness="0" Click="btnDisponibilidad_Click">
                 <StackPanel>
                     <materialDesign:PackIcon Kind="Schedule" Width="40" Height="40" HorizontalAlignment="Center"/>
-                    <Label Content="Disponibilidad" FontSize="9" HorizontalAlignment="Center"/>
+                    <Label Content="Servicios Departamento" FontSize="9" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Button>
             <Button x:Name="btnUsuario" Click="btnUsuario_Click" Width="80" Height="60" Padding="0" Grid.Row="3" Background="{x:Null}" BorderThickness="0">

@@ -26,7 +26,7 @@ namespace Pruebas
                 NroDpto = 608,
                 Capacidad = 4,
                 Comuna = comuna,
-                Disponibilidad = "D"
+                Disponibilidad = true
             };
 
             //Act
@@ -56,7 +56,7 @@ namespace Pruebas
                 NroDpto = 607,
                 Capacidad = 5,
                 Comuna = comuna,
-                Disponibilidad = "O"
+                Disponibilidad = false
             };
 
             //Act

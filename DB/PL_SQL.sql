@@ -597,6 +597,21 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Tours
     END;
 END Mantener_Tours;
 /
+CREATE OR REPLACE PACKAGE Mantener_Reserva
+    AS
+    PROCEDURE listar_reserva(Reservas OUT SYS_REFCURSOR);
+END Mantener_Reserva;
+/
+CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
+    AS    
+    PROCEDURE listar_reserva(Reservas OUT SYS_REFCURSOR)
+        IS
+    BEGIN
+        OPEN Reservas FOR
+            SELECT * FROM RESERVA;
+    END;
+END Mantener_Reserva;
+/
 DECLARE 
     r integer;
 BEGIN
