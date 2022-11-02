@@ -13,6 +13,8 @@
         private int cantidadAcompanantes;
         private string transporte;
         private int valorTotal;
+        private Departamento dpto;
+        private Cliente cliente;
 
         public int IdReserva { get => idReserva; set => idReserva = value; }
         public int IdDepto { get => idDepto; set => idDepto = value; }
@@ -25,5 +27,7 @@
         public int CantidadAcompanantes { get => cantidadAcompanantes; set => cantidadAcompanantes = value; }
         public string Transporte { get => transporte; set => transporte = value; }
         public int ValorTotal { get => valorTotal; set => valorTotal = value; }
+        public Departamento Dpto { get => dpto; set => dpto = value; }
+        public Cliente Cliente { get => cliente; set => cliente = value; }
     }
 }

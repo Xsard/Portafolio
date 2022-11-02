@@ -36,6 +36,8 @@ namespace Vista.Pages
                                     CantidadAcompanantes = Convert.ToInt32(rw[8]),
                                     Transporte = rw[9].ToString(),
                                     ValorTotal = Convert.ToInt32(rw[10]),
+                                    Cliente = new Cliente { Rut = rw[11].ToString(), Nombres = rw[12].ToString(), Apellidos = rw[13].ToString() },
+                                    Dpto = new Departamento{ NombreDpto = rw[15].ToString(), Direccion = rw[17].ToString() }
                                 }).ToList();
                     dtgTransporte.ItemsSource = Trans;
                 }
@@ -47,6 +49,28 @@ namespace Vista.Pages
         }
 
         private void btn_planificar_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            dhCorreo.IsOpen = true;
+        }
+
+        private void btn_Enviar_Correo_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Reserva reserva = (Reserva)dtgTransporte.SelectedItem;
+            if (reserva != null)
+            {
+                string email = txt_nombre_ag.Text;
+                string asunto = txtAsunto.Text;
+                string lugar = txtTerminal.Text;
+                string comuna = txtComuna.Text;
+                if (email == null || asunto == null || lugar == null || comuna == null) 
+                {
+                    return;
+                }
+                Mensajeria.PlanificarTransporte(email, asunto, reserva.CantidadAcompanantes.ToString(), lugar, comuna, reserva.CheckIn.ToString(), reserva.CheckOut.ToString(), reserva.Dpto.NombreDpto, reserva.Dpto.Direccion);
+            }
+        }
+
+        private void btn_Cancelar_Click(object sender, System.Windows.RoutedEventArgs e)
         {
 
         }
