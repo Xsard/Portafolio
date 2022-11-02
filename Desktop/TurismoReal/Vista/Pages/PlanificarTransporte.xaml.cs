@@ -74,11 +74,13 @@ namespace Vista.Pages
                     return;
                 }
                 Mensajeria.PlanificarTransporte(email, asunto, reserva.CantidadAcompanantes.ToString(), lugar, comuna, reserva.CheckIn.ToString(), reserva.CheckOut.ToString(), reserva.Dpto.NombreDpto, reserva.Dpto.Direccion);
+                dhCorreo.IsOpen = false;
             }
         }
 
         private void btn_Cancelar_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            dhCorreo.IsOpen = false;
 
         }
     }

@@ -62,23 +62,15 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-<<<<<<< Updated upstream
                     <DataGridTemplateColumn Header="Depto" Width="*">
-=======
-                    <DataGridTemplateColumn Header="IdDepto"  Width="*">
->>>>>>> Stashed changes
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox IsReadOnly="True">
                                     <TextBox.Text >
-<<<<<<< Updated upstream
                                         <Binding Path="Dpto.NombreDpto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
                                             </Binding.ValidationRules>
                                         </Binding>
-=======
-                                        <Binding Path="IdDepto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
->>>>>>> Stashed changes
                                     </TextBox.Text>
                                 </TextBox>
                             </DataTemplate>
@@ -89,46 +81,13 @@
                             <DataTemplate>
                                 <TextBox IsReadOnly="True">
                                     <TextBox.Text >
-<<<<<<< Updated upstream
-                                        <Binding Path="Cliente.Nombres" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-=======
-                                        <Binding Path="IdCliente" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                        <Binding Path="Cliente.Nombres" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
                                     </TextBox.Text>
                                 </TextBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="EstadoReserva" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox>
-                                    <TextBox.Text >
-                                        <Binding Path="EstadoReserva" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules>
-                                                <local1:EstadoHasta/>
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="EstadoPago" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox>
-                                    <TextBox.Text >
-                                        <Binding Path="EstadoPago" StringFormat="dd/MM/yyyy"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
->>>>>>> Stashed changes
-                                            <Binding.ValidationRules>
-                                                <local1:EstadoHasta/>
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+
                     <DataGridTemplateColumn Header="CheckIn" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -163,42 +122,18 @@
                                 <TextBox>
                                     <TextBox.Text>
                                         <Binding Path="CantidadAcompanantes" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules>
-                                                <local1:AcompanantesHasta/>
-                                            </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-<<<<<<< Updated upstream
-=======
-                    <DataGridTemplateColumn Header="Transporte" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox>
-                                    <TextBox.Text>
-                                        <Binding Path="Transporte" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules>
-                                                <local1:EstadoHasta/>
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
->>>>>>> Stashed changes
                     <DataGridTemplateColumn Header="Total" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox>
                                     <TextBox.Text>
                                         <Binding Path="ValorTotal" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules>
-                                                <local1:TotalEsPositivo/>
-                                            </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
