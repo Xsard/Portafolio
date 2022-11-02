@@ -23,6 +23,13 @@ namespace Vista.Pages
             ListarImg();
             lblNombreDpto.Content = "Departamento " + departamento.Direccion;
         }
+        private void ItemError(object sender, ValidationErrorEventArgs e)
+        {
+            if (e.Action == ValidationErrorEventAction.Added)
+            {
+                MessageBox.Show(e.Error.ErrorContent.ToString());
+            }
+        }
         private void ListarObjetos()
         {
             try
@@ -96,25 +103,6 @@ namespace Vista.Pages
                 throw;
             }
         }
-
-        private void ActualizarObejto_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                Objeto objeto = (Objeto)dtgInventario.SelectedItem;
-                try
-                {
-                    int estado = CInventario.ActualizarInventario(objeto);
-                    MessageBox.Show("Inventario actualizado");
-                    ListarObjetos();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-        }
-
         private void btnAgregarImagen_Click(object sender, RoutedEventArgs e)
         {
             dhFotos.IsOpen = true;
@@ -225,5 +213,22 @@ namespace Vista.Pages
             img.Source = mainPath;
         }
 
+        private void DtgInventarioUpdate_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Objeto objeto = (Objeto)dtgInventario.SelectedItem;
+                try
+                {
+                    int estado = CInventario.ActualizarInventario(objeto);
+                    MessageBox.Show("Inventario actualizado");
+                    ListarObjetos();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
     }
 }

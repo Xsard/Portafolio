@@ -33,7 +33,6 @@
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
                             <Button x:Name="Ingresar_button" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Click="Ingresar_button_Click" Content="Ingresar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,4,0" Cursor="Hand"/>
-                            <Button x:Name="Registrar_button" Content="Registrarse" Style="{StaticResource MaterialDesignRaisedButton}"  VerticalAlignment="Top"  FontSize="14" Width="104" Margin="4,0,0,0"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

@@ -3,7 +3,8 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Vista.Pages" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:Vista.Pages" xmlns:local1="clr-namespace:Vista.Pages.ValidacionesMantenimiento"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MantenedorMantenimientoDpto">
@@ -73,8 +74,9 @@
                             <DataTemplate>
                                 <TextBox KeyDown="DtgMantDptosUpdate_KeyDown">
                                     <TextBox.Text>
-                                        <Binding Path="NombreMantenimiento"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                        <Binding Path="NombreMantenimiento" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
+                                                <local1:NombreHasta/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -89,6 +91,7 @@
                                     <TextBox.Text >
                                         <Binding Path="DescripcionMantenimiento" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
+                                                <local1:DescHasta/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -131,6 +134,7 @@
                                     <TextBox.Text >
                                         <Binding Path="CostoMantencion"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
+                                                <local1:TarifaEsNroPositivo/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -145,6 +149,7 @@
                                     <TextBox.Text >
                                         <Binding Path="Estado"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
+                                                <local1:EstadoHasta/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>

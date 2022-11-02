@@ -3,13 +3,44 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Vista.Pages"
+      xmlns:local="clr-namespace:Vista.Pages" xmlns:local1="clr-namespace:Vista.Pages.ValidacionesInventario"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="785" d:DesignWidth="1140"
       Title="PerfilDepto">
 
-    <Grid>
+    <Page.Resources>
+        <CollectionViewSource x:Key="comunas"/>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBoxBase}">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <Border x:Name="errorBorder" BorderBrush="#FFCB2E2E" BorderThickness="1" Background="#11FF0000" IsHitTestVisible="False"/>
+                            <AdornedElementPlaceholder x:Name="placeholder"/>
+                            <Popup AllowsTransparency="True" HorizontalAlignment="Right" HorizontalOffset="0" VerticalOffset="0" PopupAnimation="Fade" Placement="Right" 
+                                PlacementTarget="{Binding ElementName=errorBorder}" IsOpen="{Binding ElementName=placeholder, Path=AdornedElement.IsFocused, Mode=OneWay}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Polygon  VerticalAlignment="Center" Points="0,4 4,0 4,8" Fill="#FFCB2E2E" Stretch="Fill" Stroke="#FFCB2E2E" StrokeThickness="2"/>
+                                    <Border Background="#FFCB2E2E" CornerRadius="4" Padding="4">
+                                        <TextBlock HorizontalAlignment="Center" Foreground="White" FontWeight="Bold" Margin="2,0,0,0"
+                                                Text="{Binding ElementName=placeholder, Path=AdornedElement.ToolTip, Mode=OneWay}" />
+                                    </Border>
+                                </StackPanel>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+
+    <Grid Validation.Error="ItemError">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -47,28 +78,56 @@
                     <DataGridTemplateColumn Header="Id">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Label Content="{Binding Path=IdObjeto}"/>
+                                <TextBox IsReadOnly="True" KeyDown="DtgInventarioUpdate_KeyDown">
+                                    <TextBox.Text>
+                                        <Binding Path="IdObjeto"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </TextBox.Text>
+                                </TextBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Item" Width="1.5*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Path=NombreObjeto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="ActualizarObejto_KeyDown"/>
+                                <TextBox KeyDown="DtgInventarioUpdate_KeyDown">
+                                    <TextBox.Text>
+                                        <Binding Path="NombreObjeto"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local1:NombreHasta/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Cantidad" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Path=CantidadObjeto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="ActualizarObejto_KeyDown"/>
+                                <TextBox KeyDown="DtgInventarioUpdate_KeyDown">
+                                    <TextBox.Text>
+                                        <Binding Path="CantidadObjeto"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local1:CantidadEsPositivo/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Valor unitario" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Path=ValorUnitarioObjeto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="ActualizarObejto_KeyDown"/>
+                                <TextBox KeyDown="DtgInventarioUpdate_KeyDown">
+                                    <TextBox.Text>
+                                        <Binding Path="ValorUnitarioObjeto"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local1:ValorEsNroPositivo/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

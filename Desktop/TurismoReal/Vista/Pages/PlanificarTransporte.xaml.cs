@@ -4,6 +4,7 @@ using System.Data;
 using System;
 using System.Windows.Controls;
 using System.Linq;
+using System.Windows;
 
 namespace Vista.Pages
 {
@@ -14,7 +15,13 @@ namespace Vista.Pages
             InitializeComponent();
             ListarReservas();
         }
-
+        private void ItemError(object sender, ValidationErrorEventArgs e)
+        {
+            if (e.Action == ValidationErrorEventAction.Added)
+            {
+                MessageBox.Show(e.Error.ErrorContent.ToString());
+            }
+        }
         private void ListarReservas()
         {
             try
