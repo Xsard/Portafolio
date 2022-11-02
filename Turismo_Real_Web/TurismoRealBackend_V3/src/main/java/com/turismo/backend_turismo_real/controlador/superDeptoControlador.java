@@ -23,9 +23,5 @@ public class superDeptoControlador {
 	public ResponseEntity<superDepto> obtenerDeptoId(@PathVariable Integer id){
 		return deptoServ.obtenerDeptoId(id);
 	}
-	
-	@GetMapping("/weaita/{id}")
-	public ResponseEntity<superDepto> info_depto (@PathVariable Integer id){
-		return deptoServ.info_depto(id);
-	}
+
 }

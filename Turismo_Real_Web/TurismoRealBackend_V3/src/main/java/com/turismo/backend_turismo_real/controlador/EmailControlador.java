@@ -18,6 +18,6 @@ public class EmailControlador {
 	
 	@GetMapping("/TestCorreo")
 	public void sendCorreo() {
-		envio.SendEmail("yerko.mra@gmail.com", "HOLA YERKO", "OLA SOY EL BACKEND ENVIADO CORREOS, CHUPALA");
+		envio.SendEmail("yerko.mra@gmail.com", "HOLA YERKO", "OLA SOY EL BACKEND ENVIADO CORREOS");
 	}
 }
