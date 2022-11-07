@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -39,13 +40,14 @@ public class ReservaControlador {
 	public ResponseEntity<Reserva> actualizarReserva(@PathVariable Integer id_reserva){
 		return servReserva.actualizarReserva(id_reserva);
 	}
+	@PostMapping("/ActualizarPago/{id_reserva}")
+	public ResponseEntity<Reserva> actualizarEstadoPago(@PathVariable Integer id_reserva){
+		return servReserva.actualizarEstadoPago(id_reserva);
+	}
+
+	@GetMapping("/obtenerReserva/{id_reserva}")
+	public ResponseEntity<Reserva> obtenerReserva(@PathVariable Integer id_reserva) {
+		return servReserva.obtenerReserva(id_reserva);
+	}
 	
-	@PostMapping("/updReserva/{id_reserva}")
-	public int update_reserva(@PathVariable int id_reserva){
-		return servReserva.update_reserva(id_reserva);
-	}
-	@DeleteMapping("/delete/")
-	public void borrar_reserva(@PathVariable int id) {
-		servReserva.borrar_reserva(id);
-	}
 }

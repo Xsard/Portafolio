@@ -14,8 +14,8 @@ public interface ReservaServicio {
 			Date check_out, int firma_res,int valor_total, int cantidad_acomp, String transporte);
 
 	ResponseEntity<Reserva> actualizarReserva(Integer id_reserva);
+
+	ResponseEntity<Reserva> actualizarEstadoPago(Integer id_reserva);
 	
-	int update_reserva(int id_reserva);
-	
-	void borrar_reserva(int id);
+	ResponseEntity<Reserva> obtenerReserva(Integer id_reserva);
 }

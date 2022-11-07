@@ -9,6 +9,7 @@ import clienteContext from './Contexts/ClienteContext';
 import { useEffect, useState } from 'react';
 import DeptoVista from './Components/DeptoComponent/DeptoCompVista';
 import ReservaComponente from './Components/ReservaComponent/ReservaComponente';
+import Pago_web from './Components/ReservaComponent/paginaPago';
 
 const getData = () => {
   return localStorage.getItem('correo_usuario')
@@ -50,16 +51,18 @@ function App() {
                 <Route path='/ListaReserva' element={<ReservaComponente />}></Route>
                 <Route path='/Inicio' element={<Inicio />}></Route>
                 <Route path='/' exact element={<Inicio />}></Route>
-                <Route path='/ReservaDepto/:id_depto' element={<DeptoVista />}></Route> 
+                <Route path='/ReservaDepto/:id_depto' element={<DeptoVista />}></Route>
+                <Route path='/portalPago/:id_reserva' element={<Pago_web />}></Route> 
                 <Route path="/Login" element={<FormularioLogin />}></Route>
                 <Route path="/Registrarse" element={<FormularioRegistrarse />}></Route>
               </Routes>
-              <Footer />
+              
             </div>
           </clienteContext.Provider>
         </Router >
+        <Footer />
       </div>
-
+      
     </>
   );
 }

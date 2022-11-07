@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.turismo.backend_turismo_real.modelo.Departamento;
 import com.turismo.backend_turismo_real.modelo.Reserva;
 import com.turismo.backend_turismo_real.repositorio.ReservaRepositorio;
 
@@ -34,16 +35,22 @@ public class ReservaServImplement implements ReservaServicio{
 		reporeserva.save(reservaAct);
 		return ResponseEntity.ok(reservaAct);
 	}
-
+	
 	@Override
-	public int update_reserva(int id_reserva) {
-		reporeserva.update_reserva(id_reserva);
-		return 1;
+	public ResponseEntity<Reserva> actualizarEstadoPago(Integer id_reserva){
+		Reserva reservaAct = reporeserva.findById(id_reserva).orElse(null);
+		reservaAct.setEstado_pago("A");
+		reporeserva.save(reservaAct);
+		return ResponseEntity.ok(reservaAct);
 	}
 
 	@Override
-	public void borrar_reserva(int id) {
-		reporeserva.deleteById(id);
+	public ResponseEntity<Reserva> obtenerReserva(Integer id_reserva){
+		Reserva rsv = reporeserva.findById(id_reserva)
+				.orElseThrow();
+		return ResponseEntity.ok(rsv);
 	}
+
+	
 
 }
