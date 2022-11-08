@@ -35,4 +35,9 @@ public class DeptoServicioImplement implements DeptoServicio{
 	public String id_foto() {
 		return repodepto.id_foto();
 	}
+
+	@Override
+	public List<String> fotos_departamento(int id_dpto) {
+		return repodepto.fotos_departamento(id_dpto);
+	}
 }

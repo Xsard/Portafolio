@@ -42,4 +42,9 @@ public class DepartamentoControlador {
 	public String id_foto(){
 		return deptoServ.id_foto();
 	}
+	
+	@GetMapping("/fotosDepartamento/{id_dpto}")
+	public List<String> fotos_departamento(@PathVariable int id_dpto){
+		return deptoServ.fotos_departamento(id_dpto);
+	}
 }

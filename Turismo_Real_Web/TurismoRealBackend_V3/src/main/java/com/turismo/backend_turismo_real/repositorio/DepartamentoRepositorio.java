@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import com.turismo.backend_turismo_real.modelo.Departamento;
@@ -23,4 +24,7 @@ public interface DepartamentoRepositorio extends JpaRepository<Departamento, Int
 	
 	@Query(nativeQuery = true, value= "SELECT * FROM DEPARTAMENTO WHERE DISPONIBILIDAD <> 0")
 	List<Departamento> ObtenerDepto();
+	
+	@Query(nativeQuery = true, value= "SELECT ID_FOTO FROM FOTOGRAFIA_DPTO WHERE  ID_DPTO=:id_dpto")
+	List<String> fotos_departamento(@Param("id_dpto") int id_dpto);
 }

@@ -17,4 +17,6 @@ public interface DeptoServicio {
 	
 	String id_foto();
 	
+	List<String>fotos_departamento(int id_dpto);
+	
 }

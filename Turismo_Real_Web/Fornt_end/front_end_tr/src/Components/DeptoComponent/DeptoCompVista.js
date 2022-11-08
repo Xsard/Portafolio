@@ -1,9 +1,7 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import foto_test from "../../imagenes_Dpto/22.jpg"
 import '../DeptoComponent/deptovista.css'
-import foto_alt from "../../Img/alt.jpg"
 import { Form } from "react-bootstrap";
 import { useContext } from "react";
 import clienteContext from "../../Contexts/ClienteContext";
@@ -11,10 +9,14 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { Modal, Button } from "react-bootstrap";
 import { ReactDOM } from "react";
+import { useEffect } from "react";
+
+
 
 const DeptoVista = () => {
     const { id_depto } = useParams()
     const url = `http://localhost:8080/api/v1/test/${id_depto}`;
+    const url_all = `http://localhost:8080/api/v1/fotosDepartamento/${id_depto}`;
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -37,9 +39,24 @@ const DeptoVista = () => {
     const [fechaVuelta, setFechaVuelta] = useState('');
     const [cantAcompañantes, setAcompañantes] = useState('');
 
+    const [foto_0, setFoto0] = useState('');
+    const [foto_1, setFoto1] = useState('');
+    const [foto_2, setFoto2] = useState('');
+    const [foto_3, setFoto3] = useState('');
+    const [foto_4, setFoto4] = useState('');
+
     const MySwal = withReactContent(Swal);
 
-    const handleOnLoad = async (e) => {
+    useEffect(() => {
+        const CargarFotos = async () => {
+            const resp = await axios.get(`http://localhost:8080/api/v1/fotosDepartamento/${id_depto}`)
+            setFoto0(resp.data[0])
+            setFoto1(resp.data[1])
+        }
+        CargarFotos()
+    }, [])
+
+    const Cargar = async (e) => {
         e.preventDefault();
         try {
             const resp = await axios.get(url)
@@ -58,7 +75,9 @@ const DeptoVista = () => {
         }
     }
 
-
+    const test = () => {
+        handleShow()
+    }
     const handlePostReserva = async (e) => {
         e.preventDefault();
         try {
@@ -94,7 +113,7 @@ const DeptoVista = () => {
                             denyButtonText: `No`
                         }).then((respuesta) => {
                             if (respuesta.isConfirmed) {
-                                console.log("agregar servicio extra");
+                                handleShow()
                             }
                             else {
                                 MySwal.fire({
@@ -171,17 +190,38 @@ const DeptoVista = () => {
 
     return (
         <>
-            <div onLoad={handleOnLoad}>
+            <div onLoad={Cargar}>
                 <div className="divmayor " >
                     <br></br>
                     <div className="row g-lg-2" >
-                        <a href="" className="col col-lg-6"><img src={foto_test} style={{ width: "100%", height: "100%" }}></img></a>
+                        {
+                            foto_0 === '' ?
+                                <a href="" className="col col-lg-6"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} style={{ width: "100%", height: "100%" }}></img></a> :
+                                <a href="" className="col col-lg-6"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} style={{ width: "100%", height: "100%" }}></img></a>
+                        }
                         <div className="col col-lg-6">
                             <div className="row row-cols-2 row-cols-lg-2 g-2">
-                                <a href="" className="col"><img src={foto_test} alt={foto_alt} style={{ width: "100%", height: "100%" }}></img></a>
-                                <a href="" className="col"><img src={foto_test} alt={foto_alt} style={{ width: "100%", height: "100%" }}></img></a>
-                                <a href="" className="col"><img src={foto_test} alt={foto_alt} style={{ width: "100%", height: "100%" }}></img></a>
-                                <a href="" className="col"><img src={foto_test} alt={foto_alt} style={{ width: "100%", height: "100%" }}></img></a>
+                                {
+                                    foto_1 === '' ?
+                                        <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
+                                        <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_1}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
+                                }
+                                {
+                                    foto_2 === '' ?
+                                        <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
+                                        <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
+                                }
+                                {
+                                    foto_3 === '' ?
+                                        <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
+                                        <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
+                                }
+                                {
+                                    foto_4 === '' ?
+                                        <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
+                                        <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
+                                }
+
                             </div>
                         </div>
                     </div>
@@ -237,6 +277,37 @@ const DeptoVista = () => {
                         </div>
                     </div>
                 </div>
+                <Modal
+            show={show}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+        >
+            <Modal.Header closeButton>
+                <Modal.Title>Listado de servicios extras</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <p>Para completar el registro, debe ingresar el codigo que fue enviado a su correo</p>
+                <div className="form-row mb-3">
+                    <Form.Group className="form-input mb-3"
+                        type="number"
+                        id="repCode">
+                        <Form.Label>Ingresar codigo de verificación</Form.Label>
+                        <Form.Control type="number" placeholder="ej: 123456" />
+                    </Form.Group>
+                </div>
+            </Modal.Body>
+            <Modal.Footer>
+
+                <Button variant="primary">
+                    Reenviar Codigo
+                </Button>
+                <Button variant="primary">
+                    Comprobar
+                </Button>
+
+            </Modal.Footer>
+        </Modal>
             </div>
         </>
     )
