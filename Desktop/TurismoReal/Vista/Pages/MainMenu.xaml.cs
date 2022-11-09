@@ -42,11 +42,10 @@ namespace Vista.Pages
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Pages/MantenedorServDpto.xaml", UriKind.RelativeOrAbsolute));
         }
-
-        private void btn_PlanTransporte_Crud_Click(object sender, RoutedEventArgs e)
+        private void btn_Reservas_Click(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new Uri("Pages/PlanificarTransporte.xaml", UriKind.RelativeOrAbsolute));
+            ns.Navigate(new Uri("Pages/MantenedorReservas.xaml", UriKind.RelativeOrAbsolute));
         }
     }
 }
