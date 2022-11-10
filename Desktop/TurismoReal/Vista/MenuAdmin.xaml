@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Vista"
         mc:Ignorable="d"
-        Title="Window1" Height="800" Width="1220" WindowStartupLocation="CenterScreen">
+        Title="Turismo Real" Height="800" Width="1220" WindowStartupLocation="CenterScreen">
 
     <Grid Background="#f2f2f2">
         <Grid.ColumnDefinitions>
@@ -16,14 +16,15 @@
         <!--#region Menú lateral-->
         <Grid x:Name="gridMenu" Width="80" HorizontalAlignment="Left" Background="Gray">
             <Grid.RowDefinitions>
-                <RowDefinition Height="80"/>
-                <RowDefinition Height="68"/>
-                <RowDefinition Height="68"/>
-                <RowDefinition Height="68"/>
-                <RowDefinition Height="68"/>
-                <RowDefinition Height="68"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Button Width="80" VerticalAlignment="Bottom" Height="60" Padding="0" Background="{x:Null}" BorderThickness="0" x:Name="btnHome" Click="btnHome_Click">
@@ -32,37 +33,43 @@
                     <Label Content="Inicio" FontSize="9" HorizontalAlignment="Center" Padding="0"/>
                 </StackPanel>
             </Button>
-            <Button Width="80" Height="60" Padding="0" Grid.Row="1" Background="{x:Null}" BorderThickness="0" x:Name="btnDpto" Click="btnDpto_Click">
+            <Button x:Name="btnReservas" Click="btnReservas_Click" Width="80" Height="60" Padding="0" Grid.Row="1" Background="{x:Null}" BorderThickness="0">
+                <StackPanel>
+                    <materialDesign:PackIcon Kind="BookmarkAdd" Width="40" Height="40" HorizontalAlignment="Center"/>
+                    <Label Content="Reservas" FontSize="9" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Width="80" Height="60" Padding="0" Grid.Row="2" Background="{x:Null}" BorderThickness="0" x:Name="btnDpto" Click="btnDpto_Click">
                 <StackPanel>
                     <materialDesign:PackIcon Kind="Building" Width="40" Height="40" HorizontalAlignment="Center"/>
                     <Label Content="Departamentos" FontSize="9" HorizontalAlignment="Center" Padding="0"/>
                 </StackPanel>
             </Button>
-            <Button x:Name="btnServDpto" Click="btnServDpto_Click" Width="80" Height="60" Padding="0" Grid.Row="2" Background="{x:Null}" BorderThickness="0">
+            <Button x:Name="btnServDpto" Click="btnServDpto_Click" Width="80" Height="60" Padding="0" Grid.Row="3" Background="{x:Null}" BorderThickness="0">
                 <StackPanel>
                     <materialDesign:PackIcon Kind="ServiceToolbox" Width="40" Height="40" HorizontalAlignment="Center"/>
                     <Label Content="Servicios Departamento" FontSize="9" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <Button x:Name="btnUsuario" Click="btnUsuario_Click" Width="80" Height="60" Padding="0" Grid.Row="3" Background="{x:Null}" BorderThickness="0">
+            <Button x:Name="btnUsuario" Click="btnUsuario_Click" Width="80" Height="60" Padding="0" Grid.Row="4" Background="{x:Null}" BorderThickness="0">
                 <StackPanel>
                     <materialDesign:PackIcon Kind="User" Width="40" Height="40" HorizontalAlignment="Center"/>
                     <Label Content="Usuarios" FontSize="9" HorizontalAlignment="Center"/> 
                 </StackPanel>
             </Button>
-            <Button x:Name="btnServE" Click="btnServE_Click" Width="80" Height="60" Padding="0" Grid.Row="4" Background="{x:Null}" BorderThickness="0">
+            <Button x:Name="btnServE" Click="btnServE_Click" Width="80" Height="60" Padding="0" Grid.Row="5" Background="{x:Null}" BorderThickness="0">
                 <StackPanel>
                     <materialDesign:PackIcon Kind="RoomServiceOutline" Width="40" Height="40" HorizontalAlignment="Center"/>
                     <Label Content="Servicios Extras" FontSize="9" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <Button x:Name="btnTour" Click="btnTour_Click" Width="80" Height="60" Padding="0" Grid.Row="5" Background="{x:Null}" BorderThickness="0">
+            <Button x:Name="btnTour" Click="btnTour_Click" Width="80" Height="60" Padding="0" Grid.Row="6" Background="{x:Null}" BorderThickness="0">
                 <StackPanel>
                     <materialDesign:PackIcon Kind="Voyager" Width="40" Height="40" HorizontalAlignment="Center"/>
                     <Label Content="Tours" FontSize="9" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <Button x:Name="btnTransporte" Click="btnTransporte_Click" Width="80" Height="60" Padding="0" Grid.Row="6" Background="{x:Null}" BorderThickness="0">
+            <Button x:Name="btnTransporte" Click="btnTransporte_Click" Width="80" Height="60" Padding="0" Grid.Row="7" Background="{x:Null}" BorderThickness="0">
                 <StackPanel>
                     <materialDesign:PackIcon Kind="Transportation" Width="40" Height="40" HorizontalAlignment="Center"/>
                     <Label Content="Planificar Transporte" FontSize="9" HorizontalAlignment="Center"/>

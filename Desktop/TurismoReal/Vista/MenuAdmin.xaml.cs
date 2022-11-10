@@ -7,7 +7,7 @@ namespace Vista
 {
     public partial class MenuAdmin : Window
     {
-        private DataTable dt;
+        private readonly DataTable dt;
         public MenuAdmin(DataTable admin)
         {
             InitializeComponent();
@@ -25,32 +25,34 @@ namespace Vista
             MainMenu mainMenu = new(dt);
             PagesNavigation.Navigate(mainMenu);
         }
+        private void btnReservas_Click(object sender, RoutedEventArgs e)
+        {
+            PagesNavigation.Navigate(new Uri("Pages/MantenedorReservas.xaml", UriKind.RelativeOrAbsolute));
+        }
         private void btnDpto_Click(object sender, RoutedEventArgs e)
         {
-            PagesNavigation.Navigate(new System.Uri("Pages/MantenedorDpto.xaml", UriKind.RelativeOrAbsolute));
+            PagesNavigation.Navigate(new Uri("Pages/MantenedorDpto.xaml", UriKind.RelativeOrAbsolute));
         }
         private void btnServE_Click(object sender, RoutedEventArgs e)
         {
-            PagesNavigation.Navigate(new System.Uri("Pages/MantenedorServExtras.xaml", UriKind.RelativeOrAbsolute));
+            PagesNavigation.Navigate(new Uri("Pages/MantenedorServExtras.xaml", UriKind.RelativeOrAbsolute));
         }
         private void btnUsuario_Click(object sender, RoutedEventArgs e)
         {
-            PagesNavigation.Navigate(new System.Uri("Pages/MantenedorUsuario.xaml", UriKind.RelativeOrAbsolute));
+            PagesNavigation.Navigate(new Uri("Pages/MantenedorUsuario.xaml", UriKind.RelativeOrAbsolute));
         }
         private void btnServDpto_Click(object sender, RoutedEventArgs e)
         {
-            PagesNavigation.Navigate(new System.Uri("Pages/MantenedorServDpto.xaml", UriKind.RelativeOrAbsolute));
+            PagesNavigation.Navigate(new Uri("Pages/MantenedorServDpto.xaml", UriKind.RelativeOrAbsolute));
         }
         private void btnTransporte_Click(object sender, RoutedEventArgs e)
         {
-            PagesNavigation.Navigate(new System.Uri("Pages/PlanificarTransporte.xaml", UriKind.RelativeOrAbsolute));
+            PagesNavigation.Navigate(new Uri("Pages/PlanificarTransporte.xaml", UriKind.RelativeOrAbsolute));
         }
         private void btnTour_Click(object sender, RoutedEventArgs e)
         {
-            PagesNavigation.Navigate(new System.Uri("Pages/MantenedorTours.xaml", UriKind.RelativeOrAbsolute));
+            PagesNavigation.Navigate(new Uri("Pages/MantenedorTours.xaml", UriKind.RelativeOrAbsolute));
         }
-        #endregion
-
-
+        #endregion        
     }
 }
