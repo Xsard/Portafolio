@@ -11,8 +11,6 @@ import { Modal, Button } from "react-bootstrap";
 import { ReactDOM } from "react";
 import { useEffect } from "react";
 
-
-
 const DeptoVista = () => {
     const { id_depto } = useParams()
     const url = `http://localhost:8080/api/v1/test/${id_depto}`;
@@ -53,7 +51,8 @@ const DeptoVista = () => {
             setFoto0(resp.data[0])
             setFoto1(resp.data[1])
             setFoto2(resp.data[2])
-            console.log(resp.data[3])
+            setFoto3(resp.data[3])
+            setFoto4(resp.data[4])
         }
         CargarFotos()
     }, [])
@@ -162,6 +161,7 @@ const DeptoVista = () => {
                                     }).then((respuesta) => {
                                         if (respuesta.isConfirmed) {
                                             window.location.replace('/Inicio');
+                                            window.history.forward();
                                         }
                                     })
                                 }
@@ -189,31 +189,31 @@ return (
                 <br></br>
                 <div className="row g-lg-2" >
                     {
-                        foto_0 === '' ?
+                        foto_0 === '' || foto_0 === undefined?
                             <a href="" className="col col-lg-6"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} style={{ width: "100%", height: "100%" }}></img></a> :
                             <a href="" className="col col-lg-6"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} style={{ width: "100%", height: "100%" }}></img></a>
                     }
                     <div className="col col-lg-6">
                         <div className="row row-cols-2 row-cols-lg-2 g-2">
                             {
-                                foto_1 === '' ?
+                                foto_1 === '' || foto_1 === undefined?
                                     <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
                                     <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_1}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
                             }
                             {
-                                foto_2 === '' ?
+                                foto_2 === '' || foto_2 === undefined?
                                     <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
-                                    <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
+                                    <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_2}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
                             }
                             {
-                                foto_3 === '' ?
+                                foto_3 === '' || foto_3 === undefined?
                                     <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
-                                    <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
+                                    <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_3}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
                             }
                             {
-                                foto_4 === '' ?
+                                foto_4 === '' || foto_4 === undefined?
                                     <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
-                                    <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
+                                    <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_4}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
                             }
 
                         </div>

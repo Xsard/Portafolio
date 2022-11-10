@@ -29,4 +29,7 @@ public interface ReservaRepositorio extends JpaRepository<Reserva, Integer>{
 	@Query(nativeQuery = true, value= "UPDATE reserva SET ESTADO_RESERVA = 'C' WHERE id_reserva = :id_reserva")
 	int update_reserva(@Param("id_reserva") int id_reserva);
 	
+	@Query(nativeQuery = true, value= "SELECT ID_DPTO FROM RESERVA WHERE id_reserva = :id_reserva")
+	int traerDpto(@Param("id_reserva") int id_reserva);
+	
 }

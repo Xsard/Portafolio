@@ -18,4 +18,6 @@ public interface ReservaServicio {
 	ResponseEntity<Reserva> actualizarEstadoPago(Integer id_reserva);
 	
 	ResponseEntity<Reserva> obtenerReserva(Integer id_reserva);
+	
+	int traerDpto(int id_reserva);
 }

@@ -50,4 +50,8 @@ public class ReservaControlador {
 		return servReserva.obtenerReserva(id_reserva);
 	}
 	
+	@GetMapping("/traerDpto/{id_reserva}")
+	public int traerDpto(@PathVariable int id_reserva) {
+		return servReserva.traerDpto(id_reserva);
+	}
 }
