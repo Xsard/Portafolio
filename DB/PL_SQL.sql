@@ -1,5 +1,7 @@
+/*Mostrar mensajes por consola*/
 set serveroutput on 
 /
+/*Cifrar la contraseña*/
 CREATE OR REPLACE FUNCTION GENERAR_CON(p_email VARCHAR2, p_psw VARCHAR2)
     RETURN VARCHAR2
     IS
@@ -7,30 +9,36 @@ CREATE OR REPLACE FUNCTION GENERAR_CON(p_email VARCHAR2, p_psw VARCHAR2)
         RETURN DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW(UPPER(p_email) ||''|| UPPER(p_psw)),DBMS_CRYPTO.HASH_SH1);
     END;
 /
+/*Generar paquete de procedimientos relacionados al login*/
 CREATE OR REPLACE PACKAGE login_desk AS
     PROCEDURE AUTENTIFICAR(email_aut IN USUARIO.email%type, psw_aut IN USUARIO.contraseña%type, usr_con OUT SYS_REFCURSOR);
 END login_desk;
 /
-
 CREATE OR REPLACE PACKAGE BODY login_desk AS
+    /*Validar los datos del usuario*/
     PROCEDURE AUTENTIFICAR(email_aut IN USUARIO.email%type, psw_aut IN USUARIO.contraseña%type, usr_con OUT SYS_REFCURSOR)
     IS
-    v_count number;
-    user_not_found EXCEPTION;
-    v_pass VARCHAR2(40);
-    PRAGMA EXCEPTION_INIT(user_not_found, -20000);
+        v_count number;
+        user_not_found EXCEPTION;
+        v_pass VARCHAR2(40);
+        PRAGMA EXCEPTION_INIT(user_not_found, -20000);
     BEGIN 
+        /*Generar la contraseña*/
         v_pass:= GENERAR_CON(email_aut, psw_aut);
+        
+        /*Validar si el usuario es Administrador*/
         SELECT COUNT(usr.id_usuario) 
             INTO V_COUNT 
         FROM ADMINISTRADOR ADM JOIN USUARIO USR ON(adm.id_usuario = usr.id_usuario)
             WHERE usr.email = email_aut and usr.contraseña = v_pass;
+        /*Retornar los datos del Administrador si el usuario lo es*/
         IF V_COUNT = 1 THEN
             OPEN usr_con FOR
                 SELECT adm.nombres_admin||' '||adm.apellidos_admin as nombre, 'Administrador' as rol 
                 FROM ADMINISTRADOR ADM JOIN USUARIO USR ON(adm.id_usuario = usr.id_usuario)
                     WHERE usr.email = email_aut and usr.contraseña = v_pass;
         ELSE 
+            /*Consultar si el */
             SELECT COUNT(usr.id_usuario)
                 INTO V_COUNT
             FROM FUNCIONARIO FUN JOIN USUARIO USR ON(fun.id_usuario = usr.id_usuario) 
