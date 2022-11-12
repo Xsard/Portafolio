@@ -711,7 +711,7 @@ END Mantener_Tours;
 CREATE OR REPLACE PACKAGE Mantener_Reserva
     AS
     PROCEDURE listar_reserva(Reservas OUT SYS_REFCURSOR);
-    PROCEDURE actualizar_checkin(identificador IN RESERVA.ID_RESERVA%TYPE, checkin IN RESERVA.CHECK_IN%TYPE, R OUT INTEGER);
+    PROCEDURE actualizar_firma(identificador IN RESERVA.ID_RESERVA%TYPE, firma_func IN RESERVA.FIRMA%TYPE, R OUT INTEGER);
 END Mantener_Reserva;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
@@ -722,12 +722,17 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
         OPEN Reservas FOR
             SELECT * FROM RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE TRANSPORTE <> 'N';
     END;
-    PROCEDURE actualizar_checkin(identificador IN RESERVA.ID_RESERVA%TYPE, checkin IN RESERVA.CHECK_IN%TYPE, R OUT INTEGER)
+    PROCEDURE actualizar_firma(identificador IN RESERVA.ID_RESERVA%TYPE, firma_func IN RESERVA.FIRMA%TYPE, R OUT INTEGER)
     IS
     BEGIN
         UPDATE RESERVA 
-            SET CHECK_IN = checkin
+        SET FIRMA = firma_func
+        WHERE ID_RESERVA = identificador RETURNING 1 INTO R;
+        IF R = 1 THEN
+            UPDATE RESERVA 
+            SET ESTADO_RESERVA = 'X'
             WHERE ID_RESERVA = identificador RETURNING 1 INTO R;
+        END IF;
         IF r = 1 THEN
             COMMIT;
         END IF;
