@@ -390,4 +390,3 @@ INSERT INTO Comuna VALUES (13,'Valdivia', 13);
 INSERT INTO Comuna VALUES (14,'Puerto Varas', 14);
 INSERT INTO Comuna VALUES (15,'Aysén', 15);
 INSERT INTO Comuna VALUES (16,'Punta Arenas', 16);
-select * from reserva;
