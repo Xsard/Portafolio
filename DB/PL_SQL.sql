@@ -38,80 +38,135 @@ CREATE OR REPLACE PACKAGE BODY login_desk AS
                 FROM ADMINISTRADOR ADM JOIN USUARIO USR ON(adm.id_usuario = usr.id_usuario)
                     WHERE usr.email = email_aut and usr.contraseña = v_pass;
         ELSE 
-            /*Consultar si el */
+            /*Consultar si el usuario es Funcionario*/
             SELECT COUNT(usr.id_usuario)
                 INTO V_COUNT
             FROM FUNCIONARIO FUN JOIN USUARIO USR ON(fun.id_usuario = usr.id_usuario) 
                 WHERE usr.email = email_aut and usr.contraseña = v_pass;
+                
+            /*Retornar los datos del Funcionario si el usuario lo es*/
             IF V_COUNT = 1 THEN
             OPEN usr_con FOR
                 SELECT fun.nombres_funcionario||' '||fun.apellidos_funcionario AS nombre, 'Funcionario' AS rol 
                 FROM FUNCIONARIO FUN JOIN USUARIO USR ON(fun.id_usuario = usr.id_usuario) 
                     WHERE usr.email = email_aut and usr.contraseña = v_pass;   
             ELSE
+            
+                /*En caso de no haber usuario con los datos entregados se inicia una excepción*/
                 RAISE user_not_found;
             END IF;
         END IF;
     EXCEPTION 
         WHEN user_not_found THEN
-            DBMS_OUTPUT.PUT_LINE('EL USUARIO NO EXISTE');
             usr_con:= NULL;
     END;
 END login_desk;
 /
+/*CRUD departamentos*/
 CREATE OR REPLACE PACKAGE Mantener_Dpto
     AS
     PROCEDURE insertar_dpto(nombre IN DEPARTAMENTO.NOMBRE_DPTO%TYPE, tarifa IN DEPARTAMENTO.TARIFA_DIARIA%TYPE, DIREC IN DEPARTAMENTO.DIRECCION%TYPE, 
         NRO IN DEPARTAMENTO.NRO_DPTO%TYPE, CAP IN DEPARTAMENTO.CAPACIDAD%TYPE, COMUNA IN DEPARTAMENTO.ID_COMUNA%TYPE, disponibilidad IN DEPARTAMENTO.DISPONIBILIDAD%TYPE, R OUT INTEGER);
+        
     PROCEDURE actualizar_dpto(identificador IN DEPARTAMENTO.ID_DPTO%TYPE, nombre IN DEPARTAMENTO.NOMBRE_DPTO%TYPE, tarifa IN DEPARTAMENTO.TARIFA_DIARIA%TYPE, DIREC IN DEPARTAMENTO.DIRECCION%TYPE, 
         NRO IN DEPARTAMENTO.NRO_DPTO%TYPE, CAP IN DEPARTAMENTO.CAPACIDAD%TYPE, COMUNA IN DEPARTAMENTO.ID_COMUNA%TYPE, disp IN DEPARTAMENTO.DISPONIBILIDAD%TYPE, R OUT INTEGER);
+        
     PROCEDURE eliminar_dpto(identificador IN DEPARTAMENTO.ID_DPTO%TYPE, R OUT INTEGER);
+    
     PROCEDURE listar_dpto(Deptos OUT SYS_REFCURSOR);
 END Mantener_Dpto;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Dpto
     AS
+    /*Insertar un nuevo departamento*/
     PROCEDURE insertar_dpto(nombre IN DEPARTAMENTO.NOMBRE_DPTO%TYPE, tarifa IN DEPARTAMENTO.TARIFA_DIARIA%TYPE, DIREC IN DEPARTAMENTO.DIRECCION%TYPE, 
         NRO IN DEPARTAMENTO.NRO_DPTO%TYPE, CAP IN DEPARTAMENTO.CAPACIDAD%TYPE, COMUNA IN DEPARTAMENTO.ID_COMUNA%TYPE, disponibilidad IN DEPARTAMENTO.DISPONIBILIDAD%TYPE, R OUT INTEGER)
     IS 
         id_col rowid;
+        Dpto_Error_Ag EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Dpto_Error_Ag, -20401);
     BEGIN
         INSERT INTO DEPARTAMENTO(NOMBRE_DPTO, TARIFA_DIARIA, DIRECCION, NRO_DPTO, CAPACIDAD, ID_COMUNA, DISPONIBILIDAD) VALUES(nombre, tarifa, direc, nro, cap, COMUNA, disponibilidad) RETURNING rowid INTO id_col;
+        /*Retornar un 1 si el insert fue correcto*/
         IF id_col IS NOT NULL THEN
             r:=1;
             COMMIT;
+        /*Iniciar un error si no se ingresó*/
+        ELSE 
+            RAISE Dpto_Error_Ag;
         END IF;
+    EXCEPTION 
+        WHEN Dpto_Error_Ag THEN
+            r:= -20401;
     END;
     
+    /*Actualizar un departamento existente*/
     PROCEDURE actualizar_dpto(identificador IN DEPARTAMENTO.ID_DPTO%TYPE, nombre IN DEPARTAMENTO.NOMBRE_DPTO%TYPE, tarifa IN DEPARTAMENTO.TARIFA_DIARIA%TYPE, DIREC IN DEPARTAMENTO.DIRECCION%TYPE, 
         NRO IN DEPARTAMENTO.NRO_DPTO%TYPE, CAP IN DEPARTAMENTO.CAPACIDAD%TYPE, COMUNA IN DEPARTAMENTO.ID_COMUNA%TYPE, disp IN DEPARTAMENTO.DISPONIBILIDAD%TYPE, R OUT INTEGER)
     IS 
+        Dpto_Error_Ac EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Dpto_Error_Ac, -20402);
     BEGIN
         UPDATE DEPARTAMENTO 
             SET NOMBRE_DPTO = nombre, TARIFA_DIARIA = tarifa, DIRECCION = direc, NRO_DPTO = nro,CAPACIDAD = cap, ID_COMUNA = comuna, DISPONIBILIDAD = disp
         WHERE ID_DPTO =  identificador RETURNING 1 INTO R;
+        /*Retornar un 1 si el update fue correcto*/
         IF r = 1 THEN
             COMMIT;
+        /*Iniciar un error si no se actualizó*/
+        ELSE
+            RAISE Dpto_Error_Ac;
         END IF;
+    EXCEPTION
+        WHEN Dpto_Error_Ac THEN
+            r:= -20402;        
     END;
     
+    /*Eliminar un departamento existente*/
     PROCEDURE eliminar_dpto(identificador IN DEPARTAMENTO.ID_DPTO%TYPE, R OUT INTEGER)
     IS 
+        Dpto_Error_El EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Dpto_Error_El, -20403);
     BEGIN 
         DELETE FROM DEPARTAMENTO WHERE ID_DPTO =  identificador RETURNING 1 INTO r;
+        /*Retornar un 1 si el delete fue correcto*/
         IF r = 1 THEN
             COMMIT;
+        /*Iniciar un error si no se eliminó*/
+        ELSE 
+            RAISE Dpto_Error_El;
         END IF;
+    EXCEPTION
+        WHEN Dpto_Error_El THEN
+            r:= -20403;
     END;
     
+    /*Listar todos los departamentos*/
     PROCEDURE listar_dpto(Deptos OUT SYS_REFCURSOR)
     IS
+        v_cant_datos INTEGER;
+        Dpto_Error_Li EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Dpto_Error_Li, -20404);
     BEGIN
-        OPEN Deptos FOR
-            SELECT * FROM DEPARTAMENTO DPTO JOIN COMUNA CM ON(cm.id_comuna=dpto.id_comuna);
+        /*Validar si la tabla tiene datos*/
+        SELECT COUNT(*) INTO v_cant_datos FROM DEPARTAMENTO;
+        
+        /*Si hay datos se consultan*/
+        IF v_cant_datos > 0 THEN
+            OPEN Deptos FOR
+                SELECT * FROM  DEPARTAMENTO DPTO JOIN COMUNA CM ON(cm.id_comuna=dpto.id_comuna);
+                
+        /*Si la tabla está vacía se inicia un error*/
+        ELSE
+            RAISE Dpto_Error_Li;
+        END IF;
+    EXCEPTION
+        WHEN Dpto_Error_Li THEN
+            Deptos:= NULL;
     END;
 END Mantener_Dpto;
 /
+/*Listar las regiones y comuna*/
 CREATE OR REPLACE PACKAGE Ubicacion 
     AS
     PROCEDURE listar_comunas(Comunas out SYS_REFCURSOR);
@@ -134,6 +189,7 @@ CREATE OR REPLACE PACKAGE BODY Ubicacion
     END;
 END Ubicacion;
 /
+/*CRUD Servicios extras*/
 CREATE OR REPLACE PACKAGE Mantener_Servicios_Extras
     AS
     PROCEDURE insertar_svextra(nombre IN SERVICIO_EXTRA.NOMBRE_SERV_EX%TYPE, descripcion IN SERVICIO_EXTRA.DESC_SERV_EX%TYPE, valor IN SERVICIO_EXTRA.VALOR_SERV_EX%TYPE, R OUT INTEGER);
@@ -146,40 +202,87 @@ END Mantener_Servicios_Extras;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Servicios_Extras
     AS
+    /*Agregar un nuevo servicio extra*/
     PROCEDURE insertar_svextra(nombre IN SERVICIO_EXTRA.NOMBRE_SERV_EX%TYPE, descripcion IN SERVICIO_EXTRA.DESC_SERV_EX%TYPE, valor IN SERVICIO_EXTRA.VALOR_SERV_EX%TYPE, R OUT INTEGER)
     IS
         id_col rowid;
+        ServE_Error_Ag EXCEPTION;
+        PRAGMA EXCEPTION_INIT(ServE_Error_Ag, -20501);
     BEGIN
         INSERT INTO SERVICIO_EXTRA(NOMBRE_SERV_EX, DESC_SERV_EX, VALOR_SERV_EX) VALUES(nombre, descripcion, valor) RETURNING rowid INTO id_col;
+        /* Retornar un 1 si el insert fue correcto*/
         IF id_col IS NOT NULL THEN
             r:=1;
             COMMIT;
+        /* Iniciar un error si no se ingresó*/
+        ELSE
+            RAISE ServE_Error_Ag;
         END IF;
+    EXCEPTION
+        WHEN ServE_Error_Ag THEN
+            R:= -20501;
     END;
+    
+    /*Actualizar un servicio extra existente*/
     PROCEDURE actualizar_svextra(identificador IN SERVICIO_EXTRA.ID_SVC_EX%TYPE, nombre IN SERVICIO_EXTRA.NOMBRE_SERV_EX%TYPE,
         descripcion IN SERVICIO_EXTRA.DESC_SERV_EX%TYPE, valor IN SERVICIO_EXTRA.VALOR_SERV_EX%TYPE, R OUT INTEGER)
     IS
+        ServE_Error_Ac EXCEPTION;
+        PRAGMA EXCEPTION_INIT(ServE_Error_Ac, -20502);
     BEGIN
         UPDATE SERVICIO_EXTRA 
             SET NOMBRE_SERV_EX = nombre, DESC_SERV_EX = descripcion, VALOR_SERV_EX = valor
         WHERE ID_SVC_EX = identificador RETURNING 1 INTO R;
+        /* Retornar un 1 si el update fue correcto*/
         IF r = 1 THEN
             COMMIT;
+        /* Iniciar un error si no se actualizó*/
+        ELSE 
+            RAISE ServE_Error_Ac;
         END IF;
+    EXCEPTION
+        WHEN ServE_Error_Ac THEN
+            R:= -20502;
     END;
+    
+    /*Eliminar un servicio extra existente*/
     PROCEDURE eliminar_svextra(identificador SERVICIO_EXTRA.ID_SVC_EX%TYPE, R OUT INTEGER)
     IS 
+        ServE_Error_El EXCEPTION;
+        PRAGMA EXCEPTION_INIT(ServE_Error_El, -20503);
     BEGIN 
         DELETE FROM SERVICIO_EXTRA WHERE ID_SVC_EX =  identificador RETURNING 1 INTO r;
+        /*Retornar un 1 si el delete fue correcto*/
         IF r = 1 THEN
             COMMIT;
+        /* Iniciar un error si no se eliminó*/
+        ELSE
+            RAISE ServE_Error_El;
         END IF;
+    EXCEPTION
+        WHEN ServE_Error_El THEN
+            R:= -20503;
     END;
+    
     PROCEDURE listar_svextra(Servicios_Ex OUT SYS_REFCURSOR)
     IS
+        v_cant_datos INTEGER;
+        Dpto_Error_Li EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Dpto_Error_Li, -20504);
     BEGIN
-        OPEN Servicios_Ex FOR
-            SELECT * FROM SERVICIO_EXTRA;
+        /*Validar si la tabla tiene datos*/
+        SELECT COUNT(*) INTO v_cant_datos FROM SERVICIO_EXTRA;
+        
+        /*Si hay datos se consultan*/
+        IF v_cant_datos > 0 THEN
+            OPEN Servicios_Ex FOR
+                SELECT * FROM SERVICIO_EXTRA;
+        ELSE
+            RAISE Dpto_Error_Li;
+        END IF;
+    EXCEPTION
+        WHEN Dpto_Error_Li THEN 
+            Servicios_Ex:=NULL;
     END;
 END Mantener_Servicios_Extras;
 /
@@ -687,7 +790,6 @@ BEGIN
 END;
 /
 
-/
 DECLARE 
     R INTEGER;
 BEGIN
