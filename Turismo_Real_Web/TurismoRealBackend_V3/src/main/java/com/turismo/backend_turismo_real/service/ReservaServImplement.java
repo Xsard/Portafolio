@@ -51,6 +51,11 @@ public class ReservaServImplement implements ReservaServicio{
 		return ResponseEntity.ok(rsv);
 	}
 
+	@Override
+	public int traerDpto(int id_reserva) {
+		return reporeserva.traerDpto(id_reserva);
+	}
+
 	
 
 }

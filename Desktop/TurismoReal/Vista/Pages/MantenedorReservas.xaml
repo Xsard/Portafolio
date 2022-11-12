@@ -1,26 +1,25 @@
-﻿<Page x:Class="Vista.Pages.PlanificarTransporte"
+﻿<Page x:Class="Vista.Pages.MantenedorReservas"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:local="clr-namespace:Vista.Pages" xmlns:local1="clr-namespace:Vista.Pages.Validaciones.ValidacionesTransporte"
+      xmlns:local="clr-namespace:Vista.Pages" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="785" d:DesignWidth="1140"
-      Title="PlanificarTransporte">
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MantenedorReservas">
 
-    <Grid x:Name="grdTransporte" Validation.Error="ItemError">
+    <Grid x:Name="grdReservas" Validation.Error="ItemError">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Margin="12,0" Grid.Row="0">
-            <Label Content="Planificar Transporte" VerticalAlignment="Bottom" FontSize="40" Foreground="#FFCC3300"/>
+            <Label Content="Reservas" VerticalAlignment="Bottom" FontSize="40" Foreground="#FFCC3300"/>
             <Line Fill="#FFCC3300" VerticalAlignment="Bottom" Height="1" Stroke="#FFCC3300" X1="1152" Y1="1"/>
         </Grid>
         <Grid Grid.Row="2" Margin="12,0">
-            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgTransporte">
+            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgReservas">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="id" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
@@ -58,7 +57,6 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
                     <DataGridTemplateColumn Header="CheckIn" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -115,8 +113,14 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button x:Name="btn_planificar" Click="btn_planificar_Click" Padding="0" Width="60" Background="#C0392B" BorderBrush="#C0392B">
+                                    <Button x:Name="btn_planificar" Click="btn_planificar_Click" Width="50" Margin="0 0 5 0" Background="#C0392B" BorderBrush="#C0392B">
                                         <materialDesign:PackIcon Kind="Planner" ToolTip="Enviar correo planificación"/>
+                                    </Button>
+                                    <Button x:Name="btn_ConfirmarCheckin" Click="btn_ConfirmarCheckin_Click" Width="50" Background="ForestGreen" BorderBrush="#C0392B">
+                                        <materialDesign:PackIcon Kind="Check" ToolTip="Confirmar CheckIn"/>
+                                    </Button>
+                                    <Button x:Name="btn_ConfirmarCheckOut" Click="btn_ConfirmarCheckOut_Click" Width="50" Margin="5 0 0 0" Background="Red" BorderBrush="#C0392B">
+                                        <materialDesign:PackIcon Kind="Check" ToolTip="Confirmar CheckOut"/>
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>
@@ -129,7 +133,7 @@
             <materialDesign:DialogHost.DialogContent>
                 <Grid Height="470" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
-                        <Label Content="Agregar Departamento" FontSize="20"/>
+                        <Label Content="Solicitar Transporte" FontSize="20"/>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="Email" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombre_ag}" VerticalAlignment="Bottom"/>
                             <TextBox x:Name="txt_nombre_ag" materialDesign:HintAssist.Hint="Email empresa" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
@@ -147,8 +151,8 @@
                             <TextBox x:Name="txtComuna" materialDesign:HintAssist.Hint="Comuna" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
-                            <Button x:Name="btn_Enviar_Correo" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Click="btn_Enviar_Correo_Click" Content="Solicitar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0"/>
-                            <Button x:Name="btn_Cancelar" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}" Click="btn_Cancelar_Click" VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
+                            <Button x:Name="btn_Enviar_Correo" Click="btn_Enviar_Correo_Click" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center"  Content="Solicitar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0"/>
+                            <Button x:Name="btn_Cancelar" Click="btn_Cancelar_Click" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}"  VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

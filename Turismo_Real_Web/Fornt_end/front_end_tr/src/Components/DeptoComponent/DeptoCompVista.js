@@ -11,8 +11,6 @@ import { Modal, Button } from "react-bootstrap";
 import { ReactDOM } from "react";
 import { useEffect } from "react";
 
-
-
 const DeptoVista = () => {
     const { id_depto } = useParams()
     const url = `http://localhost:8080/api/v1/test/${id_depto}`;
@@ -52,6 +50,9 @@ const DeptoVista = () => {
             const resp = await axios.get(`http://localhost:8080/api/v1/fotosDepartamento/${id_depto}`)
             setFoto0(resp.data[0])
             setFoto1(resp.data[1])
+            setFoto2(resp.data[2])
+            setFoto3(resp.data[3])
+            setFoto4(resp.data[4])
         }
         CargarFotos()
     }, [])
@@ -106,210 +107,173 @@ const DeptoVista = () => {
                     }
                     else {
                         MySwal.fire({
-                            title: "¿Desea agregar servicios extras?",
+                            title: "¿Desea agregar transporte?",
                             icon: "info",
                             showDenyButton: true,
                             confirmButtonText: 'Si',
                             denyButtonText: `No`
                         }).then((respuesta) => {
                             if (respuesta.isConfirmed) {
-                                handleShow()
+                                let fecha1 = new Date(fechaIda).getTime();
+                                let fecha2 = new Date(fechaVuelta).getTime();
+                                let diff = fecha2 - fecha1;
+
+                                console.log(diff / (1000 * 60 * 60 * 24))
+
+                                let valorTotal = tarifa * diff / (1000 * 60 * 60 * 24)
+                                console.log(valorTotal)
+
+                                const resp = axios.post('http://localhost:8080/api/v1/reserva_pl', {
+                                    id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
+                                    check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes, transporte: "S"
+                                }).then(resp => {localStorage.setItem('idReserva', resp.data)})                           
                             }
                             else {
-                                MySwal.fire({
-                                    title: "¿Desea agregar transporte?",
-                                    icon: "info",
-                                    showDenyButton: true,
-                                    confirmButtonText: 'Si',
-                                    denyButtonText: `No`
-                                }).then((respuesta) => {
-                                    if (respuesta.isConfirmed) {
-                                        let fecha1 = new Date(fechaIda).getTime();
-                                        let fecha2 = new Date(fechaVuelta).getTime();
-                                        let diff = fecha2 - fecha1;
+                                let fecha1 = new Date(fechaIda).getTime();
+                                let fecha2 = new Date(fechaVuelta).getTime();
+                                let diff = fecha2 - fecha1;
 
-                                        console.log(diff / (1000 * 60 * 60 * 24))
+                                console.log(diff / (1000 * 60 * 60 * 24))
 
-                                        let valorTotal = tarifa * diff / (1000 * 60 * 60 * 24)
-                                        console.log(valorTotal)
+                                let valorTotal = tarifa * diff / (1000 * 60 * 60 * 24)
+                                console.log(valorTotal)
 
-                                        const resp = axios.post('http://localhost:8080/api/v1/reserva_pl', {
-                                            id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
-                                            check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes, transporte: "S"
-                                        })
-
-                                        MySwal.fire({
-                                            title: "Reserva Exitosa",
-                                            icon: "success"
-                                        }).then((respuesta) => {
-                                            if (respuesta.isConfirmed) {
-                                                window.location.replace('/Inicio');
-                                            }
-                                        })
-                                    }
-                                    else {
-                                        let fecha1 = new Date(fechaIda).getTime();
-                                        let fecha2 = new Date(fechaVuelta).getTime();
-                                        let diff = fecha2 - fecha1;
-
-                                        console.log(diff / (1000 * 60 * 60 * 24))
-
-                                        let valorTotal = tarifa * diff / (1000 * 60 * 60 * 24)
-                                        console.log(valorTotal)
-
-                                        const resp = axios.post('http://localhost:8080/api/v1/reserva_pl', {
-                                            id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
-                                            check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes, transporte: "N"
-                                        })
-
-                                        MySwal.fire({
-                                            title: "Reserva Exitosa",
-                                            icon: "success"
-                                        }).then((respuesta) => {
-                                            if (respuesta.isConfirmed) {
-                                                window.location.replace('/Inicio');
-                                            }
-                                        })
-                                    }
-                                })
+                                const resp = axios.post('http://localhost:8080/api/v1/reserva_pl', {
+                                    id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
+                                    check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes, transporte: "N"
+                                }).then(resp => {localStorage.setItem('idReserva', resp.data)})
                             }
+                            MySwal.fire({
+                                title: "¿Desea agregar servicios extras?",
+                                icon: "info",
+                                showDenyButton: true,
+                                confirmButtonText: 'Si',
+                                denyButtonText: 'No'
+                            }).then((respuesta) => {
+                                if(respuesta.isConfirmed){
+                                    const idReserva1 = localStorage.getItem('idReserva')
+                                    window.location.replace(`/ListaServExtra/${idReserva1}`);
+                                }
+                                else{
+                                    MySwal.fire({
+                                        title: "Reserva Exitosa",
+                                        icon: "success"
+                                    }).then((respuesta) => {
+                                        if (respuesta.isConfirmed) {
+                                            window.location.replace('/Inicio');
+                                            window.history.forward();
+                                        }
+                                    })
+                                }
+                                
+                            })
                         })
                     }
                 }
             }
         }
         catch (error) {
-            console.log(error.response)
-        }
+        console.log(error.response)
     }
+}
 
-    const handleTest = () => {
-        handleShow()
+const handleTest = () => {
+    handleShow()
 
-    }
+}
 
-    return (
-        <>
-            <div onLoad={Cargar}>
-                <div className="divmayor " >
-                    <br></br>
-                    <div className="row g-lg-2" >
-                        {
-                            foto_0 === '' ?
-                                <a href="" className="col col-lg-6"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} style={{ width: "100%", height: "100%" }}></img></a> :
-                                <a href="" className="col col-lg-6"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} style={{ width: "100%", height: "100%" }}></img></a>
-                        }
-                        <div className="col col-lg-6">
-                            <div className="row row-cols-2 row-cols-lg-2 g-2">
-                                {
-                                    foto_1 === '' ?
-                                        <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
-                                        <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_1}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
-                                }
-                                {
-                                    foto_2 === '' ?
-                                        <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
-                                        <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
-                                }
-                                {
-                                    foto_3 === '' ?
-                                        <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
-                                        <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
-                                }
-                                {
-                                    foto_4 === '' ?
-                                        <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
-                                        <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
-                                }
+return (
+    <>
+        <div onLoad={Cargar}>
+            <div className="divmayor " >
+                <br></br>
+                <div className="row g-lg-2" >
+                    {
+                        foto_0 === '' || foto_0 === undefined?
+                            <a href="" className="col col-lg-6"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} style={{ width: "100%", height: "100%" }}></img></a> :
+                            <a href="" className="col col-lg-6"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} style={{ width: "100%", height: "100%" }}></img></a>
+                    }
+                    <div className="col col-lg-6">
+                        <div className="row row-cols-2 row-cols-lg-2 g-2">
+                            {
+                                foto_1 === '' || foto_1 === undefined?
+                                    <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
+                                    <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_1}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
+                            }
+                            {
+                                foto_2 === '' || foto_2 === undefined?
+                                    <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
+                                    <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_2}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
+                            }
+                            {
+                                foto_3 === '' || foto_3 === undefined?
+                                    <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
+                                    <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_3}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
+                            }
+                            {
+                                foto_4 === '' || foto_4 === undefined?
+                                    <a href="" className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
+                                    <a href="" className="col"><img src={require(`../../imagenes_Dpto/${foto_4}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></a>
+                            }
 
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row text ">
-                        <div className="card mt-3 cardsinfo" >
-                            <div className="card-body">
-                                <h3>Departamento: {nombre_dpto}</h3>
-                                <p className="card-text">
-                                    <b>Numero departamento: </b>{NumeroDepto}<br />
-                                    <b>Capacidad: </b>{capacidad}<br />
-                                    <b>Direccion: </b>{direccion} <br />
-                                    <b>Tarifa: </b>{tarifa} <br />
-                                    <b>Comuna: </b>{nombreComuna}
-                                </p>
-                            </div>
-                        </div>
-                        <div className="card mt-3 cardsreserv text text-right">
-                            <div className="card-body">
-                                <h3>Seleccionar fechas</h3>
-                                <p className="card-text">
-                                    <Form.Group className="form-input mb-3"
-                                        style={{ width: "50%" }}
-                                        type="date"
-                                        id="fechaida"
-                                        value={fechaIda}
-                                        onChange={(e) => setFechaIda(e.target.value)}>
-                                        <Form.Label>Fecha ida</Form.Label>
-                                        <Form.Control type="date" placeholder="Ingrese nombres" />
-                                    </Form.Group>
-                                    <Form.Group className="form-input mb-3 "
-                                        style={{ width: "50%" }}
-                                        type="date"
-                                        id="fechavuelta"
-                                        value={fechaVuelta}
-                                        onChange={(e) => setFechaVuelta(e.target.value)}>
-                                        <Form.Label>Fecha ida</Form.Label>
-                                        <Form.Control type="date" placeholder="Ingrese nombres" />
-                                    </Form.Group>
-                                    <Form.Group className="form-input mb-3 "
-                                        style={{ width: "50%" }}
-                                        type="text"
-                                        id="acompañante"
-                                        value={cantAcompañantes}
-                                        onChange={(e) => setAcompañantes(e.target.value)}>
-                                        <Form.Label>Acompañantes</Form.Label>
-                                        <Form.Control type="text" placeholder="Ingrese acompañantes" />
-                                    </Form.Group>
-                                    <br></br>
-                                    <button className="btn btn-primary" onClick={handlePostReserva}>Reserva ahora</button>
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </div>
-                <Modal
-            show={show}
-            onHide={handleClose}
-            backdrop="static"
-            keyboard={false}
-        >
-            <Modal.Header closeButton>
-                <Modal.Title>Listado de servicios extras</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <p>Para completar el registro, debe ingresar el codigo que fue enviado a su correo</p>
-                <div className="form-row mb-3">
-                    <Form.Group className="form-input mb-3"
-                        type="number"
-                        id="repCode">
-                        <Form.Label>Ingresar codigo de verificación</Form.Label>
-                        <Form.Control type="number" placeholder="ej: 123456" />
-                    </Form.Group>
+
+                <div className="row text ">
+                    <div className="card mt-3 cardsinfo" >
+                        <div className="card-body">
+                            <h3>Departamento: {nombre_dpto}</h3>
+                            <p className="card-text">
+                                <b>Numero departamento: </b>{NumeroDepto}<br />
+                                <b>Capacidad: </b>{capacidad}<br />
+                                <b>Direccion: </b>{direccion} <br />
+                                <b>Tarifa: </b>{tarifa} <br />
+                                <b>Comuna: </b>{nombreComuna}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="card mt-3 cardsreserv text text-right">
+                        <div className="card-body">
+                            <h3>Seleccionar fechas</h3>
+                            <p className="card-text">
+                                <Form.Group className="form-input mb-3"
+                                    style={{ width: "50%" }}
+                                    type="date"
+                                    id="fechaida"
+                                    value={fechaIda}
+                                    onChange={(e) => setFechaIda(e.target.value)}>
+                                    <Form.Label>Fecha ida</Form.Label>
+                                    <Form.Control type="date" placeholder="Ingrese nombres" />
+                                </Form.Group>
+                                <Form.Group className="form-input mb-3 "
+                                    style={{ width: "50%" }}
+                                    type="date"
+                                    id="fechavuelta"
+                                    value={fechaVuelta}
+                                    onChange={(e) => setFechaVuelta(e.target.value)}>
+                                    <Form.Label>Fecha ida</Form.Label>
+                                    <Form.Control type="date" placeholder="Ingrese nombres" />
+                                </Form.Group>
+                                <Form.Group className="form-input mb-3 "
+                                    style={{ width: "50%" }}
+                                    type="text"
+                                    id="acompañante"
+                                    value={cantAcompañantes}
+                                    onChange={(e) => setAcompañantes(e.target.value)}>
+                                    <Form.Label>Acompañantes</Form.Label>
+                                    <Form.Control type="text" placeholder="Ingrese acompañantes" />
+                                </Form.Group>
+                                <br></br>
+                                <button className="btn btn-primary" onClick={handlePostReserva}>Reserva ahora</button>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            </Modal.Body>
-            <Modal.Footer>
-
-                <Button variant="primary">
-                    Reenviar Codigo
-                </Button>
-                <Button variant="primary">
-                    Comprobar
-                </Button>
-
-            </Modal.Footer>
-        </Modal>
             </div>
-        </>
-    )
+
+        </div>
+    </>
+)
 }
 export default DeptoVista;
