@@ -88,7 +88,6 @@ namespace Vista.Pages
                 throw;
             }
         }
-
         private void MensajeError(string Mensaje)
         {
             MessageBox.Show(Mensaje, "Reservas", MessageBoxButton.OK, MessageBoxImage.Error);
