@@ -659,7 +659,7 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Cliente AS
         v_pass VARCHAR2(40);
         error_actualizar_usuario EXCEPTION;
         PRAGMA EXCEPTION_INIT(error_actualizar_usuario, -20002);
-        error_actualizar_funcionario EXCEPTION;
+        error_actualizar_cliente EXCEPTION;
         PRAGMA EXCEPTION_INIT(error_actualizar_cliente, -20302);
     BEGIN
         /*Iniciar un punto de guardado, en caso de un error se vuelve a este punto*/
@@ -965,7 +965,7 @@ AS
         PRAGMA EXCEPTION_INIT(Mantenimiento_Error_Li, -20804); 
     BEGIN
         /* Validar si la tabla tiene datos*/
-        SELECT COUNT(*) INTO v_cant_datos FROM FUNCIONARIO;
+        SELECT COUNT(*) INTO v_cant_datos FROM MANTENIMIENTO;
         /* Si hay datos se consultan*/
         IF v_cant_datos>0 THEN
             OPEN Mantenimientos FOR
@@ -993,40 +993,87 @@ END Mantener_Tours;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Tours
     AS
+    /*Agregar un nuevo tour*/
     PROCEDURE insertar_tour(nombre IN TOUR_PLAN.NOMBRE_TOUR%TYPE, descripcion IN TOUR_PLAN.DESC_TOUR%TYPE, valor IN TOUR_PLAN.VALOR_TOUR%TYPE, region IN TOUR_PLAN.ID_REGION%TYPE, R OUT INTEGER)
     IS
         id_col rowid;
+        Tour_Error_In EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Tour_Error_In, -20901);    
     BEGIN
         INSERT INTO TOUR_PLAN(NOMBRE_TOUR, DESC_TOUR, VALOR_TOUR, ID_REGION) VALUES(nombre, descripcion, valor, region) RETURNING rowid INTO id_col;
+        /* Retornar un 1 si el insert fue correcto*/
         IF id_col IS NOT NULL THEN
             r:=1;
             COMMIT;
+        /* Iniciar un error si no se ingresó*/
+        ELSE
+            RAISE Tour_Error_In;
         END IF;
+    EXCEPTION
+        WHEN Tour_Error_In THEN
+            R:=-20901;
     END;
+    
+    /*Actualizar un tour existente*/
     PROCEDURE actualizar_tour(identificador IN TOUR_PLAN.ID_TOUR%TYPE, nombre IN TOUR_PLAN.NOMBRE_TOUR%TYPE, descripcion IN TOUR_PLAN.DESC_TOUR%TYPE, 
     valor IN TOUR_PLAN.VALOR_TOUR%TYPE, region IN TOUR_PLAN.ID_REGION%TYPE, R OUT INTEGER)
     IS
+        Tour_Error_Ac EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Tour_Error_Ac, -20902);    
     BEGIN
         UPDATE TOUR_PLAN 
             SET NOMBRE_TOUR = nombre, DESC_TOUR = descripcion, VALOR_TOUR = valor, ID_REGION = region
         WHERE ID_TOUR = identificador RETURNING 1 INTO R;
+        /* Retornar un 1 si el update fue correcto*/
         IF r = 1 THEN
             COMMIT;
+        /* Iniciar un error si no se actualizó*/
+        ELSE
+            RAISE Tour_Error_Ac;
         END IF;
+    EXCEPTION
+        WHEN Tour_Error_Ac THEN
+            R:=-20902;
     END;
+    
+    /*Eliminar un tour existente*/
     PROCEDURE eliminar_tour(identificador TOUR_PLAN.ID_TOUR%TYPE, R OUT INTEGER)
     IS 
+        Tour_Error_El EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Tour_Error_El, -20903);    
     BEGIN 
         DELETE FROM TOUR_PLAN WHERE ID_TOUR =  identificador RETURNING 1 INTO r;
+        /* Retornar un 1 si el delete fue correcto*/
         IF r = 1 THEN
             COMMIT;
+        /* Iniciar un error si no se eliminó*/
+        ELSE
+            RAISE Tour_Error_El;
         END IF;
+    EXCEPTION
+        WHEN Tour_Error_El THEN
+            R:= -20903;
     END;
+    /*Listar todos los tours*/
     PROCEDURE listar_tour(Tours OUT SYS_REFCURSOR)
     IS
+        v_cant_datos INTEGER;
+        Tour_Error_Li EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Tour_Error_Li, -20904);
     BEGIN
-        OPEN Tours FOR
-            SELECT * FROM TOUR_PLAN TP JOIN REGION R ON(R.id_region=TP.id_region);
+        /* Validar si la tabla tiene datos*/
+        SELECT COUNT(*) INTO v_cant_datos FROM TOUR_PLAN;
+        /* Si hay datos se consultan*/
+        IF v_cant_datos>0 THEN
+            OPEN Tours FOR
+                SELECT * FROM TOUR_PLAN TP JOIN REGION R ON(R.id_region=TP.id_region);
+        /* Si la tabla está vacía se inicia un error*/
+        ELSE
+            RAISE Tour_Error_Li;
+        END IF;
+    EXCEPTION
+        WHEN Tour_Error_Li THEN
+            Tours:= null;
     END;
 END Mantener_Tours;
 /
@@ -1038,26 +1085,45 @@ END Mantener_Reserva;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
     AS    
+    /*Listar reservas*/
     PROCEDURE listar_reserva(Reservas OUT SYS_REFCURSOR)
-        IS
+    IS
+        v_cant_datos INTEGER;
+        Reserva_Error_Li EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Reserva_Error_Li, -2104);
     BEGIN
-        OPEN Reservas FOR
-            SELECT * FROM RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE TRANSPORTE <> 'N';
+        /* Validar si la tabla tiene datos*/
+        SELECT COUNT(*) INTO v_cant_datos FROM RESERVA;
+        /* Si hay datos se consultan*/
+        IF v_cant_datos>0 THEN
+            OPEN Reservas FOR
+                SELECT * FROM RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE TRANSPORTE <> 'N';
+        /* Si la tabla está vacía se inicia un error*/
+        ELSE
+            RAISE Reserva_Error_Li;
+        END IF;
+    EXCEPTION
+        WHEN Reserva_Error_Li THEN
+            Reservas:= null;
     END;
+    
+    /*Actualizar el estado de una reserva*/
     PROCEDURE actualizar_firma(identificador IN RESERVA.ID_RESERVA%TYPE, firma_func IN RESERVA.FIRMA%TYPE, R OUT INTEGER)
     IS
+        Reserva_Error_Ac EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Reserva_Error_Ac, -2102);
     BEGIN
-        UPDATE RESERVA 
-        SET FIRMA = firma_func
-        WHERE ID_RESERVA = identificador RETURNING 1 INTO R;
-        IF R = 1 THEN
-            UPDATE RESERVA 
-            SET ESTADO_RESERVA = 'X'
+        UPDATE RESERVA SET 
+            FIRMA = firma_func, ESTADO_RESERVA = 'X'
             WHERE ID_RESERVA = identificador RETURNING 1 INTO R;
-        END IF;
-        IF r = 1 THEN
+        IF R = 1 THEN
             COMMIT;
+        ELSE
+            RAISE Reserva_Error_Ac;
         END IF;
+    EXCEPTION
+        WHEN Reserva_Error_Ac THEN
+            R:=-2102;
     END;    
 END Mantener_Reserva;
 /
@@ -1073,50 +1139,97 @@ END Mantener_Servicios_Dpto;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Servicios_Dpto
     AS
+    /*Agregar un servicio de departamento*/
     PROCEDURE insertar_svdpto(nombre IN SERVICIO.NOMBRE_SERV%TYPE, descripcion IN SERVICIO.DESC_SERV%TYPE, R OUT INTEGER)
     IS
         id_col rowid;
+        Svdpto_Error_In EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Svdpto_Error_In, -21101);    
     BEGIN
         INSERT INTO SERVICIO(NOMBRE_SERV, DESC_SERV) VALUES(nombre, descripcion) RETURNING rowid INTO id_col;
+        /* Retornar un 1 si el insert fue correcto*/
         IF id_col IS NOT NULL THEN
             r:=1;
             COMMIT;
+        /* Iniciar un error si no se ingresó*/
+        ELSE
+            RAISE Svdpto_Error_In;
         END IF;
+    EXCEPTION 
+        WHEN Svdpto_Error_In THEN
+            R:= -21101;
     END;
+    
+    /*Actualizar un servicio de depto existente*/
     PROCEDURE actualizar_svdpto(identificador IN SERVICIO.ID_SERVICIO%TYPE, nombre IN SERVICIO.NOMBRE_SERV%TYPE,
         descripcion IN SERVICIO.DESC_SERV%TYPE, R OUT INTEGER)
     IS
+        Svdpto_Error_Ac EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Svdpto_Error_Ac, -21102);    
     BEGIN
         UPDATE SERVICIO 
             SET NOMBRE_SERV = nombre, DESC_SERV = descripcion
         WHERE ID_SERVICIO = identificador RETURNING 1 INTO R;
+        /* Retornar un 1 si el update fue correcto*/
         IF r = 1 THEN
             COMMIT;
+        /* Iniciar un error si no se actualizó*/
+        ELSE 
+            RAISE Svdpto_Error_Ac;
         END IF;
+    EXCEPTION
+        WHEN Svdpto_Error_Ac THEN
+            R:= -21101;
     END;
+    
+    /*Eliminar un servicio de depto existente*/
     PROCEDURE eliminar_svdpto(identificador SERVICIO.ID_SERVICIO%TYPE, R OUT INTEGER)
     IS 
+        Svdpto_Error_El EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Svdpto_Error_El, -21103);    
     BEGIN 
         DELETE FROM SERVICIO WHERE ID_SERVICIO =  identificador RETURNING 1 INTO r;
         IF r = 1 THEN
             COMMIT;
+        ELSE
+            RAISE Svdpto_Error_El;
         END IF;
+    EXCEPTION
+        WHEN Svdpto_Error_El THEN
+            R:= -21104;
     END;
+    
+    /*Listar todos los servicio de depto*/
     PROCEDURE listar_svdpto(Servicios_dpto OUT SYS_REFCURSOR)
     IS
+        v_cant_datos INTEGER;
+        Svdpto_Error_Li EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Svdpto_Error_Li, -21104);  
     BEGIN
-        OPEN Servicios_dpto FOR
-            SELECT * FROM SERVICIO;
+        /* Validar si la tabla tiene datos*/
+        SELECT COUNT(*) INTO v_cant_datos FROM SERVICIO;
+        /* Si hay datos se consultan*/
+        IF v_cant_datos>0 THEN
+            OPEN Servicios_dpto FOR
+                SELECT * FROM SERVICIO;
+        /* Si la tabla está vacía se inicia un error*/
+        ELSE
+            RAISE Svdpto_Error_Li;
+        END IF;
+    EXCEPTION
+        WHEN Svdpto_Error_Li THEN
+            Servicios_dpto:= null;
     END;
 END Mantener_Servicios_Dpto;
 /
+/*Genenerar un admin*/
 DECLARE 
     r integer;
 BEGIN
     Mantener_Usuario_Admin.Agregar_Admin('desktop@gmail.com', '123', 1235, '2-2', 'Test', 'Entrega2', r);
 END;
 /
-
+/*Generar un dpto*/
 DECLARE 
     R INTEGER;
 BEGIN
