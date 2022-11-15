@@ -286,6 +286,7 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Servicios_Extras
     END;
 END Mantener_Servicios_Extras;
 /
+/*CRUD Inventario*/
 CREATE OR REPLACE PACKAGE Mantener_Inventario_Dpto
     AS
     PROCEDURE insertar_objeto(id_Dpto IN INVENTARIO_DPTO.ID_DPTO%TYPE, nombre IN INVENTARIO_DPTO.NOMBRE_OBJETO%TYPE,
@@ -298,68 +299,149 @@ END Mantener_Inventario_Dpto;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Inventario_Dpto
     AS
+    /*Insertar objetos a un inventario*/
     PROCEDURE insertar_objeto(id_Dpto IN INVENTARIO_DPTO.ID_DPTO%TYPE, nombre IN INVENTARIO_DPTO.NOMBRE_OBJETO%TYPE,
         cantidad IN INVENTARIO_DPTO.CANT_OBJETO%TYPE, valor IN INVENTARIO_DPTO.VALOR_UNITARIO_OBJ%TYPE, R OUT INTEGER)
     IS
         id_col rowid;
+        Inv_Error_Ag EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Inv_Error_Ag, -20601);
     BEGIN
         INSERT INTO INVENTARIO_DPTO(ID_DPTO, NOMBRE_OBJETO, CANT_OBJETO, VALOR_UNITARIO_OBJ) VALUES( id_Dpto, nombre, cantidad, valor) RETURNING rowid INTO id_col;
+        /* Retornar un 1 si el insert fue correcto*/
         IF id_col IS NOT NULL THEN
             r:=1;
             COMMIT;
+        /* Iniciar un error si no se ingresó*/
+        ELSE
+            RAISE Inv_Error_Ag;
         END IF;
+        EXCEPTION
+            WHEN Inv_Error_Ag THEN
+                R:= -20601;
     END;
+    
+    /*Actualizar un objeto del inventario*/
     PROCEDURE actualizar_objeto(identificador IN INVENTARIO_DPTO.ID_INV%TYPE, nombre IN INVENTARIO_DPTO.NOMBRE_OBJETO%TYPE,
         cantidad IN INVENTARIO_DPTO.CANT_OBJETO%TYPE, valor IN INVENTARIO_DPTO.VALOR_UNITARIO_OBJ%TYPE, R OUT INTEGER)
-        IS
+    IS
+        Inv_Error_Ac EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Inv_Error_Ac, -20602);        
     BEGIN
         UPDATE INVENTARIO_DPTO 
             SET NOMBRE_OBJETO = nombre, CANT_OBJETO = cantidad, VALOR_UNITARIO_OBJ = valor
         WHERE ID_INV = identificador RETURNING 1 INTO R;
+        /* Retornar un 1 si el update fue correcto*/
         IF r = 1 THEN
             COMMIT;
+        ELSE
+            RAISE Inv_Error_Ac;
         END IF;
+        EXCEPTION
+            WHEN Inv_Error_Ac THEN
+                R:= -20602;
     END;
+    
+    /*Eliminar un objeto del inventario*/
     PROCEDURE eliminar_objeto(identificador IN INVENTARIO_DPTO.ID_INV%TYPE, R OUT INTEGER)
-        IS 
+    IS 
+        Inv_Error_El EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Inv_Error_El, -20603);        
     BEGIN 
         DELETE FROM INVENTARIO_DPTO WHERE ID_INV = identificador RETURNING 1 INTO r;
+        /* Retornar un 1 si el delete fue correcto*/
         IF r = 1 THEN
             COMMIT;
+        /* Iniciar un error si no se eliminó*/
+        ELSE
+            RAISE Inv_Error_El;
         END IF;
+        EXCEPTION
+            WHEN Inv_Error_El THEN
+                R:= -20603;    
     END;
+    /*Listar todos los objetos del inventario*/
     PROCEDURE listar_inventario(id_dp IN INVENTARIO_DPTO.ID_DPTO%TYPE, Inventario OUT SYS_REFCURSOR)
         IS
+        v_cant_datos INTEGER;
+        Inv_Error_Li EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Inv_Error_Li, -20604);       
     BEGIN
-        OPEN Inventario FOR
-            SELECT * FROM INVENTARIO_DPTO WHERE ID_DPTO =id_dp;
+        /*Validar si la tabla tiene datos*/
+        SELECT COUNT(*) INTO v_cant_datos FROM INVENTARIO_DPTO;
+        
+        /*Si hay datos se consultan*/
+        IF v_cant_datos > 0 THEN
+            OPEN Inventario FOR
+                SELECT * FROM INVENTARIO_DPTO WHERE ID_DPTO =id_dp;
+        /* Si la tabla está vacía se inicia un error*/
+        ELSE
+            RAISE Inv_Error_Li;
+        END IF;
+        EXCEPTION
+            WHEN Inv_Error_Li THEN
+                Inventario:= null;    
     END;
 END Mantener_Inventario_Dpto;
 /
+
+/*CRUD Imagenes departamento*/
 CREATE OR REPLACE PACKAGE Mantener_Img AS
-    PROCEDURE Agregar_Img(id_dp IN INVENTARIO_DPTO.ID_DPTO%TYPE, path_img IN FOTOGRAFIA_DPTO.FOTO_PATH%TYPE, alt_img IN FOTOGRAFIA_DPTO.ALT_FOTO%TYPE, extension IN VARCHAR2, NEW_FILE OUT VARCHAR2, R OUT INTEGER);
-    PROCEDURE Listar_Img(id_dp IN INVENTARIO_DPTO.ID_DPTO%TYPE, Imagenes OUT SYS_REFCURSOR);
+    PROCEDURE Agregar_Img(id_dp IN FOTOGRAFIA_DPTO.ID_DPTO%TYPE, path_img IN FOTOGRAFIA_DPTO.FOTO_PATH%TYPE, alt_img IN FOTOGRAFIA_DPTO.ALT_FOTO%TYPE, extension IN VARCHAR2, NEW_FILE OUT VARCHAR2, R OUT INTEGER);
+    PROCEDURE Listar_Img(id_dp IN FOTOGRAFIA_DPTO.ID_DPTO%TYPE, Imagenes OUT SYS_REFCURSOR);
 END Mantener_Img;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Img AS
-    PROCEDURE Agregar_Img(id_dp IN INVENTARIO_DPTO.ID_DPTO%TYPE, path_img IN FOTOGRAFIA_DPTO.FOTO_PATH%TYPE, alt_img IN FOTOGRAFIA_DPTO.ALT_FOTO%TYPE, extension IN VARCHAR2, NEW_FILE OUT VARCHAR2, R OUT INTEGER)
+    /*Agregar una imagen a un departamento*/
+    PROCEDURE Agregar_Img(id_dp IN FOTOGRAFIA_DPTO.ID_DPTO%TYPE, path_img IN FOTOGRAFIA_DPTO.FOTO_PATH%TYPE, alt_img IN FOTOGRAFIA_DPTO.ALT_FOTO%TYPE, extension IN VARCHAR2, NEW_FILE OUT VARCHAR2, R OUT INTEGER)
     IS
+        Imagen_Error_In EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Imagen_Error_In, -20701);    
     BEGIN 
+        /*Iniciar un punto de guardado, en caso de un error se vuelve a este punto*/
         SAVEPOINT A;
+        /*Agregar la imagen sin ruta*/
         INSERT INTO FOTOGRAFIA_DPTO(ID_DPTO, ALT_FOTO) VALUES(id_dp, alt_img) RETURNING ID_FOTO INTO R;
+        /*Agregar la ruta de la imagen*/
         UPDATE FOTOGRAFIA_DPTO SET FOTO_PATH = path_img||r||extension WHERE ID_FOTO = R RETURNING 1, r||extension INTO r, NEW_FILE;
-            IF r = 1 THEN
-                COMMIT;
+        /*Si ambos pasos ocurren con éxito se confirman los cambios*/    
+        IF r = 1 THEN
+            COMMIT;
+        /* Iniciar un error si no se ingresó*/
+        ELSE
+            RAISE Imagen_Error_In;
         END IF;
+    EXCEPTION
+        /*Regresar al punto A*/
+        WHEN Imagen_Error_In THEN
+            R:= -20701;
+            ROLLBACK TO A;
     END;
-    PROCEDURE Listar_Img(id_dp IN INVENTARIO_DPTO.ID_DPTO%TYPE, Imagenes OUT SYS_REFCURSOR)
+    
+    PROCEDURE Listar_Img(id_dp IN FOTOGRAFIA_DPTO.ID_DPTO%TYPE, Imagenes OUT SYS_REFCURSOR)
     IS
+        v_cant_datos INTEGER;
+        Imagen_Error_Li EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Imagen_Error_Li, -20704);       
     BEGIN
-        OPEN Imagenes FOR
-            SELECT * FROM FOTOGRAFIA_DPTO WHERE ID_DPTO =id_dp;
+        /*Validar si la tabla tiene datos*/
+        SELECT COUNT(*) INTO v_cant_datos FROM FOTOGRAFIA_DPTO;
+        
+        /*Si hay datos se consultan*/
+        IF v_cant_datos > 0 THEN
+            OPEN Imagenes FOR
+                SELECT * FROM FOTOGRAFIA_DPTO WHERE ID_DPTO =id_dp;
+        /* Si la tabla está vacía se inicia un error*/
+        ELSE
+            RAISE Imagen_Error_Li;
+        END IF;
+    EXCEPTION
+            WHEN Imagen_Error_Li THEN
+                Imagenes:= null;    
     END;
 END Mantener_Img;
 /
+/*CRUD Administradores*/
 CREATE OR REPLACE PACKAGE Mantener_Usuario_Admin AS
     PROCEDURE Agregar_Admin(email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
         rut IN ADMINISTRADOR.RUT_ADMIN%TYPE, nombre IN ADMINISTRADOR.NOMBRES_ADMIN%TYPE, apellido IN  ADMINISTRADOR.APELLIDOS_ADMIN%TYPE, R OUT INT);
@@ -370,6 +452,7 @@ CREATE OR REPLACE PACKAGE Mantener_Usuario_Admin AS
 END Mantener_Usuario_Admin;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Admin AS
+    /*Agregar un usuario tipo administrador*/
     PROCEDURE Agregar_Admin(email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
         rut IN ADMINISTRADOR.RUT_ADMIN%TYPE, nombre IN ADMINISTRADOR.NOMBRES_ADMIN%TYPE, apellido IN  ADMINISTRADOR.APELLIDOS_ADMIN%TYPE, R OUT INT)
     IS
@@ -382,63 +465,128 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Admin AS
         error_crear_admin EXCEPTION;
         PRAGMA EXCEPTION_INIT(error_crear_admin, -20201);
     BEGIN 
+        /*Iniciar un punto de guardado, en caso de un error se vuelve a este punto*/
         SAVEPOINT A;
+        
+        /*Generar contraseña */
         v_pass:=GENERAR_CON(email_c, pass);
         INSERT INTO USUARIO(EMAIL, CONTRASEÑA, TELEFONO) VALUES(email_c, v_pass , fono) RETURNING rowid, ID_USUARIO INTO id_col, identificador_usr;
+        
+        /*Si el usuario fue creado, se inicia la creación de su rol*/
         IF id_col IS NOT NULL THEN
             INSERT INTO ADMINISTRADOR(RUT_ADMIN,NOMBRES_ADMIN,APELLIDOS_ADMIN,ID_USUARIO) VALUES(rut, nombre, apellido, identificador_usr) 
                 RETURNING rowid,ID_ADMIN INTO id_col,identificador_admin;
+            /*Una vez creado su rol, se empareja con el usuario*/
             IF id_col IS NOT NULL THEN
                 UPDATE USUARIO SET ID_ADMIN = identificador_admin WHERE ID_USUARIO = identificador_usr RETURNING 1 INTO r;
                 IF r = 1 THEN
                     COMMIT;        
                 END IF;
+            /*De no haber sido creado el rol se inicia un error*/
             ELSE 
                 RAISE error_crear_admin;
             END IF;
+        /*De no haber sido creado el usuario se inicar un error*/
         ELSE
             RAISE error_crear_usuario;
         END IF;
     EXCEPTION
+        /*Se retorna -1 si el valor está repetido y se vuelve al punto A*/
         WHEN DUP_VAL_ON_INDEX THEN
             ROLLBACK TO A;
             R:= -1;
+        /*Se vuelve al punto A y se desechan los cambios*/
         WHEN error_crear_usuario THEN 
             ROLLBACK TO A;
             R:= -20001;
         WHEN error_crear_admin THEN
             ROLLBACK TO A;
-            R:= -20101;
+            R:= -20201;
     END;
+    /*Actualizar un usuario administrador*/
     PROCEDURE Actualizar_Admin(id_usr IN USUARIO.ID_USUARIO%TYPE, email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
         nombre IN ADMINISTRADOR.NOMBRES_ADMIN%TYPE, apellido IN  ADMINISTRADOR.APELLIDOS_ADMIN%TYPE, R OUT INT)
     IS
         v_pass VARCHAR2(40);
+        error_actualizar_usuario EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_actualizar_usuario, -20002);
+        error_actualizar_admin EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_actualizar_admin, -20202);
     BEGIN
+        /*Iniciar un punto de guardado, en caso de un error se vuelve a este punto*/
         SAVEPOINT A;
+        /*Generar contraseña */
         v_pass:=GENERAR_CON(email_c, pass);
         UPDATE USUARIO SET EMAIL = email_c, CONTRASEÑA = v_pass, TELEFONO = fono WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
+        
+        /*Si el usuario fue actualizado, se inicia la actualizacion de su rol*/
         IF R = 1 THEN
             UPDATE ADMINISTRADOR SET NOMBRES_ADMIN = nombre, APELLIDOS_ADMIN = apellido WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
+            /*Si ambas actualizaciones fueron realizadas con éxito, se confirman los cambios*/
             IF R = 1 THEN
                 COMMIT;
+            /*Si la actualización del rol falla se inicia un error*/
+            ELSE
+                RAISE error_actualizar_admin;
             END IF;
+        /*Si la actualización del usuario falla se inicia un error*/
+        ELSE
+            RAISE error_actualizar_usuario;
         END IF;
+    EXCEPTION
+        /*Se retorna -1 si el valor está repetido y se vuelve al punto A*/
+        WHEN DUP_VAL_ON_INDEX THEN
+            ROLLBACK TO A;
+            R:= -1;
+        /*Se vuelve al punto A y se desechan los cambios*/
+        WHEN error_actualizar_usuario THEN 
+            ROLLBACK TO A;
+            R:= -20002;
+        WHEN error_actualizar_admin THEN
+            ROLLBACK TO A;
+            R:= -20202;
     END;
+    /*Eliminar un usuario administrador*/
     PROCEDURE Eliminar_Admin(id_usr IN USUARIO.ID_USUARIO%TYPE, R OUT INT)
     IS
+        error_eliminar_usuario EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_eliminar_usuario, -20003);
     BEGIN
+        /*Iniciar un punto de guardado, en caso de un error se vuelve a este punto*/
         SAVEPOINT A;
         DELETE FROM USUARIO WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
+        /* Iniciar un error si no se eliminó*/
         IF R = 1 THEN
-            COMMIT;        
+            COMMIT;      
+        /* Iniciar un error si no se eliminó*/
+        ELSE
+            RAISE error_eliminar_usuario;
         END IF;
+    EXCEPTION
+        WHEN error_eliminar_usuario THEN
+            ROLLBACK TO A;
+            R:= -20003;
     END;
+    /*Listar todos los administradores*/
     PROCEDURE Listar_Admin(Administradores OUT SYS_REFCURSOR)
     IS
+        v_cant_datos INTEGER;
+        error_listar_admin EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_listar_admin, -20204); 
     BEGIN
-        OPEN Administradores FOR
-            SELECT * FROM USUARIO USR JOIN ADMINISTRADOR ADM ON(USR.ID_USUARIO = ADM.ID_USUARIO);
+        /* Validar si la tabla tiene datos*/
+        SELECT COUNT(*) INTO v_cant_datos FROM ADMINISTRADOR;
+        /* Si hay datos se consultan*/
+        IF v_cant_datos>0 THEN
+            OPEN Administradores FOR
+                SELECT * FROM USUARIO USR JOIN ADMINISTRADOR ADM ON(USR.ID_USUARIO = ADM.ID_USUARIO);
+        /* Si la tabla está vacía se inicia un error*/
+        ELSE
+            RAISE error_listar_admin;
+        END IF;
+    EXCEPTION
+        WHEN error_listar_admin THEN
+            Administradores:= null;
     END;
             
 END Mantener_Usuario_Admin;
@@ -453,6 +601,7 @@ CREATE OR REPLACE PACKAGE Mantener_Usuario_Cliente AS
 END Mantener_Usuario_Cliente;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Cliente AS
+    /*Agregar un usuario tipo cliente*/
     PROCEDURE Agregar_Cliente(email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
         rut IN CLIENTE.RUT_CLIENTE%TYPE, nombre IN CLIENTE.NOMBRES_CLIENTE%TYPE, apellido IN  CLIENTE.APELLIDOS_CLIENTE%TYPE, R OUT INT)
     IS
@@ -463,12 +612,18 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Cliente AS
         error_crear_usuario EXCEPTION;
         PRAGMA EXCEPTION_INIT(error_crear_usuario, -20001);
         error_crear_cliente EXCEPTION;
-        PRAGMA EXCEPTION_INIT(error_crear_cliente, -20201);
+        PRAGMA EXCEPTION_INIT(error_crear_cliente, -20101);
     BEGIN 
+        /*Iniciar un punto de guardado, en caso de un error se vuelve a este punto*/
         SAVEPOINT A;
+        
+        /*Generar contraseña */
         v_pass:=GENERAR_CON(email_c, pass);
         INSERT INTO USUARIO(EMAIL, CONTRASEÑA, TELEFONO) VALUES(email_c, v_pass , fono) RETURNING rowid, ID_USUARIO INTO id_col, identificador_usr;
+        
+        /*Si el usuario fue creado, se inicia la creación de su rol*/ 
         IF id_col IS NOT NULL THEN
+            /*Una vez creado su rol, se empareja con el usuario*/
             INSERT INTO CLIENTE(RUT_CLIENTE,NOMBRES_CLIENTE,APELLIDOS_CLIENTE,ID_USUARIO) VALUES(rut, nombre, apellido, identificador_usr) 
                 RETURNING rowid,ID_CLIENTE INTO id_col,identificador_cliente;
             IF id_col IS NOT NULL THEN
@@ -476,16 +631,20 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Cliente AS
                 IF r = 1 THEN
                     COMMIT;        
                 END IF;
+            /*De no haber sido creado el rol se inicia un error*/
             ELSE 
                 RAISE error_crear_cliente;
             END IF;
+        /*De no haber sido creado el usuario se inicar un error*/
         ELSE
             RAISE error_crear_usuario;
         END IF;
     EXCEPTION
+        /*Se retorna -1 si el valor está repetido y se vuelve al punto A*/
         WHEN DUP_VAL_ON_INDEX THEN
             ROLLBACK TO A;
             R:= -1;
+         /*Se vuelve al punto A y se desechan los cambios*/
         WHEN error_crear_usuario THEN 
             ROLLBACK TO A;
             R:= -20001;
@@ -493,35 +652,88 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Cliente AS
             ROLLBACK TO A;
             R:= -20101;
     END;
+    /*Actualizar un usuario tipo cliente*/
     PROCEDURE Actualizar_Cliente(id_usr IN USUARIO.ID_USUARIO%TYPE, email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
         nombre IN CLIENTE.NOMBRES_CLIENTE%TYPE, apellido IN  CLIENTE.APELLIDOS_CLIENTE%TYPE, R OUT INT)
     IS
         v_pass VARCHAR2(40);
+        error_actualizar_usuario EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_actualizar_usuario, -20002);
+        error_actualizar_funcionario EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_actualizar_cliente, -20302);
     BEGIN
+        /*Iniciar un punto de guardado, en caso de un error se vuelve a este punto*/
         SAVEPOINT A;
+        
+        /*Generar contraseña */
         v_pass:=GENERAR_CON(email_c, pass);
+        /*Si el usuario fue actualizado, se inicia la actualización de su rol*/
         UPDATE USUARIO SET EMAIL = email_c, CONTRASEÑA = v_pass, TELEFONO = fono WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
         IF R = 1 THEN
             UPDATE CLIENTE SET NOMBRES_CLIENTE = nombre, APELLIDOS_CLIENTE = apellido WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
+            /*Si ambas actualizaciones fueron realizadas con éxito, se confirman los cambios*/
             IF R = 1 THEN
                 COMMIT;
+            /*Si la actualización del rol falla se inicia un error*/
+            ELSE
+                RAISE error_actualizar_cliente;
             END IF;
+        /*Si la actualización del usuario falla se inicia un error*/
+        ELSE 
+            RAISE error_actualizar_usuario;
         END IF;
+    EXCEPTION 
+        /*Se retorna -1 si el valor está repetido y se vuelve al punto A*/
+        WHEN DUP_VAL_ON_INDEX THEN
+            ROLLBACK TO A;
+            R:= -1;
+        /*Se vuelve al punto A y se desechan los cambios*/
+        WHEN error_actualizar_usuario THEN 
+            ROLLBACK TO A;
+            R:= -20002;
+        WHEN error_actualizar_cliente THEN
+            ROLLBACK TO A;
+            R:= -20202;       
     END;
+    
+    /*Eliminar un usuario cliente existente*/
     PROCEDURE Eliminar_Cliente(id_usr IN USUARIO.ID_USUARIO%TYPE, R OUT INT)
     IS
+        error_eliminar_cliente EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_eliminar_cliente, -20103);
     BEGIN
         SAVEPOINT A;
         DELETE FROM USUARIO WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
         IF R = 1 THEN
-            COMMIT;        
+            COMMIT;       
+        ELSE 
+            RAISE error_eliminar_cliente;
         END IF;
+    EXCEPTION
+        WHEN error_eliminar_cliente THEN
+            R:= -20103;
     END;
+    
+    /*Listar los clientes*/
     PROCEDURE Listar_Cliente(Clientes OUT SYS_REFCURSOR)
     IS
+        v_cant_datos INTEGER;
+        error_listar_clientes EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_listar_clientes, -20104); 
     BEGIN
-        OPEN Clientes FOR
-            SELECT * FROM USUARIO USR JOIN CLIENTE CLI ON(USR.ID_USUARIO = CLI.ID_USUARIO);
+        /* Validar si la tabla tiene datos*/
+        SELECT COUNT(*) INTO v_cant_datos FROM CLIENTE;
+        /* Si hay datos se consultan*/
+        IF v_cant_datos>0 THEN
+            OPEN Clientes FOR
+                SELECT * FROM USUARIO USR JOIN CLIENTE CLI ON(USR.ID_USUARIO = CLI.ID_USUARIO);
+        /* Si la tabla está vacía se inicia un error*/
+        ELSE
+            RAISE error_listar_clientes;
+        END IF;
+    EXCEPTION
+        WHEN error_listar_clientes THEN
+            Clientes:= null;
     END;
             
 END Mantener_Usuario_Cliente;
@@ -536,6 +748,7 @@ CREATE OR REPLACE PACKAGE Mantener_Usuario_Funcionario AS
 END Mantener_Usuario_Funcionario;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Funcionario AS
+    /*Agregar un usuario tipo funcionario*/
     PROCEDURE Agregar_Funcionario(email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
         rut IN FUNCIONARIO.RUT_FUNCIONARIO%TYPE, nombre IN FUNCIONARIO.NOMBRES_FUNCIONARIO%TYPE, apellido IN  FUNCIONARIO.APELLIDOS_FUNCIONARIO%TYPE, R OUT INT)
     IS
@@ -546,12 +759,16 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Funcionario AS
         error_crear_usuario EXCEPTION;
         PRAGMA EXCEPTION_INIT(error_crear_usuario, -20001);
         error_crear_funcionario EXCEPTION;
-        PRAGMA EXCEPTION_INIT(error_crear_funcionario, -20201);
+        PRAGMA EXCEPTION_INIT(error_crear_funcionario, -20301);
     BEGIN 
+        /*Iniciar un punto de guardado, en caso de un error se vuelve a este punto*/
         SAVEPOINT A;
+        
+        /*Generar contraseña */
         v_pass:=GENERAR_CON(email_c, pass);
         INSERT INTO USUARIO(EMAIL, CONTRASEÑA, TELEFONO) VALUES(email_c, v_pass , fono) RETURNING rowid, ID_USUARIO INTO id_col, identificador_usr;
         IF id_col IS NOT NULL THEN
+            /*Una vez creado su rol, se empareja con el usuario*/
             INSERT INTO FUNCIONARIO(RUT_FUNCIONARIO,NOMBRES_FUNCIONARIO,APELLIDOS_FUNCIONARIO,ID_USUARIO) VALUES(rut, nombre, apellido, identificador_usr) 
                 RETURNING rowid,ID_FUNCIONARIO INTO id_col,identificador_funcionario;
             IF id_col IS NOT NULL THEN
@@ -559,52 +776,108 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Usuario_Funcionario AS
                 IF r = 1 THEN
                     COMMIT;        
                 END IF;
+            /*De no haber sido creado el rol se inicia un error*/
             ELSE 
                 RAISE error_crear_funcionario;
             END IF;
+        /*De no haber sido creado el usuario se inicar un error*/
         ELSE
             RAISE error_crear_usuario;
         END IF;
     EXCEPTION
+        /*Se retorna -1 si el valor está repetido y se vuelve al punto A*/
         WHEN DUP_VAL_ON_INDEX THEN
             ROLLBACK TO A;
             R:= -1;
+         /*Se vuelve al punto A y se desechan los cambios*/
         WHEN error_crear_usuario THEN 
             ROLLBACK TO A;
             R:= -20001;
         WHEN error_crear_funcionario THEN
             ROLLBACK TO A;
-            R:= -20101;
+            R:= -20301;
     END;
     PROCEDURE Actualizar_Funcionario(id_usr IN USUARIO.ID_USUARIO%TYPE, email_c IN USUARIO.EMAIL%TYPE, pass IN USUARIO.CONTRASEÑA%TYPE, fono IN USUARIO.TELEFONO%TYPE, 
         nombre IN FUNCIONARIO.NOMBRES_FUNCIONARIO%TYPE, apellido IN  FUNCIONARIO.APELLIDOS_FUNCIONARIO%TYPE, R OUT INT)
     IS
         v_pass VARCHAR2(40);
+        error_actualizar_usuario EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_actualizar_usuario, -20002);
+        error_actualizar_funcionario EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_actualizar_funcionario, -20302);
     BEGIN
+        /*Iniciar un punto de guardado, en caso de un error se vuelve a este punto*/
         SAVEPOINT A;
+        /*Generar contraseña */
         v_pass:=GENERAR_CON(email_c, pass);
         UPDATE USUARIO SET EMAIL = email_c, CONTRASEÑA = v_pass, TELEFONO = fono WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
+        
+        /*Si el usuario fue actualizado, se inicia la actualizacion de su rol*/
         IF R = 1 THEN
             UPDATE FUNCIONARIO SET NOMBRES_FUNCIONARIO = nombre, APELLIDOS_FUNCIONARIO = apellido WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
+            /*Si ambas actualizaciones fueron realizadas con éxito, se confirman los cambios*/
             IF R = 1 THEN
                 COMMIT;
+            /*Si la actualización del rol falla se inicia un error*/
+            ELSE
+                RAISE error_actualizar_funcionario;
             END IF;
+        /*Si la actualización del usuario falla se inicia un error*/
+        ELSE 
+            RAISE error_actualizar_usuario;
         END IF;
+    EXCEPTION 
+        /*Se retorna -1 si el valor está repetido y se vuelve al punto A*/
+        WHEN DUP_VAL_ON_INDEX THEN
+            ROLLBACK TO A;
+            R:= -1;
+        /*Se vuelve al punto A y se desechan los cambios*/
+        WHEN error_actualizar_usuario THEN 
+            ROLLBACK TO A;
+            R:= -20002;
+        WHEN error_actualizar_funcionario THEN
+            ROLLBACK TO A;
+            R:= -20202;       
     END;
+    
+    /*Eliminar un funcionario*/
     PROCEDURE Eliminar_Funcionario(id_usr IN USUARIO.ID_USUARIO%TYPE, R OUT INT)
     IS
+        error_eliminar_funcionario EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_eliminar_funcionario, -20303);
     BEGIN
         SAVEPOINT A;
         DELETE FROM USUARIO WHERE ID_USUARIO = id_usr RETURNING 1 INTO R;
         IF R = 1 THEN
-            COMMIT;        
+            COMMIT;       
+        ELSE 
+            RAISE error_eliminar_funcionario;
         END IF;
+    EXCEPTION
+        WHEN error_eliminar_funcionario THEN
+            R:= -20303;
     END;
+    
+    /*Listar los funcionario*/
     PROCEDURE Listar_Funcionario(Funcionarios OUT SYS_REFCURSOR)
     IS
+        v_cant_datos INTEGER;
+        error_listar_funcionarios EXCEPTION;
+        PRAGMA EXCEPTION_INIT(error_listar_funcionarios, -20304); 
     BEGIN
-        OPEN Funcionarios FOR
-            SELECT * FROM USUARIO USR JOIN FUNCIONARIO FUN ON(USR.ID_USUARIO = FUN.ID_USUARIO);
+        /* Validar si la tabla tiene datos*/
+        SELECT COUNT(*) INTO v_cant_datos FROM FUNCIONARIO;
+        /* Si hay datos se consultan*/
+        IF v_cant_datos>0 THEN
+            OPEN Funcionarios FOR
+                SELECT * FROM USUARIO USR JOIN FUNCIONARIO FUN ON(USR.ID_USUARIO = FUN.ID_USUARIO);
+        /* Si la tabla está vacía se inicia un error*/
+        ELSE
+            RAISE error_listar_funcionarios;
+        END IF;
+    EXCEPTION
+        WHEN error_listar_funcionarios THEN
+            Funcionarios:= null;
     END;
             
 END Mantener_Usuario_Funcionario;
@@ -621,42 +894,91 @@ END Mantener_Mantenimiento;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Mantenimiento
 AS 
+    /*Insertar un nuevo mantenimiento a un depto*/
     PROCEDURE Agregar_Mantenimiento(id_depto IN MANTENIMIENTO.ID_DPTO%TYPE, nombre IN MANTENIMIENTO.NOMBRE_MANT%TYPE, descripcion IN MANTENIMIENTO.DESC_MANT%TYPE,
         fecha_ini IN MANTENIMIENTO.FECHA_INICIO%TYPE, fecha_fin IN MANTENIMIENTO.FECHAR_TERMINO%TYPE, estado_man IN MANTENIMIENTO.ESTADO%TYPE, costo IN MANTENIMIENTO.COSTO_MANTENCION%TYPE, R OUT INTEGER)
     IS
         id_col rowid;
+        Mantenimiento_Error_In EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Mantenimiento_Error_In, -20801);    
     BEGIN
         INSERT INTO MANTENIMIENTO(ID_DPTO, NOMBRE_MANT, DESC_MANT, FECHA_INICIO, FECHAR_TERMINO, ESTADO, COSTO_MANTENCION) 
             VALUES(id_depto, nombre, descripcion, fecha_ini, fecha_fin, estado_man, costo) RETURNING rowid INTO id_col;
+        /* Retornar un 1 si el insert fue correcto*/
         IF id_col IS NOT NULL THEN
             R:=1;
             COMMIT;
+        /* Iniciar un error si no se ingresó*/
+        ELSE
+            RAISE Mantenimiento_Error_In;
         END IF;
+    EXCEPTION
+        WHEN Mantenimiento_Error_In THEN
+            R:=-20801;
     END;
+    
+    /*Actualizar un mantenimiento existente*/
     PROCEDURE Actualizar_Mantenimiento(id_mantenimiento MANTENIMIENTO.ID_MANT%TYPE, nombre MANTENIMIENTO.NOMBRE_MANT%TYPE, descripcion MANTENIMIENTO.DESC_MANT%TYPE,
         fecha_ini MANTENIMIENTO.FECHA_INICIO%TYPE, fecha_fin MANTENIMIENTO.FECHAR_TERMINO%TYPE, estado_man MANTENIMIENTO.ESTADO%TYPE, costo MANTENIMIENTO.COSTO_MANTENCION%TYPE, R OUT INTEGER)
     IS
+        Mantenimiento_Error_Ac EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Mantenimiento_Error_Ac, -20802);  
     BEGIN
         UPDATE MANTENIMIENTO SET NOMBRE_MANT = nombre, DESC_MANT = descripcion, FECHA_INICIO = fecha_ini, FECHAR_TERMINO = fecha_fin, ESTADO = estado_man,
             COSTO_MANTENCION = costo WHERE ID_MANT = id_mantenimiento RETURNING 1 INTO R;
+        /* Retornar un 1 si el update fue correcto*/
         IF r = 1 THEN
-            COMMIT;        
+            COMMIT;      
+        /* Iniciar un error si no se actualizó*/    
+        ELSE
+            RAISE Mantenimiento_Error_Ac;
         END IF;
+    EXCEPTION 
+        WHEN Mantenimiento_Error_Ac THEN 
+            R:=-20802;
     END;
+    
+    /*Eliminar un mantenimiento existente*/
     PROCEDURE Eliminar_Mantenimiento(id_mantenimiento MANTENIMIENTO.ID_MANT%TYPE,R OUT INTEGER)
     IS
+        Mantenimiento_Error_El EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Mantenimiento_Error_El, -20803);  
     BEGIN
         DELETE FROM MANTENIMIENTO WHERE ID_MANT = id_mantenimiento RETURNING 1 INTO R;
+        /* Retornar un 1 si el delete fue correcto*/
         IF R = 1 THEN
             COMMIT;
+        /* Iniciar un error si no se eliminó*/
+        ELSE
+            RAISE Mantenimiento_Error_El;
         END IF;
+    EXCEPTION
+        WHEN Mantenimiento_Error_El THEN    
+            R:=-20803;
     END;
+    
+    /*Listar todos los mantenimientos*/
     PROCEDURE Listar_Mantenimientos(id_depto MANTENIMIENTO.ID_DPTO%TYPE, Mantenimientos OUT SYS_REFCURSOR)
     IS
+        v_cant_datos INTEGER;
+        Mantenimiento_Error_Li EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Mantenimiento_Error_Li, -20804); 
     BEGIN
-        OPEN Mantenimientos FOR
-        SELECT id_mant, nombre_mant,desc_mant,to_char(fecha_inicio, 'dd/MM/yyyy'), to_char(fechar_termino, 'dd/MM/yyyy'), costo_mantencion, estado FROM MANTENIMIENTO WHERE ID_DPTO = id_depto;
+        /* Validar si la tabla tiene datos*/
+        SELECT COUNT(*) INTO v_cant_datos FROM FUNCIONARIO;
+        /* Si hay datos se consultan*/
+        IF v_cant_datos>0 THEN
+            OPEN Mantenimientos FOR
+                SELECT id_mant, nombre_mant,desc_mant,to_char(fecha_inicio, 'dd/MM/yyyy'), to_char(fechar_termino, 'dd/MM/yyyy'), costo_mantencion, estado FROM MANTENIMIENTO WHERE ID_DPTO = id_depto;
+        /* Si la tabla está vacía se inicia un error*/
+        ELSE
+            RAISE Mantenimiento_Error_Li;
+        END IF;
+    EXCEPTION
+        WHEN Mantenimiento_Error_Li THEN
+            Mantenimientos:= null;
     END;
+    
 END Mantener_Mantenimiento;
 /
 CREATE OR REPLACE PACKAGE Mantener_Tours
