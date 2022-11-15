@@ -7,6 +7,9 @@ namespace Vista
 {
     public partial class MenuAdmin : Window
     {
+        //variable para setear el tema de la app (dark or light)
+        //private bool isLight = true;
+
         private readonly DataTable dt;
         public MenuAdmin(DataTable admin)
         {
@@ -53,6 +56,22 @@ namespace Vista
         {
             PagesNavigation.Navigate(new Uri("Pages/MantenedorTours.xaml", UriKind.RelativeOrAbsolute));
         }
-        #endregion        
+        private void BtnReporteria_Click(object sender, RoutedEventArgs e)
+        {
+            PagesNavigation.Navigate(new Uri("Pages/Reportes.xaml", UriKind.RelativeOrAbsolute));
+        }
+        #endregion
+
+        //private void btnSwitch_Click(object sender, RoutedEventArgs e)
+        //{
+        //    isLight = !isLight;
+
+        //    var tema = isLight ? "/Resources/Light.xaml" : "/Resources/Dark.xaml";
+        //    var resources = Application.Current.Resources;
+
+        //    resources.MergedDictionaries.RemoveAt(0);
+        //    resources.MergedDictionaries.Insert(0,
+        //        new ResourceDictionary { Source = new Uri(tema, UriKind.Relative) });
+        //}
     }
 }
