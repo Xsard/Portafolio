@@ -57,6 +57,28 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Estado Reserva"  Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox IsReadOnly="True">
+                                    <TextBox.Text >
+                                        <Binding Path="EstadoReserva" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Estado Pago"  Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox IsReadOnly="True">
+                                    <TextBox.Text >
+                                        <Binding Path="EstadoPago" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="CheckIn" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -77,6 +99,20 @@
                                 <TextBox>
                                     <TextBox.Text >
                                         <Binding Path="CheckOut" StringFormat="dd/MM/yyyy" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Firma" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox>
+                                    <TextBox.Text >
+                                        <Binding Path="Firma" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
                                             </Binding.ValidationRules>
                                         </Binding>
@@ -109,15 +145,15 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="*" Header="Acciones">
+                    <DataGridTemplateColumn Width="200" Header="Acciones">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" >
                                     <Button x:Name="btn_planificar" Click="btn_planificar_Click" Width="50" Margin="0 0 5 0" Background="#C0392B" BorderBrush="#C0392B">
                                         <materialDesign:PackIcon Kind="Planner" ToolTip="Enviar correo planificación"/>
                                     </Button>
-                                    <Button x:Name="btn_ConfirmarCheckin" Click="btn_ConfirmarCheckin_Click" Width="50" Background="ForestGreen" BorderBrush="#C0392B">
-                                        <materialDesign:PackIcon Kind="Check" ToolTip="Confirmar CheckIn"/>
+                                    <Button x:Name="btn_ConfirmarFirma" Click="btn_ConfirmarFirma_Click" Width="50" Background="ForestGreen" BorderBrush="#C0392B">
+                                        <materialDesign:PackIcon Kind="TicketConfirmation" ToolTip="Confirmar CheckIn"/>
                                     </Button>
                                     <Button x:Name="btn_ConfirmarCheckOut" Click="btn_ConfirmarCheckOut_Click" Width="50" Margin="5 0 0 0" Background="Red" BorderBrush="#C0392B">
                                         <materialDesign:PackIcon Kind="Check" ToolTip="Confirmar CheckOut"/>
