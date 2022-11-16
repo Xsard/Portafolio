@@ -92,6 +92,7 @@
             <Frame x:Name="PagesNavigation" NavigationUIVisibility="Hidden">  
                 
             </Frame>
-        </Border>       
+        </Border>
+
     </Grid>
 </Window>

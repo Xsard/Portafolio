@@ -12,6 +12,8 @@
     <Grid>
         <!--#region Vista principal -->
         <Grid  x:Name="grdMainMenu">
+            <Button x:Name="btnSecreto" Content="Texto Aquí" VerticalAlignment="Top" Click="btnSecreto_Click"/>
+
             <Grid Visibility="Visible"  HorizontalAlignment="Center" Width="726" Height="360">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="242"/>
@@ -23,6 +25,7 @@
                     <RowDefinition Height="124"/>
                     <RowDefinition Height="124"/>
                 </Grid.RowDefinitions>
+                
                 <Grid Background="#FF0099CC" HorizontalAlignment="Center" Height="100" Margin="0,0,0,0" VerticalAlignment="Top" Width="726" Grid.ColumnSpan="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
