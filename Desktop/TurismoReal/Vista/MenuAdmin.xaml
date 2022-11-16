@@ -26,7 +26,6 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
             <Button Width="80" VerticalAlignment="Bottom" Height="60" Padding="0" Background="{x:Null}" BorderThickness="0" x:Name="btnHome" Click="btnHome_Click">
                 <StackPanel>
                     <materialDesign:PackIcon Kind="Home" Width="40" Height="40"/>
@@ -75,14 +74,24 @@
                     <Label Content="Planificar Transporte" FontSize="9" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Button>
+            <Button x:Name="BtnReporteria" Click="BtnReporteria_Click" Width="80" Height="60" Padding="0" Grid.Row="8" Background="{x:Null}" BorderThickness="0">
+                <StackPanel>
+                    <materialDesign:PackIcon Kind="ReportTree" Width="40" Height="40" HorizontalAlignment="Center"/>
+                    <Label Content="Reportería" FontSize="9" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <!--<Button x:Name="btnSwitch" Click="btnSwitch_Click" Width="80" Height="60" Grid.Row="8" Background="{x:Null}" BorderThickness="0">
+                <StackPanel>
+                    <materialDesign:PackIcon Kind="ToggleSwitch" Width="40" Height="40" HorizontalAlignment="Center"/>
+                    <Label Content="Cambiar tema" FontSize="9" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Button>-->
         </Grid>
         <!--#endregion-->
         <Border Grid.Column="1">
             <Frame x:Name="PagesNavigation" NavigationUIVisibility="Hidden">  
                 
             </Frame>
-        </Border>
-        
-
+        </Border>       
     </Grid>
 </Window>

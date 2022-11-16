@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Modelo;
 using System.Linq;
+using System.Resources;
 
 namespace Vista.Pages
 {
@@ -57,6 +58,11 @@ namespace Vista.Pages
                 DataTable dataTable = CReserva.ListarReservas();
                 if (dataTable != null)
                 {
+                    foreach (var row in dataTable.AsEnumerable())
+                    {
+                        if (row[3].ToString() == "X")
+                            row[3] = "En curso";
+                    }
                     var reservas = (from rw in dataTable.AsEnumerable()
                                  select new Reserva()
                                  {
@@ -82,16 +88,33 @@ namespace Vista.Pages
                 throw;
             }
         }
-
-        private void btn_ConfirmarCheckin_Click(object sender, RoutedEventArgs e)
+        private void MensajeError(string Mensaje)
         {
-            MessageBoxResult result = MessageBox.Show("Estás seguro de actualizar la fecha de checkin?", "Reservas", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            Reserva reserva = (Reserva)dtgReservas.SelectedItem;
-            int idReserva = reserva.IdReserva;
-            DateTime checkin = DateTime.Now;
-            CReserva.ConfirmarCheckIn(idReserva, checkin);
-            MessageBox.Show("CheckIn Actualizado");
-            ListarReservas();
+            MessageBox.Show(Mensaje, "Reservas", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        private void MensajeOk(string Mensaje)
+        {
+            MessageBox.Show(Mensaje, "Reservas", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        private void btn_ConfirmarFirma_Click(object sender, RoutedEventArgs e)
+        {            
+            try
+            {
+                Reserva reserva = (Reserva)dtgReservas.SelectedItem;
+                int IdReserva = reserva.IdReserva;
+                char FirmaFunc = '1';
+                MessageBoxResult result = MessageBox.Show("Quieres confirmar la firma?", "Reservas", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    CReserva.ConfirmarFirma(IdReserva,FirmaFunc);
+                    MensajeOk("Firma confirmada");
+                    ListarReservas();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btn_ConfirmarCheckOut_Click(object sender, RoutedEventArgs e)

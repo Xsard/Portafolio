@@ -40,7 +40,7 @@ namespace Controlador
             return resultado;
         }
 
-        public static int ConfirmarCheckIn(int idReserva, DateTime CheckIn)
+        public static int ConfirmarFirma(int IdReserva, char FirmaFunc)
         {
             int resultado;
             using (OracleConnection con = Conexion.getInstance().ConexionDB())
@@ -49,10 +49,10 @@ namespace Controlador
                 {
                     Connection = con,
                     CommandType = CommandType.StoredProcedure,
-                    CommandText = "Mantener_Reserva.actualizar_checkin"
+                    CommandText = "Mantener_Reserva.actualizar_firma"
                 };
-                cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = idReserva;
-                cmd.Parameters.Add("checkin", OracleDbType.Date, ParameterDirection.Input).Value = CheckIn;
+                cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = IdReserva;
+                cmd.Parameters.Add("firma", OracleDbType.Char, ParameterDirection.Input).Value = FirmaFunc;
                 cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
                 try
                 {
