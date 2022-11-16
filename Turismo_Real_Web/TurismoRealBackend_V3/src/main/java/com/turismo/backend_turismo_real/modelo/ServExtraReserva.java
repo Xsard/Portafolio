@@ -1,18 +1,36 @@
 package com.turismo.backend_turismo_real.modelo;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
+
+@NamedStoredProcedureQueries({
+	@NamedStoredProcedureQuery(
+			name = "add_serv_ex",
+			procedureName = "AGREGAR_SERV_EXTRA",
+			parameters = {
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="ID_RESERVA", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="ID_SVC", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="DPTO", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="CLIENTE", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.OUT, name="R", type=int.class)	
+			})
+	})
 
 @Entity
 @Table(name = "Reserva_servicios_extras")
 public class ServExtraReserva {
 	
-	
+	@Id
 	@Column(name = "id_reserva")
 	int id_reserva;
-	@Id
 	@Column(name = "id_svc_ex")
 	int id_svc_ex;
 	@Column(name = "id_dpto")

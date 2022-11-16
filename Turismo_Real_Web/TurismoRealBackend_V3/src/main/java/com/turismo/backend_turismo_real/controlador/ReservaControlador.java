@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turismo.backend_turismo_real.modelo.Reserva;
+import com.turismo.backend_turismo_real.modelo.ServExtraReserva;
+import com.turismo.backend_turismo_real.modelo.SuperServExtra;
 import com.turismo.backend_turismo_real.service.ReservaServImplement;
 
 @RestController
@@ -53,5 +55,16 @@ public class ReservaControlador {
 	@GetMapping("/traerDpto/{id_reserva}")
 	public int traerDpto(@PathVariable int id_reserva) {
 		return servReserva.traerDpto(id_reserva);
+	}
+	
+	@PostMapping("/actualizarValor/{id_reserva}")
+	public ResponseEntity<Reserva> update_valor_total(@PathVariable Integer id_reserva, @RequestBody SuperServExtra sevExt){
+		return servReserva.update_valor_total(id_reserva, sevExt);
+	}
+	
+	//cantidad acompañantes funcionando
+	@PostMapping("/act_acompañantes/{id_reserva}")
+	public ResponseEntity<Reserva> act_acompañantes(@PathVariable Integer id_reserva, @RequestBody Reserva reserva){
+		return servReserva.act_acompañantes(id_reserva, reserva);
 	}
 }

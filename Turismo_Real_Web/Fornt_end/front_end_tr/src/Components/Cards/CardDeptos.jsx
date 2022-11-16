@@ -1,8 +1,10 @@
 import { Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+//exportamos el componente con los parametros de cada depto
 export const CardComponent = ({ idDepto, nombreDepto, NumeroDepto, capacidad, tarifa, direccion, comuna, foto_path }) => {
 
+  //devolvemos el codigo HTML con la Card por defecto que sera llenada con los parametros de la funcion
   return (
     <>
       <Col>

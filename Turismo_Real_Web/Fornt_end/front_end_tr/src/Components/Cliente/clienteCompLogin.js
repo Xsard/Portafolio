@@ -6,28 +6,48 @@ import clienteContext from "../../Contexts/ClienteContext";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
+//creamos variables con las url que llaman al backend
 const url = "http://localhost:8080/api/v1/login"
 const url_confirm = "http://localhost:8080/api/v1/loginConfirmed/"
 
+//creamos la funcion principal que contiene todo el codigo
 const Login = () => {
+    //usamos el useContext para tener los datos de usuario que esta activo actualmente
+
     const { usuario, setUsuario } = useContext(clienteContext);
     const { id, setId } = useContext(clienteContext);
+
+    //utilizamos el useState para guardar variables y poder llenarla y renderizarla
 
     const [correo, setCorreo] = useState('');
     const [contraseña, setContraseña] = useState('');
 
+    //creamos la const myswal para llamar los mensajes de alerta de Swal Alert
+
     const MySwal = withReactContent(Swal);
 
+    //la const handleSubmit hara las llamadas al back al ser llamada
+
     const handleSubmit = async (e) => {
+
+        //preventDefault permite tener un seguro en caso de que se cancele el evento y no hacer las llamadas
         e.preventDefault();
+
+        //llamamos un Try catch en caso de fallo en las llamadas
         try {
+
+            //llamamos a axios para que haga la llamada al backend con los datos necesarios
             const resp = await axios.post(url, { email: correo, pass: contraseña })
             console.log(resp.data)
+
+            //comprobamos que el inicio de sesion sea correcto
             if (resp.data === 0) {
-                MySwal.fire({ 
+                MySwal.fire({
                     title: "Error en el inicio de sesión, verifica tus datos",
-                    icon: "error" 
+                    icon: "error"
                 })
+
+            //si el inicio es correcto, procede a enviar un mensaje y redirigir
             } else {
                 const usuariobd = await axios.get(`${url_confirm}${resp.data}`);
                 setUsuario(correo)
@@ -35,21 +55,23 @@ const Login = () => {
                 console.log(resp.data)
                 setId(resp.data)
                 localStorage.setItem('id_cliente', resp.data)
-                MySwal.fire({ 
+                MySwal.fire({
                     title: "Inicio de sesión correcto",
-                    icon: "success" 
-                }).then((respuesta)=>{
-                    if(respuesta.isConfirmed){
+                    icon: "success"
+                }).then((respuesta) => {
+                    if (respuesta.isConfirmed) {
                         window.location.replace('/Inicio');
                     }
                 })
 
             }
+            //mostramos un error si no pasa el Try
         } catch (error) {
             console.log(error.response)
         }
     }
 
+    //devolvemos el codigo HTML que sera renderizado cuando se llame la funcion
     return (
         <>
             <div className="mx-auto">

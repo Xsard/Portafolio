@@ -24,27 +24,38 @@ public class DepartamentoControlador {
 	@Autowired
 	private DeptoServicioImplement deptoServ;
 
+	//revisar
 	@GetMapping("/deptosList")
 	public List<Departamento> ObtenerDepto() {
 		return deptoServ.ObtenerDepto();
 	}
+	//revisar
 	@GetMapping("/depto/{id}")
 	public ResponseEntity<Departamento> obtenerDeptoId(@PathVariable Integer id){
 		return deptoServ.obtenerDeptoId(id);
 	}
 	
+	//trae la informacion de todos los departamentos
 	@GetMapping("/listadoDepto")
 	public List<Departamento> QueryDepto(){
 		return deptoServ.QueryDepto();
 	}
 	
+	//
 	@GetMapping("/id_foto")
 	public String id_foto(){
 		return deptoServ.id_foto();
 	}
 	
+	//Trae una lista con todas las fotos del departamento en especifico
 	@GetMapping("/fotosDepartamento/{id_dpto}")
 	public List<String> fotos_departamento(@PathVariable int id_dpto){
 		return deptoServ.fotos_departamento(id_dpto);
+	}
+	
+	//traemos la capacidad del departamento
+	@GetMapping("/capacidad/{id_dpto}")
+	public int traerCapacidad (@PathVariable int id_dpto){
+		return deptoServ.traerCapacidad(id_dpto);
 	}
 }

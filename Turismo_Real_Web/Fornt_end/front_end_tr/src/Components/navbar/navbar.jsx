@@ -10,11 +10,16 @@ import clienteContext from "../../Contexts/ClienteContext";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-
+//creamos la funcion que se cargara
 export const Navigation = () => {
+
+  //variable para guardar el tiempo de carga
   let timerInterval
+
+  //variable que trae el Swal Alert
   const MySwal = withReactContent(Swal);
 
+  //pregunta si desea cerrar sesion
   const handleSwal = () => {
     MySwal.fire({
       title: "¿Desea cerrar sesión?",
@@ -40,10 +45,12 @@ export const Navigation = () => {
             clearInterval(timerInterval)
           }
         })
+        //llamamos al logout del usecontext que se encarga de cerrar la sesion 
         logout()
       }
     })
   }
+  //ocupamos el useContext para obtener la sesion activa
   const { usuario, logout } = useContext(clienteContext);
   return (
     <Navbar

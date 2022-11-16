@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.turismo.backend_turismo_real.modelo.Departamento;
 import com.turismo.backend_turismo_real.modelo.Reserva;
+import com.turismo.backend_turismo_real.modelo.ServExtraReserva;
+import com.turismo.backend_turismo_real.modelo.ServicioExtra;
+import com.turismo.backend_turismo_real.modelo.SuperServExtra;
 import com.turismo.backend_turismo_real.repositorio.ReservaRepositorio;
 
 @Service
@@ -56,6 +59,21 @@ public class ReservaServImplement implements ReservaServicio{
 		return reporeserva.traerDpto(id_reserva);
 	}
 
-	
+	@Override
+	public ResponseEntity<Reserva> update_valor_total(int id_reserva, SuperServExtra sevExtra) {
+		Reserva servR = reporeserva.findById(id_reserva).orElse(null);
+		servR.setValor_total(servR.getValor_total()+sevExtra.getValor_serv_ex());
+		reporeserva.save(servR);
+		return ResponseEntity.ok(servR);
+	}
+
+	@Override
+	public ResponseEntity<Reserva> act_acompañantes(Integer id_reserva, Reserva reserva) {
+		Reserva reservaAct = reporeserva.findById(id_reserva).orElse(null);
+		reservaAct.setCantidad_acompañantes(reserva.getCantidad_acompañantes());
+		reporeserva.save(reservaAct);
+		return ResponseEntity.ok(reservaAct);
+	}
+
 
 }
