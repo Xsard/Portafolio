@@ -40,4 +40,10 @@ public class DeptoServicioImplement implements DeptoServicio{
 	public List<String> fotos_departamento(int id_dpto) {
 		return repodepto.fotos_departamento(id_dpto);
 	}
+
+	//llamamos al repositorio para hacer la consulta
+	@Override
+	public int traerCapacidad(int id_dpto) {
+		return repodepto.traerCapacidad(id_dpto);
+	}
 }

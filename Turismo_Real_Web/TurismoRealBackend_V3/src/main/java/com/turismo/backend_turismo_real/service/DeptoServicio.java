@@ -19,4 +19,7 @@ public interface DeptoServicio {
 	
 	List<String>fotos_departamento(int id_dpto);
 	
+	//llamamos a la funcion del repositorio
+	int traerCapacidad (int id_dpto);
+	
 }

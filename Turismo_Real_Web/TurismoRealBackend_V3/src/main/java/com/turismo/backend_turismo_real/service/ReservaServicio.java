@@ -5,6 +5,8 @@ import java.util.Date;
 import org.springframework.http.ResponseEntity;
 
 import com.turismo.backend_turismo_real.modelo.Reserva;
+import com.turismo.backend_turismo_real.modelo.ServExtraReserva;
+import com.turismo.backend_turismo_real.modelo.SuperServExtra;
 
 public interface ReservaServicio {
 
@@ -20,4 +22,9 @@ public interface ReservaServicio {
 	ResponseEntity<Reserva> obtenerReserva(Integer id_reserva);
 	
 	int traerDpto(int id_reserva);
+
+	ResponseEntity<Reserva> update_valor_total(int id_reserva, SuperServExtra sevExtra);
+	
+	ResponseEntity<Reserva> act_acompañantes(Integer id_reserva, Reserva reserva);
+	
 }

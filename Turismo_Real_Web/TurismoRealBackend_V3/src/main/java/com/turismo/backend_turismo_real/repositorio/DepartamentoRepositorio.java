@@ -27,4 +27,8 @@ public interface DepartamentoRepositorio extends JpaRepository<Departamento, Int
 	
 	@Query(nativeQuery = true, value= "SELECT ID_FOTO FROM FOTOGRAFIA_DPTO WHERE  ID_DPTO=:id_dpto")
 	List<String> fotos_departamento(@Param("id_dpto") int id_dpto);
+	
+	//obtenemos la disponibilidad del departamento
+	@Query(nativeQuery = true, value= "SELECT CAPACIDAD FROM DEPARTAMENTO WHERE id_dpto = :id_dpto")
+	int traerCapacidad(@Param("id_dpto") int id_dpto);
 }

@@ -21,6 +21,35 @@ const handleUpdate = async (id_reserva) => {
     })
 }
 
+const handleAcompañantes = (id_reserva) => {
+    localStorage.setItem('idReserva', id_reserva)
+    let id_reserva1 = localStorage.getItem('idReserva')
+    window.location.replace(`/editarAcompanantes/${id_reserva1}`);
+}
+
+const handleServExtra = (id_reserva) => {
+    localStorage.setItem('idReserva', id_reserva)
+    let id_reserva1 = localStorage.getItem('idReserva')
+    window.location.replace(`/ListaServExtra/${id_reserva1}`);
+}
+const handlePago = (id_reserva) => {
+    const MySwal = withReactContent(Swal);
+    localStorage.setItem('idReserva', id_reserva)
+    let id_reserva1 = localStorage.getItem('idReserva')
+    MySwal.fire({
+        title: "Una vez pagada la reserva no se puede editar ni agregar servicios extras, ¿Desea continuar?",
+        icon: "warning",
+        showDenyButton: true,
+        confirmButtonText: 'Si',
+        denyButtonText: 'No'
+    }).then((respuesta) => {
+        if (respuesta.isConfirmed) {
+            window.location.replace(`/portalPago/${id_reserva1}`);
+        }
+    })
+
+}
+
 class ReservaComponente extends React.Component {
 
     constructor(props) {
@@ -56,6 +85,7 @@ class ReservaComponente extends React.Component {
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,28 +95,45 @@ class ReservaComponente extends React.Component {
                                         <tr key={Reserva.id_reserva}>
                                             <td>{Reserva.id_reserva}</td>
                                             <td>{Reserva.nombre_dpto}</td>
-                                            <td>{Reserva.check_in.slice(0,10)}</td>
-                                            <td>{Reserva.check_out.slice(0,10)}</td>
+                                            <td>{Reserva.check_in.slice(0, 10)}</td>
+                                            <td>{Reserva.check_out.slice(0, 10)}</td>
                                             <td>
                                                 {
-                                                Reserva.estado_pago==="A"?
-                                                    "Pago adelantado":
-                                                    "Pendiente"
+                                                    Reserva.estado_pago === "A" ?
+                                                        "Pago adelantado" :
+                                                        "Pendiente"
                                                 }
 
                                             </td>
                                             <td>{Reserva.valor_total}</td>
-                                            <td><button onClick={() => handleUpdate(Reserva.id_reserva)} className="btn btn-danger ">Cancelar</button></td>
                                             <td>
                                                 {
                                                     Reserva.estado_pago === "A" ?
                                                         <img src="https://icons.veryicon.com/png/o/miscellaneous/new-version-of-star-selected-icon/success-26.png"
                                                             height="35" width="35" alt="" /> :
-                                                        <Link to={`/portalPago/${Reserva.id_reserva}`} >
-                                                            <a className="btn btn-primary">Pagar</a>
-                                                        </Link>
+                                                        <td><button onClick={() => handlePago(Reserva.id_reserva)} className="btn btn-success ">Pagar</button></td>
                                                 }
                                             </td>
+                                            <td>
+                                                {
+                                                    Reserva.estado_pago === "A" ?
+                                                        <a></a> :
+                                                        <td><button onClick={() => handleServExtra(Reserva.id_reserva)} className="btn btn-primary ">Editar Servicios Extras</button></td>
+                                                }
+                                            </td>
+                                            <td>
+                                                {
+                                                    Reserva.estado_pago === "A" ?
+                                                        <a></a> :
+                                                        <td><button onClick={() => handleAcompañantes(Reserva.id_reserva)} className="btn btn-primary ">Editar reserva</button></td>
+                                                }
+                                            </td>
+                                            {
+                                                    Reserva.estado_pago === "A" ?
+                                                        <a></a> :
+                                                        <td><button onClick={() => handleUpdate(Reserva.id_reserva)} className="btn btn-danger ">Cancelar</button></td>
+                                                }
+                                            
                                         </tr>
                                 )
                             }

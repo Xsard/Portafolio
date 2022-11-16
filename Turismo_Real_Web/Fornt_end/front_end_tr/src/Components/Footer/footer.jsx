@@ -2,6 +2,7 @@ import React from "react";
 
 import './footer.css';
 
+//creamos la funcion que se renderizara en otra ventana
 const Footer = () => {
 
     return (
@@ -25,9 +26,9 @@ const Footer = () => {
                         <div className="pt-4">
                             <a href="https://www.instagram.com/" className="pt-5"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/768px-Instagram_logo_2016.svg.png"
                                 height="50" width="50" alt="" /></a>
-                            <a href="https://www.instagram.com/" className="px-3"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/2048px-Facebook_f_logo_%282019%29.svg.png"
+                            <a href="https://www.facebook.com/" className="px-3"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/2048px-Facebook_f_logo_%282019%29.svg.png"
                                 height="50" width="50" alt="" /></a>
-                            <a href="https://www.instagram.com/" className="pt-5"><img src="https://seeklogo.com/images/T/twitter-icon-circle-blue-logo-0902F48837-seeklogo.com.png"
+                            <a href="https://www.twitter.com/" className="pt-5"><img src="https://seeklogo.com/images/T/twitter-icon-circle-blue-logo-0902F48837-seeklogo.com.png"
                                 height="50" width="50" alt="" /></a>
                         </div>
                     </div>

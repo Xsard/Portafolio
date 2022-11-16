@@ -31,17 +31,20 @@ public class ClienteControlador {
 	@Autowired
 	private ClienteServicioImplement serv;
 	
+	//guarda los datos y los inserta en la base de datos
 	@PostMapping("/registrarse" )
 	public int registrarse(@RequestBody Supercliente cli) {	
 		return serv.registrarse(cli.getEmail(), cli.getPass(), cli.getFono(),
 				cli.getRut(), cli.getNombre(), cli.getApellido());
 	}
 	
+	// generar el POST para loguearse en el sistema
 	@PostMapping("/login")
 	public int login(@RequestBody Supercliente cli) {
 		return serv.login(cli.getEmail(), cli.getPass());
 	}
 	
+	//Con esto confirmamos el login y guardamos los datos de sesion
 	@GetMapping("/loginConfirmed/{id}")
 	public String loginConfirmed(@PathVariable int id){
 		return serv.loginConfirmed(id);

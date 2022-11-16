@@ -6,10 +6,15 @@ import * as clienteServicio from "../../services/ClienteService";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
+//creamos la funcion de registrar
+function Registrar() {
 
-function Example() {
+    //llamamos a la variable de Swal Alert
     const MySwal = withReactContent(Swal);
+    //creamos una variable que guardara el tiempo de carga
     let timerInterval;
+
+    //creamos los useState que vamos a utilizar
     const [rut, setRut] = useState('');
     const [nombres, setNombres] = useState('');
     const [apellidos, setApellidos] = useState('');
@@ -20,21 +25,27 @@ function Example() {
     let [code, setCode] = useState('');
     const [repCode, setRepCode] = useState('');
 
+    //obtenemos un numero random que sera enviado como codigo de verificacion
     function getRandomInt() {
         return Math.floor(Math.random() * 9999999);
     }
 
+    //creamos otras variables que sirven de estado para el modal de comprobacion
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    //creamos la variable para hacer la validacion 
     const handleValidar = () => {
+        //comprobamos que las contraseñas sean correctas
         if (contraseña === repContraseña) {
+            //si son correctas muestra el modal y envia el codigo de comprobacion
             handleShow()
             code = getRandomInt();
             setCode(code)
             clienteServicio.ValidarLogin(correo, code)
         } else {
+            //mensaje de error de las contraseñas
             MySwal.fire({
                 title: "Las contraseñas no coinciden",
                 icon: "error" 
@@ -43,10 +54,14 @@ function Example() {
 
     }
 
+    //comprobacion de codigo de verificacion
     const HandleCodigo = () => {
+        //verificamos que el codigo que se inserto y el codigo del correo sean iguales
         if (code === parseInt(repCode)) {
+            //insertamos el cliente
             clienteServicio.ingresarUsuario(correo, contraseña, telefono, rut, nombres, apellidos)
             MySwal.fire({
+                //creamos el mensaje de usuario creado y con un timer para cargar la pagina
                 title: "Usuario creado, Volviendo a la pagina de inicio...",
                 icon: "success",
                 timer: "2500",
@@ -60,12 +75,14 @@ function Example() {
                     b.textContent = Swal.getTimerLeft()
                   }, 100)
                 },
+                //redirigimos a la pagina de inicio
                 willClose: () => {
                   clearInterval(timerInterval)
                   window.location.replace('/Inicio');
                 }
               })
 
+              //el codigo no es correcto envia un mensaje de error
         } else {
             MySwal.fire({
                 title: "El codigo de verificacion no coincide",
@@ -193,4 +210,4 @@ return (
     </>
 );
 }
-export default Example;
+export default Registrar;
