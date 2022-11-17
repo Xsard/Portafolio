@@ -48,10 +48,5 @@ namespace Vista.Pages
             ns.Navigate(new Uri("Pages/MantenedorReservas.xaml", UriKind.RelativeOrAbsolute));
         }
 
-        private void btnSecreto_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new Uri("Pages/MantenedorServiciosDepto.xaml", UriKind.RelativeOrAbsolute));
-        }
     }
 }

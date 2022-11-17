@@ -12,8 +12,6 @@
     <Grid>
         <!--#region Vista principal -->
         <Grid  x:Name="grdMainMenu">
-            <Button x:Name="btnSecreto" Content="Texto Aquí" VerticalAlignment="Top" Click="btnSecreto_Click"/>
-
             <Grid Visibility="Visible"  HorizontalAlignment="Center" Width="726" Height="360">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="242"/>

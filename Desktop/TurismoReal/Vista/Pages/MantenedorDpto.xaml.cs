@@ -227,6 +227,12 @@ namespace Vista.Pages
             MantenedorMantenimientoDpto mantenedorMantenimientoDpto = new(departamento);
             ns.Navigate(mantenedorMantenimientoDpto);                        
         }
-
+        private void btnSecreto_Click(object sender, RoutedEventArgs e)
+        {
+            Departamento departamento = (Departamento)dtgDptos.SelectedItem;
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            MantenedorServiciosDepto msd = new(departamento);
+            ns.Navigate(msd);
+        }
     }
 }

@@ -133,6 +133,7 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Button Click="DtgDptoDetalles_Click" Grid.Column="0" Margin="0 0 5 0" ToolTip="Inventario">
                                         <materialDesign:PackIcon Kind="Warehouse"/>
@@ -143,6 +144,10 @@
                                     <Button Click="DtgDptoDelete_Click" Grid.Column="2" Margin="5 0 0 0" ToolTip="Eliminar">
                                         <materialDesign:PackIcon Kind="Delete"/>
                                     </Button>
+                                    <Button Click="btnSecreto_Click" Grid.Column="3" Margin="5 0 0 0" ToolTip="Eliminar">
+                                        <materialDesign:PackIcon Kind="Payment"/>
+                                    </Button>
+
                                 </Grid>                                     
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

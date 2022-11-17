@@ -4,9 +4,9 @@ using System.Data;
 
 namespace Controlador
 {
-    public class CServicioDpto
+    public class CServicio
     {
-        public static int IngresarServicioDpto(ServicioDpto servicioDpto)
+        public static int IngresarServicioDpto(Servicio servicioDpto)
         {
             int resultado = 0;
             using (OracleConnection con = Conexion.getInstance().ConexionDB())
@@ -15,7 +15,7 @@ namespace Controlador
                 {
                     Connection = con,
                     CommandType = CommandType.StoredProcedure,
-                    CommandText = "Mantener_Servicios_Dpto.insertar_svdpto"
+                    CommandText = "Mantener_Servicios.insertar_svdpto"
                 };
                 cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = servicioDpto.NombreServDpto;
                 cmd.Parameters.Add("descripcion", OracleDbType.Varchar2, ParameterDirection.Input).Value = servicioDpto.DescServDpto;
@@ -41,7 +41,7 @@ namespace Controlador
             }
             return resultado;
         }
-        public static int ActualizarServicioDpto(ServicioDpto servicioDpto)
+        public static int ActualizarServicioDpto(Servicio servicioDpto)
         {
             int resultado = 0;
             using (OracleConnection con = Conexion.getInstance().ConexionDB())
@@ -50,7 +50,7 @@ namespace Controlador
                 {
                     Connection = con,
                     CommandType = CommandType.StoredProcedure,
-                    CommandText = "Mantener_Servicios_Dpto.actualizar_svdpto"
+                    CommandText = "Mantener_Servicios.actualizar_svdpto"
                 };
                 cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = servicioDpto.IdServDpto;
                 cmd.Parameters.Add("nombre", OracleDbType.Varchar2, ParameterDirection.Input).Value = servicioDpto.NombreServDpto;
@@ -84,7 +84,7 @@ namespace Controlador
                 {
                     Connection = con,
                     CommandType = CommandType.StoredProcedure,
-                    CommandText = "Mantener_Servicios_Dpto.listar_svdpto"
+                    CommandText = "Mantener_Servicios.listar_svdpto"
                 };
                 cmd.Parameters.Add("Servicios_dpto", OracleDbType.RefCursor, ParameterDirection.Output);
                 try
@@ -118,7 +118,7 @@ namespace Controlador
                 {
                     Connection = con,
                     CommandType = CommandType.StoredProcedure,
-                    CommandText = "Mantener_Servicios_Dpto.eliminar_svdpto"
+                    CommandText = "Mantener_Servicios.eliminar_svdpto"
                 };
                 cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = idServDpto;
                 cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);

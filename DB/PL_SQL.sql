@@ -1127,7 +1127,7 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
     END;    
 END Mantener_Reserva;
 /
-CREATE OR REPLACE PACKAGE Mantener_Servicios_Dpto
+CREATE OR REPLACE PACKAGE Mantener_Servicios
     AS
     PROCEDURE insertar_svdpto(nombre IN SERVICIO.NOMBRE_SERV%TYPE, descripcion IN SERVICIO.DESC_SERV%TYPE, R OUT INTEGER);
     PROCEDURE actualizar_svdpto(identificador IN SERVICIO.ID_SERVICIO%TYPE, nombre IN SERVICIO.NOMBRE_SERV%TYPE,
@@ -1135,9 +1135,9 @@ CREATE OR REPLACE PACKAGE Mantener_Servicios_Dpto
     PROCEDURE eliminar_svdpto(identificador SERVICIO.ID_SERVICIO%TYPE, R OUT INTEGER);
     PROCEDURE listar_svdpto(Servicios_dpto OUT SYS_REFCURSOR);
 
-END Mantener_Servicios_Dpto;
+END Mantener_Servicios;
 /
-CREATE OR REPLACE PACKAGE BODY Mantener_Servicios_Dpto
+CREATE OR REPLACE PACKAGE BODY Mantener_Servicios
     AS
     /*Agregar un servicio de departamento*/
     PROCEDURE insertar_svdpto(nombre IN SERVICIO.NOMBRE_SERV%TYPE, descripcion IN SERVICIO.DESC_SERV%TYPE, R OUT INTEGER)
@@ -1196,7 +1196,7 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Servicios_Dpto
         END IF;
     EXCEPTION
         WHEN Svdpto_Error_El THEN
-            R:= -21104;
+            R:= -21103;
     END;
     
     /*Listar todos los servicio de depto*/
@@ -1220,8 +1220,82 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Servicios_Dpto
         WHEN Svdpto_Error_Li THEN
             Servicios_dpto:= null;
     END;
+END Mantener_Servicios;
+/
+
+CREATE OR REPLACE PACKAGE Mantener_Servicios_Dpto
+    AS
+    PROCEDURE insertar_svdpto(id_serv IN SERVICIO_DPTO.ID_SERVICIO%TYPE, id_dpto IN SERVICIO_DPTO.ID_DPTO%TYPE, estado SERVICIO_DPTO.ESTADO_SERVICIO%TYPE, R OUT INTEGER);
+    PROCEDURE eliminar_svdpto(id_serv IN SERVICIO_DPTO.ID_SERVICIO%TYPE, id_depto IN SERVICIO_DPTO.ID_DPTO%TYPE, R OUT INTEGER);
+    PROCEDURE listar_svdpto( id_depto IN SERVICIO_DPTO.ID_DPTO%TYPE, Servicios_dpto OUT SYS_REFCURSOR);
+
 END Mantener_Servicios_Dpto;
 /
+CREATE OR REPLACE PACKAGE BODY Mantener_Servicios_Dpto
+    AS
+    /*Agregar un servicio a un departamento*/
+    PROCEDURE insertar_svdpto(id_serv IN SERVICIO_DPTO.ID_SERVICIO%TYPE, id_dpto IN SERVICIO_DPTO.ID_DPTO%TYPE, estado SERVICIO_DPTO.ESTADO_SERVICIO%TYPE, R OUT INTEGER)
+    IS
+        id_col rowid;
+        Svdpto_Error_In EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Svdpto_Error_In, -21201);    
+    BEGIN
+        INSERT INTO SERVICIO_DPTO VALUES(id_serv, id_dpto, estado) RETURNING rowid INTO id_col;
+        /* Retornar un 1 si el insert fue correcto*/
+        IF id_col IS NOT NULL THEN
+            r:=1;
+            COMMIT;
+        /* Iniciar un error si no se ingresó*/
+        ELSE
+            RAISE Svdpto_Error_In;
+        END IF;
+    EXCEPTION 
+        WHEN Svdpto_Error_In THEN
+            R:= -21201;
+    END;
+        
+    /*Eliminar un servicio de depto existente*/
+    PROCEDURE eliminar_svdpto(id_serv IN SERVICIO_DPTO.ID_SERVICIO%TYPE, id_depto IN SERVICIO_DPTO.ID_DPTO%TYPE, R OUT INTEGER)
+    IS 
+        Svdpto_Error_El EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Svdpto_Error_El, -21203);    
+    BEGIN 
+        DELETE FROM SERVICIO_DPTO WHERE ID_SERVICIO = id_serv AND ID_DPTO = id_depto RETURNING 1 INTO r;
+        IF r = 1 THEN
+            COMMIT;
+        ELSE
+            RAISE Svdpto_Error_El;
+        END IF;
+    EXCEPTION
+        WHEN Svdpto_Error_El THEN
+            R:= -21203;
+    END;
+    
+    /*Listar todos los servicio de depto*/
+    PROCEDURE listar_svdpto( id_depto IN SERVICIO_DPTO.ID_DPTO%TYPE, Servicios_dpto OUT SYS_REFCURSOR)
+    IS
+        v_cant_datos INTEGER;
+        Svdpto_Error_Li EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Svdpto_Error_Li, -21204);  
+    BEGIN
+        /* Validar si la tabla tiene datos*/
+        SELECT COUNT(*) INTO v_cant_datos FROM SERVICIO_DPTO;
+        /* Si hay datos se consultan*/
+        IF v_cant_datos>0 THEN
+            OPEN Servicios_dpto FOR
+                SELECT * FROM SERVICIO_DPTO JOIN SERVICIO USING (ID_SERVICIO) WHERE ID_DPTO = id_depto;
+        /* Si la tabla está vacía se inicia un error*/
+        ELSE
+            RAISE Svdpto_Error_Li;
+        END IF;
+    EXCEPTION
+        WHEN Svdpto_Error_Li THEN
+            Servicios_dpto:= null;
+    END;
+END Mantener_Servicios_Dpto;
+/
+
+
 /*Genenerar un admin*/
 DECLARE 
     r integer;
@@ -1235,3 +1309,5 @@ DECLARE
 BEGIN
     Mantener_Dpto.insertar_dpto('Transilvania', 59000, 'Franklin 231', 1, 5, 1, 0, R);
 END;
+/
+SELECT * FROM SERVICIO_DPTO JOIN SERVICIO USING (ID_SERVICIO) WHERE ID_DPTO = 1

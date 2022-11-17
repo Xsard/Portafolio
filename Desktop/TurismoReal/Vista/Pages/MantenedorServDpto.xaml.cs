@@ -35,10 +35,10 @@ namespace Vista.Pages
 
         private void DtgServDptoDelete(object sender, RoutedEventArgs e)
         {
-            ServicioDpto servicioDpto = (ServicioDpto)dtgServDpto.SelectedItem;
+            Servicio servicioDpto = (Servicio)dtgServDpto.SelectedItem;
             try
             {
-                int estado = CServicioDpto.EliminarServicio(servicioDpto.IdServDpto);
+                int estado = CServicio.EliminarServicio(servicioDpto.IdServDpto);
                 MessageBox.Show("Servicio eliminado");
                 ListarServicioDpto();
             }
@@ -56,12 +56,12 @@ namespace Vista.Pages
                 {
                     try
                     {
-                        ServicioDpto servicioDpto = new()
+                        Servicio servicioDpto = new()
                         {
                             NombreServDpto = txt_nombre_ag.Text.Trim(),
                             DescServDpto = txt_desc_ag.Text.Trim()
                         };
-                        int estado = CServicioDpto.IngresarServicioDpto(servicioDpto);
+                        int estado = CServicio.IngresarServicioDpto(servicioDpto);
                         MessageBox.Show("Servicio agregado");
                         ListarServicioDpto();
                         Limpiar();
@@ -77,11 +77,11 @@ namespace Vista.Pages
         {
             try
             {
-                DataTable dataTable = CServicioDpto.ListarServiciosDpto();
+                DataTable dataTable = CServicio.ListarServiciosDpto();
                 if (dataTable != null)
                 {
                     var ServDpto = (from rw in dataTable.AsEnumerable()
-                                select new ServicioDpto()
+                                select new Servicio()
                                 {
                                     IdServDpto = Convert.ToInt32(rw[0]),
                                     NombreServDpto = rw[1].ToString(),
@@ -104,10 +104,10 @@ namespace Vista.Pages
         {
             if (e.Key == Key.Enter)
             {
-                ServicioDpto servicioDpto = (ServicioDpto)dtgServDpto.SelectedItem;
+                Servicio servicioDpto = (Servicio)dtgServDpto.SelectedItem;
                 try
                 {
-                    int estado = CServicioDpto.ActualizarServicioDpto(servicioDpto);
+                    int estado = CServicio.ActualizarServicioDpto(servicioDpto);
                     MessageBox.Show("Servicio actualizado");
                     ListarServicioDpto();
                 }
