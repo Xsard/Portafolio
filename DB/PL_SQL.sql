@@ -1226,7 +1226,9 @@ END Mantener_Servicios;
 CREATE OR REPLACE PACKAGE Mantener_Servicios_Dpto
     AS
     PROCEDURE insertar_svdpto(id_serv IN SERVICIO_DPTO.ID_SERVICIO%TYPE, id_dpto IN SERVICIO_DPTO.ID_DPTO%TYPE, estado SERVICIO_DPTO.ESTADO_SERVICIO%TYPE, R OUT INTEGER);
+    PROCEDURE actualizar_svdpto(id_serv IN SERVICIO_DPTO.ID_SERVICIO%TYPE, id_depto IN SERVICIO_DPTO.ID_DPTO%TYPE, estado SERVICIO_DPTO.ESTADO_SERVICIO%TYPE, R OUT INTEGER);
     PROCEDURE eliminar_svdpto(id_serv IN SERVICIO_DPTO.ID_SERVICIO%TYPE, id_depto IN SERVICIO_DPTO.ID_DPTO%TYPE, R OUT INTEGER);
+    PROCEDURE listar_svdptoContratado( id_depto IN SERVICIO_DPTO.ID_DPTO%TYPE, Servicios_dpto OUT SYS_REFCURSOR);
     PROCEDURE listar_svdpto( id_depto IN SERVICIO_DPTO.ID_DPTO%TYPE, Servicios_dpto OUT SYS_REFCURSOR);
 
 END Mantener_Servicios_Dpto;
@@ -1253,7 +1255,22 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Servicios_Dpto
         WHEN Svdpto_Error_In THEN
             R:= -21201;
     END;
-        
+    /*Eliminar un servicio de depto existente*/
+    PROCEDURE actualizar_svdpto(id_serv IN SERVICIO_DPTO.ID_SERVICIO%TYPE, id_depto IN SERVICIO_DPTO.ID_DPTO%TYPE, estado SERVICIO_DPTO.ESTADO_SERVICIO%TYPE, R OUT INTEGER)
+    IS 
+        Svdpto_Error_El EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Svdpto_Error_El, -21202);    
+    BEGIN 
+        UPDATE SERVICIO_DPTO SET ESTADO_SERVICIO = estado WHERE ID_SERVICIO = id_serv AND ID_DPTO = id_depto RETURNING 1 INTO r;
+        IF r = 1 THEN
+            COMMIT;
+        ELSE
+            RAISE Svdpto_Error_El;
+        END IF;
+    EXCEPTION
+        WHEN Svdpto_Error_El THEN
+            R:= -21202;
+    END;
     /*Eliminar un servicio de depto existente*/
     PROCEDURE eliminar_svdpto(id_serv IN SERVICIO_DPTO.ID_SERVICIO%TYPE, id_depto IN SERVICIO_DPTO.ID_DPTO%TYPE, R OUT INTEGER)
     IS 
@@ -1271,8 +1288,8 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Servicios_Dpto
             R:= -21203;
     END;
     
-    /*Listar todos los servicio de depto*/
-    PROCEDURE listar_svdpto( id_depto IN SERVICIO_DPTO.ID_DPTO%TYPE, Servicios_dpto OUT SYS_REFCURSOR)
+    /*Listar todos los servicios asignados al depto*/
+    PROCEDURE listar_svdptoContratado( id_depto IN SERVICIO_DPTO.ID_DPTO%TYPE, Servicios_dpto OUT SYS_REFCURSOR)
     IS
         v_cant_datos INTEGER;
         Svdpto_Error_Li EXCEPTION;
@@ -1292,6 +1309,14 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Servicios_Dpto
         WHEN Svdpto_Error_Li THEN
             Servicios_dpto:= null;
     END;
+    
+    /*Listar todos los servicio no asignados depto*/
+    PROCEDURE listar_svdpto(id_depto IN SERVICIO_DPTO.ID_DPTO%TYPE, Servicios_dpto OUT SYS_REFCURSOR)
+    IS
+    BEGIN
+        OPEN Servicios_dpto FOR
+            SELECT * FROM SERVICIO SVC WHERE NOT EXISTS (SELECT SVD.ID_SERVICIO FROM SERVICIO_DPTO SVD WHERE SVC.ID_SERVICIO = SVD.ID_SERVICIO AND ID_DPTO = id_depto);
+    END;
 END Mantener_Servicios_Dpto;
 /
 
@@ -1310,4 +1335,6 @@ BEGIN
     Mantener_Dpto.insertar_dpto('Transilvania', 59000, 'Franklin 231', 1, 5, 1, 0, R);
 END;
 /
-SELECT * FROM SERVICIO_DPTO JOIN SERVICIO USING (ID_SERVICIO) WHERE ID_DPTO = 1
+SELECT * FROM SERVICIO_DPTO JOIN SERVICIO USING (ID_SERVICIO) WHERE ID_DPTO = 1;
+SELECT * FROM SERVICIO SVC WHERE NOT EXISTS (SELECT SVD.ID_SERVICIO FROM SERVICIO_DPTO SVD WHERE SVC.ID_SERVICIO = SVD.ID_SERVICIO AND ID_DPTO = 1);
+SELECT * FROM SERVICIO SVC WHERE NOT EXISTS (SELECT SVD.ID_SERVICIO FROM SERVICIO_DPTO SVD WHERE SVC.ID_SERVICIO = SVD.ID_SERVICIO AND ID_DPTO = 1)
