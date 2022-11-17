@@ -4,7 +4,17 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "../ReservaComponent/ReservaC.css"
-import { Link } from "react-router-dom";
+import hucha from "../../Img/hucha.png"
+import campana from "../../Img/campana.png"
+import aceptar from "../../Img/autorizo.jpg"
+import cancelar from "../../Img/denegao.jpg"
+import reserv from "../../Img/programar.png"
+import tours from "../../Img/travel-map.png"
+
+const handletour = (reserva_id) =>{
+    localStorage.setItem('id_reserva', reserva_id)
+    window.location.replace(`/mostrartour/${reserva_id}`);
+}
 
 const handleUpdate = async (id_reserva) => {
     const resp = await axios.post(`http://localhost:8080/api/v1/updateReserva/${id_reserva}`)
@@ -82,10 +92,11 @@ class ReservaComponente extends React.Component {
                                 <td>Check out</td>
                                 <td>Estado Pago</td>
                                 <td>Valor total</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>Pago</td>
+                                <td>Servicio extra</td>
+                                <td>Editar reserva</td>
+                                <td>Editar tours</td>
+                                <td>Cancelar</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,31 +120,44 @@ class ReservaComponente extends React.Component {
                                             <td>
                                                 {
                                                     Reserva.estado_pago === "A" ?
-                                                        <img src="https://icons.veryicon.com/png/o/miscellaneous/new-version-of-star-selected-icon/success-26.png"
-                                                            height="35" width="35" alt="" /> :
-                                                        <td><button onClick={() => handlePago(Reserva.id_reserva)} className="btn btn-success ">Pagar</button></td>
+                                                        <img src={aceptar}
+                                                            height="50" width="50" alt="" /> :
+                                                        <td><button class="button" onClick={() => handlePago(Reserva.id_reserva)}><img src={hucha}
+                                                        height="50" width="50" alt="" /></button></td>
                                                 }
                                             </td>
                                             <td>
                                                 {
                                                     Reserva.estado_pago === "A" ?
                                                         <a></a> :
-                                                        <td><button onClick={() => handleServExtra(Reserva.id_reserva)} className="btn btn-primary ">Editar Servicios Extras</button></td>
+                                                        <td><button class="button" onClick={() => handleServExtra(Reserva.id_reserva)}><img src={campana}
+                                                        height="50" width="50" alt="" /></button></td>
                                                 }
                                             </td>
                                             <td>
                                                 {
                                                     Reserva.estado_pago === "A" ?
                                                         <a></a> :
-                                                        <td><button onClick={() => handleAcompañantes(Reserva.id_reserva)} className="btn btn-primary ">Editar reserva</button></td>
+                                                        <td><button class="button" onClick={() => handleAcompañantes(Reserva.id_reserva)}><img src={reserv}
+                                                        height="50" width="50" alt="" /></button></td>
+                                                }
+                                            </td>
+                                            <td>
+                                                {
+                                                    Reserva.estado_pago === "A" ?
+                                                        <a></a> :
+                                                        <td><button class="button" onClick={() => handletour(Reserva.id_reserva)}><img src={tours}
+                                                        height="50" width="50" alt="" /></button></td>
                                                 }
                                             </td>
                                             {
-                                                    Reserva.estado_pago === "A" ?
-                                                        <a></a> :
-                                                        <td><button onClick={() => handleUpdate(Reserva.id_reserva)} className="btn btn-danger ">Cancelar</button></td>
-                                                }
+                                                Reserva.estado_pago === "A" ?
+                                                    <a></a> :
+                                                    <td><button class="button" onClick={() => handleUpdate(Reserva.id_reserva)}><img src={cancelar}
+                                                    height="50" width="50" alt="" /></button></td>
+                                            }
                                             
+
                                         </tr>
                                 )
                             }
