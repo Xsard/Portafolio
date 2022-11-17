@@ -95,6 +95,18 @@ CREATE OR REPLACE PROCEDURE AGREGAR_SERV_EXTRA(ID_RESERVA IN RESERVA_SERVICIOS_E
         END IF;
     END;
 /
+CREATE OR REPLACE PROCEDURE AGREGAR_TOUR_RES(id_Tour TOUR_RESERVA.ID_RESERVA%TYPE, id_resv TOUR_RESERVA.ID_TOUR%TYPE, 
+    id_fecha TOUR_RESERVA.FECHA_TOUR%TYPE, id_dpto TOUR_RESERVA.ID_DPTO%TYPE , id_cli TOUR_RESERVA.ID_CLIENTE%TYPE, R OUT INTEGER)
+    IS
+        id_col rowid;
+    BEGIN 
+        INSERT INTO TOUR_RESERVA VALUES(id_Tour, id_resv, id_fecha, id_dpto, id_cli) RETURNING rowid INTO id_col;
+        IF id_col IS NOT NULL THEN
+            r:= 1;
+            COMMIT;
+        END IF;
+    END;
+/
 DECLARE 
     r integer;
 BEGIN
