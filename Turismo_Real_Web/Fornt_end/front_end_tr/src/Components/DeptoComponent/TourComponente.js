@@ -4,9 +4,25 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import axios from "axios";
 
-const handleContratar = async () => {
+const handleContratar = async (id_tour1) => {
     let fecha = document.getElementById("fecha_tour").value;
-    console.log (fecha)
+    console.log(fecha)
+    let id_res = localStorage.getItem('idReserva')
+    id_res = parseInt(id_res)
+    let id_dp = localStorage.getItem('idDeptoFotos')
+    id_dp = parseInt(id_dp)
+    let id_cli = localStorage.getItem('id_cliente')
+    id_cli = parseInt(id_cli)
+    console.log(id_res, id_tour1, fecha, id_dp, id_cli)
+
+    try {
+        const resp = await axios.post('http://localhost:8080/api/v1/add_tour', {
+            id_reserva: id_res, id_tour: id_tour1, fecha_tour: fecha, id_dpto: 1, id_cliente: id_cli
+        }, { headers: { "Content-Type": "application/json" } })
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 const postTours = () => {
@@ -104,6 +120,7 @@ class TourComponent extends React.Component {
                                 <td>Nombre del tour</td>
                                 <td>Descripcion</td>
                                 <td>Valor del tour</td>
+                                <td>Fecha del tour</td>
                                 <td></td>
                             </tr>
                         </thead>
@@ -115,7 +132,8 @@ class TourComponent extends React.Component {
                                             <td>{tours.nombre_tour}</td>
                                             <td>{tours.desc_tour}</td>
                                             <td>{tours.valor_tour}</td>
-                                            <td><button className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Contratar</button></td>
+                                            <td><input type="date" id="fecha_tour"></input></td>
+                                            <td><button className="btn btn-primary" onClick={() => handleContratar(tours.id_tour)}>Contratar</button></td>
                                         </tr>
                                 )
                             }
@@ -124,24 +142,6 @@ class TourComponent extends React.Component {
                     <br></br>
                     <div className="text text-center">
                         <button onClick={postTours} className="btn btn-primary">Continuar</button>&nbsp;<button className="btn btn-danger" onClick={PostCancelar}>Cancelar</button>
-                    </div>
-                </div>
-
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Seleccionar fecha del tour</h5>
-                            </div>
-                            <div class="modal-body">
-                                <h5>Seleccionar fecha</h5>
-                                <input type="date" id="fecha_tour"></input>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary" onClick={handleContratar}>Contratar</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </>
