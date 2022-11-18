@@ -1081,6 +1081,7 @@ CREATE OR REPLACE PACKAGE Mantener_Reserva
     AS
     PROCEDURE listar_reserva(Reservas OUT SYS_REFCURSOR);
     PROCEDURE actualizar_firma(identificador IN RESERVA.ID_RESERVA%TYPE, firma_func IN RESERVA.FIRMA%TYPE, R OUT INTEGER);
+    PROCEDURE buscar_reserva(valor IN VARCHAR2, reservas_encontradas OUT SYS_REFCURSOR);
 END Mantener_Reserva;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
@@ -1105,8 +1106,7 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
     EXCEPTION
         WHEN Reserva_Error_Li THEN
             Reservas:= null;
-    END;
-    
+    END;    
     /*Actualizar el estado de una reserva*/
     PROCEDURE actualizar_firma(identificador IN RESERVA.ID_RESERVA%TYPE, firma_func IN RESERVA.FIRMA%TYPE, R OUT INTEGER)
     IS
@@ -1124,6 +1124,13 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
     EXCEPTION
         WHEN Reserva_Error_Ac THEN
             R:=-2102;
+    END;  
+    PROCEDURE buscar_reserva(valor IN VARCHAR2, reservas_encontradas OUT SYS_REFCURSOR)
+    AS
+    BEGIN
+        OPEN reservas_encontradas FOR
+            SELECT * FROM RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) 
+            WHERE departamento.nombre_dpto like '%' || valor || '%';
     END;    
 END Mantener_Reserva;
 /
