@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import axios from "axios";
 
-const handleContratar = async (id_tour1) => {
+const handleContratar = async (id_tour1, valorTour) => {
     let fecha = document.getElementById("fecha_tour").value;
     console.log(fecha)
     let id_res = localStorage.getItem('idReserva')
@@ -16,9 +16,33 @@ const handleContratar = async (id_tour1) => {
     console.log(id_res, id_tour1, fecha, id_dp, id_cli)
 
     try {
-        const resp = await axios.post('http://localhost:8080/api/v1/add_tour', {
-            id_reserva: id_res, id_tour: id_tour1, fecha_tour: fecha, id_dpto: 1, id_cliente: id_cli
-        }, { headers: { "Content-Type": "application/json" } })
+        const MySwal = withReactContent(Swal);
+        if (fecha === '') {
+            MySwal.fire({
+                title: "Error al ingresar la fecha, intente nuevamente",
+                icon: "error"
+            }).then((respuesta) => {
+                if (respuesta.isConfirmed) {
+                    window.location.replace(`/mostrartour/${id_res}`);
+                }
+            })
+        } else {
+            const resp = await axios.post('http://localhost:8080/api/v1/add_tour', {
+                id_reserva: id_res, id_tour: id_tour1, fecha_tour: fecha, id_dpto: 1, id_cliente: id_cli
+            }, { headers: { "Content-Type": "application/json" } })
+            const resppago = await axios.post(`http://localhost:8080/api/v1/actualizarValor/${id_res}`, {
+                valor_serv_ex: valorTour
+            })
+            MySwal.fire({
+                title: "El tour ha sido agendado con exito",
+                icon: "success"
+            }).then((respuesta) => {
+                if (respuesta.isConfirmed) {
+                    window.location.replace(`/mostrartour/${id_res}`);
+                }
+            })
+        }
+
     } catch (error) {
         console.log(error)
     }
@@ -133,7 +157,7 @@ class TourComponent extends React.Component {
                                             <td>{tours.desc_tour}</td>
                                             <td>{tours.valor_tour}</td>
                                             <td><input type="date" id="fecha_tour"></input></td>
-                                            <td><button className="btn btn-primary" onClick={() => handleContratar(tours.id_tour)}>Contratar</button></td>
+                                            <td><button className="btn btn-primary" onClick={() => handleContratar(tours.id_tour, tours.valor_tour)}>Contratar</button></td>
                                         </tr>
                                 )
                             }
@@ -141,8 +165,15 @@ class TourComponent extends React.Component {
                     </table>
                     <br></br>
                     <div className="text text-center">
-                        <button onClick={postTours} className="btn btn-primary">Continuar</button>&nbsp;<button className="btn btn-danger" onClick={PostCancelar}>Cancelar</button>
+                        {
+                            localStorage.getItem('ocultarBtn') == 1 ?
+                                <h1></h1> :
+                                <div className="text text-center">
+                                    <button onClick={postTours} className="btn btn-primary">Continuar</button>&nbsp;<button className="btn btn-danger" onClick={PostCancelar}>Cancelar</button>
+                                </div>
+                        }
                     </div>
+
                 </div>
             </>
         )
