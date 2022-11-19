@@ -6,16 +6,17 @@ import withReactContent from "sweetalert2-react-content";
 import "../ReservaComponent/ReservaC.css"
 import hucha from "../../Img/hucha.png"
 import campana from "../../Img/campana.png"
-import aceptar from "../../Img/autorizo.jpg"
-import cancelar from "../../Img/denegao.jpg"
+import aceptar from "../../Img/aceptar.png"
+import cancelar from "../../Img/cancelar.png"
 import reserv from "../../Img/programar.png"
 import tours from "../../Img/travel-map.png"
 
 const handletour = async (reserva_id) =>{
     //consulta que trae el id_depto
-    localStorage.setItem('id_reserva', reserva_id)
+    localStorage.setItem('idReserva', reserva_id)
     const resp1 = await axios.get(`http://localhost:8080/api/v1/traerDpto/${reserva_id}`)
     localStorage.setItem('depto_tour', resp1.data)
+    localStorage.setItem('ocultarBtn', 1)
     window.location.replace(`/mostrartour/${reserva_id}`);
 }
 
@@ -50,7 +51,7 @@ const handlePago = (id_reserva) => {
     localStorage.setItem('idReserva', id_reserva)
     let id_reserva1 = localStorage.getItem('idReserva')
     MySwal.fire({
-        title: "Una vez pagada la reserva no se puede editar ni agregar servicios extras, ¿Desea continuar?",
+        title: "Una vez pagada la reserva no se puede editar, agregar servicios extras, agregar tours y cancelar la reserva, ¿Desea continuar?",
         icon: "warning",
         showDenyButton: true,
         confirmButtonText: 'Si',

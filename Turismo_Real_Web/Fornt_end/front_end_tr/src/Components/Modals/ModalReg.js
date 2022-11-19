@@ -105,7 +105,7 @@ return (
                         value={rut}
                         onChange={(e) => setRut(e.target.value)}>
                         <Form.Label>RUT</Form.Label>
-                        <Form.Control type="text" placeholder="Ej: 20382647-3" />
+                        <Form.Control type="text" placeholder="Ej: 20382647-3" maxLength={10}/>
                     </Form.Group>
                 </div>
                 <div className="form-row mb-3">
@@ -115,7 +115,7 @@ return (
                         value={nombres}
                         onChange={(e) => setNombres(e.target.value)}>
                         <Form.Label>Nombres</Form.Label>
-                        <Form.Control type="text" placeholder="Ingrese nombres" />
+                        <Form.Control type="text" placeholder="Ingrese nombres" maxLength={60}/>
                     </Form.Group>
                 </div>
                 <div className="form-row mb-3">
@@ -125,7 +125,7 @@ return (
                         value={apellidos}
                         onChange={(e) => setApellidos(e.target.value)}>
                         <Form.Label>Apellidos</Form.Label>
-                        <Form.Control type="text" placeholder="Ingrese apellidos" />
+                        <Form.Control type="text" placeholder="Ingrese apellidos" maxLength={60}/>
                     </Form.Group>
                 </div>
                 <div className="form-row mb-3">
@@ -135,17 +135,17 @@ return (
                         value={correo}
                         onChange={(e) => setCorreo(e.target.value)}>
                         <Form.Label>Correo</Form.Label>
-                        <Form.Control type="email" placeholder="Ingrese un correo" />
+                        <Form.Control type="email" placeholder="Ingrese un correo" maxLength={254}/>
                     </Form.Group>
                 </div>
                 <div className="form-row mb-3">
                     <Form.Group className="form-input mb-3"
                         type="text"
-                        id="telefono"
+                        id="telefono1"
                         value={telefono}
                         onChange={(e) => setTelefono(e.target.value)}>
                         <Form.Label>Telefono</Form.Label>
-                        <Form.Control type="text" placeholder="Ej: 99999999" />
+                        <Form.Control type="text" placeholder="Ej: 99999999" pattern="\d*" maxlength="4"/>
                     </Form.Group>
                 </div>
                 <div className="form-row mb-3">

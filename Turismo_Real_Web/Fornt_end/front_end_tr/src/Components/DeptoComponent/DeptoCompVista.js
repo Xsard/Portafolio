@@ -196,6 +196,7 @@ const DeptoVista = () => {
                                     const idReserva1 = localStorage.getItem('idReserva')
                                     localStorage.setItem('res_tour', idReserva1)
                                     localStorage.setItem('depto_tour', id_depto)
+                                    localStorage.setItem('ocultarBtn', 0)
                                     window.location.replace(`/mostrartour/${idReserva1}`);
                                 }
                                 else {

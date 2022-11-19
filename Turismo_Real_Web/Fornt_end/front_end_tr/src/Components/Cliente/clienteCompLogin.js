@@ -35,8 +35,13 @@ const Login = () => {
 
         //llamamos un Try catch en caso de fallo en las llamadas
         try {
-
-            //llamamos a axios para que haga la llamada al backend con los datos necesarios
+            if(correo === '' && contraseña === ''){
+                MySwal.fire({
+                    title: "Debe rellenar los datos para ingresar",
+                    icon: "error"
+                })
+            }else {
+                //llamamos a axios para que haga la llamada al backend con los datos necesarios
             const resp = await axios.post(url, { email: correo, pass: contraseña })
             console.log(resp.data)
 
@@ -65,6 +70,8 @@ const Login = () => {
                 })
 
             }
+            }
+            
             //mostramos un error si no pasa el Try
         } catch (error) {
             console.log(error.response)
@@ -85,7 +92,7 @@ const Login = () => {
                             value={correo}
                             onChange={(e) => setCorreo(e.target.value)}>
                             <Form.Label>Correo</Form.Label>
-                            <Form.Control type="email" placeholder="Ingrese un correo" id="correo_login" />
+                            <Form.Control type="email" placeholder="Ingrese un correo" id="correo_login" maxLength={254}/>
                         </Form.Group>
                     </div>
                     <div className="form-row mb-3">
@@ -95,7 +102,7 @@ const Login = () => {
                             value={contraseña}
                             onChange={(e) => setContraseña(e.target.value)}>
                             <Form.Label>Contraseña</Form.Label>
-                            <Form.Control type="password" placeholder="Contraseña" />
+                            <Form.Control type="password" placeholder="Contraseña" maxLength={30}/>
                         </Form.Group>
                     </div>
                     <button type='submit' className='btn btn-primary'>
