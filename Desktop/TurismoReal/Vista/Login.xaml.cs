@@ -13,7 +13,7 @@ namespace Vista
 
         private void Ingresar_button_Click(object sender, RoutedEventArgs e)
         {
-            string email = "desktop@gmail.com"; //email_txt.Text;
+            string email = "desktopFun@gmail.com"; //email_txt.Text;
             string psw =  "123"; //pass_txt.Password.ToString();
             DataTable dt = CUsuario.Autentificar(email, psw);
             if (dt.Rows.Count != 0)
@@ -26,7 +26,9 @@ namespace Vista
                 }
                 else if(dt.Rows[0][1].Equals("Funcionario"))
                 {
-                    MessageBox.Show("Bienvenid@ Funcionari@ "+ dt.Rows[0][0].ToString());
+                    MenuFuncionario menuFuncionario = new(dt);
+                    menuFuncionario.Show();
+                    this.Close();
                 }
             }
             else

@@ -1079,15 +1079,49 @@ END Mantener_Tours;
 /
 CREATE OR REPLACE PACKAGE Mantener_Reserva
     AS
-    PROCEDURE listar_reserva(Reservas OUT SYS_REFCURSOR);
-    PROCEDURE actualizar_firma(identificador IN RESERVA.ID_RESERVA%TYPE, firma_func IN RESERVA.FIRMA%TYPE, R OUT INTEGER);
+    PROCEDURE listar_reserva(estadoCheck integer, Reservas OUT SYS_REFCURSOR);
+    PROCEDURE actualizar_firma(identificador IN RESERVA.ID_RESERVA%TYPE, firma_func IN RESERVA.FIRMA%TYPE, estadoR RESERVA.ESTADO_RESERVA%TYPE, estadoP RESERVA.ESTADO_PAGO%TYPE, R OUT INTEGER);
     PROCEDURE buscar_reserva(valor IN VARCHAR2, reservas_encontradas OUT SYS_REFCURSOR);
 END Mantener_Reserva;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
     AS    
+
+    /*Listar checkIn*/
+    FUNCTION listar_checkin
+        RETURN SYS_REFCURSOR
+    AS
+        R SYS_REFCURSOR; 
+    BEGIN 
+        OPEN R FOR
+            SELECT * FROM  RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE FIRMA = 0 AND ESTADO_RESERVA = 'I' AND ESTADO_PAGO = 'A' AND SYSDATE >= CHECK_IN AND SYSDATE < CHECK_OUT;
+        RETURN R;
+    END;
+
+    /*Listar CheckOut*/
+    FUNCTION listar_checkout
+        RETURN SYS_REFCURSOR
+    AS
+        R SYS_REFCURSOR; 
+    BEGIN 
+        OPEN R FOR
+            SELECT * FROM  RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE FIRMA = 1;
+        RETURN R;
+    END;    
+    
+    /*Listar transporte*/
+    FUNCTION listar_reservas_trans
+        RETURN SYS_REFCURSOR
+    AS
+        R SYS_REFCURSOR; 
+    BEGIN 
+        OPEN R FOR
+            SELECT * FROM RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE TRANSPORTE <> 'N' AND FIRMA = 0;
+        RETURN R;
+    END;    
+    
     /*Listar reservas*/
-    PROCEDURE listar_reserva(Reservas OUT SYS_REFCURSOR)
+    PROCEDURE listar_reserva(estadoCheck integer,Reservas OUT SYS_REFCURSOR)
     IS
         v_cant_datos INTEGER;
         Reserva_Error_Li EXCEPTION;
@@ -1095,26 +1129,36 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
     BEGIN
         /* Validar si la tabla tiene datos*/
         SELECT COUNT(*) INTO v_cant_datos FROM RESERVA;
-        /* Si hay datos se consultan*/
-        IF v_cant_datos>0 THEN
-            OPEN Reservas FOR
-                SELECT * FROM RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE TRANSPORTE <> 'N';
+        /* Si hay datos se consultan y se llama desde checkIn*/
+        IF v_cant_datos>0 AND estadoCheck = 0 THEN
+            Reservas:= listar_checkin;
+        
+        /* Si hay datos se consultan y se llama desde checkOut*/
+        ELSIF v_cant_datos>0 AND estadoCheck =1 THEN
+            Reservas:= listar_checkout;
+        
+        /* Si hay datos se consultan y se llama desde Planificar transporte*/
+        ELSIF v_cant_datos>0 AND estadoCheck =2 THEN
+            Reservas:= listar_reservas_trans;
+        
         /* Si la tabla está vacía se inicia un error*/
         ELSE
             RAISE Reserva_Error_Li;
         END IF;
+        
     EXCEPTION
         WHEN Reserva_Error_Li THEN
             Reservas:= null;
     END;    
+
     /*Actualizar el estado de una reserva*/
-    PROCEDURE actualizar_firma(identificador IN RESERVA.ID_RESERVA%TYPE, firma_func IN RESERVA.FIRMA%TYPE, R OUT INTEGER)
+    PROCEDURE actualizar_firma(identificador IN RESERVA.ID_RESERVA%TYPE, firma_func IN RESERVA.FIRMA%TYPE, estadoR RESERVA.ESTADO_RESERVA%TYPE, estadoP RESERVA.ESTADO_PAGO%TYPE, R OUT INTEGER)
     IS
         Reserva_Error_Ac EXCEPTION;
         PRAGMA EXCEPTION_INIT(Reserva_Error_Ac, -2102);
     BEGIN
         UPDATE RESERVA SET 
-            FIRMA = firma_func, ESTADO_RESERVA = 'X'
+            FIRMA = firma_func, ESTADO_RESERVA = estadoR, ESTADO_PAGO = estadoP
             WHERE ID_RESERVA = identificador RETURNING 1 INTO R;
         IF R = 1 THEN
             COMMIT;
@@ -1335,6 +1379,13 @@ BEGIN
     Mantener_Usuario_Admin.Agregar_Admin('desktop@gmail.com', '123', 1235, '2-2', 'Test', 'Entrega2', r);
 END;
 /
+/*Generar un funcionario*/
+DECLARE 
+    r integer;
+BEGIN
+    Mantener_Usuario_Funcionario.Agregar_Funcionario('desktopFun@gmail.com', '123', 124335, '3-2', 'Test', 'Entrega2', r);
+END;
+/
 /*Generar un dpto*/
 DECLARE 
     R INTEGER;
@@ -1344,6 +1395,5 @@ END;
 /
 SELECT * FROM SERVICIO_DPTO JOIN SERVICIO USING (ID_SERVICIO) WHERE ID_DPTO = 1;
 SELECT * FROM SERVICIO SVC WHERE NOT EXISTS (SELECT SVD.ID_SERVICIO FROM SERVICIO_DPTO SVD WHERE SVC.ID_SERVICIO = SVD.ID_SERVICIO AND ID_DPTO = 1);
-SELECT * FROM SERVICIO SVC WHERE NOT EXISTS (SELECT SVD.ID_SERVICIO FROM SERVICIO_DPTO SVD WHERE SVC.ID_SERVICIO = SVD.ID_SERVICIO AND ID_DPTO = 1)
-:;
+SELECT * FROM SERVICIO SVC WHERE NOT EXISTS (SELECT SVD.ID_SERVICIO FROM SERVICIO_DPTO SVD WHERE SVC.ID_SERVICIO = SVD.ID_SERVICIO AND ID_DPTO = 1);
 commit;

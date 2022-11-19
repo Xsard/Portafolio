@@ -6,7 +6,7 @@ namespace Controlador
 {
     public class CReserva
     {
-        public static DataTable ListarReservas()
+        public static DataTable ListarReservas(int estado)
         {
             DataTable resultado = new();
             using (OracleConnection con = Conexion.getInstance().ConexionDB())
@@ -17,6 +17,7 @@ namespace Controlador
                     CommandType = CommandType.StoredProcedure,
                     CommandText = "Mantener_Reserva.listar_reserva"
                 };
+                cmd.Parameters.Add("Reservas", OracleDbType.Int32, ParameterDirection.Input).Value = estado;
                 cmd.Parameters.Add("Reservas", OracleDbType.RefCursor, ParameterDirection.Output);
                 try
                 {
@@ -75,7 +76,7 @@ namespace Controlador
             }
             return resultado;
         }
-        public static int ConfirmarFirma(int IdReserva, char FirmaFunc)
+        public static int ConfirmarFirma(int IdReserva, char FirmaFunc, char estadoRes, char estadoPago)
         {
             int resultado;
             using (OracleConnection con = Conexion.getInstance().ConexionDB())
@@ -88,6 +89,8 @@ namespace Controlador
                 };
                 cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = IdReserva;
                 cmd.Parameters.Add("firma", OracleDbType.Char, ParameterDirection.Input).Value = FirmaFunc;
+                cmd.Parameters.Add("estadoR", OracleDbType.Char, ParameterDirection.Input).Value = estadoRes;
+                cmd.Parameters.Add("estadoP", OracleDbType.Char, ParameterDirection.Input).Value = estadoPago;
                 cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
                 try
                 {

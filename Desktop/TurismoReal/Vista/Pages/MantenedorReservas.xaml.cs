@@ -57,7 +57,7 @@ namespace Vista.Pages
         {
             try
             {
-                DataTable dataTable = CReserva.ListarReservas();
+                DataTable dataTable = CReserva.ListarReservas(2);
                 if (dataTable != null)
                 {
                     foreach (var row in dataTable.AsEnumerable())
@@ -100,27 +100,6 @@ namespace Vista.Pages
         }
         private void btn_ConfirmarFirma_Click(object sender, RoutedEventArgs e)
         {            
-            try
-            {
-                Reserva reserva = (Reserva)dtgReservas.SelectedItem;
-                int IdReserva = reserva.IdReserva;
-                char FirmaFunc = '1';
-                MessageBoxResult result = MessageBox.Show("Quieres confirmar la firma?", "Reservas", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    CReserva.ConfirmarFirma(IdReserva,FirmaFunc);
-                    MensajeOk("Firma confirmada");
-                    ListarReservas();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void btn_ConfirmarCheckOut_Click(object sender, RoutedEventArgs e)
-        {
 
         }
 

@@ -14,10 +14,33 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid x:Name="gridMenu" Width="80" HorizontalAlignment="Left" Background="Gray">
-            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Width="80" VerticalAlignment="Bottom" Height="60" Padding="0" Background="{x:Null}" BorderThickness="0" x:Name="btnHome" Click="btnHome_Click">
+                <StackPanel>
+                    <materialDesign:PackIcon Kind="Home" Width="40" Height="40"/>
+                    <Label Content="Inicio" FontSize="9" HorizontalAlignment="Center" Padding="0"/>
+                </StackPanel>
+            </Button>
+            <Button Width="80" VerticalAlignment="Bottom" Height="60" Padding="0" Background="{x:Null}" BorderThickness="0" x:Name="btnCheckIn" Click="btnCheckIn_Click" Grid.Row="1">
+                <StackPanel>
+                    <materialDesign:PackIcon Kind="Book" Width="40" Height="40"/>
+                    <Label Content="Check-In" FontSize="9" HorizontalAlignment="Center" Padding="0"/>
+                </StackPanel>
+            </Button>
+            <Button Width="80" VerticalAlignment="Bottom" Height="60" Padding="0" Background="{x:Null}" BorderThickness="0" x:Name="btnCheckOut" Click="btnCheckOut_Click" Grid.Row="2">
+                <StackPanel>
+                    <materialDesign:PackIcon Kind="ExitToApp" Width="40" Height="40"/>
+                    <Label Content="Check-Out" FontSize="9" HorizontalAlignment="Center" Padding="0"/>
+                </StackPanel>
+            </Button>
         </Grid>
-        <Border>
-            <Frame x:Name="PagesNavigation"> 
+        <Border Grid.Column="1">
+            <Frame x:Name="PagesNavigation" NavigationUIVisibility="Hidden"> 
                 
             </Frame>
         </Border>
