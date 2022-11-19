@@ -194,6 +194,8 @@ const DeptoVista = () => {
                                 //si la respuesta es si, es redigido a la lista de los servicios extras
                                 if (respuesta.isConfirmed) {
                                     const idReserva1 = localStorage.getItem('idReserva')
+                                    localStorage.setItem('res_tour', idReserva1)
+                                    localStorage.setItem('depto_tour', id_depto)
                                     window.location.replace(`/mostrartour/${idReserva1}`);
                                 }
                                 else {

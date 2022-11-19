@@ -11,8 +11,11 @@ import cancelar from "../../Img/denegao.jpg"
 import reserv from "../../Img/programar.png"
 import tours from "../../Img/travel-map.png"
 
-const handletour = (reserva_id) =>{
+const handletour = async (reserva_id) =>{
+    //consulta que trae el id_depto
     localStorage.setItem('id_reserva', reserva_id)
+    const resp1 = await axios.get(`http://localhost:8080/api/v1/traerDpto/${reserva_id}`)
+    localStorage.setItem('depto_tour', resp1.data)
     window.location.replace(`/mostrartour/${reserva_id}`);
 }
 

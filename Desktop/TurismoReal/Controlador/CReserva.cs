@@ -1,4 +1,5 @@
 ﻿using Oracle.ManagedDataAccess.Client;
+using System.Configuration;
 using System.Data;
 
 namespace Controlador
@@ -39,7 +40,41 @@ namespace Controlador
             }
             return resultado;
         }
-
+        public static DataTable Buscar(string valor)
+        {
+            DataTable resultado = new();
+            using (OracleConnection con = Conexion.getInstance().ConexionDB())
+            {
+                OracleCommand cmd = new()
+                {
+                    Connection = con,
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "Mantener_Reserva.buscar_reserva"
+                };
+                cmd.Parameters.Add("valor", OracleDbType.Varchar2, ParameterDirection.Input).Value = valor;
+                cmd.Parameters.Add("reservas_encontradas", OracleDbType.RefCursor, ParameterDirection.Output);
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteReader();
+                    OracleDataAdapter da = new()
+                    {
+                        SelectCommand = cmd
+                    };
+                    da.Fill(resultado);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                    cmd.Dispose();
+                }
+            }
+            return resultado;
+        }
         public static int ConfirmarFirma(int IdReserva, char FirmaFunc)
         {
             int resultado;

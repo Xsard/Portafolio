@@ -6,6 +6,8 @@ using System.Windows.Controls;
 using Modelo;
 using System.Linq;
 using System.Resources;
+using System.Windows.Input;
+using Vista.Pages.Validaciones.ValidacionesInventario;
 
 namespace Vista.Pages
 {
@@ -120,6 +122,49 @@ namespace Vista.Pages
         private void btn_ConfirmarCheckOut_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void TxtBuscar_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.Key == Key.Enter)
+                {
+                    string valor = TxtBuscar.Text.ToString();
+                    DataTable dataTable = CReserva.Buscar(valor);
+
+                    if (dataTable != null)
+                    {
+                        foreach (var row in dataTable.AsEnumerable())
+                        {
+                            if (row[3].ToString() == "X")
+                                row[3] = "En curso";
+                        }
+                        var reservas = (from rw in dataTable.AsEnumerable()
+                                        select new Reserva()
+                                        {
+                                            IdReserva = Convert.ToInt32(rw[2]),
+                                            IdDepto = Convert.ToInt32(rw[0]),
+                                            IdCliente = Convert.ToInt32(rw[1]),
+                                            EstadoReserva = rw[3].ToString(),
+                                            EstadoPago = rw[4].ToString(),
+                                            CheckIn = DateTime.Parse(rw[5].ToString()),
+                                            CheckOut = DateTime.Parse(rw[6].ToString()),
+                                            Firma = rw[7].ToString(),
+                                            CantidadAcompanantes = Convert.ToInt32(rw[8]),
+                                            Transporte = rw[9].ToString(),
+                                            ValorTotal = Convert.ToInt32(rw[10]),
+                                            Cliente = new Cliente { Rut = rw[11].ToString(), Nombres = rw[12].ToString(), Apellidos = rw[13].ToString() },
+                                            Dpto = new Departamento { NombreDpto = rw[15].ToString(), Direccion = rw[17].ToString() }
+                                        }).ToList();
+                        dtgReservas.ItemsSource = reservas;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.StackTrace);
+            }
         }
     }
 }

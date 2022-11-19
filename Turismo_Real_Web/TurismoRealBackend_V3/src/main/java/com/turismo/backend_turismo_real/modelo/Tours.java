@@ -1,13 +1,35 @@
 package com.turismo.backend_turismo_real.modelo;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
 @Entity
+
+@NamedStoredProcedureQueries({
+	@NamedStoredProcedureQuery(
+			name = "agregar_tour",
+			procedureName = "AGREGAR_TOUR_RES",
+			parameters = {
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="id_resv", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="id_Tour", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="id_fecha", type=Date.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="id_dpto", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.IN, name="id_cli", type=int.class),
+				@StoredProcedureParameter(mode= ParameterMode.OUT, name="r", type=int.class)	
+			}
+	)
+})
+
 @Table(name = "tour_plan")
 public class Tours {
 	@Id
