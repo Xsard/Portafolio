@@ -156,5 +156,40 @@ namespace Controlador
             }
             return resultado;
         }
+        public static int EliminarServicioDpto(int servicio, int dpto)
+        {
+            int resultado = 0;
+            using (OracleConnection con = Conexion.getInstance().ConexionDB())
+            {
+                OracleCommand cmd = new()
+                {
+                    Connection = con,
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "Mantener_Servicios_Dpto.eliminar_svdpto"
+                };
+                cmd.Parameters.Add("id_serv", OracleDbType.Int32, ParameterDirection.Input).Value = servicio;
+                cmd.Parameters.Add("id_dpto", OracleDbType.Int32, ParameterDirection.Input).Value = dpto;
+                cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
+
+
+                try
+                {
+                    cmd.Connection.Open();
+                    cmd.ExecuteReader();
+                    resultado = int.Parse(cmd.Parameters["r"].Value.ToString());
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    cmd.Connection.Close();
+                    cmd.Dispose();
+                }
+            }
+            return resultado;
+        }
     }
 }

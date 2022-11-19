@@ -55,7 +55,6 @@ namespace Vista.Pages
                     {
                         GenerarElementos(item);
                     }
-
                 }
             }
             catch (Exception)
@@ -159,8 +158,7 @@ namespace Vista.Pages
                 stkServ1.Children.Add(borde);
                 stkServ1.RegisterName(lblTitulo.Name, lblTitulo);
                 stkServ1.RegisterName(lblDesc.Name, lblDesc);
-                stkServ1.RegisterName(contenedor.Name, contenedor);
-                btnAgregar.Click += delegate (object sender, RoutedEventArgs e) { BtnAgregarServicioDpto(sender, e, borde, 0, item); };
+                btnAgregar.Click += delegate (object sender, RoutedEventArgs e) { BtnAgregarServicioDpto(sender, e, borde, 0, item, lblTitulo.Name, lblDesc.Name); };
                 col = 1;
             }
             else
@@ -168,8 +166,7 @@ namespace Vista.Pages
                 stkServ2.Children.Add(borde);
                 stkServ2.RegisterName(lblTitulo.Name, lblTitulo);
                 stkServ2.RegisterName(lblDesc.Name, lblDesc);
-                stkServ2.RegisterName(contenedor.Name, contenedor);
-                btnAgregar.Click += delegate (object sender, RoutedEventArgs e) { BtnAgregarServicioDpto(sender, e, borde, 1, item); };
+                btnAgregar.Click += delegate (object sender, RoutedEventArgs e) { BtnAgregarServicioDpto(sender, e, borde, 1, item, lblTitulo.Name, lblDesc.Name); };
                 col = 0;
             }
         }
@@ -210,7 +207,6 @@ namespace Vista.Pages
                 Content = "Quitar",
                 Height = 30,
                 Width = 100,
-                Name = "btnQ" + item.IdServDpto
             };
             Button btnAcEstado = new()
             {
@@ -220,7 +216,6 @@ namespace Vista.Pages
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 Height = 30,
                 Width = 100,
-                Name = "btnAg" + item.IdServDpto
             };
 
             if (item.Estado == 0)
@@ -261,8 +256,8 @@ namespace Vista.Pages
                 stkServDpto1.Children.Add(borde);
                 stkServDpto1.RegisterName(lblTitulo.Name, lblTitulo);
                 stkServDpto1.RegisterName(lblDesc.Name, lblDesc);
-                stkServDpto1.RegisterName(contenedor.Name, contenedor);
                 btnAcEstado.Click += delegate (object sender, RoutedEventArgs e) { BtnActServicioDpto(sender, e, item.IdServDpto, auxEstado, btnAcEstado); };
+                btnQuitar.Click += delegate (object sender, RoutedEventArgs e) { BtnElimServicioDpto(sender, e, borde, 0, item, lblTitulo.Name, lblDesc.Name); };
                 colC = 1;
             }
             else
@@ -270,21 +265,34 @@ namespace Vista.Pages
                 stkServDpto2.Children.Add(borde);
                 stkServDpto2.RegisterName(lblTitulo.Name, lblTitulo);
                 stkServDpto2.RegisterName(lblDesc.Name, lblDesc);
-                stkServDpto2.RegisterName(contenedor.Name, contenedor);
                 btnAcEstado.Click += delegate (object sender, RoutedEventArgs e) { BtnActServicioDpto(sender, e, item.IdServDpto, auxEstado, btnAcEstado); };
+                btnQuitar.Click += delegate (object sender, RoutedEventArgs e) { BtnElimServicioDpto(sender, e, borde, 1, item, lblTitulo.Name, lblDesc.Name); };
                 colC = 0;
             }
         }
 
         #region
-        private void BtnAgregarServicioDpto(object sender, RoutedEventArgs e, Border border, int posStk, Servicio serv)
+        private void BtnAgregarServicioDpto(object sender, RoutedEventArgs e, Border border, int posStk, Servicio serv, string titulo, string desc)
         {
             int resultado = CServDpto.IngresarServicioDpto(serv.IdServDpto, departamento.IdDepto, 0);
-
+            MessageBox.Show(posStk.ToString());
             if (resultado == -21201) return;
 
-            if (posStk == 0) stkServ1.Children.Remove(border);            
-            if (posStk == 1) stkServ2.Children.Remove(border);
+            if (posStk == 0)
+            {
+                stkServ1.Children.Remove(border); 
+                stkServ1.UnregisterName(titulo); 
+                stkServ1.UnregisterName(desc);
+                col = 0;
+            }
+            else if (posStk == 1)
+            {
+                stkServ2.Children.Remove(border);
+                stkServ2.UnregisterName(titulo); 
+                stkServ2.UnregisterName(desc);
+                col = 1;
+            }
+
             ServDpto servDpto = new() { IdServDpto = serv.IdServDpto, NombreServDpto = serv.NombreServDpto, DescServDpto = serv.DescServDpto, Estado = 0, IdDpto = departamento.IdDepto };
             GenerarElementos(servDpto);
         }
@@ -305,6 +313,30 @@ namespace Vista.Pages
                 estado.Content = 0;
                 button.Content = "Activar";
             }
+        }
+        private void BtnElimServicioDpto(object sender, RoutedEventArgs e, Border border, int posStk, ServDpto sev, string titulo, string desc)
+        {
+            int restulado = CServDpto.EliminarServicioDpto(sev.IdServDpto, departamento.IdDepto);
+
+            if (restulado == -21203) return;
+            if (posStk == 0)
+            {
+                MessageBox.Show(posStk.ToString());
+                stkServDpto1.Children.Remove(border);
+                stkServDpto1.UnregisterName(titulo);
+                stkServDpto1.UnregisterName(desc);
+                colC = 0;
+            }
+            else if (posStk == 1)
+            {
+                MessageBox.Show(posStk.ToString());
+                stkServDpto2.Children.Remove(border);
+                stkServDpto2.UnregisterName(titulo);
+                stkServDpto2.UnregisterName(desc);
+                colC = 1;
+            }
+            Servicio serv = new() { IdServDpto = sev.IdServDpto, NombreServDpto = sev.NombreServDpto, DescServDpto = sev.DescServDpto };
+            GenerarElementos(serv);
         }
         #endregion
     }
