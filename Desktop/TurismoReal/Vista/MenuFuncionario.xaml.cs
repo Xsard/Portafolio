@@ -48,6 +48,7 @@ namespace Vista
 
         private void btnCheckOut_Click(object sender, RoutedEventArgs e)
         {
+            PagesNavigation.Navigate(new Uri("PagesFuncionario/CheckOut.xaml", UriKind.RelativeOrAbsolute));
 
         }
     }

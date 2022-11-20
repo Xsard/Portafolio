@@ -1,4 +1,4 @@
-﻿<Page x:Class="Vista.PagesFuncionario.CheckIn"
+﻿<Page x:Class="Vista.PagesFuncionario.CheckOut"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +7,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
       mc:Ignorable="d" 
       d:DesignHeight="785" d:DesignWidth="1140"
-      Title="CheckIn">
+      Title="CheckOut">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -18,7 +18,7 @@
         <Grid Margin="12,0" Grid.Row="0">
             <Label Content="Reservas" VerticalAlignment="Bottom" FontSize="40" Foreground="#FFCC3300"/>
             <Line Fill="#FFCC3300" VerticalAlignment="Bottom" Height="1" Stroke="#FFCC3300" X1="1152" Y1="1"/>
-        </Grid> 
+        </Grid>
         <Grid Grid.Row="2" Margin="12,0">
             <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgReservas">
                 <DataGrid.Columns>
@@ -33,7 +33,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Departamento" Width="*">
+                    <DataGridTemplateColumn Header="Depto" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox IsReadOnly="True">
@@ -47,7 +47,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Cliente"  Width="*">
+                    <DataGridTemplateColumn Header="IdCliente"  Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox IsReadOnly="True">
@@ -64,17 +64,6 @@
                                 <TextBox IsReadOnly="True">
                                     <TextBox.Text >
                                         <Binding Path="EstadoReserva" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Estado Pago"  Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox IsReadOnly="True">
-                                    <TextBox.Text >
-                                        <Binding Path="EstadoPago" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
                                     </TextBox.Text>
                                 </TextBox>
                             </DataTemplate>
@@ -122,18 +111,6 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Acompañantes" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox>
-                                    <TextBox.Text>
-                                        <Binding Path="CantidadAcompanantes" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Total" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -150,8 +127,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" >
-                                    <Button x:Name="btnCheckIn" Click="btnCheckIn_Click" Width="50" Background="ForestGreen" BorderBrush="ForestGreen">
-                                        <materialDesign:PackIcon Kind="TicketConfirmation" ToolTip="Confirmar CheckIn"/>
+                                    <Button x:Name="btnCheckOut" Click="btnCheckOut_Click" Width="50" Background="ForestGreen" BorderBrush="ForestGreen">
+                                        <materialDesign:PackIcon Kind="CheckAll" ToolTip="Confirmar CheckIn"/>
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>
