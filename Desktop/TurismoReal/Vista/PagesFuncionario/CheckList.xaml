@@ -15,5 +15,87 @@
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="2" Margin="12">
+            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgItems">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Objeto" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox IsReadOnly="True">
+                                    <TextBox.Text >
+                                        <Binding Path="NombreObjeto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Precio" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox IsReadOnly="True">
+                                    <TextBox.Text >
+                                        <Binding Path="IdReserva" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Cantidad" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox IsReadOnly="True">
+                                    <TextBox.Text >
+                                        <Binding Path="IdReserva" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Cantidad afectada" Width="1.1*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox IsSynchronizedWithCurrentItem="False" SelectedIndex="0" ItemsSource="{Binding Path=AuxCant, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1" Margin="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1.6*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <StackPanel Width="400">
+                    <Label Content="Razón de la multa"/>
+                    <TextBox x:Name="txtRazonMulta"/>
+                    <Label Content="Descripción"/>
+                    <TextBox x:Name="txtDescripción" Height="100" HorizontalAlignment="Stretch" MaxLength="200"/>
+                    <Grid Margin="0,20,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Costo objetos:"/>
+                        <Label Grid.Column="1" x:Name="lblCostoObj"/>
+                        <Label Grid.Column="2" Content="Otros costos:"/>
+                        <TextBox Grid.Column="3" Text="0" TextAlignment="Center" x:Name="txtOtrosCostos"/>
+                    </Grid>
+
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <DataGrid>
+                    
+                </DataGrid>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

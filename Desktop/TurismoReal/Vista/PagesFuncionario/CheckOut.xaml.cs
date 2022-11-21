@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Vista.Pages;
 
 namespace Vista.PagesFuncionario
 {
@@ -41,7 +42,9 @@ namespace Vista.PagesFuncionario
                 MessageBoxResult result = MessageBox.Show("¿Desea ingresar multas?", "Reservas", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-
+                    NavigationService ns = NavigationService.GetNavigationService(this);
+                    CheckList checkList = new(reserva);
+                    ns.Navigate(checkList);
                 }
                 else
                 {
