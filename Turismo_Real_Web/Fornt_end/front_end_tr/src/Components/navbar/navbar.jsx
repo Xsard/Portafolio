@@ -61,7 +61,7 @@ export const Navigation = () => {
       variant="dark"
     >
       <Container>
-        <NavbarBrand href="/Inicio"> Turismo Real</NavbarBrand>
+        <b><NavbarBrand style={{color: "#EEEEEE"}} href="/Inicio"> Turismo Real</NavbarBrand></b>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
@@ -69,13 +69,13 @@ export const Navigation = () => {
           <Nav>
 
             {usuario
-              ? <NavDropdown
+              ? <b><NavDropdown
                 title={usuario}
                 id="collasible-nav-dropdown"
               >
-                <NavDropdown.Item href="/ListaReserva">Reservas</NavDropdown.Item>
+                <NavDropdown.Item  href="/ListaReserva">Reservas</NavDropdown.Item>
                 <NavDropdown.Item onClick={handleSwal}>Cerrar Sesion</NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown></b>
 
               : <NavLink className="nav-link" to="/Login">
                 Iniciar sesión

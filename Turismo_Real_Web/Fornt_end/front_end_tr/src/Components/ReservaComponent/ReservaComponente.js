@@ -85,7 +85,7 @@ class ReservaComponente extends React.Component {
 
         return (
             <>
-                <div class="container">
+                <div class="container" style={{color: "#EEEEEE"}}>
                     <h1 className="text-center">Reservas</h1>
                     <table class="table table-fixed">
                         <thead class="table-dark">
@@ -103,7 +103,7 @@ class ReservaComponente extends React.Component {
                                 <td>Cancelar</td>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{color: "#EEEEEE"}}>
                             {
                                 this.state.Reserva.map(
                                     Reserva =>

@@ -62,7 +62,7 @@ class ServExtraComponente extends React.Component {
     render() {
         return (
             <>
-                <div class="container">
+                <div class="container" style={{color: "#EEEEEE"}}>
                     <h1 className="text-center">Listado de servicios extras</h1>
                     <table class="table table-fixed">
                         <thead class="table-dark">
@@ -73,7 +73,7 @@ class ServExtraComponente extends React.Component {
                                 <td></td>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{color: "#EEEEEE"}}>
                             {
                                 this.state.servicios.map(
                                     servicios =>
@@ -84,7 +84,7 @@ class ServExtraComponente extends React.Component {
                                             {
                                                 servicios.seleccionado === ''?
                                                 <h1>a</h1>:
-                                                <td><button  onClick={() => HandleInsertar(servicios.id_svc_ex, servicios.valor_serv_ex)} className="btn btn-success ">Agregar</button></td>
+                                                <td><button  onClick={() => HandleInsertar(servicios.id_svc_ex, servicios.valor_serv_ex)} className="btn btn-success" style={{backgroundColor: "#00ADB5"}}>Agregar</button></td>
                                                 
                                             }
                                         </tr>

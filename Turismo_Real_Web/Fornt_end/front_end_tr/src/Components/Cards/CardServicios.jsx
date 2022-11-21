@@ -8,7 +8,7 @@ export const CardServicio = ({ id_servicio, nombre_servicio, descripcion}) => {
   return (
     <>
       <Col>
-        <div className="card mt-3" >
+        <div className="card mt-3" style={{background: "#222631", color: "#EEEEEE", borderColor: "#EEEEEE"}} >
           <div className="card-body text text-right">
             <h4>{nombre_servicio}</h4>
             <p className="card-text">

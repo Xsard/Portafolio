@@ -26,8 +26,8 @@ class DeptoComponent extends React.Component {
     render() {
         return (
             <>
-                <center>
-                    <Row className="mx-auto gx-0 cards" style={{ width: "80%" }}>
+                <div>
+                    <Row className="mx-auto gx-0 cards" style={{ width: "80%" }}>     
                         {
                             this.state.deptos.map(
                                 deptos =>
@@ -46,7 +46,7 @@ class DeptoComponent extends React.Component {
 
                         }
                     </Row>
-                </center>
+                </div>
 
             </>
         );
