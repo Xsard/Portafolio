@@ -69,11 +69,14 @@ CREATE OR REPLACE PACKAGE Mantener_Dpto
         NRO IN DEPARTAMENTO.NRO_DPTO%TYPE, CAP IN DEPARTAMENTO.CAPACIDAD%TYPE, COMUNA IN DEPARTAMENTO.ID_COMUNA%TYPE, disponibilidad IN DEPARTAMENTO.DISPONIBILIDAD%TYPE, R OUT INTEGER);
         
     PROCEDURE actualizar_dpto(identificador IN DEPARTAMENTO.ID_DPTO%TYPE, nombre IN DEPARTAMENTO.NOMBRE_DPTO%TYPE, tarifa IN DEPARTAMENTO.TARIFA_DIARIA%TYPE, DIREC IN DEPARTAMENTO.DIRECCION%TYPE, 
-        NRO IN DEPARTAMENTO.NRO_DPTO%TYPE, CAP IN DEPARTAMENTO.CAPACIDAD%TYPE, COMUNA IN DEPARTAMENTO.ID_COMUNA%TYPE, disp IN DEPARTAMENTO.DISPONIBILIDAD%TYPE, R OUT INTEGER);
+        NRO IN DEPARTAMENTO.NRO_DPTO%TYPE, CAP IN DEPARTAMENTO.CAPACIDAD%TYPE, COMUNA IN DEPARTAMENTO.ID_COMUNA%TYPE, R OUT INTEGER);
         
     PROCEDURE eliminar_dpto(identificador IN DEPARTAMENTO.ID_DPTO%TYPE, R OUT INTEGER);
     
     PROCEDURE listar_dpto(Deptos OUT SYS_REFCURSOR);
+    
+    PROCEDURE actualizar_dpto_dispo(identificador IN DEPARTAMENTO.ID_DPTO%TYPE, disp IN DEPARTAMENTO.DISPONIBILIDAD%TYPE, R OUT INTEGER);
+
 END Mantener_Dpto;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Dpto
@@ -102,13 +105,13 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Dpto
     
     /*Actualizar un departamento existente*/
     PROCEDURE actualizar_dpto(identificador IN DEPARTAMENTO.ID_DPTO%TYPE, nombre IN DEPARTAMENTO.NOMBRE_DPTO%TYPE, tarifa IN DEPARTAMENTO.TARIFA_DIARIA%TYPE, DIREC IN DEPARTAMENTO.DIRECCION%TYPE, 
-        NRO IN DEPARTAMENTO.NRO_DPTO%TYPE, CAP IN DEPARTAMENTO.CAPACIDAD%TYPE, COMUNA IN DEPARTAMENTO.ID_COMUNA%TYPE, disp IN DEPARTAMENTO.DISPONIBILIDAD%TYPE, R OUT INTEGER)
+        NRO IN DEPARTAMENTO.NRO_DPTO%TYPE, CAP IN DEPARTAMENTO.CAPACIDAD%TYPE, COMUNA IN DEPARTAMENTO.ID_COMUNA%TYPE, R OUT INTEGER)
     IS 
         Dpto_Error_Ac EXCEPTION;
         PRAGMA EXCEPTION_INIT(Dpto_Error_Ac, -20402);
     BEGIN
         UPDATE DEPARTAMENTO 
-            SET NOMBRE_DPTO = nombre, TARIFA_DIARIA = tarifa, DIRECCION = direc, NRO_DPTO = nro,CAPACIDAD = cap, ID_COMUNA = comuna, DISPONIBILIDAD = disp
+            SET NOMBRE_DPTO = nombre, TARIFA_DIARIA = tarifa, DIRECCION = direc, NRO_DPTO = nro,CAPACIDAD = cap, ID_COMUNA = comuna
         WHERE ID_DPTO =  identificador RETURNING 1 INTO R;
         /*Retornar un 1 si el update fue correcto*/
         IF r = 1 THEN
@@ -163,6 +166,27 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Dpto
     EXCEPTION
         WHEN Dpto_Error_Li THEN
             Deptos:= NULL;
+    END;
+    
+    /*Actualizar disponibilidad*/
+    PROCEDURE actualizar_dpto_dispo(identificador IN DEPARTAMENTO.ID_DPTO%TYPE, disp IN DEPARTAMENTO.DISPONIBILIDAD%TYPE, R OUT INTEGER)
+    IS 
+        Dpto_Error_Ac EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Dpto_Error_Ac, -20402);
+    BEGIN
+        UPDATE DEPARTAMENTO DPTO
+            SET DISPONIBILIDAD = disp
+        WHERE ID_DPTO =  identificador AND (SELECT COUNT(*) FROM FOTOGRAFIA_DPTO FDTO WHERE DPTO.ID_DPTO=FDTO.ID_DPTO)>0 RETURNING 1 INTO R;
+        /*Retornar un 1 si el update fue correcto*/
+        IF r = 1 THEN
+            COMMIT;
+        /*Iniciar un error si no se actualizó*/
+        ELSE
+            RAISE Dpto_Error_Ac;
+        END IF;
+    EXCEPTION
+        WHEN Dpto_Error_Ac THEN
+            r:= -20405;        
     END;
 END Mantener_Dpto;
 /
@@ -1370,7 +1394,50 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Servicios_Dpto
     END;
 END Mantener_Servicios_Dpto;
 /
-
+CREATE OR REPLACE PACKAGE P_CheckList
+    AS
+    PROCEDURE RealizarMulta(reserva IN MULTA.ID_RESERVA%TYPE, costo MULTA.VALOR%TYPE, razon MULTA.RAZON_MULTA%TYPE, descripcion MULTA.DESC_MULTA%TYPE, dpto MULTA.ID_DPTO%TYPE, cliente MULTA.ID_CLIENTE%TYPE, R OUT INTEGER);
+    PROCEDURE ObjetoAfectado(multa IN MULTA_OBJETO.ID_MULTA%TYPE, objeto MULTA_OBJETO.ID_INV%TYPE, cantidad MULTA_OBJETO.CANT_AFECTADA%TYPE, R OUT INTEGER);    
+END P_CheckList;
+/
+CREATE OR REPLACE PACKAGE BODY P_CheckList
+    AS
+    PROCEDURE RealizarMulta(reserva IN MULTA.ID_RESERVA%TYPE, costo MULTA.VALOR%TYPE, razon MULTA.RAZON_MULTA%TYPE, descripcion MULTA.DESC_MULTA%TYPE, dpto MULTA.ID_DPTO%TYPE, cliente MULTA.ID_CLIENTE%TYPE, R OUT INTEGER)
+    IS
+        id_col rowid;
+        id_multa MULTA.ID_MULTA%TYPE;
+        Multa_Error_In EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Multa_Error_In, -21301);
+    BEGIN
+        INSERT INTO MULTA(ID_RESERVA, VALOR, RAZON_MULTA, DESC_MULTA, ID_DPTO, ID_CLIENTE) VALUES(reserva, costo, razon, descripcion, dpto, cliente) RETURNING ROWID, ID_MULTA INTO id_col, id_multa;
+        IF id_col IS NOT NULL THEN
+            R:= id_multa;
+        ELSE
+            RAISE Multa_Error_In;
+        END IF;
+    EXCEPTION
+        WHEN Multa_Error_In THEN
+            R:=-21301;
+    END;
+    
+    PROCEDURE ObjetoAfectado(multa IN MULTA_OBJETO.ID_MULTA%TYPE, objeto MULTA_OBJETO.ID_INV%TYPE, cantidad MULTA_OBJETO.CANT_AFECTADA%TYPE, R OUT INTEGER)
+    IS
+        id_col rowid;
+        Multa_Objeto_Error_In EXCEPTION;
+        PRAGMA EXCEPTION_INIT(Multa_Objeto_Error_In, -21401);   
+    BEGIN
+        INSERT INTO MULTA_OBJETO VALUES(multa, objeto, cantidad) RETURNING ROWID INTO id_col;
+        IF id_col IS NOT NULL THEN
+            R:= 1;
+        ELSE
+            RAISE Multa_Objeto_Error_In;
+        END IF;
+    EXCEPTION
+        WHEN Multa_Objeto_Error_In THEN
+            R:=-21401;
+    END;       
+END P_CheckList;
+/
 
 /*Genenerar un admin*/
 DECLARE 

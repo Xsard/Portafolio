@@ -17,6 +17,7 @@ namespace Vista.Pages
             InitializeComponent();
             departamento = depto;
             ListarMantencion();
+            RestringirFechas();
         }
         private void ItemError(object sender, ValidationErrorEventArgs e)
         {
@@ -146,6 +147,15 @@ namespace Vista.Pages
         private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
         {
             dhMantDpto_ag.IsOpen = false;
+        }
+        private void RestringirFechas()
+        {
+            foreach (Mantencion item in dtgMantDptos.Items)
+            {
+                var fecha_inicio = item.FechaInicio;
+                var fecha_termino = item.FechaTermino;
+                dp_inicio_ag.BlackoutDates.Add(new CalendarDateRange(fecha_inicio, fecha_termino));
+            }
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Vista.Pages
         }
         private void btn_Agregar_Objeto_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(txt_cantidad_ag.Text, out int valor))
+            if (int.TryParse(txt_precio_unitario.Text, out int valor))
             {
                 if (!txt_objeto_ag.Text.Trim().Equals(""))
                 {

@@ -184,7 +184,14 @@ namespace Vista.Pages
             {
                 try
                 {
-                    int estado = CDepartamento.ActualizarDepto(departamento);
+                    int estado = CDepartamento.ActualizarDisponibilidad(departamento.IdDepto, departamento.Disponibilidad);
+                    if (estado == -20405)
+                    {
+                        MensajeError("No hay imagen");
+                        CheckBox cb = (CheckBox)sender;
+                        cb.IsChecked = false;
+                        return;
+                    }
                     MensajeOk("Departamento actualizado");
                     ListarDpto();
                 }

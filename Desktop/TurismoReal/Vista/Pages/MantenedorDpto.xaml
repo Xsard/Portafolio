@@ -120,7 +120,7 @@
                     <DataGridTemplateColumn Header="Disponibilidad" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding Path= Disponibilidad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="CheckBoxEstado_Click" >
+                                <CheckBox IsChecked="{Binding Path= Disponibilidad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="CheckBoxEstado_Click">
                                 </CheckBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
