@@ -21,6 +21,23 @@ const Pago_web = () => {
     const [cv, setCv] = useState('');
     const MySwal = withReactContent(Swal);
 
+    const handleTarjeta = acom => {
+        const result = acom.replace(/\D/g, '');
+        setTarjeta(result)
+    }
+    const handleFecha = acom => {
+        const result = acom.replace(/\D/g, '');
+        setFecha(result)
+    }
+    const handleFecha1 = acom => {
+        const result = acom.replace(/\D/g, '');
+        setFecha1(result)
+    }
+    const handleCv = acom => {
+        const result = acom.replace(/\D/g, '');
+        setCv(result)
+    }
+
     //creamos un use effect para cargar el valor total
     useEffect(() => {
         const obtenerValorTotal = async () => {
@@ -56,7 +73,7 @@ const Pago_web = () => {
     }
     return (
         <>
-            <div className="mx-auto">
+            <div className="mx-auto" style={{color: "#EEEEEE"}}>
                 <br></br>
                 <h2 className="text-center">Portal de pagos Turismo Real</h2>
                 <div className="mx-auto mt-5 w-25" >
@@ -65,11 +82,9 @@ const Pago_web = () => {
                             type="text"
                             pattern="\d*"
                             id="numerotarjeta"
-                            value={tarjeta}
-                            onChange={(e) => setTarjeta(e.target.value)}
                         >
                             <Form.Label>Numero Tarjeta</Form.Label>
-                            <Form.Control  type="text" placeholder="Ej: 2637 3627 4361 2163" maxLength={16}/>
+                            <Form.Control  type="text" placeholder="Ej: 2637 3627 4361 2163" maxLength={16} value={tarjeta} onChange={(e) => handleTarjeta(e.target.value)}/>
                         </Form.Group>
                     </div>
                     <div className="form-row mb-3">
@@ -86,25 +101,19 @@ const Pago_web = () => {
                     <br></br>
                     <div className="form-row mb-3">
                         <label>Fecha</label>&nbsp;&nbsp;
-                        <p class="fecha"><input className="form-control" type="number" maxlength="2" style={{width : "60px", heigth : "30px"}} 
-                        value={fecha}
-                        onChange={(e) => setFecha(e.target.value)}
-                        maxLength={2}></input></p>&nbsp;
+                        <p class="fecha"><input className="form-control" type="text" style={{width : "60px", heigth : "30px"}} 
+                        maxLength={2} value={fecha} onChange={(e) => handleFecha(e.target.value)}></input></p>&nbsp;
                         <h5 class="fecha">/</h5>&nbsp;
-                        <p class="fecha"><input className="form-control" type="number" style={{width : "60px", heigth : "30px"}}
-                        value={fecha1}
-                        onChange={(e) => setFecha1(e.target.value)}
-                        maxLength={2}></input></p>&nbsp;&nbsp;
+                        <p class="fecha"><input className="form-control" type="text" style={{width : "60px", heigth : "30px"}}
+                        maxLength={2} value={fecha1} onChange={(e) => handleFecha1(e.target.value)}></input></p>&nbsp;&nbsp;
                         <label>CV</label>&nbsp;&nbsp;
-                        <p class="fecha"><input type="number" className="form-control" style={{width : "65px", heigth : "30px"}} 
-                        value={cv}
-                        onChange={(e) => setCv(e.target.value)}
-                        maxLength={3}></input></p>&nbsp;
+                        <p class="fecha"><input type="text" className="form-control" style={{width : "65px", heigth : "30px"}} 
+                        maxLength={3} value={cv} onChange={(e) => handleCv(e.target.value)}></input></p>&nbsp;
                     </div>   
                     <br></br>
                     <h2>El valor total a pagar es: {valorTotal}</h2>
                     <br></br>
-                    <Button variant="primary" onClick={handleUpdate}>
+                    <Button variant="primary" style={{backgroundColor: "#00ADB5"}} onClick={handleUpdate}>
                         Pagar
                     </Button>
                 </div>

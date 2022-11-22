@@ -27,7 +27,7 @@ class DeptoServiceComp extends React.Component {
         return (
             <>
                 <div>
-                    <Row className="mx-auto gx-0 cards_svc" style={{ width: "100%" }}>
+                    <Row className="mx-auto gx-0 cards_svc" style={{ width: "100%"}}>
                         {
                             this.state.ServicioDepto.map(
                                 ServicioDepto =>

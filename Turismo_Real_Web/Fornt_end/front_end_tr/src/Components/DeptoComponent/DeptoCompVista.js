@@ -7,11 +7,14 @@ import { useContext } from "react";
 import clienteContext from "../../Contexts/ClienteContext";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { Modal, Button } from "react-bootstrap";
-import { ReactDOM } from "react";
+import foto_alt from "../../Img/background.png"
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import DeptoServiceComp from "./DeptoServicioComponente";
+import depto from "../../Img/departamento.png"
+import cap from "../../Img/capacidad.png"
+import ubi from "../../Img/ubicacion.png"
+import tar from "../../Img/gastos.png"
 
 const DeptoVista = () => {
 
@@ -45,7 +48,10 @@ const DeptoVista = () => {
     const [foto_4, setFoto4] = useState('');
     const [fecha_actual, setFechaActual] = useState('');
 
-
+    const handleAcom = acom => {
+        const result = acom.replace(/\D/g, '');
+        setAcompañantes(result)
+    }
 
     //guardamos el id del departamento en un localStorage para utilizarlo en otras ventanas
     localStorage.setItem('idDeptoFotos', id_depto)
@@ -182,7 +188,7 @@ const DeptoVista = () => {
                                     check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes, transporte: "N"
                                 }).then(resp => { localStorage.setItem('idReserva', resp.data) })
                             }
-                            //pregunta acerca de los servicios extras
+                            //pregunta acerca de los tours
                             MySwal.fire({
                                 title: "¿Desea agregar tours?",
                                 icon: "info",
@@ -240,58 +246,59 @@ const DeptoVista = () => {
     return (
         <>
             <div onLoad={Cargar}>
+            <h3 style={{color: "#EEEEEE"}} class='titulo'>{nombre_dpto}</h3>
                 <div className="divmayor " >
                     <br></br>
                     <div className="row g-lg-2" >
                         {
                             foto_0 === '' || foto_0 === undefined ?
-                                <a to={`/mostrarFotos/${idDepto}`} className="col col-lg-6"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} style={{ width: "100%", height: "100%" }}></img></a> :
-                                <Link to={`/mostrarFotos/${idDepto}`} className="col col-lg-6"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} style={{ width: "100%", height: "100%" }}></img></Link>
+                                <a to={`/mostrarFotos/${idDepto}`} className="col col-lg-6"><img src={foto_alt} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></a> :
+                                <Link to={`/mostrarFotos/${idDepto}`} className="col col-lg-6"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
                         }
                         <div className="col col-lg-6">
                             <div className="row row-cols-2 row-cols-lg-2 g-2">
                                 {
                                     foto_1 === '' || foto_1 === undefined ?
-                                        <a to={`/mostrarFotos/${idDepto}`} className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
-                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={require(`../../imagenes_Dpto/${foto_1}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></Link>
+                                        <a to={`/mostrarFotos/${idDepto}`} className="col"><img src={foto_alt} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></a> :
+                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={require(`../../imagenes_Dpto/${foto_1}.jpg`)} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
                                 }
                                 {
                                     foto_2 === '' || foto_2 === undefined ?
-                                        <a to={`/mostrarFotos/${idDepto}`} className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
-                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={require(`../../imagenes_Dpto/${foto_2}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></Link>
+                                        <a to={`/mostrarFotos/${idDepto}`} className="col"><img src={foto_alt} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></a> :
+                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={require(`../../imagenes_Dpto/${foto_2}.jpg`)} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
                                 }
                                 {
                                     foto_3 === '' || foto_3 === undefined ?
-                                        <a to={`/mostrarFotos/${idDepto}`} className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
-                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={require(`../../imagenes_Dpto/${foto_3}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></Link>
+                                        <a to={`/mostrarFotos/${idDepto}`} className="col"><img src={foto_alt} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></a> :
+                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={require(`../../imagenes_Dpto/${foto_3}.jpg`)} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
                                 }
                                 {
                                     foto_4 === '' || foto_4 === undefined ?
-                                        <a to={`/mostrarFotos/${idDepto}`} className="col"><img src={"https://data.pixiz.com/output/user/frame/preview/400x400/1/3/3/9/3069331_726cc.jpg"} alt={""} style={{ width: "100%", height: "100%" }}></img></a> :
-                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={require(`../../imagenes_Dpto/${foto_4}.jpg`)} alt={""} style={{ width: "100%", height: "100%" }}></img></Link>
+                                        <a to={`/mostrarFotos/${idDepto}`} className="col"><img src={foto_alt} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></a> :
+                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={require(`../../imagenes_Dpto/${foto_4}.jpg`)} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
                                 }
 
                             </div>
                         </div>
                     </div>
-
+                                
                     <div className="row text ">
-                        <div className="card mt-3 cardsinfo" >
-                            <div className="card-body">
-                                <h3>Departamento: {nombre_dpto}</h3>
+                        <div className="card mt-3 cardsinfo" style={{background: "#222631", color: "#EEEEEE", borderColor: "#222631"}}>
+                            <h2 className="card-header" style={{background: "#222631", color: "#EEEEEE"}}>Información departamento</h2>
+                                
                                 <p className="card-text">
-                                    <b>Numero departamento: </b>{NumeroDepto}<br />
-                                    <b>Capacidad: </b>{capacidad}<br />
-                                    <b>Direccion: </b>{direccion} <br />
-                                    <b>Tarifa: </b>{tarifa} <br />
-                                    <b>Comuna: </b>{nombreComuna}
+                                    <br></br>
+                                    <img src={depto} height="50" width="50" alt="" /> Numero: {NumeroDepto}<br /><br></br>
+                                    <img src={cap} height="50" width="50" alt="" /> para {capacidad} personas<br /><br></br>
+                                    <img src={ubi} height="50" width="50" alt="" /> {direccion}, {nombreComuna} <br /><br></br>
+                                    <img src={tar} height="50" width="50" alt="" /> ${tarifa} CLP por noche<br /><br />
+                                    
                                 </p>
-                            </div>
                         </div>
-                        <div className="card mt-3 cardsreserv text text-right">
+                        <div className="card mt-3 cardsreserv text text-right" style={{background: "#222631", color: "#EEEEEE", borderColor: "#222631"}}>
                             <div className="card-body">
-                                <h3>Seleccionar fechas</h3>
-                                <p className="card-text">
+                            <h2 className="card-header" style={{background: "#222631", color: "#EEEEEE"}}>Seleccionar fechas</h2>
+                                <p className="card-text"><br></br>
                                     <Form.Group className="form-input mb-3"
                                         style={{ width: "50%" }}
                                         type="date"
@@ -299,7 +306,7 @@ const DeptoVista = () => {
                                         value={fechaIda}
                                         onChange={(e) => setFechaIda(e.target.value)}>
                                         <Form.Label>Fecha ida</Form.Label>
-                                        <Form.Control type="date" placeholder="Ingrese nombres" id="fechaReserva" min="2022-11-01" />
+                                        <Form.Control type="date" id="fechaReserva" min="2022-11-01" />
                                     </Form.Group>
                                     <Form.Group className="form-input mb-3 "
                                         style={{ width: "50%" }}
@@ -308,26 +315,25 @@ const DeptoVista = () => {
                                         value={fechaVuelta}
                                         onChange={(e) => setFechaVuelta(e.target.value)}>
                                         <Form.Label>Fecha vuelta</Form.Label>
-                                        <Form.Control type="date" placeholder="Ingrese nombres" id="fechaReserva2" min="2022-11-01" />
+                                        <Form.Control type="date" id="fechaReserva2" min="2022-11-01" />
                                     </Form.Group>
                                     <Form.Group className="form-input mb-3 "
                                         style={{ width: "50%" }}
                                         type="text"
                                         id="acompañante"
-                                        value={cantAcompañantes}
-                                        onChange={(e) => setAcompañantes(e.target.value)}>
+                                    >
                                         <Form.Label>Acompañantes</Form.Label>
-                                        <Form.Control type="text" placeholder="Ingrese acompañantes" />
+                                        <Form.Control type="text" placeholder="Ingrese acompañantes" value={cantAcompañantes} onChange={(e) => handleAcom(e.target.value)} maxLength={2} />
                                     </Form.Group>
                                     <br></br>
-                                    <button className="btn btn-primary" onClick={handlePostReserva}>Reserva ahora</button>
+                                    <button className="btn btn-primary" style={{backgroundColor: "#00ADB5"}} onClick={handlePostReserva}>Reserva ahora</button>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <br></br>
                     <div>
-                        <h3 className="text text-center">Servicios incluidos en el departamento</h3>
+                        <h3 className="text text-center" style={{color: "#EEEEEE"}}>Servicios incluidos en el departamento</h3>
                         <DeptoServiceComp></DeptoServiceComp>
                     </div>
                 </div>

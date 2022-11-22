@@ -1,32 +1,30 @@
 import { Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import "../Cards/card.css"
 //exportamos el componente con los parametros de cada depto
 export const CardComponent = ({ idDepto, nombreDepto, NumeroDepto, capacidad, tarifa, direccion, comuna, foto_path }) => {
 
+  const handleload = (id_dpto) =>{
+    window.location.replace(`/ReservaDepto/${idDepto}`);
+  }
   //devolvemos el codigo HTML con la Card por defecto que sera llenada con los parametros de la funcion
   return (
     <>
-      <Col>
-        <div className="card mt-3" >
-          <img src={require(`../../imagenes_Dpto/${foto_path}.jpg`)} alt=".." className="card-img-top" style={{ maxWidth: "100%", height: "20rem" }} />
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'></link>
+      <button class="btn" onClick={() => handleload(idDepto)}><Col>
+        <div className="card mt-3" style={{background: "#222831"}}>
+          <img src={require(`../../imagenes_Dpto/${foto_path}.jpg`)} alt=".." className="card-img-top" style={{ maxWidth: "100%", height: "18rem"}} />
           <div className="card-body text text-right">
-            <h5>{nombreDepto}</h5>
+            <b style={{color: "#EEEEEE"}}><h4>{nombreDepto}, {direccion}</h4></b>
             <p className="card-text">
-              Capacidad: {capacidad} <br />
-              Tarifa diaria: {tarifa} <br />
-              Numero Departamento: {NumeroDepto} <br />
-              Direccion: {direccion} <br />
-              Comuna: {comuna}  <br />
-              <br />
-              <Link to={`/ReservaDepto/${idDepto}`} >
-                <a className="btn btn-primary">Reserva</a>
-              </Link>
-              <br />
+              <p style={{color: "#EEEEEE"}}>
+                <b>${tarifa} CLP </b>
+                <font style={{fontSize:"17px"}}>noche</font>
+              </p>
             </p>
           </div>
         </div>
-      </Col>
+      </Col></button>
     </>
   );
 };

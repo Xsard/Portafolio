@@ -32,16 +32,24 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
-.page-container{
+
+.page-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
-.content-warp{
+
+.content-warp {
   flex: 1;
   padding-bottom: 60px;
+}
+
+body {
+  background: rgb(34,40,49);
+background: linear-gradient(61deg, rgba(34,40,49,1) 0%, rgba(34,38,49,1) 35%);
 }

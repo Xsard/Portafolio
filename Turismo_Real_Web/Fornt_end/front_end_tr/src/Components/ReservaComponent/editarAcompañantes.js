@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useEffect } from "react";
 
+
 //creamos la funcion que se cargara
 const EditarAcom = () => {
     //traemos la variable que viene en la URL
@@ -17,6 +18,11 @@ const EditarAcom = () => {
     const [acompañantes, setAcompañante] = useState('');
     //creamos la variable del Swal Alert
     const MySwal = withReactContent(Swal);
+
+    const handleAcom = acom => {
+        const result = acom.replace(/\D/g, '');
+        setAcompañante(result)
+    }
 
     //usamos un useEffect para cargar la disponibilidad
     useEffect(() => {
@@ -60,7 +66,7 @@ const EditarAcom = () => {
     
     return (
         <>
-            <div className="mx-auto">
+            <div className="mx-auto" style={{color: "#EEEEEE"}}>
                 <br></br>
                 <h2 className="text-center">Editar reserva</h2>
                 <div className="mx-auto mt-5 w-25" >
@@ -68,16 +74,14 @@ const EditarAcom = () => {
                         <Form.Group className="form-input mb-3"
                             type="text"
                             id="acompañantes"
-                            value={acompañantes}
-                            onChange={(e) => setAcompañante(e.target.value)}
                         >
                             <Form.Label>Editar acompañantes</Form.Label>
-                            <Form.Control type="text" placeholder="Ej: 2" maxLength={2} />
+                            <Form.Control type="text" placeholder="Ej: 2" maxLength={2}  value={acompañantes} onChange={(e) => handleAcom(e.target.value)}/>
                         </Form.Group>
                     </div>
                     <br></br>
                     <h3>La disponibilidad del departamento es: {disponibilidad}</h3>
-                    <Button variant="primary" onClick={handleActualizarAcom}>
+                    <Button variant="primary" style={{backgroundColor: "#00ADB5"}} onClick={handleActualizarAcom}>
                         Editar
                     </Button>
                 </div>
