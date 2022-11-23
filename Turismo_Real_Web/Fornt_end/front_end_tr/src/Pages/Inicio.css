@@ -4,3 +4,35 @@
         padding-left: 10%;
         font-family: 'Poppins'; font-size: 20px;
 }
+.divs{
+        width: 100%;
+        padding-left: 10%;
+        font-family: 'Poppins'; font-size: 20px;
+        position: relative;
+        display: table;
+}
+.divs1{
+        font-family: 'Poppins'; font-size: 20px;
+        position: relative;
+        float: left;
+}
+.divs2{
+        
+        padding-left: 1%;
+        font-family: 'Poppins'; font-size: 20px;
+        position: relative;
+        float: left;
+}
+.divs3{
+        
+        padding-left: 1%;
+        font-family: 'Poppins'; font-size: 20px;
+        position: relative;
+        float: left;
+}
+.button_se{
+        padding-top: 20px;
+        padding-left: 15px;
+        background-color: transparent;
+        border-color: transparent;
+}

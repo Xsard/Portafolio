@@ -1,5 +1,7 @@
 package com.turismo.backend_turismo_real.controlador;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,4 +26,10 @@ public class ComunaControlador {
 	public ResponseEntity<Comuna> obtenerDeptoId(@PathVariable Integer id){
 		return comunaServ.obtenerComunaId(id);
 	}
+	
+	//obtenemos los datos de la comuna con su id
+		@GetMapping("/comunas")
+		public List<Comuna> todosComuna(){
+			return comunaServ.todosComuna();
+		}
 }

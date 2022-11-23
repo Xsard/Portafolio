@@ -1,5 +1,6 @@
 package com.turismo.backend_turismo_real.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -22,4 +23,7 @@ public interface DeptoServicio {
 	//llamamos a la funcion del repositorio
 	int traerCapacidad (int id_dpto);
 	
+	List<Departamento> DeptoFiltro(String nombre_comuna);
+	
+	List<?>departamentoFiltrado(Integer id_comuna, Date check_in, Date check_out);
 }

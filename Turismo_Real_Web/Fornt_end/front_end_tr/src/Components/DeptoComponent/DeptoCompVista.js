@@ -79,20 +79,6 @@ const DeptoVista = () => {
     const Cargar = async (e) => {
         e.preventDefault();
         try {
-            // crea un nuevo objeto `Date`
-            let today = new Date();
-            //devuelve el día del mes (del 1 al 31)
-            let day = today.getDate();
-            //devuelve el mes (de 0 a 11)
-            let month = today.getMonth() + 1;
-            //devuelve el año completo
-            let year = today.getFullYear();
-            //guardamos la fecha
-            let tiempo = `${year}-${month}-${day}`
-            setFechaActual(tiempo)
-            document.getElementById("fechaReserva").min = tiempo
-            document.getElementById("fechaReserva2").min = tiempo
-
             //todos los datos obtenidos de la consulta se almacenan en los useStates creados anteriormente
             const resp = await axios.get(url)
             setDireccion(resp.data.direccion)
@@ -106,7 +92,7 @@ const DeptoVista = () => {
             setnombreComuna(respComuna.data.nombre_comuna)
         }
         catch (error) {
-            console.log(error.response)
+            console.log(error)
         }
     }
 
@@ -297,34 +283,8 @@ const DeptoVista = () => {
                         </div>
                         <div className="card mt-3 cardsreserv text text-right" style={{background: "#222631", color: "#EEEEEE", borderColor: "#222631"}}>
                             <div className="card-body">
-                            <h2 className="card-header" style={{background: "#222631", color: "#EEEEEE"}}>Seleccionar fechas</h2>
+                            <h2 className="card-header" style={{background: "#222631", color: "#EEEEEE"}}>Reserva con nosotros</h2>
                                 <p className="card-text"><br></br>
-                                    <Form.Group className="form-input mb-3"
-                                        style={{ width: "50%" }}
-                                        type="date"
-                                        id="fechaida"
-                                        value={fechaIda}
-                                        onChange={(e) => setFechaIda(e.target.value)}>
-                                        <Form.Label>Fecha ida</Form.Label>
-                                        <Form.Control type="date" id="fechaReserva" min="2022-11-01" />
-                                    </Form.Group>
-                                    <Form.Group className="form-input mb-3 "
-                                        style={{ width: "50%" }}
-                                        type="date"
-                                        id="fechavuelta"
-                                        value={fechaVuelta}
-                                        onChange={(e) => setFechaVuelta(e.target.value)}>
-                                        <Form.Label>Fecha vuelta</Form.Label>
-                                        <Form.Control type="date" id="fechaReserva2" min="2022-11-01" />
-                                    </Form.Group>
-                                    <Form.Group className="form-input mb-3 "
-                                        style={{ width: "50%" }}
-                                        type="text"
-                                        id="acompañante"
-                                    >
-                                        <Form.Label>Acompañantes</Form.Label>
-                                        <Form.Control type="text" placeholder="Ingrese acompañantes" value={cantAcompañantes} onChange={(e) => handleAcom(e.target.value)} maxLength={2} />
-                                    </Form.Group>
                                     <br></br>
                                     <button className="btn btn-primary" style={{backgroundColor: "#00ADB5"}} onClick={handlePostReserva}>Reserva ahora</button>
                                 </p>

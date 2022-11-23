@@ -14,6 +14,7 @@ import ServExtraComponente from './Components/DeptoComponent/ServExtraComponente
 import EditarAcom from './Components/ReservaComponent/editarAcompañantes';
 import Deptofotos from './Components/DeptoComponent/fotosDeptoComponente';
 import TourComponent from './Components/DeptoComponent/TourComponente';
+import DeptoFiltro from './Components/DeptoComponent/DeptoFiltrado';
 
 const getData = () => {
   return localStorage.getItem('correo_usuario')
@@ -53,6 +54,7 @@ function App() {
               <Navigation />
               <Routes>
                 <Route path='/ListaReserva' element={<ReservaComponente />}></Route>
+                <Route path='/DeptoFiltrado' element={<DeptoFiltro />}></Route>
                 <Route path='/Inicio' element={<Inicio />}></Route>
                 <Route path='/' exact element={<Inicio />}></Route>
                 <Route path='/ReservaDepto/:id_depto' element={<DeptoVista />}></Route>

@@ -1,6 +1,6 @@
 import React from "react";
 import DeptoService from "../../services/DeptoService";
-import { CardComponent } from "../Cards/CardDeptos";
+import { CardComponentNP } from "../Cards/cardnoPresionable";
 import { Row } from "react-bootstrap";
 import "./DeptoComponente.css"
 
@@ -31,7 +31,7 @@ class DeptoComponent extends React.Component {
                         {
                             this.state.deptos.map(
                                 deptos =>
-                                    <CardComponent
+                                    <CardComponentNP
                                         key={deptos.idDepto}
                                         NumeroDepto={deptos.nroDepto}
                                         nombreDepto={deptos.nombre_dpto}
