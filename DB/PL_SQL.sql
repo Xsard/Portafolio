@@ -74,6 +74,8 @@ CREATE OR REPLACE PACKAGE Mantener_Dpto
     PROCEDURE eliminar_dpto(identificador IN DEPARTAMENTO.ID_DPTO%TYPE, R OUT INTEGER);
     
     PROCEDURE listar_dpto(Deptos OUT SYS_REFCURSOR);
+
+    PROCEDURE contar_dpto(R OUT INTEGER);
     
     PROCEDURE actualizar_dpto_dispo(identificador IN DEPARTAMENTO.ID_DPTO%TYPE, disp IN DEPARTAMENTO.DISPONIBILIDAD%TYPE, R OUT INTEGER);
 
@@ -168,6 +170,13 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Dpto
             Deptos:= NULL;
     END;
     
+    /*Contar todos los departamentos*/
+    PROCEDURE contar_dpto(R OUT INTEGER)
+    IS
+    BEGIN
+        /*Contar los datos de la tabla*/
+        SELECT COUNT(*) INTO R FROM DEPARTAMENTO;
+    END;    
     /*Actualizar disponibilidad*/
     PROCEDURE actualizar_dpto_dispo(identificador IN DEPARTAMENTO.ID_DPTO%TYPE, disp IN DEPARTAMENTO.DISPONIBILIDAD%TYPE, R OUT INTEGER)
     IS 
