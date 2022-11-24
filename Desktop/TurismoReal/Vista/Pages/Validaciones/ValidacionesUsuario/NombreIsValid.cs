@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 namespace Vista.Pages.Validaciones.ValidacionesUsuario
 {
-    public class NombreHasta : ValidationRule
+    public class NombreIsValid : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -14,7 +15,11 @@ namespace Vista.Pages.Validaciones.ValidacionesUsuario
 
                 if (nombre != null && nombre != string.Empty)
                 {
-                    if (nombre.Length >= 200)
+                    if (!NotContainsSpecialChars(nombre))
+                    {
+                        return new ValidationResult(false, "El nombre no puede contener caracteres especiales");
+                    }
+                    if (nombre.Length >= 60)
                     {
                         return new ValidationResult(false, "El nombre no puede superar los 60 caracteres");
                     }
@@ -28,6 +33,12 @@ namespace Vista.Pages.Validaciones.ValidacionesUsuario
             catch (Exception)
             {
                 return new ValidationResult(false, "Algo anda mal");
+            }
+
+            static bool NotContainsSpecialChars(string s)
+            {
+                Regex regex = new(@"^[a-zA-Z\s]*$");
+                return regex.IsMatch(s);
             }
         }
     }

@@ -48,10 +48,6 @@ namespace Vista
         {
             PagesNavigation.Navigate(new Uri("Pages/MantenedorServDpto.xaml", UriKind.RelativeOrAbsolute));
         }
-        private void btnTransporte_Click(object sender, RoutedEventArgs e)
-        {
-            PagesNavigation.Navigate(new Uri("Pages/PlanificarTransporte.xaml", UriKind.RelativeOrAbsolute));
-        }
         private void btnTour_Click(object sender, RoutedEventArgs e)
         {
             PagesNavigation.Navigate(new Uri("Pages/MantenedorTours.xaml", UriKind.RelativeOrAbsolute));

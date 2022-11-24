@@ -46,7 +46,6 @@
                                     <TextBox.Text>
                                         <Binding Path="NombreMantenimiento" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
-                                                <local1:NombreHasta/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -61,7 +60,6 @@
                                     <TextBox.Text >
                                         <Binding Path="DescripcionMantenimiento" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
-                                                <local1:DescHasta/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -104,7 +102,6 @@
                                     <TextBox.Text >
                                         <Binding Path="CostoMantencion"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
-                                                <local1:TarifaEsNroPositivo/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -119,7 +116,6 @@
                                     <TextBox.Text >
                                         <Binding Path="Estado"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
-                                                <local1:EstadoHasta/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>

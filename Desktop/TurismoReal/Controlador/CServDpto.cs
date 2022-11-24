@@ -1,11 +1,5 @@
-﻿using Modelo;
-using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
+﻿using Oracle.ManagedDataAccess.Client;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Controlador
 {
@@ -26,7 +20,6 @@ namespace Controlador
                 cmd.Parameters.Add("id_dpto", OracleDbType.Int32, ParameterDirection.Input).Value = dpto;
                 cmd.Parameters.Add("estado", OracleDbType.Char, ParameterDirection.Input).Value = estado;
                 cmd.Parameters.Add("r", OracleDbType.Int32, ParameterDirection.Output);
-
 
                 try
                 {

@@ -1,13 +1,11 @@
 ﻿using Controlador;
-using System.Data;
+using Modelo;
 using System;
+using System.Data;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Modelo;
-using System.Linq;
-using System.Resources;
 using System.Windows.Input;
-using Vista.Pages.Validaciones.ValidacionesInventario;
 
 namespace Vista.Pages
 {
@@ -98,11 +96,6 @@ namespace Vista.Pages
         {
             MessageBox.Show(Mensaje, "Reservas", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-        private void btn_ConfirmarFirma_Click(object sender, RoutedEventArgs e)
-        {            
-
-        }
-
         private void TxtBuscar_KeyDown(object sender, KeyEventArgs e)
         {
             try

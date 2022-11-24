@@ -53,7 +53,7 @@
                                     <TextBox.Text >
                                         <Binding Path="Nombres" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
-                                                <local1:NombreHasta/>
+                                                <local1:NombreIsValid/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -68,7 +68,7 @@
                                     <TextBox.Text >
                                         <Binding Path="Apellidos"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
-                                                <local1:ApellidoHasta/>
+                                                <local1:ApellidoIsValid/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -98,7 +98,7 @@
                                     <TextBox.Text >
                                         <Binding Path="Email"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
-                                                <local1:EmailHasta/>
+                                                <local1:EmailIsValid/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>

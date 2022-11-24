@@ -56,8 +56,7 @@
                                 <TextBox KeyDown="DtgDptosUpdate_KeyDown">
                                     <TextBox.Text>
                                         <Binding Path="TarifaDiara"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules >
-                                                <local1:TarifaEsNroPositivo/>
+                                            <Binding.ValidationRules>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -72,7 +71,6 @@
                                     <TextBox.Text >
                                         <Binding Path="Direccion" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules >
-                                                <local1:DirHasta/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -87,7 +85,6 @@
                                     <TextBox.Text >
                                         <Binding Path="NroDpto"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules >
-                                                <local1:NroDeptoEsPositivo/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -102,7 +99,6 @@
                                     <TextBox.Text >
                                         <Binding Path="Capacidad"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules >
-                                                <local1:CapacidadEsPositivo/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -147,7 +143,6 @@
                                     <Button Click="btnSecreto_Click" Grid.Column="3" Margin="5 0 0 0" ToolTip="Eliminar">
                                         <materialDesign:PackIcon Kind="Payment"/>
                                     </Button>
-
                                 </Grid>                                     
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

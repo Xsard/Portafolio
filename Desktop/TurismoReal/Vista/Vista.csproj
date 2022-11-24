@@ -27,4 +27,8 @@
     <Resource Include="Img\background.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Reportes\" />
+  </ItemGroup>
+
 </Project>

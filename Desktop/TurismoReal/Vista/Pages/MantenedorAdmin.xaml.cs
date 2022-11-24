@@ -141,14 +141,11 @@ namespace Vista.Pages
         }       
         private void MensajeError(string Mensaje)
         {
-            MessageBox.Show(Mensaje, "Administradores", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(Mensaje, "Administrador", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         private void MensajeOk(string Mensaje)
         {
-            MessageBox.Show(Mensaje, "Administradores", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-        
-
-        
+            MessageBox.Show(Mensaje, "Administrador", MessageBoxButton.OK, MessageBoxImage.Information);
+        } 
     }
 }
