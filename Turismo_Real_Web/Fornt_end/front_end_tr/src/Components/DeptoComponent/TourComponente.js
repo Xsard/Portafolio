@@ -136,7 +136,7 @@ class TourComponent extends React.Component {
     render() {
         return (
             <>
-                <div class="container" style={{color: "#EEEEEE"}}>
+                <div class="container" style={{ color: "#EEEEEE" }} >
                     <h1 className="text-center">Listado de tours</h1>
                     <table class="table table-fixed">
                         <thead class="table-dark">
@@ -148,7 +148,7 @@ class TourComponent extends React.Component {
                                 <td></td>
                             </tr>
                         </thead>
-                        <tbody style={{color: "#EEEEEE"}}> 
+                        <tbody style={{ color: "#EEEEEE" }}>
                             {
                                 this.state.tours.map(
                                     tours =>
@@ -157,7 +157,7 @@ class TourComponent extends React.Component {
                                             <td>{tours.desc_tour}</td>
                                             <td>{tours.valor_tour}</td>
                                             <td><input type="date" id="fecha_tour" min="2022-11-01"></input></td>
-                                            <td><button className="btn btn-primary" style={{backgroundColor: "#00ADB5"}} onClick={() => handleContratar(tours.id_tour, tours.valor_tour)}>Contratar</button></td>
+                                            <td><button className="btn btn-primary" style={{ backgroundColor: "#00ADB5" }} onClick={() => handleContratar(tours.id_tour, tours.valor_tour)}>Contratar</button></td>
                                         </tr>
                                 )
                             }
