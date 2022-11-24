@@ -1,5 +1,4 @@
 ﻿using Controlador;
-using FluentEmail.Core.Models;
 using Modelo;
 using QuestPDF.Drawing;
 using QuestPDF.Fluent;
