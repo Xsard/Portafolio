@@ -218,6 +218,7 @@ const DeptoVista = () => {
                                     }).then((respuesta) => {
                                         if (respuesta.isConfirmed) {
                                             const idReserva1 = localStorage.getItem('idReserva')
+                                            localStorage.setItem('ocultarReserva', 0)
                                             window.location.replace(`/ListaServExtra/${idReserva1}`);
                                         } else {
                                             MySwal.fire({
