@@ -102,7 +102,7 @@ const Login = () => {
                             value={contraseña}
                             onChange={(e) => setContraseña(e.target.value)}>
                             <Form.Label>Contraseña</Form.Label>
-                            <Form.Control type="password" placeholder="Contraseña" maxLength={30}/>
+                            <Form.Control type="password" placeholder="Contraseña"  maxLength={30}/>
                         </Form.Group>
                     </div>
                     <button type='submit' className='btn btn-primary' style={{backgroundColor: "#00ADB5"}}>
