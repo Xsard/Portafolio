@@ -8,6 +8,8 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import DeptoFiltro from "../Components/DeptoComponent/DeptoFiltrado";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 export const Inicio = () => {
     const { usuario, setUsuario } = useContext(clienteContext);
@@ -16,6 +18,8 @@ export const Inicio = () => {
     const [fecha_actual, setFechaActual] = useState('')
     const [fechaIda, setFechaIda] = useState('');
     const [fechaVuelta, setFechaVuelta] = useState('');
+    const [Acompañantes, setAcompañantes] = useState('');
+    const MySwal = withReactContent(Swal);
 
     const fechaIdaHandle = fecha_ida => {
         localStorage.setItem("fecha_ida", fecha_ida)
@@ -26,13 +30,35 @@ export const Inicio = () => {
         setFechaVuelta(fecha_vuelta)
     }
 
+    const handleAcompañante = acomp => {
+        const aco = acomp.replace(/\D/g, '');
+        localStorage.setItem("acompañante", aco)
+        setAcompañantes(aco)
+    }
+
     const cargarComuna = (ev) => {
         setIdComuna(ev.target.value)
         localStorage.setItem("id_com", ev.target.value)
     }
 
     const redireccion = () =>{
-        window.location.replace('/DeptoFiltrado');
+        let id_Com = localStorage.getItem("id_com")
+        if(id_Com === "Comuna"){
+            MySwal.fire({
+                title: "Debe ingresar una comuna",
+                icon: "error"
+            })
+        }else{
+            if(fechaIda === '' || fechaVuelta === '' || Acompañantes === ''){
+                MySwal.fire({
+                    title: "Debe completar todos los datos",
+                    icon: "error"
+                })
+            }else{
+                window.location.replace('/DeptoFiltrado');
+            }
+        }
+        
     }    
     const cargar = (e) => {
         e.preventDefault();
@@ -89,12 +115,18 @@ export const Inicio = () => {
                         </p>
                     </div>
                     <div class="divs3">
-                        <p><h4 style={{ color: "#00ADB5" }}>Fecha de vuelta</h4>
+                        <p><h4 style={{ color: "#00ADB5"}}>Fecha de vuelta</h4>
                             <input type="date" id="fechaReserva2" min="2022-11-01"value={fechaVuelta} onChange={(e) => fechaVueltaHandle(e.target.value)}></input>
+                        </p>
+                    </div>
+                    <div class="divs3">
+                        <p><h4 style={{ color: "#00ADB5"}}>Acompañantes</h4>
+                            <input type="input" style={{width: " 200px", height:"32px"}} maxLength={2} value={Acompañantes} onChange={(e) => handleAcompañante(e.target.value)}></input>
                         </p>
                     </div>
                     <button class="button_se"><img src={buscar} height="50" width="50" alt="" onClick={redireccion}/></button>
                 </div>
+                
                 <br></br>
                 <hr style={{ color: "#00ADB5", borderWidth:"5px"}}></hr>
                 <b><h1 className="text text-center" style={{ color: "#00ADB5" }}>Nuestros departamentos</h1></b>

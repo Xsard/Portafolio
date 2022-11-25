@@ -79,6 +79,12 @@ const DeptoVista = () => {
     const Cargar = async (e) => {
         e.preventDefault();
         try {
+            let fecha_ida1 = localStorage.getItem('fecha_ida')
+            let fecha_vuelta1 = localStorage.getItem('fecha_vuelta')
+            let acomp = localStorage.getItem('acompañante')
+            setAcompañantes(acomp)
+            setFechaIda(fecha_ida1)
+            setFechaVuelta(fecha_vuelta1)
             //todos los datos obtenidos de la consulta se almacenan en los useStates creados anteriormente
             const resp = await axios.get(url)
             setDireccion(resp.data.direccion)
@@ -151,9 +157,14 @@ const DeptoVista = () => {
                                 console.log(valorTotal)
 
                                 //inserta la reserva en la base de datos
+                                let id_com = localStorage.getItem('id_com')
+                                let fecha_ida1 = localStorage.getItem('fecha_ida')
+                                let fecha_vuelta1 = localStorage.getItem('fecha_vuelta')
+                                let acomp = localStorage.getItem('acompañante')
+
                                 const resp = axios.post('http://localhost:8080/api/v1/reserva_pl', {
-                                    id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
-                                    check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes, transporte: "S"
+                                    id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fecha_ida1,
+                                    check_out: fecha_vuelta1, firma: 0, valor_total: valorTotal, cantidad_acompañantes: acomp, transporte: "S"
                                 }).then(resp => { localStorage.setItem('idReserva', resp.data) })
                             }
                             else {
@@ -168,10 +179,14 @@ const DeptoVista = () => {
                                 let valorTotal = tarifa * diff / (1000 * 60 * 60 * 24)
                                 console.log(valorTotal)
 
+                                let id_com = localStorage.getItem('id_com')
+                                let fecha_ida1 = localStorage.getItem('fecha_ida')
+                                let fecha_vuelta1 = localStorage.getItem('fecha_vuelta')
+                                let acomp = localStorage.getItem('acompañante')
                                 //inserta la reserva en la base de datos
                                 const resp = axios.post('http://localhost:8080/api/v1/reserva_pl', {
-                                    id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fechaIda,
-                                    check_out: fechaVuelta, firma: 0, valor_total: valorTotal, cantidad_acompañantes: cantAcompañantes, transporte: "N"
+                                    id_dpto: id_depto, id_cliente: id, estado_reserva: "I", estado_pago: "P", check_in: fecha_ida1,
+                                    check_out: fecha_vuelta1, firma: 0, valor_total: valorTotal, cantidad_acompañantes: acomp, transporte: "N"
                                 }).then(resp => { localStorage.setItem('idReserva', resp.data) })
                             }
                             //pregunta acerca de los tours
@@ -232,7 +247,7 @@ const DeptoVista = () => {
     return (
         <>
             <div onLoad={Cargar}>
-            <h3 style={{color: "#EEEEEE"}} class='titulo'>{nombre_dpto}</h3>
+                <h3 style={{ color: "#EEEEEE" }} class='titulo'>{nombre_dpto}</h3>
                 <div className="divmayor " >
                     <br></br>
                     <div className="row g-lg-2" >
@@ -267,33 +282,33 @@ const DeptoVista = () => {
                             </div>
                         </div>
                     </div>
-                                
+
                     <div className="row text ">
-                        <div className="card mt-3 cardsinfo" style={{background: "#222631", color: "#EEEEEE", borderColor: "#222631"}}>
-                            <h2 className="card-header" style={{background: "#222631", color: "#EEEEEE"}}>Información departamento</h2>
-                                
-                                <p className="card-text">
-                                    <br></br>
-                                    <img src={depto} height="50" width="50" alt="" /> Numero: {NumeroDepto}<br /><br></br>
-                                    <img src={cap} height="50" width="50" alt="" /> para {capacidad} personas<br /><br></br>
-                                    <img src={ubi} height="50" width="50" alt="" /> {direccion}, {nombreComuna} <br /><br></br>
-                                    <img src={tar} height="50" width="50" alt="" /> ${tarifa} CLP por noche<br /><br />
-                                    
-                                </p>
+                        <div className="card mt-3 cardsinfo" style={{ background: "#222631", color: "#EEEEEE", borderColor: "#222631" }}>
+                            <h2 className="card-header" style={{ background: "#222631", color: "#EEEEEE" }}>Información departamento</h2>
+
+                            <p className="card-text">
+                                <br></br>
+                                <img src={depto} height="50" width="50" alt="" /> Numero: {NumeroDepto}<br /><br></br>
+                                <img src={cap} height="50" width="50" alt="" /> para {capacidad} personas<br /><br></br>
+                                <img src={ubi} height="50" width="50" alt="" /> {direccion}, {nombreComuna} <br /><br></br>
+                                <img src={tar} height="50" width="50" alt="" /> ${tarifa} CLP por noche<br /><br />
+
+                            </p>
                         </div>
-                        <div className="card mt-3 cardsreserv text text-right" style={{background: "#222631", color: "#EEEEEE", borderColor: "#222631"}}>
+                        <div className="card mt-3 cardsreserv text text-right" style={{ background: "#222631", color: "#EEEEEE", borderColor: "#222631" }}>
                             <div className="card-body">
-                            <h2 className="card-header" style={{background: "#222631", color: "#EEEEEE"}}>Reserva con nosotros</h2>
+                                <h2 className="card-header" style={{ background: "#222631", color: "#EEEEEE" }}>Reserva con nosotros</h2>
                                 <p className="card-text"><br></br>
                                     <br></br>
-                                    <button className="btn btn-primary" style={{backgroundColor: "#00ADB5"}} onClick={handlePostReserva}>Reserva ahora</button>
+                                    <button className="btn btn-primary" style={{ backgroundColor: "#00ADB5" }} onClick={handlePostReserva}>Reserva ahora</button>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <br></br>
                     <div>
-                        <h3 className="text text-center" style={{color: "#EEEEEE"}}>Servicios incluidos en el departamento</h3>
+                        <h3 className="text text-center" style={{ color: "#EEEEEE" }}>Servicios incluidos en el departamento</h3>
                         <DeptoServiceComp></DeptoServiceComp>
                     </div>
                 </div>

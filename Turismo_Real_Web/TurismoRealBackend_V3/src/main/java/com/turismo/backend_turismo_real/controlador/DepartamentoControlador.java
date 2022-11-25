@@ -93,8 +93,6 @@ public class DepartamentoControlador {
 		String check_out = node.findValue("check_out").toString().replace("\"", "");
 		Date format_in = new SimpleDateFormat("yyyy-MM-dd").parse(check_in);
 		Date format_out = new SimpleDateFormat("yyyy-MM-dd").parse(check_out);
-		System.out.println(format_in);
-		System.out.println(node.findValue("check_in").toString().replace("\"", ""));
 		return deptoServ.departamentoFiltrado(Integer.parseInt(id_comuna_final), format_in, format_out);
 	}
 }
