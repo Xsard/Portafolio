@@ -31,6 +31,7 @@ class DeptoFiltro extends React.Component {
         return (
             <>
                 <div>
+                <h3 className="text text-center" style={{ color: "#EEEEEE" }}>departamentos disponibles</h3>
                     <Row className="mx-auto gx-0 cards" style={{ width: "80%" }}>     
                         {
                             this.state.deptofil.map(

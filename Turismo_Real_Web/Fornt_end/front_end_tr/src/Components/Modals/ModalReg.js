@@ -237,7 +237,7 @@ function Registrar() {
                     <Button variant="primary" style={{backgroundColor: "#00ADB5"}} onClick={handleValidar}>
                         Reenviar Codigo
                     </Button>
-                    <Button variant="success" onClick={HandleCodigo} >
+                    <Button variant="success" style={{backgroundColor: "#00ADB5"}} onClick={HandleCodigo} >
                         Comprobar
                     </Button>
 
