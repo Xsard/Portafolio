@@ -38,6 +38,6 @@ public interface DepartamentoRepositorio extends JpaRepository<Departamento, Int
 	List<Departamento> DeptoFiltro(@Param("nombre_comuna") String nombre_comuna);
 	
 	//query traer depto filtro
-	@Query(nativeQuery = true, value="select id_dpto, nombre_dpto, tarifa_diaria, direccion, nro_dpto, capacidad,(select id_foto from fotografia_dpto ft where ft.id_dpto = dpto.id_dpto and rownum = 1) as foto from departamento dpto where DISPONIBILIDAD <> 0  AND ID_COMUNA =:id_comuna AND NOT EXISTS (SELECT ID_DPTO FROM RESERVA res WHERE res.id_dpto=dpto.id_dpto AND :check_in BETWEEN CHECK_IN AND CHECK_OUT OR :check_out BETWEEN CHECK_IN AND CHECK_OUT)")
+	@Query(nativeQuery = true, value="select id_dpto, nombre_dpto, tarifa_diaria, direccion, nro_dpto, capacidad,(select id_foto from fotografia_dpto ft where ft.id_dpto = dpto.id_dpto and rownum = 1) as foto from departamento dpto where DISPONIBILIDAD <> 0  AND ID_COMUNA =:id_comuna AND NOT EXISTS (SELECT ID_DPTO FROM RESERVA res WHERE ESTADO_RESERVA <> 'C' AND res.id_dpto=dpto.id_dpto AND (:check_in BETWEEN CHECK_IN AND CHECK_OUT OR :check_out BETWEEN CHECK_IN AND CHECK_OUT))")
 	List<?>departamentoFiltrado(@Param("id_comuna") Integer id_comuna,@Param("check_in") Date check_in, @Param("check_out") Date check_out);
 }
