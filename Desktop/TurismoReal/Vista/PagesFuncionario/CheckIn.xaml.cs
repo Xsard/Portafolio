@@ -41,8 +41,8 @@ namespace Vista.PagesFuncionario
                 MessageBoxResult result = MessageBox.Show("Quieres confirmar la firma?", "Reservas", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    CReserva.ConfirmarFirma(IdReserva, FirmaFunc, EstadoR, EstadoP);
-                    MensajeOk("Firma confirmada");
+                    int estado = CReserva.ConfirmarFirma(IdReserva, FirmaFunc, EstadoR, EstadoP);
+                    MensajeOk(IdReserva.ToString() );
                     ListarReservas();
                 }
             }
@@ -76,9 +76,9 @@ namespace Vista.PagesFuncionario
                     var reservas = (from rw in dataTable.AsEnumerable()
                                     select new Reserva()
                                     {
-                                        IdReserva = Convert.ToInt32(rw[0]),
-                                        IdDepto = Convert.ToInt32(rw[1]),
-                                        IdCliente = Convert.ToInt32(rw[2]),
+                                        IdReserva = Convert.ToInt32(rw[2]),
+                                        IdDepto = Convert.ToInt32(rw[0]),
+                                        IdCliente = Convert.ToInt32(rw[1]),
                                         EstadoReserva = rw[3].ToString(),
                                         EstadoPago = rw[4].ToString(),
                                         CheckIn = DateTime.Parse(rw[5].ToString()),

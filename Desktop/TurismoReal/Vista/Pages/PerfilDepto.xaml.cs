@@ -148,6 +148,9 @@ namespace Vista.Pages
         }
         private void ListarImg()
         {
+            string path = System.IO.Directory.GetCurrentDirectory();
+            path = path.Substring(0, path.LastIndexOf("Desktop"));
+            path = string.Concat(path, "Turismo_Real_Web\\Fornt_end\\front_end_tr\\src\\imagenes_Dpto\\");
             try
             {
                 DataTable dataTable = CFotografia.ListarImagenes(departamento.IdDepto);
@@ -161,13 +164,13 @@ namespace Vista.Pages
                                        Path_img = rw[2].ToString(),
                                        Alt = rw[3].ToString()
                                    }).ToList();
-                    imgMain.Source = new BitmapImage(new Uri(fotografias[0].Path_img));
+                    imgMain.Source = new BitmapImage(new Uri(string.Concat(path, fotografias[0].Id_foto,".jpg")));
                     StkOtrasImg.Children.Clear();
                     try
                     {
                         for (int i = 1; i <= fotografias.Count-1 ; i++)
                         {
-
+                            string pathF = string.Concat(path, fotografias[i].Id_foto, ".jpg");
                             try
                             {
                                 StkOtrasImg.UnregisterName("imgDpto" + fotografias[i].Id_foto);
@@ -179,7 +182,7 @@ namespace Vista.Pages
                             }
                             Image image = new()
                             {
-                                Source = new BitmapImage(new Uri(fotografias[i].Path_img)),
+                                Source = new BitmapImage(new Uri(pathF)),
                                 Name = "imgDpto" + fotografias[i].Id_foto,
                                 Height = 100,
                                 Width = 100
