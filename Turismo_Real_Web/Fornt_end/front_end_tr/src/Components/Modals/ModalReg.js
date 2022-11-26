@@ -48,47 +48,55 @@ function Registrar() {
 
     //creamos la variable para hacer la validacion 
     const handleValidar = async () => {
-        if(Rut=== '' || nombres === '' || apellidos=== '' || correo=== '' || telefono=== '' || contraseña=== '' || repContraseña=== '' ){
+        if (contraseña.length <= 8 || repContraseña <= 8) {
             MySwal.fire({
-                title: "Debe rellenar los campos",
+                title: "La contraseña debe tener un largo de 8 caracteres",
                 icon: "error"
             })
-        }else{
-            const resRut = await axios.post('http://localhost:8080/api/v1/rutComprobacion', {
-            rut: Rut
-        })
-        if (resRut.data === '') {
-            const respCorreo = await axios.post('http://localhost:8080/api/v1/correoComprobacion', {
-                email: correo
-            })
-            if (respCorreo.data === '') {
-                //comprobamos que las contraseñas sean correctas
-                if (contraseña === repContraseña) {
-                    //si son correctas muestra el modal y envia el codigo de comprobacion
-                    handleShow()
-                    code = getRandomInt();
-                    setCode(code)
-                    clienteServicio.ValidarLogin(correo, code)
+        } else {
+            if (Rut === '' || nombres === '' || apellidos === '' || correo === '' || telefono === '' || contraseña === '' || repContraseña === '') {
+                MySwal.fire({
+                    title: "Debe rellenar los campos",
+                    icon: "error"
+                })
+            } else {
+                const resRut = await axios.post('http://localhost:8080/api/v1/rutComprobacion', {
+                    rut: Rut
+                })
+                if (resRut.data === '') {
+                    const respCorreo = await axios.post('http://localhost:8080/api/v1/correoComprobacion', {
+                        email: correo
+                    })
+                    if (respCorreo.data === '') {
+                        //comprobamos que las contraseñas sean correctas
+                        if (contraseña === repContraseña) {
+                            //si son correctas muestra el modal y envia el codigo de comprobacion
+                            handleShow()
+                            code = getRandomInt();
+                            setCode(code)
+                            clienteServicio.ValidarLogin(correo, code)
+                        } else {
+                            //mensaje de error de las contraseñas
+                            MySwal.fire({
+                                title: "Las contraseñas no coinciden",
+                                icon: "error"
+                            })
+                        }
+                    } else {
+                        MySwal.fire({
+                            title: "El correo ya esta en uso",
+                            icon: "error"
+                        })
+                    }
                 } else {
-                    //mensaje de error de las contraseñas
                     MySwal.fire({
-                        title: "Las contraseñas no coinciden",
+                        title: "El rut ya esta en uso",
                         icon: "error"
                     })
                 }
-            } else {
-                MySwal.fire({
-                    title: "El correo ya esta en uso",
-                    icon: "error"
-                })
             }
-        } else {
-            MySwal.fire({
-                title: "El rut ya esta en uso",
-                icon: "error"
-            })
         }
-        }
+
     }
 
     //comprobacion de codigo de verificacion
@@ -131,7 +139,7 @@ function Registrar() {
     return (
         <>
 
-            <div className="mx-auto" style={{color: "#EEEEEE"}}>
+            <div className="mx-auto" style={{ color: "#EEEEEE" }}>
                 <br></br>
                 <h2 className="text-center">Registrate en Turismo Real</h2>
                 <div className="mx-auto mt-5 w-25">
@@ -206,7 +214,7 @@ function Registrar() {
                         </Form.Group>
                     </div>
                     <br></br>
-                    <Button variant="primary" style={{backgroundColor: "#00ADB5"}} onClick={handleValidar}>
+                    <Button variant="primary" style={{ backgroundColor: "#00ADB5" }} onClick={handleValidar}>
                         Registrarse
                     </Button>
                 </div>
@@ -234,10 +242,10 @@ function Registrar() {
                 </Modal.Body>
                 <Modal.Footer>
 
-                    <Button variant="primary" style={{backgroundColor: "#00ADB5"}} onClick={handleValidar}>
+                    <Button variant="primary" style={{ backgroundColor: "#00ADB5" }} onClick={handleValidar}>
                         Reenviar Codigo
                     </Button>
-                    <Button variant="success" style={{backgroundColor: "#00ADB5"}} onClick={HandleCodigo} >
+                    <Button variant="success" style={{ backgroundColor: "#00ADB5" }} onClick={HandleCodigo} >
                         Comprobar
                     </Button>
 
