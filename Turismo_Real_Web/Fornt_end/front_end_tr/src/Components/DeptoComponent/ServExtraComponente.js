@@ -22,7 +22,7 @@ const HandleInsertar = async (id_sv_extra, valor_serv) => {
         id_reserva: reserva, id_svc_ex: id_sv_extra, id_dpto: id_depto1, id_cliente: idCliente
     })
     //actualizamos el pago sumando el valor total con el valor del servicio extra
-    const respActualizarPago = await axios.post(`http://localhost:8080/api/v1/actualizarValor/${reserva}`,{
+    const respActualizarPago = await axios.post(`http://localhost:8080/api/v1/actualizarValor/${reserva}`, {
         valor_serv_ex: valor_serv
     })
     //enviamos un mensaje de aceptacion
@@ -40,7 +40,18 @@ const HandleInsertar = async (id_sv_extra, valor_serv) => {
     console.log(id_sv_extra)
 }
 
-
+const hanleFinalizar  = () => {
+    const MySwal = withReactContent(Swal);
+    MySwal.fire({
+        title: "Reserva finalizada",
+        icon: "success",
+        allowOutsideClick: false
+    }).then((respuesta) => {
+        if (respuesta.isConfirmed) {
+            window.location.replace('/Inicio');
+        }
+    })
+}
 
 class ServExtraComponente extends React.Component {
 
@@ -55,14 +66,14 @@ class ServExtraComponente extends React.Component {
     componentDidMount() {
         let id_reserva1 = localStorage.getItem("idReserva")
         serviciosServices.getServExtra(id_reserva1).then((Response) => {
-            this.setState({ servicios: Response.data})
+            this.setState({ servicios: Response.data })
         });
     }
 
     render() {
         return (
             <>
-                <div class="container" style={{color: "#EEEEEE"}}>
+                <div class="container" style={{ color: "#EEEEEE" }}>
                     <h1 className="text-center">Listado de servicios extras</h1>
                     <table class="table table-fixed">
                         <thead class="table-dark">
@@ -73,7 +84,7 @@ class ServExtraComponente extends React.Component {
                                 <td></td>
                             </tr>
                         </thead>
-                        <tbody style={{color: "#EEEEEE"}}>
+                        <tbody style={{ color: "#EEEEEE" }}>
                             {
                                 this.state.servicios.map(
                                     servicios =>
@@ -82,16 +93,25 @@ class ServExtraComponente extends React.Component {
                                             <td>{servicios.desc_serv_ex}</td>
                                             <td>{servicios.valor_serv_ex}</td>
                                             {
-                                                servicios.seleccionado === ''?
-                                                <h1>a</h1>:
-                                                <td><button  onClick={() => HandleInsertar(servicios.id_svc_ex, servicios.valor_serv_ex)} className="btn btn-success" style={{backgroundColor: "#00ADB5"}}>Agregar</button></td>
-                                                
+                                                servicios.seleccionado === '' ?
+                                                    <h1>a</h1> :
+                                                    <td><button onClick={() => HandleInsertar(servicios.id_svc_ex, servicios.valor_serv_ex)} className="btn btn-success" style={{ backgroundColor: "#00ADB5" }}>Agregar</button></td>
+
                                             }
                                         </tr>
                                 )
                             }
                         </tbody>
                     </table>
+                    <div className="text text-center">
+                        {
+                            localStorage.getItem('ocultarReserva') == 1 ?
+                                <h1></h1> :
+                                <button className="btn btn-primary" style={{ backgroundColor: "#00ADB5" }} onClick={hanleFinalizar}>Continuar</button>
+                        }
+                        
+                    </div>
+
                 </div>
             </>
         );

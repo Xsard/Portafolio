@@ -44,6 +44,7 @@ const handleAcompañantes = (id_reserva) => {
 const handleServExtra = (id_reserva) => {
     localStorage.setItem('idReserva', id_reserva)
     let id_reserva1 = localStorage.getItem('idReserva')
+    localStorage.setItem('ocultarReserva', 1)
     window.location.replace(`/ListaServExtra/${id_reserva1}`);
 }
 const handlePago = (id_reserva) => {

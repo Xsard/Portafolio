@@ -28,7 +28,7 @@ const handleContratar = async (id_tour1, valorTour) => {
             })
         } else {
             const resp = await axios.post('http://localhost:8080/api/v1/add_tour', {
-                id_reserva: id_res, id_tour: id_tour1, fecha_tour: fecha, id_dpto: 1, id_cliente: id_cli
+                id_reserva: id_res, id_tour: id_tour1, fecha_tour: fecha, id_dpto: id_dp, id_cliente: id_cli
             }, { headers: { "Content-Type": "application/json" } })
             const resppago = await axios.post(`http://localhost:8080/api/v1/actualizarValor/${id_res}`, {
                 valor_serv_ex: valorTour
