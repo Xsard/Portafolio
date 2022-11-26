@@ -115,12 +115,8 @@
                         Content="Seleccione una región" />
                 </Border>
                 <ComboBox x:Name="cbo_Regiones"
-                    Width="100"
-                    DisplayMemberPath="NombreRegion"
-                    IsSynchronizedWithCurrentItem="False"                
-                    SelectedItem="{Binding Region, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                    SelectedValue="{Binding Region.IdRegion}"
-                    SelectedValuePath="IdRegion" />
+                    Width="200"
+                    DisplayMemberPath="NombreRegion" SelectedIndex="0" />
             </StackPanel>
             <StackPanel
                 Grid.Row="1"
@@ -136,12 +132,8 @@
                 </Border>
                 <ComboBox 
                     x:Name="cbo_Comunas"
-                    Width="100"
-                    DisplayMemberPath="NombreComuna"
-                    IsSynchronizedWithCurrentItem="False"
-                    SelectedItem="{Binding Comuna, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                    SelectedValue="{Binding Comuna.IdComuna}"
-                    SelectedValuePath="IdComuna" />
+                    Width="200"
+                    DisplayMemberPath="NombreComuna" SelectedIndex="0"/>
             </StackPanel>
             <StackPanel
                 Grid.Row="1"
@@ -157,12 +149,8 @@
                 </Border>
                 <ComboBox 
                     x:Name="cbo_Dptos"
-                    Width="100"
-                    DisplayMemberPath="NombreDpto"
-                    IsSynchronizedWithCurrentItem="False"
-                    SelectedItem="{Binding Departamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                    SelectedValue="{Binding Departamento.IdDepto}"
-                    SelectedValuePath="IdComuna" />
+                    Width="200"
+                    DisplayMemberPath="NombreDpto" SelectedIndex="0"/>
             </StackPanel>
         </Grid>
     </Grid>

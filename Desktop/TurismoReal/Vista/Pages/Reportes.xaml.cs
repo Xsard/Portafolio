@@ -37,6 +37,7 @@ namespace Vista.Pages
                 List<Comuna> comunas = CComuna.ListarComuna();
                 if (comunas != null)
                 {
+                    comunas.Insert(0, new Comuna() { NombreComuna = "Seleccione una comuna" });
                     cbo_Comunas.ItemsSource = comunas;
                 }
             }
@@ -52,6 +53,8 @@ namespace Vista.Pages
                 List<Region> regiones = CRegion.ListarRegion();
                 if (regiones != null)
                 {
+                    regiones.Insert(0, new Region() { NombreRegion = "Seleccione una región" });
+
                     cbo_Regiones.ItemsSource = regiones;
                 }
             }
@@ -83,6 +86,7 @@ namespace Vista.Pages
                                      },
                                      Disponibilidad = Convert.ToBoolean(rw[7])
                                  }).ToList();
+                    Dptos.Insert(0,new Departamento() { NombreDpto = "Seleccione un departamento" });
                     cbo_Dptos.ItemsSource = Dptos;
                 }
             }
@@ -173,13 +177,26 @@ namespace Vista.Pages
             if (cbo_Dptos.SelectedIndex > 0)
             {
                 Departamento departamento = (Departamento)cbo_Dptos.SelectedItem;
-                MessageBox.Show(departamento.NombreDpto);
-                cbo_Dptos.SelectedIndex = -1;
+                id = departamento.IdDepto;
+                nivel = 3;
             }
-            //var model = InvoiceDocumentDataSource.GetInvoiceDetails();
-            //var document = new ReporteDocumento(model);
+            else if (cbo_Comunas.SelectedIndex >0 )
+            {
+                Comuna comuna = (Comuna)cbo_Comunas.SelectedItem;
+                id = comuna.IdComuna;
+                nivel = 2;
+            }
+            else if (cbo_Regiones.SelectedIndex > 0)
+            {
+                Region region = (Region)cbo_Regiones.SelectedItem;
+                id = region.IdRegion;
+                nivel = 1;
+            }
 
-            //GenerateDocumentAndShow(document);
+            var model = InvoiceDocumentDataSource.GetInvoiceDetails(id, nivel,);
+            var document = new ReporteDocumento(model);
+
+            GenerateDocumentAndShow(document);
         }
 
         private void GenerateDocumentAndShow(ReporteDocumento document)
