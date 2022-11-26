@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 namespace Vista.Pages.Validaciones.ValidacionesUsuario
@@ -8,15 +9,26 @@ namespace Vista.Pages.Validaciones.ValidacionesUsuario
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             if (int.TryParse(value.ToString(), out int telefono))
-            {
+            {              
                 if (telefono <= 0)
                 {
                     return new ValidationResult(false, "El teléfono debe ser un número positivo");
                 }
+                if (telefono.ToString().Length < 9 || telefono.ToString().Length > 11)
+                {
+                    return new ValidationResult(false, "El largo del teléfono no es válido");
+                }
+
                 return ValidationResult.ValidResult;
 
             }
             return new ValidationResult(false, "El teléfono debe ser un número");
-        }    
+        }
+
+        //static bool OnlyLetters(string s)
+        //{
+        //    Regex regex = new(@"^[a-zA-Z]+$");
+        //    return regex.IsMatch(s);
+        //}
     }
 }

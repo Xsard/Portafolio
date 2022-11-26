@@ -167,13 +167,22 @@ namespace Vista.Pages
         }
         private void btnGenReporteReservas_Click(object sender, RoutedEventArgs e)
         {
-            var model = InvoiceDocumentDataSource.GetInvoiceDetails();
-            var document = new InvoiceDocument(model);
+            int id = 0;
+            int nivel = 0;
+            
+            if (cbo_Dptos.SelectedIndex > 0)
+            {
+                Departamento departamento = (Departamento)cbo_Dptos.SelectedItem;
+                MessageBox.Show(departamento.NombreDpto);
+                cbo_Dptos.SelectedIndex = -1;
+            }
+            //var model = InvoiceDocumentDataSource.GetInvoiceDetails();
+            //var document = new ReporteDocumento(model);
 
-            GenerateDocumentAndShow(document);
+            //GenerateDocumentAndShow(document);
         }
 
-        private void GenerateDocumentAndShow(InvoiceDocument document)
+        private void GenerateDocumentAndShow(ReporteDocumento document)
         {
             const string filePath = "invoice.pdf";
 
@@ -191,14 +200,14 @@ namespace Vista.Pages
         }
     }
 
-    public class InvoiceDocument : IDocument
+    public class ReporteDocumento : IDocument
     {
-        public InvoiceModel Model { get; }
+        public List<ReporteReserva> Modelo { get; }
 
-        public InvoiceDocument(InvoiceModel model)
+        public ReporteDocumento(List<ReporteReserva> modelo)
         {
-            Model = model;
-        }
+            Modelo = modelo;
+        }        
 
         public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
 
@@ -228,19 +237,13 @@ namespace Vista.Pages
                 row.RelativeItem().Column(Column =>
                 {
                     Column
-                        .Item().Text($"Invoice #{Model.InvoiceNumber}")
+                        .Item().Text($"Reporte #1")
                         .FontSize(20).SemiBold().FontColor(Colors.Blue.Medium);
 
                     Column.Item().Text(text =>
                     {
-                        text.Span("Issue date: ").SemiBold();
-                        text.Span($"{Model.IssueDate:d}");
-                    });
-
-                    Column.Item().Text(text =>
-                    {
-                        text.Span("Due date: ").SemiBold();
-                        text.Span($"{Model.DueDate:d}");
+                        text.Span("Fecha del reporte: ").SemiBold();
+                        text.Span($"{DateTime.Now:d}");
                     });
                 });
 
@@ -254,23 +257,23 @@ namespace Vista.Pages
             {
                 column.Spacing(20);
 
-                column.Item().Row(row =>
-                {
-                    row.RelativeItem().Component(new AddressComponent("From", Model.SellerAddress));
-                    row.ConstantItem(50);
-                    row.RelativeItem().Component(new AddressComponent("For", Model.CustomerAddress));
-                });
+                //column.Item().Row(row =>
+                //{
+                //    row.RelativeItem().Component(new AddressComponent("From", Modelo.SellerAddress));
+                //    row.ConstantItem(50);
+                //    row.RelativeItem().Component(new AddressComponent("For", Modelo.CustomerAddress));
+                //});
 
                 column.Item().Element(ComposeTable);
 
-                var totalPrice = Model.Items.Sum(x => x.Price * x.Quantity);
-                column.Item().PaddingRight(5).AlignRight().Text($"Grand total: {totalPrice}$").SemiBold();
+                //var totalPrice = Modelo.Items.Sum(x => x.Price * x.Quantity);
+                //column.Item().PaddingRight(5).AlignRight().Text($"Grand total: {totalPrice}$").SemiBold();
 
-                if (!string.IsNullOrWhiteSpace(Model.Comments))
-                    column.Item().PaddingTop(25).Element(ComposeComments);
+                //if (!string.IsNullOrWhiteSpace(Modelo.Comments))
+                //    column.Item().PaddingTop(25).Element(ComposeComments);
             });
         }
-
+        
         void ComposeTable(IContainer container)
         {
             var headerStyle = TextStyle.Default.SemiBold();
@@ -279,8 +282,7 @@ namespace Vista.Pages
             {
                 table.ColumnsDefinition(columns =>
                 {
-                    columns.ConstantColumn(25);
-                    columns.RelativeColumn(3);
+                    columns.ConstantColumn(250);
                     columns.RelativeColumn();
                     columns.RelativeColumn();
                     columns.RelativeColumn();
@@ -288,22 +290,24 @@ namespace Vista.Pages
 
                 table.Header(header =>
                 {
-                    header.Cell().Text("#");
-                    header.Cell().Text("Product").Style(headerStyle);
-                    header.Cell().AlignRight().Text("Unit price").Style(headerStyle);
-                    header.Cell().AlignRight().Text("Quantity").Style(headerStyle);
-                    header.Cell().AlignRight().Text("Total").Style(headerStyle);
+                    //header.Cell().Text("#");
+                    header.Cell().Text("Nombre Departamento").Style(headerStyle);
+                    header.Cell().AlignRight().Text("Cant. Arriendos").Style(headerStyle);
+                    header.Cell().AlignRight().Text("Duración prom. de reservas").Style(headerStyle);
+                    header.Cell().AlignRight().Text("Cant. Multas").Style(headerStyle);
 
-                    header.Cell().ColumnSpan(5).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
+                    header.Cell().ColumnSpan(4).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
                 });
 
-                foreach (var item in Model.Items)
-                {
-                    table.Cell().Element(CellStyle).Text(Model.Items.IndexOf(item) + 1);
-                    table.Cell().Element(CellStyle).Text(item.Name);
-                    table.Cell().Element(CellStyle).AlignRight().Text($"{item.Price}$");
-                    table.Cell().Element(CellStyle).AlignRight().Text(item.Quantity);
-                    table.Cell().Element(CellStyle).AlignRight().Text($"{item.Price * item.Quantity}$");
+
+
+            foreach (var item in Modelo)
+            {
+                    //table.Cell().Element(CellStyle).Text(Modelo.Items.IndexOf(item) + 1);
+                    table.Cell().Element(CellStyle).Text(item.NombreDpto);
+                    table.Cell().Element(CellStyle).AlignRight().Text(item.CantArriendos);
+                    table.Cell().Element(CellStyle).AlignRight().Text(item.PromDiasReserva);
+                    table.Cell().Element(CellStyle).AlignRight().Text(item.CantMultas);
 
                     static IContainer CellStyle(IContainer container) => container.BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5);
                 }
@@ -315,118 +319,97 @@ namespace Vista.Pages
             container.ShowEntire().Background(Colors.Grey.Lighten3).Padding(10).Column(column =>
             {
                 column.Spacing(5);
-                column.Item().Text("Comments").FontSize(14).SemiBold();
-                column.Item().Text(Model.Comments);
+                //column.Item().Text("Comments").FontSize(14).SemiBold();
+                //column.Item().Text(Modelo.Comments);
             });
         }
     }
 
-    public class AddressComponent : IComponent
-    {
-        private string Title { get; }
-        private Address Address { get; }
+    //public class AddressComponent : IComponent
+    //{
+    //    private string Title { get; }
+    //    private Address Address { get; }
 
-        public AddressComponent(string title, Address address)
-        {
-            Title = title;
-            Address = address;
-        }
+    //    public AddressComponent(string title, Address address)
+    //    {
+    //        Title = title;
+    //        Address = address;
+    //    }
 
-        public void Compose(IContainer container)
-        {
-            container.ShowEntire().Column(column =>
-            {
-                column.Spacing(2);
+    //    public void Compose(IContainer container)
+    //    {
+    //        container.ShowEntire().Column(column =>
+    //        {
+    //            column.Spacing(2);
 
-                column.Item().Text(Title).SemiBold();
-                column.Item().PaddingBottom(5).LineHorizontal(1);
+    //            column.Item().Text(Title).SemiBold();
+    //            column.Item().PaddingBottom(5).LineHorizontal(1);
 
-                column.Item().Text(Address.CompanyName);
-                column.Item().Text(Address.Street);
-                column.Item().Text($"{Address.City}, {Address.State}");
-                column.Item().Text(Address.Email);
-                column.Item().Text(Address.Phone);
-            });
-        }
-    }
+    //            //column.Item().Text(Address.CompanyName);
+    //            //column.Item().Text(Address.Street);
+    //            //column.Item().Text($"{Address.City}, {Address.State}");
+    //            //column.Item().Text(Address.Email);
+    //            //column.Item().Text(Address.Phone);
+    //        });
+    //    }
+    //}
 
     public static class InvoiceDocumentDataSource
     {
-        private static Random Random = new Random();
 
-        public static InvoiceModel GetInvoiceDetails()
-        {
-            var items = Enumerable
-                .Range(1, 25)
-                .Select(i => GenerateRandomOrderItem())
-                .ToList();
+        public static List<ReporteReserva> GetInvoiceDetails(int id, int nivel, DateTime fecha_inicio, DateTime fecha_termino)
+        {          
+            DataTable dt = CReporte.GenReporteReserva(id, nivel, fecha_inicio, fecha_termino);
+            var Dptos = (from rw in dt.AsEnumerable()
+                         select new ReporteReserva()
+                         {
+                             FechaReporte = DateTime.Now,
+                             NombreDpto = (string)rw[0],
+                             CantArriendos = (decimal)rw[1],
+                             PromDiasReserva = (decimal)rw[2],
+                             CantMultas = (decimal)rw[3],
+                             Comments = Placeholders.Paragraph()
+                         }).ToList();
 
-            return new InvoiceModel
-            {
-                InvoiceNumber = Random.Next(1_000, 10_000),
-                IssueDate = DateTime.Now,
-                DueDate = DateTime.Now + TimeSpan.FromDays(14),
-
-                SellerAddress = GenerateRandomAddress(),
-                CustomerAddress = GenerateRandomAddress(),
-
-                Items = items,
-                Comments = Placeholders.Paragraph()
-            };
+            return Dptos;
         }
 
-        private static OrderItem GenerateRandomOrderItem()
-        {
-            return new OrderItem
-            {
-                Name = Placeholders.Label(),
-                Price = (decimal)Math.Round(Random.NextDouble() * 100, 2),
-                Quantity = Random.Next(1, 10)
-            };
-        }
+        //private static void GenerarReporteReserva()
+        //{
+        //    DataTable dt = CReporte.GenReporteReserva();
+        //    var Dptos = (from rw in dt.AsEnumerable()
+        //                 select new ReporteReserva()
+        //                 {
+        //                     FechaReporte = DateTime.Now,
+        //                     NombreDpto = (string)rw[0],
+        //                     CantArriendos = (int)rw[1],
+        //                     PromDiasReserva = (int)rw[2],
+        //                     CantMultas = (int)rw[3],
+        //                     Comments = Placeholders.Paragraph()
+        //                 }).ToList();
+        //}
 
-        private static Address GenerateRandomAddress()
-        {
-            return new Address
-            {
-                CompanyName = Placeholders.Name(),
-                Street = Placeholders.Label(),
-                City = Placeholders.Label(),
-                State = Placeholders.Label(),
-                Email = Placeholders.Email(),
-                Phone = Placeholders.PhoneNumber()
-            };
-        }
+        //private static OrderItem GenerateRandomOrderItem()
+        //{
+        //    return new OrderItem
+        //    {
+        //        Name = Placeholders.Label(),
+        //        Price = (decimal)Math.Round(Random.NextDouble() * 100, 2),
+        //        Quantity = Random.Next(1, 10)
+        //    };
+        //}
+
+        //private static Address GenerateRandomAddress()
+        //{
+        //    return new Address
+        //    {
+        //        CompanyName = Placeholders.Name(),
+        //        Street = Placeholders.Label(),
+        //        City = Placeholders.Label(),
+        //        State = Placeholders.Label(),
+        //        Email = Placeholders.Email(),
+        //        Phone = Placeholders.PhoneNumber()
+        //    };
+        //}
     }
-
-    public class InvoiceModel
-    {
-        public int InvoiceNumber { get; set; }
-        public DateTime IssueDate { get; set; }
-        public DateTime DueDate { get; set; }
-
-        public Address SellerAddress { get; set; }
-        public Address CustomerAddress { get; set; }
-
-        public List<OrderItem> Items { get; set; }
-        public string Comments { get; set; }
-    }
-
-    public class OrderItem
-    {
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        public int Quantity { get; set; }
-    }
-
-    public class Address
-    {
-        public string CompanyName { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public object Email { get; set; }
-        public string Phone { get; set; }
-    }
-
 }

@@ -39,7 +39,7 @@ namespace Vista.Pages.Validaciones.ValidacionesUsuario
             {
                 Regex regex = new(@"^[a-zA-Z\s]*$");
                 return regex.IsMatch(s);
-            }
+            }            
         }
     }
 }
