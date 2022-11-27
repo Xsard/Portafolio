@@ -3,7 +3,9 @@ using Microsoft.Win32;
 using Modelo;
 using System;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -122,23 +124,17 @@ namespace Vista.Pages
         }
         private void btn_Agregar_Img_Click(object sender, RoutedEventArgs e)
         {
-            string ext = System.IO.Path.GetExtension(txtPathFoto.Text);
-            string path = System.IO.Directory.GetCurrentDirectory();
-            path = path.Substring(0, path.LastIndexOf("Desktop"));
-            path = string.Concat(path, "Turismo_Real_Web\\Fornt_end\\front_end_tr\\src\\imagenes_Dpto\\");
 
             Fotografia fotografia = new()
             {
                 Id_dpto = departamento.IdDepto,
-                Path_img = path,
                 Alt = txtAltFoto.Text
             };
-            string r = CFotografia.InsertarImagen(fotografia, ext);
-            if (r.Length > 0)
+            Stream st = File.OpenRead(txtPathFoto.Text);
+            int r = CFotografia.InsertarImagen(fotografia, st);
+            MessageBox.Show(r.ToString());
+            if (r > 0)
             {
-                r = System.IO.Path.Combine(path, r);
-                System.IO.File.Copy(txtPathFoto.Text, r, true);
-                dhFotos.IsOpen = false;
                 ListarImg();
             }
         }
@@ -148,9 +144,7 @@ namespace Vista.Pages
         }
         private void ListarImg()
         {
-            string path = System.IO.Directory.GetCurrentDirectory();
-            path = path.Substring(0, path.LastIndexOf("Desktop"));
-            path = string.Concat(path, "Turismo_Real_Web\\Fornt_end\\front_end_tr\\src\\imagenes_Dpto\\");
+            string path = "https://d254rvr6bqb0tr.cloudfront.net/";
             try
             {
                 DataTable dataTable = CFotografia.ListarImagenes(departamento.IdDepto);
@@ -161,8 +155,7 @@ namespace Vista.Pages
                                    {
                                        Id_foto = Convert.ToInt32(rw[0]),
                                        Id_dpto = Convert.ToInt32(rw[1]),
-                                       Path_img = rw[2].ToString(),
-                                       Alt = rw[3].ToString()
+                                       Alt = rw[2].ToString()
                                    }).ToList();
                     imgMain.Source = new BitmapImage(new Uri(string.Concat(path, fotografias[0].Id_foto,".jpg")));
                     StkOtrasImg.Children.Clear();
