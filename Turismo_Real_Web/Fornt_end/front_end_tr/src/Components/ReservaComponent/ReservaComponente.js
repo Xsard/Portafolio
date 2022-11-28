@@ -11,7 +11,7 @@ import cancelar from "../../Img/cancelar.png"
 import reserv from "../../Img/programar.png"
 import tours from "../../Img/travel-map.png"
 
-const handletour = async (reserva_id) =>{
+const handletour = async (reserva_id) => {
     //consulta que trae el id_depto
     localStorage.setItem('idReserva', reserva_id)
     const resp1 = await axios.get(`http://localhost:8080/api/v1/traerDpto/${reserva_id}`)
@@ -64,6 +64,14 @@ const handlePago = (id_reserva) => {
     })
 
 }
+const cambiarFecha = (fecha) => {
+    let today = new Date(fecha);
+    let day = today.getDate();
+    let month = today.getMonth() + 1;
+    let year = today.getFullYear();
+    let tiempo = `${year}-${month}-${day}`
+    return tiempo
+}
 
 class ReservaComponente extends React.Component {
 
@@ -86,7 +94,7 @@ class ReservaComponente extends React.Component {
 
         return (
             <>
-                <div class="container" style={{color: "#EEEEEE"}}>
+                <div class="container" style={{ color: "#EEEEEE" }}>
                     <h1 className="text-center">Reservas</h1>
                     <table class="table table-fixed">
                         <thead class="table-dark">
@@ -104,15 +112,19 @@ class ReservaComponente extends React.Component {
                                 <td>Cancelar</td>
                             </tr>
                         </thead>
-                        <tbody style={{color: "#EEEEEE"}}>
+                        <tbody style={{ color: "#EEEEEE" }}>
                             {
                                 this.state.Reserva.map(
                                     Reserva =>
                                         <tr key={Reserva.id_reserva}>
                                             <td>{Reserva.id_reserva}</td>
                                             <td>{Reserva.nombre_dpto}</td>
-                                            <td>{Reserva.check_in.slice(0, 10)}</td>
-                                            <td>{Reserva.check_out.slice(0, 10)}</td>
+                                            <td>{
+                                                cambiarFecha(Reserva.check_in.slice(0, 10))
+                                            }</td>
+                                            <td>{
+                                                cambiarFecha(Reserva.check_out.slice(0, 10))
+                                            }</td>
                                             <td>
                                                 {
                                                     Reserva.estado_pago === "A" ?
@@ -128,7 +140,7 @@ class ReservaComponente extends React.Component {
                                                         <img src={aceptar}
                                                             height="50" width="50" alt="" /> :
                                                         <td><button class="button" onClick={() => handlePago(Reserva.id_reserva)}><img src={hucha}
-                                                        height="50" width="50" alt="" /></button></td>
+                                                            height="50" width="50" alt="" /></button></td>
                                                 }
                                             </td>
                                             <td>
@@ -136,7 +148,7 @@ class ReservaComponente extends React.Component {
                                                     Reserva.estado_pago === "A" ?
                                                         <a></a> :
                                                         <td><button class="button" onClick={() => handleServExtra(Reserva.id_reserva)}><img src={campana}
-                                                        height="50" width="50" alt="" /></button></td>
+                                                            height="50" width="50" alt="" /></button></td>
                                                 }
                                             </td>
                                             <td>
@@ -144,7 +156,7 @@ class ReservaComponente extends React.Component {
                                                     Reserva.estado_pago === "A" ?
                                                         <a></a> :
                                                         <td><button class="button" onClick={() => handleAcompañantes(Reserva.id_reserva)}><img src={reserv}
-                                                        height="50" width="50" alt="" /></button></td>
+                                                            height="50" width="50" alt="" /></button></td>
                                                 }
                                             </td>
                                             <td>
@@ -152,16 +164,16 @@ class ReservaComponente extends React.Component {
                                                     Reserva.estado_pago === "A" ?
                                                         <a></a> :
                                                         <td><button class="button" onClick={() => handletour(Reserva.id_reserva)}><img src={tours}
-                                                        height="50" width="50" alt="" /></button></td>
+                                                            height="50" width="50" alt="" /></button></td>
                                                 }
                                             </td>
                                             {
                                                 Reserva.estado_pago === "A" ?
                                                     <a></a> :
                                                     <td><button class="button" onClick={() => handleUpdate(Reserva.id_reserva)}><img src={cancelar}
-                                                    height="50" width="50" alt="" /></button></td>
+                                                        height="50" width="50" alt="" /></button></td>
                                             }
-                                            
+
 
                                         </tr>
                                 )

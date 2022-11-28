@@ -1,5 +1,8 @@
 package com.turismo.backend_turismo_real.controlador;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,8 +35,12 @@ public class ReservaControlador {
 	
 	@PostMapping("/reserva_pl")
 	public int agregar_reserva(@RequestBody Reserva reserv) {
+		Date d = new Date(reserv.getCheck_in().getTime() + 86400000);
+		Date d1 = new Date(reserv.getCheck_out().getTime() + 86400000);
+		System.out.println("a1" + reserv.getCheck_in());
+		System.out.println("a2:" + d);
 		return servReserva.agregar_reserva(reserv.getId_dpto(), reserv.getId_cliente(),
-				reserv.getEstado_reserva(), reserv.getEstado_pago(), reserv.getCheck_in(), reserv.getCheck_out(),
+				reserv.getEstado_reserva(), reserv.getEstado_pago(), d, d1,
 				reserv.getFirma(), reserv.getValor_total(), reserv.getCantidad_acompañantes(), reserv.getTransporte());
 	}
 	
