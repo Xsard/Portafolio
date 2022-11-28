@@ -15,7 +15,7 @@ import com.turismo.backend_turismo_real.service.ComunaServiceImplement;
 
 @RestController
 @RequestMapping("/api/v1/")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"https://main.d3im8s8jx11qi.amplifyapp.com", "https://turismo-real-front-end.vercel.app/","http://localhost:3000"})
 public class ComunaControlador {
 
 	@Autowired
