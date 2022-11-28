@@ -42,7 +42,7 @@ namespace Vista.PagesFuncionario
                 if (result == MessageBoxResult.Yes)
                 {
                     int estado = CReserva.ConfirmarFirma(IdReserva, FirmaFunc, EstadoR, EstadoP);
-                    MensajeOk(IdReserva.ToString() );
+                    MensajeOk("Check-in realizado con éxito");
                     ListarReservas();
                 }
             }

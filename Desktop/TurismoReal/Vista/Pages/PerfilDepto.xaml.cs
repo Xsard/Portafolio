@@ -119,7 +119,6 @@ namespace Vista.Pages
             {
                 txtPathFoto.Text = ofd.FileName;
                 imgFoto.Source = new BitmapImage(new Uri(ofd.FileName));
-                MessageBox.Show(ofd.FileName);
             }
         }
         private void btn_Agregar_Img_Click(object sender, RoutedEventArgs e)
@@ -132,7 +131,6 @@ namespace Vista.Pages
             };
             Stream st = File.OpenRead(txtPathFoto.Text);
             int r = CFotografia.InsertarImagen(fotografia, st);
-            MessageBox.Show(r.ToString());
             if (r > 0)
             {
                 ListarImg();
