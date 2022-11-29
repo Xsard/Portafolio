@@ -256,29 +256,29 @@ const DeptoVista = () => {
                         {
                             foto_0 === '' || foto_0 === undefined ?
                                 <a to={`/mostrarFotos/${idDepto}`} className="col col-lg-6"><img src={foto_alt} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></a> :
-                                <Link to={`/mostrarFotos/${idDepto}`} className="col col-lg-6"><img src={`https://d254rvr6bqb0tr.cloudfront.net/${foto_0}.jpg`} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
+                                <Link to={`/mostrarFotos/${idDepto}`} className="col col-lg-6"><img src={require(`../../imagenes_Dpto/${foto_0}.jpg`)} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
                         }
                         <div className="col col-lg-6">
                             <div className="row row-cols-2 row-cols-lg-2 g-2">
                                 {
                                     foto_1 === '' || foto_1 === undefined ?
                                         <a to={`/mostrarFotos/${idDepto}`} className="col"><img src={foto_alt} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></a> :
-                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={`https://d254rvr6bqb0tr.cloudfront.net/${foto_1}.jpg`} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
+                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={require(`../../imagenes_Dpto/${foto_1}.jpg`)} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
                                 }
                                 {
                                     foto_2 === '' || foto_2 === undefined ?
                                         <a to={`/mostrarFotos/${idDepto}`} className="col"><img src={foto_alt} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></a> :
-                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={`https://d254rvr6bqb0tr.cloudfront.net/${foto_2}.jpg`} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
+                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={require(`../../imagenes_Dpto/${foto_2}.jpg`)} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
                                 }
                                 {
                                     foto_3 === '' || foto_3 === undefined ?
                                         <a to={`/mostrarFotos/${idDepto}`} className="col"><img src={foto_alt} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></a> :
-                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={`https://d254rvr6bqb0tr.cloudfront.net/${foto_3}.jpg`} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
+                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={require(`../../imagenes_Dpto/${foto_3}.jpg`)} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
                                 }
                                 {
                                     foto_4 === '' || foto_4 === undefined ?
                                         <a to={`/mostrarFotos/${idDepto}`} className="col"><img src={foto_alt} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></a> :
-                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={`https://d254rvr6bqb0tr.cloudfront.net/${foto_4}.jpg`} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
+                                        <Link to={`/mostrarFotos/${idDepto}`} className="col"><img src={require(`../../imagenes_Dpto/${foto_4}.jpg`)} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></Link>
                                 }
 
                             </div>

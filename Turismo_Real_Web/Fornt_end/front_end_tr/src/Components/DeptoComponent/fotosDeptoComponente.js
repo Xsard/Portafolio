@@ -35,7 +35,7 @@ class FotosComponente extends React.Component {
                                 this.state.fotos.map(
                                     fotos =>
                                         <tr key={fotos}>
-                                            <td><img src={`https://d254rvr6bqb0tr.cloudfront.net/${fotos}.jpg`} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></td>
+                                            <td><img src={require(`../../imagenes_Dpto/${fotos}.jpg`)} alt={""} style={{ width: "100%", height: "100%", borderRadius: "35px" }}></img></td>
                                        </tr>
                                 )
                             }
