@@ -1,13 +1,9 @@
 ﻿<Page x:Class="Vista.Pages.Reportes"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:local="clr-namespace:Vista.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="785" d:DesignWidth="1140"
-      Title="Reportería">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Vista.Pages"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="Reportería">
 
     <Grid x:Name="grdDpto"
         Validation.Error="ItemError">
@@ -41,7 +37,8 @@
                 Background="#FF0099CC"
                 BorderBrush="#FF0099CC"
                 Click="btnGenReporteStats_Click"
-                Content="Generar Reporte" />
+                Content="Generar Reporte de Estadísticas"
+                Visibility="Hidden" />
             <Button x:Name="btnGenReporteReservas"
                 Width="250"
                 HorizontalAlignment="Left"
@@ -116,7 +113,8 @@
                 </Border>
                 <ComboBox x:Name="cbo_Regiones"
                     Width="200"
-                    DisplayMemberPath="NombreRegion" SelectedIndex="0" />
+                    DisplayMemberPath="NombreRegion"
+                    SelectedIndex="0" />
             </StackPanel>
             <StackPanel
                 Grid.Row="1"
@@ -130,10 +128,10 @@
                         Margin="0,0,20,0"
                         Content="Seleccione una comuna" />
                 </Border>
-                <ComboBox 
-                    x:Name="cbo_Comunas"
+                <ComboBox x:Name="cbo_Comunas"
                     Width="200"
-                    DisplayMemberPath="NombreComuna" SelectedIndex="0"/>
+                    DisplayMemberPath="NombreComuna"
+                    SelectedIndex="0" />
             </StackPanel>
             <StackPanel
                 Grid.Row="1"
@@ -147,10 +145,10 @@
                         Margin="0,0,20,0"
                         Content="Seleccione un departamento" />
                 </Border>
-                <ComboBox 
-                    x:Name="cbo_Dptos"
+                <ComboBox x:Name="cbo_Dptos"
                     Width="200"
-                    DisplayMemberPath="NombreDpto" SelectedIndex="0"/>
+                    DisplayMemberPath="NombreDpto"
+                    SelectedIndex="0" />
             </StackPanel>
         </Grid>
     </Grid>

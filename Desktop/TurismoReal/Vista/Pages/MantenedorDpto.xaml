@@ -140,7 +140,7 @@
                                     <Button Click="DtgDptoDelete_Click" Grid.Column="2" Margin="5 0 0 0" ToolTip="Eliminar">
                                         <materialDesign:PackIcon Kind="Delete"/>
                                     </Button>
-                                    <Button Click="btnSecreto_Click" Grid.Column="3" Margin="5 0 0 0" ToolTip="Eliminar">
+                                    <Button Click="btnSecreto_Click" Grid.Column="3" Margin="5 0 0 0" ToolTip="Servicios Depto.">
                                         <materialDesign:PackIcon Kind="Payment"/>
                                     </Button>
                                 </Grid>                                     
