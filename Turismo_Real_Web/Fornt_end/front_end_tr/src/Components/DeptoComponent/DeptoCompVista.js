@@ -249,7 +249,7 @@ const DeptoVista = () => {
     return (
         <>
             <div onLoad={Cargar}>
-                <h3 style={{ color: "#EEEEEE" }} class='titulo'>{nombre_dpto}</h3>
+                <h3 style={{ color: "#1687A7" }} class='titulo'>{nombre_dpto}</h3>
                 <div className="divmayor " >
                     <br></br>
                     <div className="row g-lg-2" >
@@ -286,8 +286,8 @@ const DeptoVista = () => {
                     </div>
 
                     <div className="row text ">
-                        <div className="card mt-3 cardsinfo" style={{ background: "#222631", color: "#EEEEEE", borderColor: "#222631" }}>
-                            <h2 className="card-header" style={{ background: "#222631", color: "#EEEEEE" }}>Información departamento</h2>
+                        <div className="card mt-3 cardsinfo" style={{ background: "#FFFFFF", color: "#000000", borderColor: "#1687A7" }}>
+                            <h2 className="card-header" style={{ background: "#FFFFFF", color: "#000000" }}>Información departamento</h2>
 
                             <p className="card-text">
                                 <br></br>
@@ -298,19 +298,19 @@ const DeptoVista = () => {
 
                             </p>
                         </div>
-                        <div className="card mt-3 cardsreserv text text-right" style={{ background: "#222631", color: "#EEEEEE", borderColor: "#222631" }}>
+                        <div className="card mt-3 cardsreserv text text-right" style={{ background: "#FFFFFF", color: "#000000", borderColor: "#1687A7  " }}>
                             <div className="card-body">
-                                <h2 className="card-header" style={{ background: "#222631", color: "#EEEEEE" }}>Reserva con nosotros</h2>
+                                <h2 className="card-header" style={{ background: "#FFFFFF", color: "#000000" }}>Reserva con nosotros</h2>
                                 <p className="card-text"><br></br>
                                     <br></br>
-                                    <button className="btn btn-primary" style={{ backgroundColor: "#00ADB5" }} onClick={handlePostReserva}>Reserva ahora</button>
+                                    <button className="btn btn-primary" style={{ backgroundColor: "#1687A7" }} onClick={handlePostReserva}>Reserva ahora</button>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <br></br>
                     <div>
-                        <h3 className="text text-center" style={{ color: "#EEEEEE" }}>Servicios incluidos en el departamento</h3>
+                        <h3 className="text text-center" style={{ color: "#1687A7" }}>Servicios incluidos en el departamento</h3>
                         <DeptoServiceComp></DeptoServiceComp>
                     </div>
                 </div>

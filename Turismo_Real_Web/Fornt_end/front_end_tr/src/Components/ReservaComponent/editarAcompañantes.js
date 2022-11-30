@@ -66,7 +66,7 @@ const EditarAcom = () => {
     
     return (
         <>
-            <div className="mx-auto" style={{color: "#EEEEEE"}}>
+            <div className="mx-auto" style={{color: "#1687A7"}}>
                 <br></br>
                 <h2 className="text-center">Editar reserva</h2>
                 <div className="mx-auto mt-5 w-25" >
@@ -81,7 +81,7 @@ const EditarAcom = () => {
                     </div>
                     <br></br>
                     <h3>La disponibilidad del departamento es: {disponibilidad}</h3>
-                    <Button variant="primary" style={{backgroundColor: "#00ADB5"}} onClick={handleActualizarAcom}>
+                    <Button variant="primary" style={{backgroundColor: "#1687A7"}} onClick={handleActualizarAcom}>
                         Editar
                     </Button>
                 </div>

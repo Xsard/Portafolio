@@ -12,12 +12,12 @@ export const CardComponent = ({ idDepto, nombreDepto, NumeroDepto, capacidad, ta
     <>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'></link>
       <button class="btn" onClick={() => handleload(idDepto)}><Col>
-        <div className="card mt-3" style={{background: "#222831"}}>
+        <div className="card mt-3" style={{background: "#F6F5F5"}}>
           <img src={require(`../../imagenes_Dpto/${foto_path}.jpg`)} alt=".." className="card-img-top" style={{ maxWidth: "100%", height: "18rem"}} />
           <div className="card-body text text-right">
-            <b style={{color: "#EEEEEE"}}><h4>{nombreDepto}, {direccion}</h4></b>
+            <b style={{color: "#1687A7"}}><h4>{nombreDepto}, {direccion}</h4></b>
             <p className="card-text">
-              <p style={{color: "#EEEEEE"}}>
+              <p style={{color: "#1687A7"}}>
                 <b>${tarifa} CLP </b>
                 <font style={{fontSize:"17px"}}>noche</font>
               </p>

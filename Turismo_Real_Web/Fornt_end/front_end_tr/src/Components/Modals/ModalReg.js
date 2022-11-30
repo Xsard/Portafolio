@@ -139,7 +139,7 @@ function Registrar() {
     return (
         <>
 
-            <div className="mx-auto" style={{ color: "#EEEEEE" }}>
+            <div className="mx-auto" style={{ color: "#1687A7" }}>
                 <br></br>
                 <h2 className="text-center">Registrate en Turismo Real</h2>
                 <div className="mx-auto mt-5 w-25">
@@ -214,7 +214,7 @@ function Registrar() {
                         </Form.Group>
                     </div>
                     <br></br>
-                    <Button variant="primary" style={{ backgroundColor: "#00ADB5" }} onClick={handleValidar}>
+                    <Button variant="primary" style={{ backgroundColor: "#1687A7" }} onClick={handleValidar}>
                         Registrarse
                     </Button>
                 </div>
@@ -242,10 +242,10 @@ function Registrar() {
                 </Modal.Body>
                 <Modal.Footer>
 
-                    <Button variant="primary" style={{ backgroundColor: "#00ADB5" }} onClick={handleValidar}>
+                    <Button variant="primary" style={{ backgroundColor: "#1687A7" }} onClick={handleValidar}>
                         Reenviar Codigo
                     </Button>
-                    <Button variant="success" style={{ backgroundColor: "#00ADB5" }} onClick={HandleCodigo} >
+                    <Button variant="success" style={{ backgroundColor: "#1687A7" }} onClick={HandleCodigo} >
                         Comprobar
                     </Button>
 

@@ -92,13 +92,13 @@ export const Inicio = () => {
         <>
             <div onLoad={cargar}>
                 <div className="text text-center" class="titulo"><br></br>
-                    <b><h1 style={{ color: "#00ADB5" }}>Comienza a buscar tu Departamento ideal</h1></b>
+                    <b><h1 style={{ color: "#1687A7" }}>Comienza a buscar tu Departamento ideal</h1></b>
                 </div>
                 <br />
                 <div class="divs">
                     <div class="divs1">
-                        <p><h4 style={{ color: "#00ADB5" }}>Comuna</h4>
-                            <select value={idcomuna} id="comuna" style={{width: " 200px", height:"34px", borderColor: "#00ADB5" }} onChange={cargarComuna}>
+                        <p><h4 style={{ color: "#1687A7" }}>Comuna</h4>
+                            <select value={idcomuna} id="comuna" style={{width: " 200px", height:"34px", borderColor: "#1687A7" }} onChange={cargarComuna}>
                                 <option>Comuna</option>
                                 {
                                     listaComuna.map(
@@ -110,17 +110,17 @@ export const Inicio = () => {
                         </p>
                     </div>
                     <div class="divs2">
-                        <p><h4 style={{ color: "#00ADB5" }}>Fecha de ida</h4>
+                        <p><h4 style={{ color: "#1687A7" }}>Fecha de ida</h4>
                             <input type="date" id="fechaReserva" min="2022-11-01" value={fechaIda} onChange={(e) => fechaIdaHandle(e.target.value)}></input>
                         </p>
                     </div>
                     <div class="divs3">
-                        <p><h4 style={{ color: "#00ADB5"}}>Fecha de vuelta</h4>
+                        <p><h4 style={{ color: "#1687A7"}}>Fecha de vuelta</h4>
                             <input type="date" id="fechaReserva2" min="2022-11-01"value={fechaVuelta} onChange={(e) => fechaVueltaHandle(e.target.value)}></input>
                         </p>
                     </div>
                     <div class="divs3">
-                        <p><h4 style={{ color: "#00ADB5"}}>Acompañantes</h4>
+                        <p><h4 style={{ color: "#1687A7"}}>Acompañantes</h4>
                             <input type="input" style={{width: " 200px", height:"32px"}} maxLength={2} value={Acompañantes} onChange={(e) => handleAcompañante(e.target.value)}></input>
                         </p>
                     </div>
@@ -128,8 +128,8 @@ export const Inicio = () => {
                 </div>
                 
                 <br></br>
-                <hr style={{ color: "#00ADB5", borderWidth:"5px"}}></hr>
-                <b><h1 className="text text-center" style={{ color: "#00ADB5" }}>Nuestros departamentos</h1></b>
+                <hr style={{ color: "#276678", borderWidth:"5px"}}></hr>
+                <b><h1 className="text text-center" style={{ color: "#1687A7" }}>Nuestros departamentos</h1></b>
                 <DeptoComponent></DeptoComponent>
                 <br />
             </div>

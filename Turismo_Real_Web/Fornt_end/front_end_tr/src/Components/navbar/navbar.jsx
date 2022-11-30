@@ -9,7 +9,7 @@ import { useContext } from "react";
 import clienteContext from "../../Contexts/ClienteContext";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
+import logo from "../../Img/turismoRealLetras.png"
 //creamos la funcion que se cargara
 export const Navigation = () => {
 
@@ -60,8 +60,8 @@ export const Navigation = () => {
       bg=""
       variant="dark"
     >
-      <Container>
-        <b><NavbarBrand style={{color: "#EEEEEE"}} href="/Inicio"> Turismo Real</NavbarBrand></b>
+      <Container style={{ color: "#1687A7" }}>
+        <b><NavbarBrand style={{ color: "#1687A7" }} href="/Inicio"><img src={logo} width="180px" height="50px"></img></NavbarBrand></b>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
@@ -71,13 +71,14 @@ export const Navigation = () => {
             {usuario
               ? <b><NavDropdown
                 title={usuario}
-                id="collasible-nav-dropdown"
+                id="collapse_nav"
+                class="navBarOLA"
               >
-                <NavDropdown.Item  href="/ListaReserva">Reservas</NavDropdown.Item>
-                <NavDropdown.Item onClick={handleSwal}>Cerrar Sesion</NavDropdown.Item>
+                <NavDropdown.Item style={{ color: "#1687A7" }} href="/ListaReserva">Reservas</NavDropdown.Item>
+                <NavDropdown.Item style={{ color: "#1687A7" }} onClick={handleSwal}>Cerrar Sesion</NavDropdown.Item>
               </NavDropdown></b>
 
-              : <NavLink className="nav-link" to="/Login">
+              : <NavLink className="nav-link" to="/Login" style={{ color: "#1687A7" }}>
                 Iniciar sesión
               </NavLink>
             }

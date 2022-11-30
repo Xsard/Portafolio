@@ -23,7 +23,7 @@ const Footer = () => {
                         <a href="https://www.twitter.com/" className="pt-5"><img src={tw}
                             height="50" width="50" alt="" /></a>                        
                     </div><br></br>
-                <div style={{background: "#00ADB5"}}>
+                <div style={{background: "#1687A7"}}>
                     
                 </div>
                 </div>

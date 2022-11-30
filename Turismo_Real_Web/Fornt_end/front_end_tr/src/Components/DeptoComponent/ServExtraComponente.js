@@ -73,7 +73,7 @@ class ServExtraComponente extends React.Component {
     render() {
         return (
             <>
-                <div class="container" style={{ color: "#EEEEEE" }}>
+                <div class="container" style={{ color: "#1687A7" }}>
                     <h1 className="text-center">Listado de servicios extras</h1>
                     <table class="table table-fixed">
                         <thead class="table-dark">
@@ -84,7 +84,7 @@ class ServExtraComponente extends React.Component {
                                 <td></td>
                             </tr>
                         </thead>
-                        <tbody style={{ color: "#EEEEEE" }}>
+                        <tbody style={{ color: "#1687A7" }}>
                             {
                                 this.state.servicios.map(
                                     servicios =>
@@ -95,7 +95,7 @@ class ServExtraComponente extends React.Component {
                                             {
                                                 servicios.seleccionado === '' ?
                                                     <h1>a</h1> :
-                                                    <td><button onClick={() => HandleInsertar(servicios.id_svc_ex, servicios.valor_serv_ex)} className="btn btn-success" style={{ backgroundColor: "#00ADB5" }}>Agregar</button></td>
+                                                    <td><button onClick={() => HandleInsertar(servicios.id_svc_ex, servicios.valor_serv_ex)} className="btn btn-success" style={{ backgroundColor: "#1687A7" }}>Agregar</button></td>
 
                                             }
                                         </tr>
@@ -107,7 +107,7 @@ class ServExtraComponente extends React.Component {
                         {
                             localStorage.getItem('ocultarReserva') == 1 ?
                                 <h1></h1> :
-                                <button className="btn btn-primary" style={{ backgroundColor: "#00ADB5" }} onClick={hanleFinalizar}>Continuar</button>
+                                <button className="btn btn-primary" style={{ backgroundColor: "#1687A7" }} onClick={hanleFinalizar}>Continuar</button>
                         }
                         
                     </div>

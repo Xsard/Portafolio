@@ -73,7 +73,7 @@ const Pago_web = () => {
     }
     return (
         <>
-            <div className="mx-auto" style={{color: "#EEEEEE"}}>
+            <div className="mx-auto" style={{color: "#1687A7"}}>
                 <br></br>
                 <h2 className="text-center">Portal de pagos Turismo Real</h2>
                 <div className="mx-auto mt-5 w-25" >
@@ -113,7 +113,7 @@ const Pago_web = () => {
                     <br></br>
                     <h2>El valor total a pagar es: {valorTotal}</h2>
                     <br></br>
-                    <Button variant="primary" style={{backgroundColor: "#00ADB5"}} onClick={handleUpdate}>
+                    <Button variant="primary" style={{backgroundColor: "#1687A7"}} onClick={handleUpdate}>
                         Pagar
                     </Button>
                 </div>

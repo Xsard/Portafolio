@@ -1,9 +1,12 @@
 .navbar {
     font-size: 18px;
-    color: #00ADB5;
-    background-color: #222831;
+    color: #1687A7;
+    background-color: #F6F5F5;
 }
 
 .b{
-    color: #00ADB5;
+    color: #1687A7  ;
+}
+#collapse_nav{
+    color: #1687A7  !important;
 }

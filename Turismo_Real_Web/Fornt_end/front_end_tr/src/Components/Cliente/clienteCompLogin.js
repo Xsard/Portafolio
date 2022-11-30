@@ -81,7 +81,7 @@ const Login = () => {
     //devolvemos el codigo HTML que sera renderizado cuando se llame la funcion
     return (
         <>
-            <div className="mx-auto" style={{color: "#EEEEEE"}}>
+            <div className="mx-auto" style={{color: "#1687A7"}}>
                 <br></br>
                 <h2 className="text-center">Iniciar sesión</h2>
                 <form className="form mx-auto mt-5 w-25" onSubmit={handleSubmit}>
@@ -105,10 +105,10 @@ const Login = () => {
                             <Form.Control type="password" placeholder="Contraseña"  maxLength={30}/>
                         </Form.Group>
                     </div>
-                    <button type='submit' className='btn btn-primary' style={{backgroundColor: "#00ADB5"}}>
+                    <button type='submit' className='btn btn-primary' style={{backgroundColor: "#1687A7"}}>
                         Iniciar Sesion
                     </button>
-                    <Button variant="primary" style={{backgroundColor: "#00ADB5"}} type="submit" className='text mx-3' href='Registrarse'>
+                    <Button variant="primary" style={{backgroundColor: "#1687A7"}} type="submit" className='text mx-3' href='Registrarse'>
                         Registrarse
                     </Button>
                 </form>
