@@ -917,9 +917,9 @@ END Mantener_Usuario_Funcionario;
 CREATE OR REPLACE PACKAGE Mantener_Mantenimiento
 AS
     PROCEDURE Agregar_Mantenimiento(id_depto MANTENIMIENTO.ID_DPTO%TYPE, nombre MANTENIMIENTO.NOMBRE_MANT%TYPE, descripcion MANTENIMIENTO.DESC_MANT%TYPE,
-        fecha_ini MANTENIMIENTO.FECHA_INICIO%TYPE, fecha_fin MANTENIMIENTO.FECHAR_TERMINO%TYPE, estado_man MANTENIMIENTO.ESTADO%TYPE, costo MANTENIMIENTO.COSTO_MANTENCION%TYPE, R OUT INTEGER);
+        fecha_ini MANTENIMIENTO.FECHA_INICIO%TYPE, fecha_fin MANTENIMIENTO.FECHA_TERMINO%TYPE, estado_man MANTENIMIENTO.ESTADO%TYPE, costo MANTENIMIENTO.COSTO_MANTENCION%TYPE, R OUT INTEGER);
     PROCEDURE Actualizar_Mantenimiento(id_mantenimiento MANTENIMIENTO.ID_MANT%TYPE, nombre MANTENIMIENTO.NOMBRE_MANT%TYPE, descripcion MANTENIMIENTO.DESC_MANT%TYPE,
-        fecha_ini MANTENIMIENTO.FECHA_INICIO%TYPE, fecha_fin MANTENIMIENTO.FECHAR_TERMINO%TYPE, estado_man MANTENIMIENTO.ESTADO%TYPE, costo MANTENIMIENTO.COSTO_MANTENCION%TYPE, R OUT INTEGER);
+        fecha_ini MANTENIMIENTO.FECHA_INICIO%TYPE, fecha_fin MANTENIMIENTO.FECHA_TERMINO%TYPE, estado_man MANTENIMIENTO.ESTADO%TYPE, costo MANTENIMIENTO.COSTO_MANTENCION%TYPE, R OUT INTEGER);
     PROCEDURE Eliminar_Mantenimiento(id_mantenimiento MANTENIMIENTO.ID_MANT%TYPE,R OUT INTEGER);
     PROCEDURE Listar_Mantenimientos(id_depto MANTENIMIENTO.ID_DPTO%TYPE,Mantenimientos OUT SYS_REFCURSOR);    
 END Mantener_Mantenimiento;
@@ -928,13 +928,13 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Mantenimiento
 AS 
     /*Insertar un nuevo mantenimiento a un depto*/
     PROCEDURE Agregar_Mantenimiento(id_depto IN MANTENIMIENTO.ID_DPTO%TYPE, nombre IN MANTENIMIENTO.NOMBRE_MANT%TYPE, descripcion IN MANTENIMIENTO.DESC_MANT%TYPE,
-        fecha_ini IN MANTENIMIENTO.FECHA_INICIO%TYPE, fecha_fin IN MANTENIMIENTO.FECHAR_TERMINO%TYPE, estado_man IN MANTENIMIENTO.ESTADO%TYPE, costo IN MANTENIMIENTO.COSTO_MANTENCION%TYPE, R OUT INTEGER)
+        fecha_ini IN MANTENIMIENTO.FECHA_INICIO%TYPE, fecha_fin IN MANTENIMIENTO.FECHA_TERMINO%TYPE, estado_man IN MANTENIMIENTO.ESTADO%TYPE, costo IN MANTENIMIENTO.COSTO_MANTENCION%TYPE, R OUT INTEGER)
     IS
         id_col rowid;
         Mantenimiento_Error_In EXCEPTION;
         PRAGMA EXCEPTION_INIT(Mantenimiento_Error_In, -20801);    
     BEGIN
-        INSERT INTO MANTENIMIENTO(ID_DPTO, NOMBRE_MANT, DESC_MANT, FECHA_INICIO, FECHAR_TERMINO, ESTADO, COSTO_MANTENCION) 
+        INSERT INTO MANTENIMIENTO(ID_DPTO, NOMBRE_MANT, DESC_MANT, FECHA_INICIO, FECHA_TERMINO, ESTADO, COSTO_MANTENCION) 
             VALUES(id_depto, nombre, descripcion, fecha_ini, fecha_fin, estado_man, costo) RETURNING rowid INTO id_col;
         /* Retornar un 1 si el insert fue correcto*/
         IF id_col IS NOT NULL THEN
@@ -951,12 +951,12 @@ AS
     
     /*Actualizar un mantenimiento existente*/
     PROCEDURE Actualizar_Mantenimiento(id_mantenimiento MANTENIMIENTO.ID_MANT%TYPE, nombre MANTENIMIENTO.NOMBRE_MANT%TYPE, descripcion MANTENIMIENTO.DESC_MANT%TYPE,
-        fecha_ini MANTENIMIENTO.FECHA_INICIO%TYPE, fecha_fin MANTENIMIENTO.FECHAR_TERMINO%TYPE, estado_man MANTENIMIENTO.ESTADO%TYPE, costo MANTENIMIENTO.COSTO_MANTENCION%TYPE, R OUT INTEGER)
+        fecha_ini MANTENIMIENTO.FECHA_INICIO%TYPE, fecha_fin MANTENIMIENTO.FECHA_TERMINO%TYPE, estado_man MANTENIMIENTO.ESTADO%TYPE, costo MANTENIMIENTO.COSTO_MANTENCION%TYPE, R OUT INTEGER)
     IS
         Mantenimiento_Error_Ac EXCEPTION;
         PRAGMA EXCEPTION_INIT(Mantenimiento_Error_Ac, -20802);  
     BEGIN
-        UPDATE MANTENIMIENTO SET NOMBRE_MANT = nombre, DESC_MANT = descripcion, FECHA_INICIO = fecha_ini, FECHAR_TERMINO = fecha_fin, ESTADO = estado_man,
+        UPDATE MANTENIMIENTO SET NOMBRE_MANT = nombre, DESC_MANT = descripcion, FECHA_INICIO = fecha_ini, FECHA_TERMINO = fecha_fin, ESTADO = estado_man,
             COSTO_MANTENCION = costo WHERE ID_MANT = id_mantenimiento RETURNING 1 INTO R;
         /* Retornar un 1 si el update fue correcto*/
         IF r = 1 THEN
@@ -1001,7 +1001,7 @@ AS
         /* Si hay datos se consultan*/
         IF v_cant_datos>0 THEN
             OPEN Mantenimientos FOR
-                SELECT id_mant, nombre_mant,desc_mant,to_char(fecha_inicio, 'dd/MM/yyyy'), to_char(fechar_termino, 'dd/MM/yyyy'), costo_mantencion, estado FROM MANTENIMIENTO WHERE ID_DPTO = id_depto;
+                SELECT id_mant, nombre_mant,desc_mant,to_char(fecha_inicio, 'dd/MM/yyyy'), to_char(fecha_termino, 'dd/MM/yyyy'), costo_mantencion, estado FROM MANTENIMIENTO WHERE ID_DPTO = id_depto;
         /* Si la tabla está vacía se inicia un error*/
         ELSE
             RAISE Mantenimiento_Error_Li;
@@ -1490,6 +1490,19 @@ CREATE OR REPLACE PROCEDURE REPORTE_RESERVA(FECHA_INICIO IN TIMESTAMP, FECHA_TER
         END IF;
     END;
 /
+CREATE OR REPLACE PROCEDURE AGREGAR_RESERVA(idDepto IN RESERVA.ID_DPTO%TYPE, idCli RESERVA.ID_CLIENTE%TYPE,  estadoRes RESERVA.ESTADO_RESERVA%TYPE, 
+        estadoPag RESERVA.ESTADO_PAGO%TYPE, checkIn RESERVA.CHECK_IN%TYPE, checkOut RESERVA.CHECK_OUT%TYPE, firmaRes RESERVA.FIRMA%TYPE, cant_acomp RESERVA.CANTIDAD_ACOMPAÑANTES%TYPE, transporte_reserva RESERVA.TRANSPORTE%TYPE, valorTotal RESERVA.VALOR_TOTAL%TYPE, R OUT INTEGER)
+    IS
+        id_col rowid;
+        identificador_RES RESERVA.ID_RESERVA%TYPE;
+    BEGIN
+        INSERT INTO RESERVA(ID_DPTO, ID_CLIENTE, ESTADO_RESERVA, ESTADO_PAGO, CHECK_IN, CHECK_OUT, FIRMA, CANTIDAD_ACOMPAÑANTES, TRANSPORTE, VALOR_TOTAL) 
+            VALUES(idDepto, idCli, estadoRes, estadoPag, checkIn, checkOut, firmaRes, cant_acomp, transporte_reserva,    valorTotal) RETURNING rowid, ID_RESERVA INTO id_col, identificador_RES;
+        IF id_col IS NOT NULL THEN
+            r:= identificador_RES;
+            COMMIT;        
+        END IF;
+    END;
 /*Genenerar un admin*/
 DECLARE 
     r integer;
@@ -1503,7 +1516,18 @@ DECLARE
 BEGIN
     Mantener_Usuario_Funcionario.Agregar_Funcionario('desktopFun@gmail.com', '123', 124335, '3-2', 'Test', 'Entrega2', r);
 END;
-/
+/*Generar un cliente*/
+DECLARE 
+    r integer;
+BEGIN
+    Mantener_Usuario_Cliente.Agregar_Cliente('yerko.mra@gmail.com', '123', 124335, '3-2', 'Test', 'Entrega2', r);
+END;
+/*Generar una reserva*/
+DECLARE 
+    R INTEGER;
+BEGIN
+    AGREGAR_RESERVA(1, 1,'I','P' ,TO_TIMESTAMP('30-11-2022 06:14:00.742000000', 'DD-MM-YYYY HH24:MI:SS.FF'), TO_TIMESTAMP('05-12-2022 06:14:00.742000000', 'DD-MM-YYYY HH24:MI:SS.FF'), '1',3, 'y', 100000, R);
+END;
 /*Generar un dpto*/
 DECLARE 
     R INTEGER;

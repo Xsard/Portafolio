@@ -32,13 +32,12 @@
             Grid.Row="1"
             Margin="12,0">
             <Button x:Name="btnGenReporteStats"
-                Width="150"
+                Width="250"
                 HorizontalAlignment="Right"
                 Background="#FF0099CC"
                 BorderBrush="#FF0099CC"
                 Click="btnGenReporteStats_Click"
-                Content="Generar Reporte de Estadísticas"
-                Visibility="Hidden" />
+                Content="Generar Reporte de Estadísticas"/>
             <Button x:Name="btnGenReporteReservas"
                 Width="250"
                 HorizontalAlignment="Left"

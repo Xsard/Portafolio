@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using static Vista.Pages.StatsReport;
 
 namespace Vista.Pages
 {
@@ -97,49 +98,10 @@ namespace Vista.Pages
         }
         private void btnGenReporteStats_Click(object sender, RoutedEventArgs e)
         {
-            //int id = 0;
-            //int nivel = 0;
-
-            //if (dp_Fecinicio.SelectedDate != null || dp_FecTermino.SelectedDate != null)
-            //{
-            //    DateTime fecha_inicio = (DateTime)dp_Fecinicio.SelectedDate;
-            //    DateTime fecha_termino = (DateTime)dp_FecTermino.SelectedDate;
-
-            //    if (cbo_Dptos.SelectedIndex > 0)
-            //    {
-            //        Departamento departamento = (Departamento)cbo_Dptos.SelectedItem;
-            //        id = departamento.IdDepto;
-            //        nivel = 3;
-            //    }
-            //    else if (cbo_Comunas.SelectedIndex > 0)
-            //    {
-            //        Comuna comuna = (Comuna)cbo_Comunas.SelectedItem;
-            //        id = comuna.IdComuna;
-            //        nivel = 2;
-            //    }
-            //    else if (cbo_Regiones.SelectedIndex > 0)
-            //    {
-            //        Region region = (Region)cbo_Regiones.SelectedItem;
-            //        id = region.IdRegion;
-            //        nivel = 1;
-            //    }
-
-            //    var model = ReporteStatsDataSource.GetInvoiceDetails(id, nivel, fecha_inicio, fecha_termino);
-            //    var document = new ReporteDocumentoStats(model);
-
-            //    GenerateStatsDocumentAndShow(document);
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Se debe selecionar fechas");
-            //}
-        }
-        private void btnGenReporteReservas_Click(object sender, RoutedEventArgs e)
-        {
             int id = 0;
             int nivel = 0;
 
-            if (dp_Fecinicio.SelectedDate != null || dp_FecTermino.SelectedDate !=null)
+            if (dp_Fecinicio.SelectedDate != null || dp_FecTermino.SelectedDate != null)
             {
                 DateTime fecha_inicio = (DateTime)dp_Fecinicio.SelectedDate;
                 DateTime fecha_termino = (DateTime)dp_FecTermino.SelectedDate;
@@ -163,6 +125,44 @@ namespace Vista.Pages
                     nivel = 1;
                 }
 
+                var model = ReporteStatsDataSource.GetInvoiceDetails(id, nivel, fecha_inicio, fecha_termino);
+                var documentStats = new ReporteDocumentoStats(model);
+
+                GenerateStatsDocumentAndShow(documentStats);
+            }
+            else
+            {
+                MessageBox.Show("Se debe selecionar fechas");
+            }
+        }
+        private void btnGenReporteReservas_Click(object sender, RoutedEventArgs e)
+        {
+            int id = 0;
+            int nivel = 0;
+
+            if (dp_Fecinicio.SelectedDate != null || dp_FecTermino.SelectedDate != null)
+            {
+                DateTime fecha_inicio = (DateTime)dp_Fecinicio.SelectedDate;
+                DateTime fecha_termino = (DateTime)dp_FecTermino.SelectedDate;
+
+                if (cbo_Dptos.SelectedIndex > 0)
+                {
+                    Departamento departamento = (Departamento)cbo_Dptos.SelectedItem;
+                    id = departamento.IdDepto;
+                    nivel = 3;
+                }
+                else if (cbo_Comunas.SelectedIndex > 0)
+                {
+                    Comuna comuna = (Comuna)cbo_Comunas.SelectedItem;
+                    id = comuna.IdComuna;
+                    nivel = 2;
+                }
+                else if (cbo_Regiones.SelectedIndex > 0)
+                {
+                    Region region = (Region)cbo_Regiones.SelectedItem;
+                    id = region.IdRegion;
+                    nivel = 1;
+                }
                 var model = InvoiceDocumentDataSource.GetInvoiceDetails(id, nivel, fecha_inicio, fecha_termino);
                 var document = new ReporteDocumento(model);
 
@@ -171,26 +171,24 @@ namespace Vista.Pages
             else
             {
                 MessageBox.Show("Se debe selecionar fechas");
-            }                        
+            }
         }
+        private void GenerateStatsDocumentAndShow(ReporteDocumentoStats documentStats)
+        {
+            const string filePath = "invoiceStats.pdf";
 
-        //private void GenerateStatsDocumentAndShow(ReporteDocumentoStats document)
-        //{
-        //    const string filePath = "invoiceStats.pdf";
+            documentStats.GeneratePdf(filePath);
 
-        //    document.GeneratePdf(filePath);
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo(filePath)
+                {
+                    UseShellExecute = true
+                }
+            };
 
-        //    var process = new Process
-        //    {
-        //        StartInfo = new ProcessStartInfo(filePath)
-        //        {
-        //            UseShellExecute = true
-        //        }
-        //    };
-
-        //    process.Start();
-        //}
-
+            process.Start();
+        }
         private void GenerateDocumentAndShow(ReporteDocumento document)
         {
             const string filePath = "invoice.pdf";
@@ -248,7 +246,7 @@ namespace Vista.Pages
                 row.RelativeItem().Column(Column =>
                 {
                     Column
-                        .Item().Text($"Reporte #1")
+                        .Item().Text($"Reporte Reservas #1")
                         .FontSize(20).SemiBold().FontColor(Colors.Blue.Medium);
 
                     Column.Item().Text(text =>
@@ -358,8 +356,6 @@ namespace Vista.Pages
     }   
     public static class InvoiceDocumentDataSource
     {
-        private static Random Random = new Random();
-
         public static List<ReporteReserva> GetInvoiceDetails(int id, int nivel, DateTime fecha_inicio, DateTime fecha_termino)
         {
 
@@ -376,6 +372,169 @@ namespace Vista.Pages
         }
     }
     #endregion
-    #region "REPORTE ESTADÍSTICAS"    
-    #endregion 
+
+    #region "Reporte Estadísticas"
+    public class StatsReport
+    {
+        public class ReporteDocumentoStats : IDocument
+        {
+            public List<ReporteStats> Modelo { get; }
+
+            public ReporteDocumentoStats(List<ReporteStats> modelo)
+            {
+                Modelo = modelo;
+            }
+
+            public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
+
+            public void Compose(IDocumentContainer container)
+            {
+                container
+                    .Page(page =>
+                    {
+                        page.Margin(50);
+
+                        page.Header().Element(ComposeHeader);
+                        page.Content().Element(ComposeContent);
+
+                        page.Footer().AlignCenter().Text(text =>
+                        {
+                            text.CurrentPageNumber();
+                            text.Span(" / ");
+                            text.TotalPages();
+                        });
+                    });
+            }
+
+            void ComposeHeader(IContainer container)
+            {
+                container.Row(row =>
+                {
+                    row.RelativeItem().Column(Column =>
+                    {
+                        Column
+                            .Item().Text($"Reporte Estadísticas #1")
+                            .FontSize(20).SemiBold().FontColor(Colors.Blue.Medium);
+
+                        Column.Item().Text(text =>
+                        {
+                            text.Span("Fecha del reporte: ").SemiBold();
+                            text.Span($"{DateTime.Now:d}");
+                        });
+                    });
+
+                    row.ConstantItem(100).Height(50).Placeholder();
+                });
+            }
+
+            void ComposeContent(IContainer container)
+            {
+                container.PaddingVertical(40).Column(column =>
+                {
+                    column.Spacing(20);
+
+                    column.Item().Element(ComposeTable);
+
+                    column.Item().Table(table =>
+                    {
+                        var headerStyle = TextStyle.Default.SemiBold();
+                        table.ColumnsDefinition(columns =>
+                        {
+                            columns.ConstantColumn(250);
+                            columns.RelativeColumn();
+                            columns.RelativeColumn();
+                            columns.RelativeColumn();
+                        });
+                        table.Header(header =>
+                        {
+                            var headerStyle = TextStyle.Default.SemiBold();
+                            header.Cell().Text("").Style(headerStyle);
+                            header.Cell().AlignRight().Text("Total Gral. días Arriendos").Style(headerStyle);
+                            header.Cell().AlignRight().Text("Total Gral. Mantención").Style(headerStyle);
+                            header.Cell().AlignRight().Text("Total Gral. Multas").Style(headerStyle);
+                            header.Cell().AlignRight().Text("Total Gral. Recaudación").Style(headerStyle);
+                            header.Cell().ColumnSpan(4).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
+                        });
+
+                        var TotalGralCantArriendos = 0m;
+                        var TotalGralCostoMantencion = 0m;
+                        var TotalGralCostoMultas = 0m;
+                        var TotalGralRecaudacion = 0m;
+                        foreach (var item in Modelo)
+                        {
+                            TotalGralCantArriendos += item.TotalDiasArriendo;
+                            TotalGralCostoMantencion += item.TotalMantencion;
+                            TotalGralCostoMultas += item.TotalMultas;
+                            TotalGralRecaudacion += item.TotalRecaudacion;
+                        }
+                        table.Cell().Element(CellStyle).AlignRight().Text("");
+                        table.Cell().Element(CellStyle).AlignRight().Text(TotalGralCantArriendos);
+                        table.Cell().Element(CellStyle).AlignRight().Text(TotalGralCostoMantencion);
+                        table.Cell().Element(CellStyle).AlignRight().Text(TotalGralCostoMultas);
+                        table.Cell().Element(CellStyle).AlignRight().Text(TotalGralRecaudacion);
+
+
+                        static IContainer CellStyle(IContainer container) => container.BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5);
+                    });
+                });
+            }
+
+            void ComposeTable(IContainer container)
+            {
+                var headerStyle = TextStyle.Default.SemiBold();
+
+                container.Table(table =>
+                {
+                    table.ColumnsDefinition(columns =>
+                    {
+                        columns.ConstantColumn(250);
+                        columns.RelativeColumn();
+                        columns.RelativeColumn();
+                        columns.RelativeColumn();
+                    });
+
+                    table.Header(header =>
+                    {
+                        header.Cell().Text("Nombre Departamento").Style(headerStyle);
+                        header.Cell().AlignRight().Text("Cant. días Arriendos").Style(headerStyle);
+                        header.Cell().AlignRight().Text("Total Costo Mantención").Style(headerStyle);
+                        header.Cell().AlignRight().Text("Total Costo Multas").Style(headerStyle);
+                        header.Cell().AlignRight().Text("Total Recaudación").Style(headerStyle);
+
+                        header.Cell().ColumnSpan(4).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
+                    });
+
+
+                    foreach (var item in Modelo)
+                    {
+                        table.Cell().Element(CellStyle).Text(item.NombreDpto);
+                        table.Cell().Element(CellStyle).AlignRight().Text(item.TotalDiasArriendo);
+                        table.Cell().Element(CellStyle).AlignRight().Text(item.TotalMantencion);
+                        table.Cell().Element(CellStyle).AlignRight().Text(item.TotalMultas);
+                        table.Cell().Element(CellStyle).AlignRight().Text(item.TotalRecaudacion);
+                        static IContainer CellStyle(IContainer container) => container.BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5);
+                    }
+                });
+            }
+        }
+        public static class ReporteStatsDataSource
+        {
+            public static List<ReporteStats> GetInvoiceDetails(int id, int nivel, DateTime fecha_inicio, DateTime fecha_termino)
+            {
+
+                DataTable dt = CReporte.GenReporteStats(id, nivel, fecha_inicio, fecha_termino);
+                var Dptos = (from rw in dt.AsEnumerable()
+                             select new ReporteStats()
+                             {
+                                 NombreDpto = (string)rw[0],
+                                 TotalRecaudacion = (decimal)rw[1],
+                                 TotalMantencion = (decimal)rw[2],
+                                 TotalDiasArriendo = (decimal)rw[3],
+                                 TotalMultas = (decimal)rw[4],
+                             }).ToList();
+                return Dptos;
+            }
+        }
+    }
+    #endregion
 }
