@@ -33,7 +33,6 @@ namespace Controlador
                     resultado = int.Parse(cmd.Parameters["r"].Value.ToString());
                     if (resultado >0)
                     {
-                        ImageController.CargarImagen(pathFoto,resultado.ToString() + ".jpg");
                     }
                 }
                 catch (Exception ex)

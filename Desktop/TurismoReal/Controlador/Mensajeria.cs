@@ -8,7 +8,7 @@ namespace Controlador
         public static void PlanificarTransporte(string receptor, string asunto, string cantidadPersonas, string lugar, string comuna, string horaIda, string horaVuelta, string dpto, string direccion)
         {
             string fromMail = "TurismoRealNoResponder@gmail.com";
-            string fromPass = "hteuhwaobzbmyngv";
+            string fromPass = "gowektlbweashvlg";
 
             MailMessage mail = new()
             {
@@ -23,6 +23,7 @@ namespace Controlador
                 Credentials = new NetworkCredential(fromMail, fromPass),
                 EnableSsl = true
             };
+            smtpCliente.UseDefaultCredentials = true;
             smtpCliente.Send(mail);
         }
     }

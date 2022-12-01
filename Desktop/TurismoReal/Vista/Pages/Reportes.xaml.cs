@@ -124,7 +124,7 @@ namespace Vista.Pages
                     id = region.IdRegion;
                     nivel = 1;
                 }
-
+                MessageBox.Show(id.ToString() +nivel.ToString());
                 var model = ReporteStatsDataSource.GetInvoiceDetails(id, nivel, fecha_inicio, fecha_termino);
                 var documentStats = new ReporteDocumentoStats(model);
 
@@ -532,6 +532,8 @@ namespace Vista.Pages
                                  TotalDiasArriendo = (decimal)rw[3],
                                  TotalMultas = (decimal)rw[4],
                              }).ToList();
+
+
                 return Dptos;
             }
         }

@@ -4,7 +4,7 @@ namespace Controlador
 {
     class Conexion
     {
-        private string connectionString = "User Id=c##turismo_real; Password=TurismoReal22; Data Source=localhost:1521/ORCLCDB";
+        private string connectionString = "User Id=c##turismo_real; Password=TurismoReal22; Data Source=localhost:1521/ORCL";
         private static Conexion Con = null;
 
         public OracleConnection ConexionDB()
