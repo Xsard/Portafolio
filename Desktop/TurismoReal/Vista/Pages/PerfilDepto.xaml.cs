@@ -1,4 +1,4 @@
-﻿using Controlador;
+﻿    using Controlador;
 using Microsoft.Win32;
 using Modelo;
 using System;
@@ -110,7 +110,7 @@ namespace Vista.Pages
             dhFotos.IsOpen = true;
         }
         private void btnSubirFoto_Click(object sender, RoutedEventArgs e)
-        {
+        {   
             OpenFileDialog ofd = new();
             ofd.Filter = "Image names|*.jpg;*.png";
             ofd.Multiselect = false;
@@ -123,6 +123,10 @@ namespace Vista.Pages
         }
         private void btn_Agregar_Img_Click(object sender, RoutedEventArgs e)
         {
+            string ext = System.IO.Path.GetExtension(txtPathFoto.Text);
+            string path = System.IO.Directory.GetCurrentDirectory();
+            path = path.Substring(0, path.LastIndexOf("Desktop"));
+            path = string.Concat(path, "Turismo_Real_Web\\Fornt_end\\front_end_tr\\src\\imagenes_Dpto\\");
 
             Fotografia fotografia = new()
             {
@@ -133,6 +137,9 @@ namespace Vista.Pages
             int r = CFotografia.InsertarImagen(fotografia, st);
             if (r > 0)
             {
+                string copiarImg = System.IO.Path.Combine(path, r.ToString()+".jpg");
+                System.IO.File.Copy(txtPathFoto.Text, copiarImg, true);
+                dhFotos.IsOpen = false;
                 ListarImg();
             }
         }
@@ -142,7 +149,9 @@ namespace Vista.Pages
         }
         private void ListarImg()
         {
-            string path = "https://d254rvr6bqb0tr.cloudfront.net/";
+            string path = System.IO.Directory.GetCurrentDirectory();
+            path = path.Substring(0, path.LastIndexOf("Desktop"));
+            path = string.Concat(path, "Turismo_Real_Web\\Fornt_end\\front_end_tr\\src\\imagenes_Dpto\\");
             try
             {
                 DataTable dataTable = CFotografia.ListarImagenes(departamento.IdDepto);
