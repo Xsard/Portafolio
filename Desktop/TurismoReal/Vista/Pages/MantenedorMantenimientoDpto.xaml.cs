@@ -17,7 +17,6 @@ namespace Vista.Pages
             InitializeComponent();
             departamento = depto;
             ListarMantencion();
-            RestringirFechas();
         }
         private void ItemError(object sender, ValidationErrorEventArgs e)
         {
@@ -95,6 +94,13 @@ namespace Vista.Pages
                                      CostoMantencion = Convert.ToInt32(rw[5]),
                                      Estado = rw[6].ToString()                                    
                                  }).ToList();
+                    foreach (Mantencion item in mantenciones)
+                    {
+                        var fecha_inicio = item.FechaInicio;
+                        var fecha_termino = item.FechaTermino;
+                        dp_inicio_ag.BlackoutDates.Add(new CalendarDateRange(fecha_inicio, fecha_termino));
+                        dp_termino_ag.BlackoutDates.Add(new CalendarDateRange(fecha_inicio, fecha_termino));
+                    }
                     dtgMantDptos.ItemsSource = mantenciones;
                 }
             }
@@ -148,14 +154,20 @@ namespace Vista.Pages
         {
             dhMantDpto_ag.IsOpen = false;
         }
-        private void RestringirFechas()
+
+        private void DatePicker_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach (Mantencion item in dtgMantDptos.Items)
+            DatePicker datePickerGrd = (DatePicker)sender;
+            var test = dp_inicio_ag.BlackoutDates.ToArray();
+            foreach (var item in test)
             {
-                var fecha_inicio = item.FechaInicio;
-                var fecha_termino = item.FechaTermino;
-                dp_inicio_ag.BlackoutDates.Add(new CalendarDateRange(fecha_inicio, fecha_termino));
+                if (datePickerGrd.SelectedDate != item.End && datePickerGrd.SelectedDate != item.Start)
+                {
+                    datePickerGrd.BlackoutDates.Add(new CalendarDateRange(item.Start, item.End));
+
+                }
             }
+
         }
     }
 }
