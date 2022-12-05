@@ -50,6 +50,6 @@
 }
 
 body {
-  background: rgb(211,224,234);
-background: radial-gradient(circle, rgba(211,224,234,1) 0%, rgba(246,245,245,1) 32%);
+  background: rgb(211, 224, 234);
+  background: radial-gradient(circle, rgba(211, 224, 234, 1) 0%, rgba(246, 245, 245, 1) 32%);
 }
