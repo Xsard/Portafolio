@@ -11,6 +11,10 @@ import DeptoFiltro from "../Components/DeptoComponent/DeptoFiltrado";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import logo from "../Img/turismoRealLetras.png"
+import norte from "../Img/desierto.png"
+import centro from "../Img/edificios.png"
+import sur from "../Img/bosque.png"
+import moai from "../Img/moai.png"
 
 export const Inicio = () => {
     const { usuario, setUsuario } = useContext(clienteContext);
@@ -91,18 +95,26 @@ export const Inicio = () => {
 
     function fotoNorte() {
         document.getElementById("div_fotos").style.backgroundImage = "url('https://media.vogue.mx/photos/61aa2ef47a5d7b17735e8e33/16:9/w_2992,h_1683,c_limit/Desierto-de-Atacama.jpg')"
+        document.getElementById("texto_fotos").innerText = "La zona desertica nos lleva al desierto mas arido del mundo con postales que quedaran para el recuerdo."
+        document.getElementById("titulo_fotos").innerText = "Norte de Chile"
     }
 
     function fotoCentro() {
         document.getElementById("div_fotos").style.backgroundImage = "url('https://cdn.wallpapersafari.com/34/91/AhduLG.jpg')"
+        document.getElementById("texto_fotos").innerText = "La zona central nos ofrece multiples zonas desde playas hasta la imponente ciudad de Santiago."
+        document.getElementById("titulo_fotos").innerText = "Centro de Chile"
     }
 
     function fotoSur() {
         document.getElementById("div_fotos").style.backgroundImage = "url('https://www.navimag.com/hubfs/sur-de-chile-vs-norte-de-chile.jpg')"
+        document.getElementById("texto_fotos").innerText = "El sur de Chile nos impacta con sus grandes bosques y volcanes, y su hermosa flora y fauna."
+        document.getElementById("titulo_fotos").innerText = "Sur de Chile"
     }
 
     function fotoRapa() {
         document.getElementById("div_fotos").style.backgroundImage = "url('https://i.pinimg.com/originals/b6/7e/46/b67e46db45a8481dd051d3826175c8dd.jpg')"
+        document.getElementById("texto_fotos").innerText = "La Isla de Pascua nos lleva a explorar los grandes Moais y su alegria isleña."
+        document.getElementById("titulo_fotos").innerText = "Isla de Pascua"
     }
     return (
         <>
@@ -154,7 +166,7 @@ export const Inicio = () => {
                         <img src={logo} className="col-lg-2" style={{ width: "285px", height: "110px", paddingTop: "40px" }}></img>
                         <p className="col-lg-2" style={{ width: "500px", textAlign: "justify" }}>La empresa Turismo Real nace con el propósito de lograr las mejores estadías en el territorio nacional, buscando un equilibrio entre la mejor calidad y los
                             precios más accesibles en el mercado actual de turismo. Día a día se agregan nuevos departamentos que cumplen un alto estándar de calidad y son revisados
-                            constantemente por el equipo de Turismo Real</p>
+                            constantemente por el equipo de Turismo Real.</p>
                     </div>
                 </div>
                 <br></br>
@@ -163,19 +175,27 @@ export const Inicio = () => {
                     <h3 className="text text-left">Los lugares de Chile donde tenemos estadías</h3>
                     <br></br>
                     <br></br>
-                    <div id="DIVBTN" style={{width: "80px"}}>
-                        <button className="btn btn-primary botones_foto" id="norte" onClick={fotoNorte}>Norte de Chile</button><br></br>
+                    <div id="DIVBTN" style={{ width: "80px" }}>
+                        <button className="btn btn-primary botones_foto" id="norte" onClick={fotoNorte}><img src={norte}
+                        width="50px" height="50px" style={{paddingRight: "3px"}}></img>Norte de Chile</button><br></br>
                         <br></br>
                         <br></br>
-                        <button className="btn btn-primary botones_foto" id="centro" onClick={fotoCentro}>Zona Central</button><br></br>
+                        <button className="btn btn-primary botones_foto" id="centro" onClick={fotoCentro}><img src={centro}
+                        width="50px" height="50px" style={{paddingRight: "3px"}}></img>Zona Central</button><br></br>
                         <br></br>
                         <br></br>
-                        <button className="btn btn-primary botones_foto" id="sur" onClick={fotoSur}>Sur de Chile</button><br></br>
+                        <button className="btn btn-primary botones_foto" id="sur" onClick={fotoSur}><img src={sur}
+                        width="50px" height="50px"style={{paddingRight: "3px"}}></img>Sur de Chile</button><br></br>
                         <br></br>
                         <br></br>
-                        <button className="btn btn-primary botones_foto" id="rapanui" onClick={fotoRapa}>Rapa Nui</button><br></br>
+                        <button className="btn btn-primary botones_foto" id="rapanui" onClick={fotoRapa}><img src={moai}
+                        width="50px" height="50px" style={{paddingRight: "3px"}}></img>Rapa Nui</button><br></br>
                         <br></br>
-                        <br></br>            
+                        <br></br>
+                    </div>
+                    <div class="div_txt">
+                        <h2 id="titulo_fotos">Norte de Chile</h2>
+                        <p id="texto_fotos" style={{ textAlign: "justify"}}>La zona desertica nos lleva al desierto mas arido del mundo con postales que quedaran para el recuerdo.</p>
                     </div>
                 </div>
                 <br />

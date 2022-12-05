@@ -6,7 +6,6 @@ import * as clienteServicio from "../../services/ClienteService";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import axios from "axios";
-
 //creamos la funcion de registrar
 function Registrar() {
 
@@ -17,6 +16,7 @@ function Registrar() {
 
     //creamos los useState que vamos a utilizar
     const [Rut, setRut] = useState('');
+    const [dv, setDv] = useState('');
     const [nombres, setNombres] = useState('');
     const [apellidos, setApellidos] = useState('');
     const [correo, setCorreo] = useState('');
@@ -34,6 +34,22 @@ function Registrar() {
     const handleVerificacion = cod => {
         const result = cod.replace(/\D/g, '');
         setRepCode(result)
+    }
+    const handleNombre = nom =>{
+        const result = nom.replace(/[\W\d]*/g, '');
+        setNombres(result)
+    }
+    const handleApellido = app =>{
+        const result = app.replace(/[\W\d]*/g, '');
+        setApellidos(result)
+    }
+    const handleRut = rut1 => {
+        const result = rut1.replace(/\D/g, '');
+        setRut(result)
+    }
+    const handleCV = cv1 => {
+        const result = cv1.replace(/[a-j]*[l-z]*[A-J]*[L-Z]*[\W]*/g, '');
+        setDv(result)
     }
 
     //obtenemos un numero random que sera enviado como codigo de verificacion
@@ -104,7 +120,7 @@ function Registrar() {
         //verificamos que el codigo que se inserto y el codigo del correo sean iguales
         if (code === parseInt(repCode)) {
             //insertamos el cliente
-            clienteServicio.ingresarUsuario(correo, contraseña, telefono, Rut, nombres, apellidos)
+            clienteServicio.ingresarUsuario(correo, contraseña, telefono, Rut, dv, nombres, apellidos)
             MySwal.fire({
                 //creamos el mensaje de usuario creado y con un timer para cargar la pagina
                 title: "Usuario creado, Volviendo a la pagina de inicio...",
@@ -143,44 +159,38 @@ function Registrar() {
                 <br></br>
                 <h2 className="text-center">Registrate en Turismo Real</h2>
                 <div className="mx-auto mt-5 w-25">
-                    <div className="form-row mb-3">
-                        <Form.Group className="form-input mb-3"
-                            type="text"
-                            id="rut"
-                            value={Rut}
-                            onChange={(e) => setRut(e.target.value)}>
-                            <Form.Label>RUT</Form.Label>
-                            <Form.Control type="text" placeholder="Ej: 20382647-3" maxLength={10} />
-                        </Form.Group>
+                <label>Rut</label>
+                    <div className="form-row mb-1">
+                        <p class="fecha"><input className="form-control" type="text" style={{width : "150px", heigth : "30px"}} 
+                        maxLength={8} value={Rut} onChange={(e) => handleRut(e.target.value)}></input></p>&nbsp;
+                        <h5 class="fecha">-</h5>&nbsp;
+                        <p class="fecha"><input className="form-control" type="text" style={{width : "40px", heigth : "30px"}}
+                        maxLength={1} value={dv} onChange={(e) => handleCV(e.target.value)}></input></p>
                     </div>
                     <div className="form-row mb-3">
                         <Form.Group className="form-input mb-3"
                             type="text"
-                            id="nombres"
-                            value={nombres}
-                            onChange={(e) => setNombres(e.target.value)}>
+                            id="nombres">
                             <Form.Label>Nombres</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese nombres" maxLength={60} />
+                            <Form.Control type="text" placeholder="Ingrese nombres" maxLength={60} value={nombres} onChange={(e) => handleNombre(e.target.value)}/>
                         </Form.Group>
                     </div>
                     <div className="form-row mb-3">
                         <Form.Group className="form-input mb-3"
                             type="text"
                             id="apellidos"
-                            value={apellidos}
-                            onChange={(e) => setApellidos(e.target.value)}>
+                            >
                             <Form.Label>Apellidos</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese apellidos" maxLength={60} />
+                            <Form.Control type="text" placeholder="Ingrese apellidos" maxLength={60} value={apellidos} onChange={(e) => handleApellido(e.target.value)}/>
                         </Form.Group>
                     </div>
                     <div className="form-row mb-3">
                         <Form.Group className="form-input mb-3"
                             type="text"
                             id="correo"
-                            value={correo}
-                            onChange={(e) => setCorreo(e.target.value)}>
+                            >
                             <Form.Label>Correo</Form.Label>
-                            <Form.Control type="email" placeholder="Ingrese un correo" maxLength={254} />
+                            <Form.Control type="email" placeholder="Ingrese un correo" maxLength={254} value={correo} onChange={(e) => setCorreo(e.target.value)}/>
                         </Form.Group>
                     </div>
                     <div className="form-row mb-3">
