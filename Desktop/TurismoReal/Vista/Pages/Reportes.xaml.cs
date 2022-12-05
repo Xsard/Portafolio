@@ -124,7 +124,6 @@ namespace Vista.Pages
                     id = region.IdRegion;
                     nivel = 1;
                 }
-                MessageBox.Show(id.ToString() +nivel.ToString());
                 var model = ReporteStatsDataSource.GetInvoiceDetails(id, nivel, fecha_inicio, fecha_termino);
                 var documentStats = new ReporteDocumentoStats(model);
 
@@ -281,10 +280,12 @@ namespace Vista.Pages
                     table.Header(header =>
                     {
                         var headerStyle = TextStyle.Default.SemiBold();
+
                         header.Cell().Text("").Style(headerStyle);
-                        header.Cell().AlignRight().Text("Total Gral. Arriendos").Style(headerStyle);
-                        header.Cell().AlignRight().Text("Prom. Total. Gral. Reservas").Style(headerStyle);
-                        header.Cell().AlignRight().Text("Total Gral. Multas").Style(headerStyle);
+                        header.Cell().MaxWidth(55).AlignRight().Text("Total Gral. Arriendos").Style(headerStyle).FontSize(10);
+                        header.Cell().MaxWidth(55).AlignRight().Text("Prom. Total. Gral. Reservas").Style(headerStyle).FontSize(10);
+                        header.Cell().MaxWidth(55).AlignRight().Text("Total Gral. Multas").Style(headerStyle).FontSize(10);
+
                         header.Cell().ColumnSpan(4).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
                     });
                     var CantMultas = 0m;
@@ -302,14 +303,14 @@ namespace Vista.Pages
                     table.Cell().Element(CellStyle).AlignRight().Text(CantArriendos);
                     if (count!=0)
                     {
-                        table.Cell().Element(CellStyle).AlignRight().Text(PromReservas / count);
+                        table.Cell().MaxWidth(55).Element(CellStyle).AlignRight().Text(PromReservas / count);
                     }
                     else
                     {
-                        table.Cell().Element(CellStyle).AlignRight().Text(0);
+                        table.Cell().MaxWidth(55).Element(CellStyle).AlignRight().Text(0);
                     }
                     
-                    table.Cell().Element(CellStyle).AlignRight().Text(CantMultas);
+                    table.Cell().MaxWidth(55).Element(CellStyle).AlignRight().Text(CantMultas);
                     
 
                     static IContainer CellStyle(IContainer container) => container.BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5);
@@ -333,10 +334,10 @@ namespace Vista.Pages
 
                 table.Header(header =>
                 {
-                    header.Cell().Text("Nombre Departamento").Style(headerStyle);
-                    header.Cell().AlignRight().Text("Cant. Arriendos").Style(headerStyle);
-                    header.Cell().AlignRight().Text("Duración prom. de reservas").Style(headerStyle);
-                    header.Cell().AlignRight().Text("Cant. Multas").Style(headerStyle);
+                    header.Cell().AlignMiddle().Text("Nombre Departamento").Style(headerStyle).FontSize(10);
+                    header.Cell().MaxWidth(55).AlignRight().Text("Cant. Arriendos").Style(headerStyle).FontSize(10);
+                    header.Cell().MaxWidth(55).AlignRight().Text("Duración prom. de reservas").Style(headerStyle).FontSize(10);
+                    header.Cell().MaxWidth(55).AlignRight().Text("Cant. Multas").Style(headerStyle).FontSize(10);
 
                     header.Cell().ColumnSpan(4).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
                 }); 
@@ -346,9 +347,10 @@ namespace Vista.Pages
                 {
                     //table.Cell().Element(CellStyle).Text(Modelo.Items.IndexOf(item) + 1);
                     table.Cell().Element(CellStyle).Text(item.NombreDpto);
-                    table.Cell().Element(CellStyle).AlignRight().Text(item.CantArriendos);
-                    table.Cell().Element(CellStyle).AlignRight().Text(item.PromDiasReserva);
-                    table.Cell().Element(CellStyle).AlignRight().Text(item.CantMultas);
+                    table.Cell().MaxWidth(55).Element(CellStyle).AlignRight().Text(item.CantArriendos);
+                    table.Cell().MaxWidth(55).Element(CellStyle).AlignRight().Text(item.PromDiasReserva);
+                    table.Cell().MaxWidth(55).Element(CellStyle).AlignRight().Text(item.CantMultas);
+
                     static IContainer CellStyle(IContainer container) => container.BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5);
                 }
             });
@@ -405,7 +407,6 @@ namespace Vista.Pages
                         });
                     });
             }
-
             void ComposeHeader(IContainer container)
             {
                 container.Row(row =>
@@ -426,7 +427,6 @@ namespace Vista.Pages
                     row.ConstantItem(100).Height(50).Placeholder();
                 });
             }
-
             void ComposeContent(IContainer container)
             {
                 container.PaddingVertical(40).Column(column =>
@@ -440,7 +440,8 @@ namespace Vista.Pages
                         var headerStyle = TextStyle.Default.SemiBold();
                         table.ColumnsDefinition(columns =>
                         {
-                            columns.ConstantColumn(250);
+                            columns.ConstantColumn(200);
+                            columns.RelativeColumn();
                             columns.RelativeColumn();
                             columns.RelativeColumn();
                             columns.RelativeColumn();
@@ -448,12 +449,14 @@ namespace Vista.Pages
                         table.Header(header =>
                         {
                             var headerStyle = TextStyle.Default.SemiBold();
+
                             header.Cell().Text("").Style(headerStyle);
-                            header.Cell().AlignRight().Text("Total Gral. días Arriendos").Style(headerStyle);
-                            header.Cell().AlignRight().Text("Total Gral. Mantención").Style(headerStyle);
-                            header.Cell().AlignRight().Text("Total Gral. Multas").Style(headerStyle);
-                            header.Cell().AlignRight().Text("Total Gral. Recaudación").Style(headerStyle);
-                            header.Cell().ColumnSpan(4).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
+                            header.Cell().MaxWidth(55).AlignRight().Text("Total Gral. días Arriendos").Style(headerStyle).FontSize(10);
+                            header.Cell().MaxWidth(55).AlignRight().Text("Total Gral. Mantención").Style(headerStyle).FontSize(10);
+                            header.Cell().MaxWidth(55).AlignRight().Text("Total Gral. Multas").Style(headerStyle).FontSize(10);
+                            header.Cell().MaxWidth(60).AlignRight().Text("Total Gral. Recaudación").Style(headerStyle).FontSize(10);
+
+                            header.Cell().ColumnSpan(5).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
                         });
 
                         var TotalGralCantArriendos = 0m;
@@ -478,7 +481,6 @@ namespace Vista.Pages
                     });
                 });
             }
-
             void ComposeTable(IContainer container)
             {
                 var headerStyle = TextStyle.Default.SemiBold();
@@ -487,7 +489,8 @@ namespace Vista.Pages
                 {
                     table.ColumnsDefinition(columns =>
                     {
-                        columns.ConstantColumn(250);
+                        columns.ConstantColumn(200);
+                        columns.RelativeColumn();
                         columns.RelativeColumn();
                         columns.RelativeColumn();
                         columns.RelativeColumn();
@@ -495,13 +498,13 @@ namespace Vista.Pages
 
                     table.Header(header =>
                     {
-                        header.Cell().Text("Nombre Departamento").Style(headerStyle);
-                        header.Cell().AlignRight().Text("Cant. días Arriendos").Style(headerStyle);
-                        header.Cell().AlignRight().Text("Total Costo Mantención").Style(headerStyle);
-                        header.Cell().AlignRight().Text("Total Costo Multas").Style(headerStyle);
-                        header.Cell().AlignRight().Text("Total Recaudación").Style(headerStyle);
+                        header.Cell().Text("Nombre Departamento").Style(headerStyle).FontSize(10);
+                        header.Cell().MaxWidth(55).AlignRight().Text("Cant. días Arriendos").Style(headerStyle).FontSize(10);
+                        header.Cell().MaxWidth(55).AlignRight().Text("Total Costo Mantención").Style(headerStyle).FontSize(10);
+                        header.Cell().MaxWidth(55).AlignRight().Text("Total Costo Multas").Style(headerStyle).FontSize(10);
+                        header.Cell().MaxWidth(60).AlignRight().Text("Total Recaudación").Style(headerStyle).FontSize(10);
 
-                        header.Cell().ColumnSpan(4).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
+                        header.Cell().ColumnSpan(5).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
                     });
 
 
@@ -532,8 +535,6 @@ namespace Vista.Pages
                                  TotalDiasArriendo = (decimal)rw[3],
                                  TotalMultas = (decimal)rw[4],
                              }).ToList();
-
-
                 return Dptos;
             }
         }
