@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace Vista.Pages.Validaciones.ValidacionesDepto
 {
-    public class TarifaEsNroPositivo : ValidationRule
+    public class TarifaIsValid : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 namespace Vista.Pages.Validaciones.ValidacionesUsuario
@@ -24,11 +23,5 @@ namespace Vista.Pages.Validaciones.ValidacionesUsuario
             }
             return new ValidationResult(false, "El teléfono debe ser un número");
         }
-
-        //static bool OnlyLetters(string s)
-        //{
-        //    Regex regex = new(@"^[a-zA-Z]+$");
-        //    return regex.IsMatch(s);
-        //}
     }
 }

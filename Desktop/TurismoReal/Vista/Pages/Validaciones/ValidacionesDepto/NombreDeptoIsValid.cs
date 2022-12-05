@@ -1,23 +1,23 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
+using System;
 using System.Windows.Controls;
 
 namespace Vista.Pages.Validaciones.ValidacionesDepto
 {
-    public class DirHasta : ValidationRule
+    public class NombreDeptoIsValid : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             try
             {
-                var dir = Convert.ToString(value);
+                var dir = (string)value;
 
                 if (dir != null && dir != string.Empty)
                 {
-                    if (dir.Length >= 200)
+                    if (dir.Length >= 100)
                     {
-                        return new ValidationResult(false, "La dirección no puede superar los 200 caracteres");
-                    } 
+                        return new ValidationResult(false, "El nombre no puede superar los 100 caracteres");
+                    }
                 }
                 else
                 {
