@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,7 +21,6 @@ namespace Vista.Pages
             ListarComunas();
             ListarDpto();
         }
-
         private void ItemError(object sender, ValidationErrorEventArgs e)
         {
             if (e.Action == ValidationErrorEventAction.Added)
@@ -28,7 +28,6 @@ namespace Vista.Pages
                 MessageBox.Show(e.Error.ErrorContent.ToString());
             }
         }
-
         #region Ubicacion
         public void ListarComunas()
         {
@@ -90,30 +89,63 @@ namespace Vista.Pages
         private void btn_Agregar_Dpto_Click(object sender, RoutedEventArgs e)
         {
             try
-            {                
-                if(txt_tarifa_ag.Text == string.Empty || txt_cap_ag.Text == string.Empty || txt_direccion_ag.Text == string.Empty || 
-                    txt_nro_ag.Text == string.Empty || cbo_comuna_ag.Text == string.Empty)
+            {
+                if (txt_nombre_ag.Text != string.Empty)
                 {
-                    this.MensajeError("Falta ingresar algunos datos");
+                    if (txt_tarifa_ag.Text != string.Empty)
+                    {
+                        if (txt_direccion_ag.Text != string.Empty)
+                        {
+                            if (txt_nro_ag.Text != string.Empty)
+                            {
+                                if (txt_cap_ag.Text != string.Empty)
+                                {
+                                    if (cbo_comuna_ag.Text != string.Empty)
+                                    {
+                                        Departamento dpto = new Departamento
+                                        {
+                                            NombreDpto = txt_nombre_ag.Text.Trim(),
+                                            TarifaDiara = Int32.Parse(txt_tarifa_ag.Text.Trim()),
+                                            Capacidad = Int32.Parse(txt_cap_ag.Text.Trim()),
+                                            Direccion = txt_direccion_ag.Text.Trim(),
+                                            NroDpto = Int32.Parse(txt_nro_ag.Text.Trim()),
+                                            Comuna = (Comuna)cbo_comuna_ag.SelectedItem,
+                                            Disponibilidad = false
+                                        };
+                                        int estado = CDepartamento.CrearDepto(dpto);
+                                        MensajeOk("Departamento agregado");
+                                        ListarDpto();
+                                        Limpiar();
+                                    }
+                                    else
+                                    {
+                                        this.MensajeError("Comuna es un campo requerido");
+                                    }
+                                }
+                                else
+                                {
+                                    this.MensajeError("Capacidad es un campo requerido");
+                                }
+                            }
+                            else
+                            {
+                                this.MensajeError("Nro. Departamento es un campo requerido");
+                            }
+                        }
+                        else
+                        {
+                            this.MensajeError("Dirección es un campo requerido");
+                        }
+                    }
+                    else
+                    {
+                        this.MensajeError("Tarifa es un campo requerido");
+                    }
                 }
                 else
                 {
-                    Departamento dpto = new Departamento
-                    {
-                        NombreDpto = txt_nombre_ag.Text.Trim(),
-                        TarifaDiara = Int32.Parse(txt_tarifa_ag.Text.Trim()),
-                        Capacidad = Int32.Parse(txt_cap_ag.Text.Trim()),
-                        Direccion = txt_direccion_ag.Text.Trim(),
-                        NroDpto = Int32.Parse(txt_nro_ag.Text.Trim()),
-                        Comuna = (Comuna)cbo_comuna_ag.SelectedItem,
-                        Disponibilidad = false
-                    };
-
-                    int estado = CDepartamento.CrearDepto(dpto);
-                    MensajeOk("Departamento agregado");
-                    ListarDpto();
-                    Limpiar();
-                }                          
+                    this.MensajeError("Nombre es un campo requerido");
+                }                                     
             }
             catch (Exception ex)
             {
@@ -122,6 +154,7 @@ namespace Vista.Pages
         }
         private void Limpiar()
         {
+            txt_nombre_ag.Clear();
             txt_tarifa_ag.Clear();
             txt_direccion_ag.Clear();
             txt_nro_ag.Clear();
@@ -200,7 +233,7 @@ namespace Vista.Pages
                     MessageBox.Show(ex.Message);
                 }
             }
-        }
+        }        
         private void DtgDptoDelete_Click(object sender, RoutedEventArgs e)
         {
             Departamento departamento = (Departamento)dtgDptos.SelectedItem;
@@ -240,6 +273,36 @@ namespace Vista.Pages
             NavigationService ns = NavigationService.GetNavigationService(this);
             MantenedorServiciosDepto msd = new(departamento);
             ns.Navigate(msd);
+        }
+
+        private void txt_nombre_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-zA-Z]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_tarifa_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_nro_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_cap_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_direccion_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("^[a-zA-Z0-9, ]*$");
+            e.Handled = !regex.IsMatch(e.Text);            
         }
     }
 }
