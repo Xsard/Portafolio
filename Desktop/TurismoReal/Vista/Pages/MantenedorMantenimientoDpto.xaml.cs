@@ -1,6 +1,7 @@
 ﻿using Controlador;
 using Modelo;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows;
@@ -12,6 +13,8 @@ namespace Vista.Pages
     public partial class MantenedorMantenimientoDpto : Page
     {
         private Departamento departamento;
+        private List<DateTime> fechasInicio = new();
+        private List<DateTime> fechasTermino = new();
         public MantenedorMantenimientoDpto(Departamento depto)
         {
             InitializeComponent();
@@ -96,10 +99,10 @@ namespace Vista.Pages
                                  }).ToList();
                     foreach (Mantencion item in mantenciones)
                     {
-                        var fecha_inicio = item.FechaInicio;
-                        var fecha_termino = item.FechaTermino;
-                        dp_inicio_ag.BlackoutDates.Add(new CalendarDateRange(fecha_inicio, fecha_termino));
-                        dp_termino_ag.BlackoutDates.Add(new CalendarDateRange(fecha_inicio, fecha_termino));
+                        fechasInicio.Add(item.FechaInicio);
+                        fechasTermino.Add(item.FechaTermino);
+                        dp_inicio_ag.BlackoutDates.Add(new CalendarDateRange(item.FechaInicio, item.FechaTermino));
+                        dp_termino_ag.BlackoutDates.Add(new CalendarDateRange(item.FechaInicio, item.FechaTermino));
                     }
                     dtgMantDptos.ItemsSource = mantenciones;
                 }
@@ -159,15 +162,55 @@ namespace Vista.Pages
         {
             DatePicker datePickerGrd = (DatePicker)sender;
             var test = dp_inicio_ag.BlackoutDates.ToArray();
+
             foreach (var item in test)
             {
-                if (datePickerGrd.SelectedDate != item.End && datePickerGrd.SelectedDate != item.Start)
+                DateTime fechaPervia = default(DateTime);
+                DateTime fechaSiguiente = default(DateTime);
+                if (datePickerGrd.SelectedDate == item.End)
                 {
-                    datePickerGrd.BlackoutDates.Add(new CalendarDateRange(item.Start, item.End));
-
+                    fechasInicio.Sort((a, b) => a.CompareTo(b));
+                    fechaSiguiente = fechasInicio.SkipWhile(x => x <= datePickerGrd.SelectedDate).FirstOrDefault();
+                    if (!fechaSiguiente.Equals(default(DateTime)))
+                    {
+                        datePickerGrd.DisplayDateEnd = fechaSiguiente.AddDays(-1);
+                    }
+                }
+                else if (datePickerGrd.SelectedDate == item.Start)
+                {
+                    fechasInicio.Sort((a, b) => a.CompareTo(b));
+                    fechaPervia = fechasTermino.SkipWhile(x => x >= datePickerGrd.SelectedDate).FirstOrDefault();
+                    if (!fechaPervia.Equals(default(DateTime)))
+                    {
+                        datePickerGrd.DisplayDateStart = fechaPervia.AddDays(1);
+                    }
                 }
             }
 
+        }
+
+        private void DatePickerFechaInicio_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DatePicker datePickerGrd = (DatePicker)sender;
+            Mantencion mantencion = (Mantencion)dtgMantDptos.SelectedItem;
+            if (mantencion == null) return;
+            if (datePickerGrd.SelectedDate >= mantencion.FechaTermino)
+            {
+                MessageBox.Show("La fecha seleccionada no puede ser mayor o igual a la de término");
+                return;
+            }
+        }
+
+        private void DatePickerFechaTer_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DatePicker datePickerGrd = (DatePicker)sender;
+            Mantencion mantencion = (Mantencion)dtgMantDptos.SelectedItem;
+            if (mantencion == null) return;
+            if (datePickerGrd.SelectedDate <= mantencion.FechaInicio)
+            {
+                MessageBox.Show("La fecha seleccionada no puede ser menor o igual a la de inicio");
+                return;
+            }
         }
     }
 }

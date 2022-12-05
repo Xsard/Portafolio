@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Vista.Pages" xmlns:local1="clr-namespace:Vista.Pages.Validaciones.ValidacionesMantenimiento"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="1220"
       Title="MantenedorMantenimientoDpto">
 
     <Grid x:Name="grdMantDpto" Validation.Error="ItemError">
@@ -70,7 +70,7 @@
                     <DataGridTemplateColumn Header="Fecha Inicio" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <DatePicker Loaded="DatePicker_Loaded" KeyDown="DtgMantDptosUpdate_KeyDown" SelectedDate="{Binding Path=FechaInicio, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                                <DatePicker Loaded="DatePicker_Loaded" SelectedDateChanged="DatePickerFechaInicio_SelectedDateChanged" SelectedDate="{Binding Path=FechaInicio, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
                                 </DatePicker>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -78,7 +78,7 @@
                     <DataGridTemplateColumn Header="Fecha Termino" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <DatePicker Loaded="DatePicker_Loaded" KeyDown="DtgMantDptosUpdate_KeyDown" SelectedDate="{Binding Path=FechaTermino, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                                <DatePicker Loaded="DatePicker_Loaded" SelectedDateChanged="DatePickerFechaTer_SelectedDateChanged" SelectedDate="{Binding Path=FechaTermino, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
                                 </DatePicker>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
