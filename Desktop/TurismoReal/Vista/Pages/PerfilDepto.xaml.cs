@@ -6,6 +6,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -232,6 +233,18 @@ namespace Vista.Pages
                     throw;
                 }
             }
+        }
+
+        private void txt_objeto_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_numero_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

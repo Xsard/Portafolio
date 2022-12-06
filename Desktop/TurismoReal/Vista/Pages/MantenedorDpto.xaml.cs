@@ -277,7 +277,7 @@ namespace Vista.Pages
 
         private void txt_nombre_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^a-zA-Z]+");
+            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
@@ -301,7 +301,7 @@ namespace Vista.Pages
 
         private void txt_direccion_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("^[a-zA-Z0-9, ]*$");
+            Regex regex = new Regex("^[a-zA-Zá-úÁ-Ú0-9, ]*$");
             e.Handled = !regex.IsMatch(e.Text);            
         }
     }
