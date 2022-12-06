@@ -237,7 +237,7 @@ namespace Vista.Pages
 
         private void txt_objeto_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú]+");
+            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú0-9\"]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 

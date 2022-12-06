@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -211,6 +212,18 @@ namespace Vista.Pages
                 MessageBox.Show("La fecha seleccionada no puede ser menor o igual a la de inicio");
                 return;
             }
+        }
+
+        private void txt_string_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú0-9\"]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_costo_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9\"]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
