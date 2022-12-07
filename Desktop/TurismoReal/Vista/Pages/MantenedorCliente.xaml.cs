@@ -200,5 +200,32 @@ namespace Vista.Pages
             Regex regex = new Regex("[^0-9k\"]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
+        private void txt_Nombres_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_Apellidos_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_Telefono_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9\"]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_email_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            string pattern = @"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@" + @"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?
+				                                    [0-9]{1,2}|25[0-5]|2[0-4][0-9])\." + @"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?
+				                                    [0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|" + @"([a-zA-Z]+[\w-]+\.)+[a-zA-Z]{2,4})$";
+            Regex regex = new Regex(pattern);
+            e.Handled = regex.IsMatch(e.Text);
+        }
     }
 }

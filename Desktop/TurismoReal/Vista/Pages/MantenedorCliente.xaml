@@ -49,7 +49,7 @@
                     <DataGridTemplateColumn Header="Nombres" Width="2*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgClienteUpdate_KeyDown">
+                                <TextBox x:Name="txt_Nombres" KeyDown="DtgClienteUpdate_KeyDown" PreviewTextInput="txt_Nombres_PreviewTextInput">
                                     <TextBox.Text >
                                         <Binding Path="Nombres" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -64,7 +64,7 @@
                     <DataGridTemplateColumn Header="Apellidos" Width="1.3*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgClienteUpdate_KeyDown">
+                                <TextBox x:Name="txt_Apellidos" KeyDown="DtgClienteUpdate_KeyDown" PreviewTextInput="txt_Apellidos_PreviewTextInput">
                                     <TextBox.Text >
                                         <Binding Path="Apellidos"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -79,7 +79,7 @@
                     <DataGridTemplateColumn Header="Teléfono" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgClienteUpdate_KeyDown">
+                                <TextBox x:Name="txt_Telefono" KeyDown="DtgClienteUpdate_KeyDown" PreviewTextInput="txt_Telefono_PreviewTextInput">
                                     <TextBox.Text >
                                         <Binding Path="Telefono"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -94,7 +94,7 @@
                     <DataGridTemplateColumn Header="Email" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgClienteUpdate_KeyDown">
+                                <TextBox x:Name="txt_email" KeyDown="DtgClienteUpdate_KeyDown" PreviewTextInput="txt_email_PreviewTextInput">
                                     <TextBox.Text >
                                         <Binding Path="Email"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>

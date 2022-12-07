@@ -39,9 +39,9 @@
                     <DataGridTemplateColumn Header="Nombre Departamento" Width="0.7*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgDptosUpdate_KeyDown">
+                                <TextBox x:Name="txt_NombreDpto" KeyDown="DtgDptosUpdate_KeyDown" PreviewTextInput="txt_NombreDpto_PreviewTextInput">
                                     <TextBox.Text>
-                                        <Binding Path="NombreDpto"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                        <Binding Path="NombreDpto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
                                                 <local1:NombreDeptoIsValid/>
                                             </Binding.ValidationRules>
@@ -54,7 +54,7 @@
                     <DataGridTemplateColumn Header="Tarifa Diaria" Width="0.7*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgDptosUpdate_KeyDown">
+                                <TextBox x:Name="txt_TarifaDiaria" KeyDown="DtgDptosUpdate_KeyDown" PreviewTextInput="txt_TarifaDiaria_PreviewTextInput">
                                     <TextBox.Text>
                                         <Binding Path="TarifaDiara"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -69,7 +69,7 @@
                     <DataGridTemplateColumn Header="Dirección" Width="2*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgDptosUpdate_KeyDown">
+                                <TextBox x:Name="txt_Direccion" KeyDown="DtgDptosUpdate_KeyDown" PreviewTextInput="txt_Direccion_PreviewTextInput">
                                     <TextBox.Text >
                                         <Binding Path="Direccion" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules >
@@ -84,7 +84,7 @@
                     <DataGridTemplateColumn Header="Número departamento" Width="1.3*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgDptosUpdate_KeyDown">
+                                <TextBox x:Name="txt_NroDpto"  KeyDown="DtgDptosUpdate_KeyDown" PreviewTextInput="txt_NroDpto_PreviewTextInput">
                                     <TextBox.Text >
                                         <Binding Path="NroDpto"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules >
@@ -99,7 +99,7 @@
                     <DataGridTemplateColumn Header="Capacidad" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgDptosUpdate_KeyDown">
+                                <TextBox x:Name="txt_Capacidad" KeyDown="DtgDptosUpdate_KeyDown" PreviewTextInput="txt_Capacidad_PreviewTextInput">
                                     <TextBox.Text >
                                         <Binding Path="Capacidad"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules >

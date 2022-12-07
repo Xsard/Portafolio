@@ -176,10 +176,23 @@ namespace Vista.Pages
                 if (e.Key == Key.Enter)
                 {
                     Departamento departamento = (Departamento)dtgDptos.SelectedItem;
+                    MessageBox.Show("Nombre Depto: " + departamento.NombreDpto);
+                    MessageBox.Show("NroDptoo: " + departamento.NroDpto);
+                    MessageBox.Show("Direccion: " + departamento.Direccion);
+                    MessageBox.Show("Comuna: " + departamento.Comuna);
+                    MessageBox.Show("TarifaDiara: " + departamento.TarifaDiara);
+                    MessageBox.Show("Capacidad: " + departamento.Capacidad);
                     try
                     {
-                        int estado = CDepartamento.ActualizarDepto(departamento);
-                        MensajeOk("Departamento actualizado");
+                        if (departamento.NombreDpto.Length > 0)
+                        {
+                            int estado = CDepartamento.ActualizarDepto(departamento);
+                            MensajeOk("Departamento actualizado");
+                        }
+                        else
+                        {
+                            MensajeError("Debe ingresar un nombre de departamento");
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -303,6 +316,36 @@ namespace Vista.Pages
         {
             Regex regex = new Regex("^[a-zA-Zá-úÁ-Ú0-9, ]*$");
             e.Handled = !regex.IsMatch(e.Text);            
+        }
+
+        private void txt_NombreDpto_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_TarifaDiaria_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_Direccion_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("^[a-zA-Zá-úÁ-Ú0-9, ]*$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void txt_NroDpto_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_Capacidad_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

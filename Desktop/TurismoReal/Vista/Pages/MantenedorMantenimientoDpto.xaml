@@ -42,7 +42,7 @@
                     <DataGridTemplateColumn Header="Nombre" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgMantDptosUpdate_KeyDown">
+                                <TextBox x:Name="txt_Nombre" KeyDown="DtgMantDptosUpdate_KeyDown" PreviewTextInput="txt_Nombre_PreviewTextInput">
                                     <TextBox.Text>
                                         <Binding Path="NombreMantenimiento" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -56,7 +56,7 @@
                     <DataGridTemplateColumn Header="Descripción" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgMantDptosUpdate_KeyDown">
+                                <TextBox x:Name="txt_descripcion" KeyDown="DtgMantDptosUpdate_KeyDown" PreviewTextInput="txt_descripcion_PreviewTextInput">
                                     <TextBox.Text >
                                         <Binding Path="DescripcionMantenimiento" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -86,7 +86,7 @@
                     <DataGridTemplateColumn Header="Costo" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgMantDptosUpdate_KeyDown">
+                                <TextBox x:Name="txt_Costo" KeyDown="DtgMantDptosUpdate_KeyDown" PreviewTextInput="txt_Costo_PreviewTextInput">
                                     <TextBox.Text >
                                         <Binding Path="CostoMantencion"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -102,7 +102,7 @@
                             <DataTemplate>
                                 <TextBox KeyDown="DtgMantDptosUpdate_KeyDown">
                                     <TextBox.Text >
-                                        <Binding Path="Estado"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                        <Binding Path="Estado" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
                                             </Binding.ValidationRules>
                                         </Binding>
