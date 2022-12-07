@@ -8,6 +8,7 @@ using Modelo;
 using System.Data;
 using System.Linq;
 using System.Windows.Input;
+using System.Text.RegularExpressions;
 
 namespace Vista.Pages
 {
@@ -183,6 +184,18 @@ namespace Vista.Pages
             {
                 MessageBox.Show(ex.Message, ex.StackTrace);
             }
+        }
+
+        private void txt_string_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú0-9\"]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_int_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9\"]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

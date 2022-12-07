@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Vista.Pages" xmlns:local1="clr-namespace:Vista.Pages.Validaciones.ValidacionesTour"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="785" d:DesignWidth="1140"
       Title="MantenedorTours">
 
     <Page.Resources>
@@ -107,15 +107,15 @@
                         <Label Content="Agregar Tour" FontSize="20"/>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="RoomService" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombre_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox materialDesign:HintAssist.Hint="Nombre del Tour" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_nombre_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox materialDesign:HintAssist.Hint="Nombre del Tour" PreviewTextInput="txt_string_PreviewTextInput" MaxLength="50" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_nombre_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Details" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_desc_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox  SpellCheck.IsEnabled="True" materialDesign:HintAssist.Hint="Descripción del Tour" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_desc_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox SpellCheck.IsEnabled="True" MaxLength="200" materialDesign:HintAssist.Hint="Descripción del Tour" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_desc_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Money" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_precio_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox materialDesign:HintAssist.Hint="Valor del Tour" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_precio_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox materialDesign:HintAssist.Hint="Valor del Tour" PreviewTextInput="txt_int_ag_PreviewTextInput" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_precio_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Place" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=cbo_comuna_ag}" VerticalAlignment="Bottom"/>
