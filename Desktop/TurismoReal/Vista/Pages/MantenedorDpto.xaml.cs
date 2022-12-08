@@ -173,7 +173,7 @@ namespace Vista.Pages
         {
             try
             {
-                if (e.Key == Key.Enter)
+                if (e.Key == Key.Enter && ValidarCamposDataGrid())
                 {
                     Departamento departamento = (Departamento)dtgDptos.SelectedItem;
                     MessageBox.Show("Nombre Depto: " + departamento.NombreDpto);
@@ -208,7 +208,7 @@ namespace Vista.Pages
         private void DtgDptosUpdate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Departamento departamento = (Departamento)dtgDptos.SelectedItem;
-            if (departamento != null)
+            if (departamento != null && ValidarCamposDataGrid())
             {
                 try
                 {
@@ -226,7 +226,7 @@ namespace Vista.Pages
         private void CheckBoxEstado_Click(object sender, RoutedEventArgs e)
         {
             Departamento departamento = (Departamento)dtgDptos.SelectedItem;
-            if (departamento != null)
+            if (departamento != null && ValidarCamposDataGrid())
             {
                 try
                 {
@@ -346,6 +346,61 @@ namespace Vista.Pages
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+        private bool ValidarCamposDataGrid()
+        {
+            try
+            {
+                if (txt_nombre_ag.Text != string.Empty)
+                {
+                    if (txt_tarifa_ag.Text != string.Empty)
+                    {
+                        if (txt_direccion_ag.Text != string.Empty)
+                        {
+                            if (txt_nro_ag.Text != string.Empty)
+                            {
+                                if (txt_cap_ag.Text != string.Empty)
+                                {
+                                    if (cbo_comuna_ag.Text != string.Empty)
+                                    {
+                                        return true;
+
+                                    }
+                                    else
+                                    {
+                                        this.MensajeError("Comuna es un campo requerido");
+                                    }
+                                }
+                                else
+                                {
+                                    this.MensajeError("Capacidad es un campo requerido");
+                                }
+                            }
+                            else
+                            {
+                                this.MensajeError("Nro. Departamento es un campo requerido");
+                            }
+                        }
+                        else
+                        {
+                            this.MensajeError("Dirección es un campo requerido");
+                        }
+                    }
+                    else
+                    {
+                        this.MensajeError("Tarifa es un campo requerido");
+                    }
+                }
+                else
+                {
+                    this.MensajeError("Nombre es un campo requerido");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.StackTrace);
+            }
+            return false;
         }
     }
 }
