@@ -173,9 +173,9 @@ namespace Vista.Pages
         {
             try
             {
-                if (e.Key == Key.Enter && ValidarCamposDataGrid())
+                Departamento departamento = (Departamento)dtgDptos.SelectedItem;
+                if (e.Key == Key.Enter && ValidarCamposDataGrid(departamento))
                 {
-                    Departamento departamento = (Departamento)dtgDptos.SelectedItem;
                     MessageBox.Show("Nombre Depto: " + departamento.NombreDpto);
                     MessageBox.Show("NroDptoo: " + departamento.NroDpto);
                     MessageBox.Show("Direccion: " + departamento.Direccion);
@@ -208,7 +208,7 @@ namespace Vista.Pages
         private void DtgDptosUpdate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Departamento departamento = (Departamento)dtgDptos.SelectedItem;
-            if (departamento != null && ValidarCamposDataGrid())
+            if (departamento != null && ValidarCamposDataGrid(departamento))
             {
                 try
                 {
@@ -226,7 +226,7 @@ namespace Vista.Pages
         private void CheckBoxEstado_Click(object sender, RoutedEventArgs e)
         {
             Departamento departamento = (Departamento)dtgDptos.SelectedItem;
-            if (departamento != null && ValidarCamposDataGrid())
+            if (departamento != null && ValidarCamposDataGrid(departamento))
             {
                 try
                 {
@@ -347,29 +347,21 @@ namespace Vista.Pages
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-        private bool ValidarCamposDataGrid()
+        private bool ValidarCamposDataGrid(Departamento departamento)
         {
             try
             {
-                if (txt_nombre_ag.Text != string.Empty)
+                if (departamento.NombreDpto.Trim() != string.Empty)
                 {
-                    if (txt_tarifa_ag.Text != string.Empty)
+                    if (departamento.TarifaDiara > 0)
                     {
-                        if (txt_direccion_ag.Text != string.Empty)
+                        if (departamento.Direccion.Trim() != string.Empty)
                         {
-                            if (txt_nro_ag.Text != string.Empty)
+                            if (departamento.NroDpto >0)
                             {
-                                if (txt_cap_ag.Text != string.Empty)
+                                if (departamento.Capacidad > 0)
                                 {
-                                    if (cbo_comuna_ag.Text != string.Empty)
-                                    {
-                                        return true;
-
-                                    }
-                                    else
-                                    {
-                                        this.MensajeError("Comuna es un campo requerido");
-                                    }
+                                    return true;
                                 }
                                 else
                                 {
