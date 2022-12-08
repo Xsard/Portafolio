@@ -13,12 +13,17 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <Grid Margin="12,0" Grid.Row="0">
+                <Label Content="Checklist" VerticalAlignment="Bottom" FontSize="40" Foreground="#FFCC3300"/>
+                <Line Fill="#FFCC3300" VerticalAlignment="Bottom" Height="1" Stroke="#FFCC3300" X1="1152" Y1="1"/>
+            </Grid>
             <Grid Grid.Row="2" Margin="12">
                 <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgItems">
                     <DataGrid.Columns>
@@ -55,7 +60,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Unit" Width="*" IsReadOnly="True">
+                        <DataGridTemplateColumn Header="Cant. Afectada" Width="*" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox SelectedIndex="0" ItemsSource="{Binding Path=AuxCant}" SelectionChanged="ComboBox_SelectionChanged"/>

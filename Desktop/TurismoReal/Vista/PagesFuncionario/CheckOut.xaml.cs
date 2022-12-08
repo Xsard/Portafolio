@@ -35,20 +35,20 @@ namespace Vista.PagesFuncionario
             try
             {
                 Reserva reserva = (Reserva)dtgReservas.SelectedItem;
-                int IdReserva = reserva.IdReserva;
-                char FirmaFunc = '1';
-                char EstadoR = 'T';
-                char EstadoP = 'L';
+
                 MessageBoxResult result = MessageBox.Show("¿Desea ingresar multas?", "Reservas", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    CReserva.ConfirmarFirma(IdReserva, FirmaFunc, EstadoR, EstadoP);
                     NavigationService ns = NavigationService.GetNavigationService(this);
                     CheckList checkList = new(reserva);
                     ns.Navigate(checkList);
                 }
                 else
                 {
+                    int IdReserva = reserva.IdReserva;
+                    char FirmaFunc = '1';
+                    char EstadoR = 'T';
+                    char EstadoP = 'L';
                     CReserva.ConfirmarFirma(IdReserva, FirmaFunc, EstadoR, EstadoP);
                     MensajeOk("Check out realizado con éxito");
                     ListarReservas();

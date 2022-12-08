@@ -148,7 +148,12 @@ namespace Vista.PagesFuncionario
                 DescMulta = txtDescripción.Text,
                 ValorMulta = int.Parse(lblCostoTotal.Content.ToString())
             };
-            int estado = CMulta.GenerarMulta(multa, reserva.IdReserva, reserva.IdDepto, reserva.IdCliente);
+            char FirmaFunc = '1';
+            char EstadoR = 'T';
+            char EstadoP = 'L';
+            int estado = CReserva.ConfirmarFirma(reserva.IdReserva, FirmaFunc, EstadoR, EstadoP);
+            if (estado <= 0) return; 
+            estado = CMulta.GenerarMulta(multa, reserva.IdReserva, reserva.IdDepto, reserva.IdCliente);
             if (estado > 0)
             {
                 foreach (var item in dtgObjetosAfectados.Items)

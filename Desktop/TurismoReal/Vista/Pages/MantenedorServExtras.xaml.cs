@@ -3,6 +3,7 @@ using Modelo;
 using System;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -99,6 +100,7 @@ namespace Vista.Pages
             if (e.Key == Key.Enter)
             {
                 ServicioExtra servicioExtra = (ServicioExtra)dtgServE.SelectedItem;
+                if (servicioExtra.ValorServicioExtra <= 0) return;
                 try
                 {
                     int estado = CServicioExtra.ActualizarServicio(servicioExtra);
@@ -124,6 +126,18 @@ namespace Vista.Pages
             {
                 throw;
             }
+        }
+
+        private void txt_string_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú0-9\"]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_int_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9\"]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

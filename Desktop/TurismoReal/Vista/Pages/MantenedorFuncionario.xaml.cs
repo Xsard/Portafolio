@@ -107,6 +107,19 @@ namespace Vista.Pages
             {
                 if (e.Key == Key.Enter)
                 {
+                    string nRut = txt_rut_ag.Text.Split('-').First();
+                    string dvRut = txt_rut_ag.Text.Split('-').Last();
+                    if (!Rut.ValidaRut(nRut, dvRut))
+                    {
+                        MessageBox.Show("El rut ingresado no es válido");
+                        return;
+                    }
+                    string pattern = "^\\S+@\\S+\\.\\S+$";
+                    if (!Regex.IsMatch(txt_email_ag.Text, pattern))
+                    {
+                        MessageBox.Show("Ingrese un correo con formato válido");
+                        return;
+                    }
                     Funcionario userFuncionario = (Funcionario)dtgFuncionario.SelectedItem;
                     try
                     {

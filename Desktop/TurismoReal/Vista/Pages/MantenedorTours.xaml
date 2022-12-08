@@ -39,7 +39,7 @@
                     <DataGridTemplateColumn Header="Nombre Tour" Width="120">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgTourUpdate_KeyDown">
+                                <TextBox KeyDown="DtgTourUpdate_KeyDown" PreviewTextInput="txt_string_PreviewTextInput">
                                     <TextBox.Text>
                                         <Binding Path="NombreTour"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -54,7 +54,7 @@
                     <DataGridTemplateColumn Header="Descripción Tour" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgTourUpdate_KeyDown" TextWrapping="Wrap">
+                                <TextBox KeyDown="DtgTourUpdate_KeyDown" TextWrapping="Wrap" PreviewTextInput="txt_string_PreviewTextInput">
                                     <TextBox.Text>
                                         <Binding Path="DescripcionTour"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -69,7 +69,7 @@
                     <DataGridTemplateColumn Header="Valor Tour" Width="180">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgTourUpdate_KeyDown">
+                                <TextBox KeyDown="DtgTourUpdate_KeyDown" PreviewTextInput="txt_int_ag_PreviewTextInput">
                                     <TextBox.Text >
                                         <Binding Path="ValorTour"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>

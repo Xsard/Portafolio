@@ -83,6 +83,11 @@ namespace Vista.Pages
                 if (e.Key == Key.Enter)
                 {
                     Tour tour = (Tour)dtgTours.SelectedItem;
+                    if (tour.ValorTour <= 0)
+                    {
+                        this.MensajeError("El valor debe ser mayor a 0");
+                        return;
+                    }
                     try
                     {
                         int estado = CTour.ActualizarTour(tour);
@@ -166,11 +171,17 @@ namespace Vista.Pages
                 }
                 else
                 {
+                    if (!Int32.TryParse(txt_precio_ag.Text.Trim(),out int valor)) return;
+                    if (valor <= 0)
+                    {
+                        this.MensajeError("El valor debe ser mayor a 0");
+                        return;
+                    }
                     Tour tour = new()
                     {
                         NombreTour = txt_nombre_ag.Text.Trim(),
                         DescripcionTour = txt_desc_ag.Text.Trim(),
-                        ValorTour = Int32.Parse(txt_precio_ag.Text.Trim()),
+                        ValorTour = valor,
                         Region = (Region)cbo_region_ag.SelectedItem
                     };
 
@@ -197,5 +208,6 @@ namespace Vista.Pages
             Regex regex = new Regex("[^0-9\"]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
     }
 }
