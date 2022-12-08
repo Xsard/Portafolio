@@ -21,7 +21,7 @@ namespace Vista.Pages.Validaciones.ValidacionesDepto
                 }
                 else
                 {
-                    return new ValidationResult(false, "La dirección es requerida");
+                    return new ValidationResult(false, "El nombre es requerido");
                 }
                 return ValidationResult.ValidResult;
             }

@@ -90,7 +90,7 @@
                     <DataGridTemplateColumn Header="CheckIn" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox>
+                                <TextBox IsReadOnly="True">
                                     <TextBox.Text >
                                         <Binding Path="CheckIn" StringFormat="dd/MM/yyyy" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -104,7 +104,7 @@
                     <DataGridTemplateColumn Header="CheckOut" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox>
+                                <TextBox IsReadOnly="True">
                                     <TextBox.Text >
                                         <Binding Path="CheckOut" StringFormat="dd/MM/yyyy" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -118,7 +118,7 @@
                     <DataGridTemplateColumn Header="Firma" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox>
+                                <TextBox IsReadOnly="True">
                                     <TextBox.Text >
                                         <Binding Path="Firma" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -132,7 +132,7 @@
                     <DataGridTemplateColumn Header="Acompañantes" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox>
+                                <TextBox IsReadOnly="True">
                                     <TextBox.Text>
                                         <Binding Path="CantidadAcompanantes" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                         </Binding>
@@ -144,7 +144,7 @@
                     <DataGridTemplateColumn Header="Total" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox>
+                                <TextBox IsReadOnly="True">
                                     <TextBox.Text>
                                         <Binding Path="ValorTotal" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                         </Binding>

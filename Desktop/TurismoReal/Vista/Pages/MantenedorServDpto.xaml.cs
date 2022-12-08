@@ -3,6 +3,7 @@ using Modelo;
 using System;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -71,6 +72,14 @@ namespace Vista.Pages
                         throw;
                     }                    
                 }
+                else
+                {
+                    MessageBox.Show("La descripción es requerida");
+                }
+            }
+            else
+            {
+                MessageBox.Show("El nombre es requerido");
             }
         }
         private void ListarServicioDpto()
@@ -100,22 +109,79 @@ namespace Vista.Pages
             dhServDpto_ag.IsOpen = false;
         }
 
-        private void DtgServDptoUpdate_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void DtgServDptoUpdate_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            try
             {
-                Servicio servicioDpto = (Servicio)dtgServDpto.SelectedItem;
-                try
+                Servicio servicio = (Servicio)dtgServDpto.SelectedItem;
+                if (e.Key == Key.Enter && ValidarCamposDataGrid(servicio))
                 {
-                    int estado = CServicio.ActualizarServicioDpto(servicioDpto);
-                    MessageBox.Show("Servicio actualizado");
-                    ListarServicioDpto();
-                }
-                catch (Exception)
-                {
-                    throw;
+                    try
+                    {
+                        int estado = CServicio.ActualizarServicioDpto(servicio);
+                        MessageBox.Show("Servicio actualizado");
+                        ListarServicioDpto();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
                 }
             }
+            catch (Exception)
+            {
+                throw;
+            }           
         }
+        private bool ValidarCamposDataGrid(Servicio servicio)
+        {
+            try
+            {
+                if (servicio.NombreServDpto.Trim() != string.Empty)
+                {
+                    if (servicio.DescServDpto.Trim() != string.Empty)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Descripción es un campo requerido");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Nombre es un campo requerido");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.StackTrace);
+            }
+            return false;
+        }
+        private void txt_NombreServDpto_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("^[a-zA-Zá-úÁ-Ú0-9, ]*$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void txt_DescServDpto_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("^[a-zA-Zá-úÁ-Ú0-9, ]*$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void txt_nombre_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("^[a-zA-Zá-úÁ-Ú0-9, ]*$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void txt_desc_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("^[a-zA-Zá-úÁ-Ú0-9, ]*$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
     }
 }

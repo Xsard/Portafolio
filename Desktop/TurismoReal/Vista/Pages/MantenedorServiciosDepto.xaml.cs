@@ -1,27 +1,14 @@
 ﻿using Controlador;
 using Modelo;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Vista.Pages
 {
-    /// <summary>
-    /// Interaction logic for MantenedorServiciosDepto.xaml
-    /// </summary>
     public partial class MantenedorServiciosDepto : Page
     {
         Departamento departamento;
@@ -224,7 +211,7 @@ namespace Vista.Pages
             }
             else
             {
-                btnAcEstado.Content = "Desctivar";
+                btnAcEstado.Content = "Desactivar";
 
             }
 

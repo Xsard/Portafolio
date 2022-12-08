@@ -35,7 +35,7 @@
                     <DataGridTemplateColumn Header="Nombre" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgServDptoUpdate_KeyDown">
+                                <TextBox x:Name="txt_NombreServDpto" PreviewTextInput="txt_NombreServDpto_PreviewTextInput" KeyDown="DtgServDptoUpdate_KeyDown">
                                     <TextBox.Text>
                                         <Binding Path="NombreServDpto"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -50,7 +50,7 @@
                     <DataGridTemplateColumn Header="Descripción" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgServDptoUpdate_KeyDown" TextWrapping="Wrap">
+                                <TextBox x:Name="txt_DescServDpto" PreviewTextInput="txt_DescServDpto_PreviewTextInput" KeyDown="DtgServDptoUpdate_KeyDown" TextWrapping="Wrap">
                                     <TextBox.Text >
                                         <Binding Path="DescServDpto"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -81,11 +81,11 @@
                         <Label Content="Agregar Servicio Departamento" FontSize="20"/>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="RoomService" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombre_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox materialDesign:HintAssist.Hint="Nombre del servicio" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_nombre_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox materialDesign:HintAssist.Hint="Nombre del servicio" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_nombre_ag" PreviewTextInput="txt_nombre_ag_PreviewTextInput" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Details" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_desc_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox  SpellCheck.IsEnabled="True" materialDesign:HintAssist.Hint="Descripción" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_desc_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox  SpellCheck.IsEnabled="True" materialDesign:HintAssist.Hint="Descripción" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_desc_ag" PreviewTextInput="txt_desc_ag_PreviewTextInput" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
                             <Button x:Name="btn_Agregar_ServicioDpto" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Click="btn_Agregar_ServicioDpto_Click" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0"/>

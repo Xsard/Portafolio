@@ -62,7 +62,7 @@
                     <DataGridTemplateColumn Header="Item" Width="1.5*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgInventarioUpdate_KeyDown">
+                                <TextBox x:Name="txt_NombreObjeto" KeyDown="DtgInventarioUpdate_KeyDown" PreviewTextInput="txt_NombreObjeto_PreviewTextInput">
                                     <TextBox.Text>
                                         <Binding Path="NombreObjeto"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -77,7 +77,7 @@
                     <DataGridTemplateColumn Header="Cantidad" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgInventarioUpdate_KeyDown">
+                                <TextBox x:Name="txt_CantidadObjeto" KeyDown="DtgInventarioUpdate_KeyDown" PreviewTextInput="txt_CantidadObjeto_PreviewTextInput">
                                     <TextBox.Text>
                                         <Binding Path="CantidadObjeto"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
@@ -92,7 +92,7 @@
                     <DataGridTemplateColumn Header="Valor unitario" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgInventarioUpdate_KeyDown">
+                                <TextBox x:Name="txt_ValorUnitario" KeyDown="DtgInventarioUpdate_KeyDown" PreviewTextInput="txt_ValorUnitario_PreviewTextInput">
                                     <TextBox.Text>
                                         <Binding Path="ValorUnitarioObjeto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>

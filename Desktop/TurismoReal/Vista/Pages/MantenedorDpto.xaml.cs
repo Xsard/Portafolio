@@ -176,15 +176,9 @@ namespace Vista.Pages
                 Departamento departamento = (Departamento)dtgDptos.SelectedItem;
                 if (e.Key == Key.Enter && ValidarCamposDataGrid(departamento))
                 {
-                    MessageBox.Show("Nombre Depto: " + departamento.NombreDpto);
-                    MessageBox.Show("NroDptoo: " + departamento.NroDpto);
-                    MessageBox.Show("Direccion: " + departamento.Direccion);
-                    MessageBox.Show("Comuna: " + departamento.Comuna);
-                    MessageBox.Show("TarifaDiara: " + departamento.TarifaDiara);
-                    MessageBox.Show("Capacidad: " + departamento.Capacidad);
                     try
                     {
-                        if (departamento.NombreDpto.Length > 0)
+                        if (departamento.NombreDpto.Length > 0 || departamento.NombreDpto != null)
                         {
                             int estado = CDepartamento.ActualizarDepto(departamento);
                             MensajeOk("Departamento actualizado");
@@ -326,7 +320,7 @@ namespace Vista.Pages
 
         private void txt_TarifaDiaria_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú]+");
+            Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 

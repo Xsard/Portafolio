@@ -66,12 +66,14 @@ namespace Vista.Pages
         }
         private void btn_Agregar_Objeto_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(txt_precio_unitario.Text, out int valor))
-            {
-                if (!txt_objeto_ag.Text.Trim().Equals(""))
+            if (!txt_objeto_ag.Text.Trim().Equals(""))                
+            {                
+                if (!txt_cantidad_ag.Text.Trim().Equals(""))
                 {
-                    if (int.TryParse(txt_cantidad_ag.Text, out int cantidad))
+                    int.TryParse(txt_cantidad_ag.Text, out int cantidad);
+                    if (!txt_precio_unitario.Text.Trim().Equals(""))
                     {
+                        int.TryParse(txt_precio_unitario.Text, out int valor);
                         Objeto objeto = new()
                         {
                             NombreObjeto = txt_objeto_ag.Text,
@@ -83,8 +85,21 @@ namespace Vista.Pages
                         ListarObjetos();
                         Limpiar();
                     }
+                    else
+                    {
+                        MessageBox.Show("Debe ingresar el precio del objeto");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Debe ingresar la cantidad de objetos");
                 }
             }
+            else
+            {
+                MessageBox.Show("Debe ingresar un nombre de objeto");
+            }
+            
         }
         private void Limpiar()
         {
@@ -154,7 +169,7 @@ namespace Vista.Pages
         }
         private void ListarImg()
         {
-            string path = System.IO.Directory.GetCurrentDirectory();
+            string path = Directory.GetCurrentDirectory();
             path = path.Substring(0, path.LastIndexOf("Desktop"));
             path = string.Concat(path, "Turismo_Real_Web\\Fornt_end\\front_end_tr\\src\\imagenes_Dpto\\");
             try
@@ -248,6 +263,24 @@ namespace Vista.Pages
         private void txt_numero_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_NombreObjeto_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("^[a-zA-Zá-úÁ-Ú0-9, ]*$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void txt_CantidadObjeto_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9\"]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_ValorUnitario_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9\"]+");
             e.Handled = regex.IsMatch(e.Text);
         }
     }
