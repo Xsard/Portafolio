@@ -54,51 +54,115 @@ namespace Vista.Pages
         {
             try
             {
-                if (txt_rut_ag.Text == string.Empty || txt_nombres_ag.Text == string.Empty || txt_apellidos_ag.Text == string.Empty ||
-                    txt_fono_ag.Text == string.Empty || txt_email_ag.Text == string.Empty || txt_pass_ag.Password == string.Empty || txt_passConfirm_ag.Password == string.Empty)
-                {
-                    this.MensajeError("Falta ingresar algunos datos");
-                }
-                else
+                if (validarForm())
                 {
                     string pattern = @"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
-                    if (!Regex.IsMatch(txt_pass_ag.Password, pattern) || txt_pass_ag.Password != txt_passConfirm_ag.Password)
+                    if (txt_pass_ag.Password.Length >= 8 && txt_pass_ag.Password.Length <= 30)
                     {
-                        MessageBox.Show("Las contraseñas no coinciden o no son lo suficientemente seguras");
-                        return;
-                    }
-                    string nRut = txt_rut_ag.Text.Split('-').First();
-                    string dvRut = txt_rut_ag.Text.Split('-').Last();
-                    if (!Rut.ValidaRut(nRut, dvRut))
-                    {
-                        MessageBox.Show("Rut invalido");
-                        return;
-                    }
-                    pattern = "^\\S+@\\S+\\.\\S+$";
-                    if (!Regex.IsMatch(txt_email_ag.Text, pattern))
-                    {
-                        MessageBox.Show("Correo inválido");
-                        return;
-                    }
-                    Funcionario userFuncionario = new()
-                    {
-                        Email = txt_email_ag.Text.Trim(),
-                        Contraseña = txt_pass_ag.Password.Trim(),
-                        Telefono = Convert.ToInt32(txt_fono_ag.Text.Trim()),
-                        Rut = txt_rut_ag.Text.Trim(),
-                        Nombres = txt_nombres_ag.Text.Trim(),
-                        Apellidos = txt_apellidos_ag.Text.Trim(),
-                    };
+                        if (!Regex.IsMatch(txt_pass_ag.Password, pattern) || txt_pass_ag.Password != txt_passConfirm_ag.Password)
+                        {
+                            MessageBox.Show("Las contraseñas no coinciden o no son lo suficientemente seguras");
+                            return;
+                        }
+                        string nRut = txt_rut_ag.Text.Split('-').First();
+                        string dvRut = txt_rut_ag.Text.Split('-').Last();
+                        if (!Rut.ValidaRut(nRut, dvRut))
+                        {
+                            MessageBox.Show("Rut invalido");
+                            return;
+                        }
+                        pattern = "^\\S+@\\S+\\.\\S+$";
+                        if (!Regex.IsMatch(txt_email_ag.Text, pattern))
+                        {
+                            MessageBox.Show("Correo inválido");
+                            return;
+                        }
+                        Funcionario userFuncionario = new()
+                        {
+                            Email = txt_email_ag.Text.Trim(),
+                            Contraseña = txt_pass_ag.Password.Trim(),
+                            Telefono = Convert.ToInt32(txt_fono_ag.Text.Trim()),
+                            Rut = txt_rut_ag.Text.Trim(),
+                            Nombres = txt_nombres_ag.Text.Trim(),
+                            Apellidos = txt_apellidos_ag.Text.Trim(),
+                        };
 
-                    int estado = CFuncionario.CrearUsuarioFuncionario(userFuncionario);
-                    MensajeOk("Funcionario agregado");
-                    ListarFuncionario();
-                    Limpiar();
-                }
+                        int estado = CFuncionario.CrearUsuarioFuncionario(userFuncionario);
+                        MensajeOk("Funcionario agregado");
+                        ListarFuncionario();
+                        Limpiar();
+                    }
+                    else
+                    {
+                        MessageBox.Show("La contraseña debe tener entre 8 y 30 caracteres");
+                    }   
+                }                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.StackTrace);
+            }
+        }
+        private bool validarForm()
+        {
+            try
+            {
+                if (txt_rut_ag.Text != string.Empty)
+                {
+                    if (txt_nombres_ag.Text != string.Empty)
+                    {
+                        if (txt_apellidos_ag.Text != string.Empty)
+                        {
+                            if (txt_fono_ag.Text != string.Empty)
+                            {
+                                if (txt_email_ag.Text != string.Empty)
+                                {
+                                    if (txt_pass_ag.Password != string.Empty)
+                                    {
+                                        if (txt_passConfirm_ag.Password != string.Empty)
+                                        {
+                                            return true;
+                                        }
+                                        else
+                                        {
+                                            MensajeError("La confirmación de contraseña es requerida");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        MensajeError("La contraseña es requerida");
+                                    }
+                                }
+                                else
+                                {
+                                    MensajeError("El correo es requerido");
+                                }
+                            }
+                            else
+                            {
+                                MensajeError("El telefono es requerido");
+
+                            }
+                        }
+                        else
+                        {
+                            MensajeError("Los apellidos son requeridos");
+                        }
+                    }
+                    else
+                    {
+                        MensajeError("Los nombres son requeridos");
+                    }
+                }
+                else
+                {
+                    MensajeError("El RUT es requerido");
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
         private void DtgFuncionarioUpdate_KeyDown(object sender, KeyEventArgs e)
@@ -167,11 +231,6 @@ namespace Vista.Pages
         private void MensajeOk(string Mensaje)
         {
             MessageBox.Show(Mensaje, "Funcionarios", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-        private void txt_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú0-9\"]+");
-            e.Handled = regex.IsMatch(e.Text);
         }
         private void txt_fono_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

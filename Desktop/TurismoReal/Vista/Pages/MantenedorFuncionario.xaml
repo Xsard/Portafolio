@@ -131,11 +131,11 @@
                         </StackPanel>
                         <StackPanel x:Name="spNombres" Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="IdentificationCard" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombres_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_nombres_ag" MaxLength="60" PreviewTextInput="txt_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Nombres" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox x:Name="txt_nombres_ag" MaxLength="60" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Nombres" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
                         </StackPanel>
                         <StackPanel x:Name="spApellidos" Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="IdentificationCard" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_apellidos_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_apellidos_ag" MaxLength="60" PreviewTextInput="txt_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Apellidos" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox x:Name="txt_apellidos_ag" MaxLength="60" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Apellidos" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
                         </StackPanel>
                         <StackPanel x:Name="spEmail" Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="EmailAdd" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_email_ag}" VerticalAlignment="Bottom"/>
