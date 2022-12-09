@@ -10,13 +10,22 @@ namespace Vista.Pages.Validaciones.ValidacionesDepto
         {
             try
             {
-                var numero = Convert.ToInt32(value);
-
-                if (numero <= 0)
+                if (value != null && value.ToString() != string.Empty)
                 {
-                    return new ValidationResult(false, "La capacidad debe ser un número positivo");
+                    if (int.TryParse(value.ToString(), out int tarifaDiara))
+                    {
+                        if (tarifaDiara <= 0)
+                        {
+                            return new ValidationResult(false, "La capacidad debe ser un número positivo");
+                        }
+                        return ValidationResult.ValidResult;
+                    }
+                    return new ValidationResult(false, "La capacidad debe ser un número");
                 }
-                return ValidationResult.ValidResult;
+                else
+                {
+                    return new ValidationResult(false, "La capacidad es requerida");
+                }
             }
             catch (Exception)
             {

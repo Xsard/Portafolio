@@ -87,17 +87,17 @@ namespace Vista.Pages
                     }
                     else
                     {
-                        MessageBox.Show("Debe ingresar el precio del objeto");
+                        MessageBox.Show("El precio unitario es requerido");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Debe ingresar la cantidad de objetos");
+                    MessageBox.Show("La cantidad es requerida");
                 }
             }
             else
             {
-                MessageBox.Show("Debe ingresar un nombre de objeto");
+                MessageBox.Show("El nombre es requerido");
             }
             
         }

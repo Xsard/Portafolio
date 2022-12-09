@@ -9,14 +9,20 @@ namespace Vista.Pages.Validaciones.ValidacionesDepto
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             try
-            {
-                var numero = Convert.ToInt32(value);
-
-                if (numero <= 0)
+            {                
+                if (value != null && value.ToString() != string.Empty)
                 {
-                    return new ValidationResult(false, "El N° del departamento debe ser un número positivo");
+                    var numero = Convert.ToInt32(value);
+                    if (numero <= 0)
+                    {
+                        return new ValidationResult(false, "El N° del departamento debe ser un número positivo");
+                    }
+                    return ValidationResult.ValidResult;
                 }
-                return ValidationResult.ValidResult;
+                else
+                {
+                    return new ValidationResult(false, "El N° del departamento es requerido");
+                }
             }
             catch (Exception)
             {

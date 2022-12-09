@@ -170,7 +170,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="AddressMarker" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_direccion_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox materialDesign:HintAssist.Hint="Dirección" PreviewTextInput="txt_direccion_ag_PreviewTextInput" MaxLength="250" Margin="10,0,0,0" x:Name="txt_direccion_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+                            <TextBox materialDesign:HintAssist.Hint="Dirección" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="txt_direccion_ag_PreviewTextInput" MaxLength="250" Margin="10,0,0,0" x:Name="txt_direccion_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Numeric" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nro_ag}" VerticalAlignment="Bottom"/>

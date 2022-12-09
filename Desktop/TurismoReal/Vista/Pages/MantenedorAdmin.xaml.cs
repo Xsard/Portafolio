@@ -115,9 +115,9 @@ namespace Vista.Pages
                     {
                         if (txt_apellidos_ag.Text != string.Empty)
                         {
-                            if (txt_fono_ag.Text != string.Empty)
+                            if (txt_email_ag.Text != string.Empty)
                             {
-                                if (txt_email_ag.Text != string.Empty)
+                                if (txt_fono_ag.Text != string.Empty)
                                 {
                                     if (txt_pass_ag.Password != string.Empty)
                                     {
@@ -137,12 +137,12 @@ namespace Vista.Pages
                                 }
                                 else
                                 {
-                                    MensajeError("El correo es requerido");
+                                    MensajeError("El teléfono es requerido");
                                 }
                             }
                             else
                             {
-                                MensajeError("El telefono es requerido");
+                                MensajeError("El correo es requerido");
 
                             }
                         }
@@ -172,26 +172,26 @@ namespace Vista.Pages
         {
             try
             {
-                if (e.Key == Key.Enter)
+                Administrador userAdmin = (Administrador)dtgAdmin.SelectedItem;
+                if (e.Key == Key.Enter && ValidarCamposDataGrid(userAdmin))
                 {
-                    string nRut = txt_rut_ag.Text.Split('-').First();
-                    string dvRut = txt_rut_ag.Text.Split('-').Last();
-                    if (!Rut.ValidaRut(nRut, dvRut))
-                    {
-                        MessageBox.Show("El rut ingresado no es válido");
-                        return;
-                    }
-                    string pattern = "^\\S+@\\S+\\.\\S+$";
-                    if (!Regex.IsMatch(txt_email_ag.Text, pattern))
-                    {
-                        MessageBox.Show("Ingrese un correo con formato válido");
-                        return;
-                    }
-                    Administrador userAdmin = (Administrador)dtgAdmin.SelectedItem;
                     try
                     {
-                        int estado = CAdmin.ActualizarAdmin(userAdmin);
-                        MensajeOk("Administrador actualizado");
+                        string pattern = "^\\S+@\\S+\\.\\S+$";
+                        if (!Regex.IsMatch(userAdmin.Email, pattern))
+                        {
+                            MessageBox.Show("Ingrese un correo con formato válido");
+                            return;
+                        }
+                        if (userAdmin.Nombres.Length > 0 || userAdmin.Nombres != null)
+                        {
+                            int estado = CAdmin.ActualizarAdmin(userAdmin);
+                            MensajeOk("Administrador actualizado");
+                        }
+                        else
+                        {
+                            MensajeError("El nombre es requerido");
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -203,6 +203,46 @@ namespace Vista.Pages
             {
                 MessageBox.Show(ex.Message, ex.StackTrace);
             }
+        }
+        private bool ValidarCamposDataGrid(Administrador userAdmin)
+        {
+            try
+            {
+                if (userAdmin.Nombres.Trim() != string.Empty)
+                {
+                    if (userAdmin.Apellidos.Trim() != string.Empty)
+                    {
+                        if (userAdmin.Telefono > 0)
+                        {
+                            if (userAdmin.Email.Trim() != string.Empty)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                this.MensajeError("El correo es requerido");
+                            }                        
+                        }
+                        else
+                        {
+                            this.MensajeError("El teléfono requerido");
+                        }
+                    }
+                    else
+                    {
+                        this.MensajeError("Los apellidos requeridos");
+                    }
+                }
+                else
+                {
+                    this.MensajeError("Los nombres son requeridos");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.StackTrace);
+            }
+            return false;
         }
         private void DtgAdminDelete_Click(object sender, RoutedEventArgs e)
         {

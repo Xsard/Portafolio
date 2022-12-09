@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Windows.Controls;
 
 namespace Vista.Pages.Validaciones.ValidacionesDepto
@@ -7,16 +8,29 @@ namespace Vista.Pages.Validaciones.ValidacionesDepto
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (int.TryParse(value.ToString(), out int tarifaDiara))
+            try
             {
-                if (tarifaDiara <= 0)
+                if (value != null && value.ToString() != string.Empty)
                 {
-                    return new ValidationResult(false, "La tarifa debe ser un número positivo");
+                    if (int.TryParse(value.ToString(), out int tarifaDiara))
+                    {
+                        if (tarifaDiara <= 0)
+                        {
+                            return new ValidationResult(false, "La tarifa debe ser un número positivo");
+                        }
+                        return ValidationResult.ValidResult;
+                    }
+                    return new ValidationResult(false, "La tarifa debe ser un número");
                 }
-                return ValidationResult.ValidResult;
-
+                else
+                {
+                    return new ValidationResult(false, "La tarifa es requerida");
+                }
             }
-            return new ValidationResult(false, "La tarifa debe ser un número");
+            catch (Exception)
+            {
+                throw;
+            }            
         }
     }
 }
