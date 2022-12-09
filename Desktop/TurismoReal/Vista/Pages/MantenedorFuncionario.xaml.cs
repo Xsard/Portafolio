@@ -68,13 +68,13 @@ namespace Vista.Pages
                         string dvRut = txt_rut_ag.Text.Split('-').Last();
                         if (!Rut.ValidaRut(nRut, dvRut))
                         {
-                            MessageBox.Show("Rut invalido");
+                            MessageBox.Show("El RUT ingresado no es válido");
                             return;
                         }
                         pattern = "^\\S+@\\S+\\.\\S+$";
                         if (!Regex.IsMatch(txt_email_ag.Text, pattern))
                         {
-                            MessageBox.Show("Correo inválido");
+                            MessageBox.Show("Ingrese un correo con formato válido");
                             return;
                         }
                         Funcionario userFuncionario = new()
@@ -113,9 +113,9 @@ namespace Vista.Pages
                     {
                         if (txt_apellidos_ag.Text != string.Empty)
                         {
-                            if (txt_fono_ag.Text != string.Empty)
+                            if (txt_email_ag.Text != string.Empty)
                             {
-                                if (txt_email_ag.Text != string.Empty)
+                                if (txt_fono_ag.Text != string.Empty)
                                 {
                                     if (txt_pass_ag.Password != string.Empty)
                                     {
@@ -135,12 +135,12 @@ namespace Vista.Pages
                                 }
                                 else
                                 {
-                                    MensajeError("El correo es requerido");
+                                    MensajeError("El teléfono es requerido");
                                 }
                             }
                             else
                             {
-                                MensajeError("El telefono es requerido");
+                                MensajeError("El correo es requerido");
 
                             }
                         }

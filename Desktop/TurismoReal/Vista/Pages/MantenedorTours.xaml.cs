@@ -164,14 +164,9 @@ namespace Vista.Pages
         {
             try
             {
-                if (txt_nombre_ag.Text == string.Empty || txt_desc_ag.Text == string.Empty || txt_precio_ag.Text == string.Empty ||
-                    cbo_region_ag.Text == string.Empty)
+                if (ValidarForm())
                 {
-                    this.MensajeError("Falta ingresar algunos datos");
-                }
-                else
-                {
-                    if (!Int32.TryParse(txt_precio_ag.Text.Trim(),out int valor)) return;
+                    if (!Int32.TryParse(txt_precio_ag.Text.Trim(), out int valor)) return;
                     if (valor <= 0)
                     {
                         this.MensajeError("El valor debe ser mayor a 0");
@@ -194,6 +189,46 @@ namespace Vista.Pages
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.StackTrace);
+            }
+        }
+        private bool ValidarForm()
+        {
+            try
+            {
+                if (txt_nombre_ag.Text != string.Empty)
+                {
+                    if (txt_desc_ag.Text != string.Empty)
+                    {
+                        if (txt_precio_ag.Text != string.Empty)
+                        {
+                            if (cbo_region_ag.Text != string.Empty)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                MensajeError("La región es requerida");
+                            }
+                        }
+                        else
+                        {
+                            MensajeError("El valor es requerido");
+                        }
+                    }
+                    else
+                    {
+                        MensajeError("La descripción es requerida");
+                    }
+                }
+                else
+                {
+                    MensajeError("El nombre es requerido");
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 

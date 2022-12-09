@@ -1,5 +1,4 @@
 ﻿using Oracle.ManagedDataAccess.Client;
-using System.Configuration;
 using System.Data;
 
 namespace Controlador

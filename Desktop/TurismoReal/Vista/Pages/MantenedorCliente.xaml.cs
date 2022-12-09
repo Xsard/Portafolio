@@ -113,9 +113,9 @@ namespace Vista.Pages
                     {
                         if (txt_apellidos_ag.Text != string.Empty)
                         {
-                            if (txt_fono_ag.Text != string.Empty)
+                            if (txt_email_ag.Text != string.Empty)
                             {
-                                if (txt_email_ag.Text != string.Empty)
+                                if (txt_fono_ag.Text != string.Empty)
                                 {
                                     if (txt_pass_ag.Password != string.Empty)
                                     {
@@ -135,13 +135,12 @@ namespace Vista.Pages
                                 }
                                 else
                                 {
-                                    MensajeError("El correo es requerido");
+                                    MensajeError("El teléfono es requerido");
                                 }
                             }
                             else
                             {
-                                MensajeError("El telefono es requerido");
-
+                                MensajeError("El correo es requerido");
                             }
                         }
                         else

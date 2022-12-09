@@ -84,7 +84,7 @@
                     <DataGridTemplateColumn Header="Región Tour" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox IsSynchronizedWithCurrentItem="False" ItemsSource="{Binding Source={StaticResource regiones}}" SelectedItem="{Binding Region, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" SelectedValuePath="IdRegion" SelectedValue="{Binding Region.IdRegion}" DisplayMemberPath="NombreRegion" SelectionChanged="DtgToursUpdate_SelectionChanged" />
+                                <ComboBox x:Name="cbo_region" IsSynchronizedWithCurrentItem="False" ItemsSource="{Binding Source={StaticResource regiones}}" SelectedItem="{Binding Region, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" SelectedValuePath="IdRegion" SelectedValue="{Binding Region.IdRegion}" DisplayMemberPath="NombreRegion" SelectionChanged="DtgToursUpdate_SelectionChanged" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -111,7 +111,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Details" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_desc_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox SpellCheck.IsEnabled="True" MaxLength="200" materialDesign:HintAssist.Hint="Descripción del Tour" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_desc_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox SpellCheck.IsEnabled="True" MaxLength="200" PreviewTextInput="txt_string_PreviewTextInput" materialDesign:HintAssist.Hint="Descripción del Tour" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_desc_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Money" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_precio_ag}" VerticalAlignment="Bottom"/>
