@@ -208,7 +208,7 @@ namespace Vista.Pages
                 MessageBoxResult result = MessageBox.Show("Estás seguro de querer eliminar este usuario cliente?", "Clientes", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    int estado = CAdmin.EliminarAdmin(cliente.IdUsuario);
+                    int estado = CCliente.EliminarCliente(cliente.IdUsuario);
                     MensajeOk("Cliente eliminado");
                     ListarCliente();
                 }
