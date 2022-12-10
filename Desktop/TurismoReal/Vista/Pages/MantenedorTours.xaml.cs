@@ -178,7 +178,7 @@ namespace Vista.Pages
             int estado = CTour.ActualizarTour(tourActualizar);
             if (estado > 0)
             {
-                MessageBox.Show("Funcionario actualizado");
+                MessageBox.Show("Tour actualizado");
                 ListarTour();
             }
             dhTour_ac.IsOpen = false;
