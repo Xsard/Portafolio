@@ -94,7 +94,7 @@ export const Inicio = () => {
     }, [])
 
     function fotoNorte() {
-        document.getElementById("div_fotos").style.backgroundImage = "url('https://media.vogue.mx/photos/61aa2ef47a5d7b17735e8e33/16:9/w_2992,h_1683,c_limit/Desierto-de-Atacama.jpg')"
+        document.getElementById("div_fotos").style.backgroundImage = "url('https://patrimonio.bienes.cl/wp-content/uploads/2020/09/Lugares-para-visitar-en-La-Serena.png')"
         document.getElementById("texto_fotos").innerText = "La zona desertica nos lleva al desierto mas arido del mundo con postales que quedaran para el recuerdo."
         document.getElementById("titulo_fotos").innerText = "Norte de Chile"
     }
