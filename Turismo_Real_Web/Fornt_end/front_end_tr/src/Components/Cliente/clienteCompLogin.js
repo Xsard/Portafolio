@@ -81,7 +81,7 @@ const Login = () => {
     //devolvemos el codigo HTML que sera renderizado cuando se llame la funcion
     return (
         <>
-            <div className="mx-auto" style={{color: "#1687A7"}}>
+            <div className="mx-auto" style={{color: "#000000", fontWeight: "bold"}}>
                 <br></br>
                 <h2 className="text-center">Iniciar sesión</h2>
                 <form className="form mx-auto mt-5 w-25" onSubmit={handleSubmit}>

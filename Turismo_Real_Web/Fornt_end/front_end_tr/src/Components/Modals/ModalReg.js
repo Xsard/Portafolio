@@ -155,7 +155,7 @@ function Registrar() {
     return (
         <>
 
-            <div className="mx-auto" style={{ color: "#1687A7" }}>
+            <div className="mx-auto" style={{ color: "#000000", fontWeight: "bold" }}>
                 <br></br>
                 <h2 className="text-center">Registrate en Turismo Real</h2>
                 <div className="mx-auto mt-5 w-25">
