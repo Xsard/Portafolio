@@ -115,7 +115,7 @@
                             <materialDesign:PackIcon Kind="Group" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_rut_ag}" VerticalAlignment="Bottom"/>
                             <TextBox x:Name="txt_rut_ag" LostFocus="txt_rut_ag_LostFocus" PreviewTextInput="txt_rut_ag_PreviewTextInput" GotFocus="txt_rut_ag_GotFocus" materialDesign:HintAssist.Hint="Rut" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="rut" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding ValidatesOnDataErrors="True" Path="Rut" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <local1:RutIsValid/>
                                         </Binding.ValidationRules>
@@ -127,7 +127,7 @@
                             <materialDesign:PackIcon Kind="IdentificationCard" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombres_ag}" VerticalAlignment="Bottom"/>
                             <TextBox x:Name="txt_nombres_ag" MaxLength="60" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Nombres" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="nombres" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding ValidatesOnDataErrors="True" Mode="TwoWay" Path="Nombres" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <local1:NombreIsValid/>
                                         </Binding.ValidationRules>
@@ -139,7 +139,7 @@
                             <materialDesign:PackIcon Kind="IdentificationCard" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_apellidos_ag}" VerticalAlignment="Bottom"/>
                             <TextBox x:Name="txt_apellidos_ag" MaxLength="60" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Apellidos" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="apellidos" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding ValidatesOnDataErrors="True" Mode="TwoWay" Path="Apellidos" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <local1:ApellidoIsValid/>
                                         </Binding.ValidationRules>
@@ -149,9 +149,9 @@
                         </StackPanel>
                         <StackPanel x:Name="spEmail" Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="EmailAdd" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_email_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_email_ag" MaxLength="254" materialDesign:HintAssist.Hint="Email" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                            <TextBox x:Name="txt_email_ag" Validation.Error="ItemError" MaxLength="254" materialDesign:HintAssist.Hint="Email" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="email" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding ValidatesOnDataErrors="True" Mode="TwoWay" Path="Email" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <local1:EmailIsValid/>
                                         </Binding.ValidationRules>
@@ -163,7 +163,7 @@
                             <materialDesign:PackIcon Kind="Telephone" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_fono_ag}" VerticalAlignment="Bottom"/>
                             <TextBox x:Name="txt_fono_ag" PreviewTextInput="txt_fono_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Teléfono" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="telefono" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding ValidatesOnDataErrors="True" Mode="TwoWay" Path="Telefono" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <local1:TelefonoEsNroPositivo/>
                                         </Binding.ValidationRules>
@@ -193,9 +193,25 @@
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_apellidos_ag}" Value="False"/>
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_email_ag}" Value="False"/>
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_fono_ag}" Value="False"/>
+
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEnabled" Value="True"/>
                                             </MultiDataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txt_rut_ag}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txt_nombres_ag}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txt_apellidos_ag}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txt_email_ag}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txt_fono_ag}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>
@@ -212,18 +228,18 @@
                     <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
                         <Label Content="Agregar Funcionario" FontSize="20"/>
                         <StackPanel  Orientation="Horizontal" Height="39" Margin="0,20,0,0">
-                            <materialDesign:PackIcon Kind="Group" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_rut_ag}" VerticalAlignment="Bottom"/>
-                            <Label x:Name="txt_rut_ac" LostFocus="txt_rut_ag_LostFocus" PreviewTextInput="txt_rut_ag_PreviewTextInput" GotFocus="txt_rut_ag_GotFocus" materialDesign:HintAssist.Hint="Rut" Margin="10,0,0,0" Style="{StaticResource MaterialDesignLabel}"  HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" >
-                                <Label.Content>
-                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="rut" UpdateSourceTrigger="PropertyChanged"/>
-                                </Label.Content>
-                            </Label>
+                            <materialDesign:PackIcon Kind="Group" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_rut_ac}" VerticalAlignment="Bottom"/>
+                            <TextBox IsReadOnly="True" x:Name="txt_rut_ac" VerticalContentAlignment="Bottom" materialDesign:HintAssist.Hint="Rut" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" >
+                                <TextBox.Text>
+                                    <Binding  Mode="OneTime" Path="Rut" UpdateSourceTrigger="PropertyChanged"/>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel  Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="IdentificationCard" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombres_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_nombres_ac" MaxLength="60" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Nombres" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
+                            <TextBox x:Name="txt_nombres_ac" MaxLength="60" Validation.Error="ItemError" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Nombres" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="nombres" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="Nombres" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <local1:NombreIsValid/>
                                         </Binding.ValidationRules>
@@ -233,9 +249,9 @@
                         </StackPanel>
                         <StackPanel  Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="IdentificationCard" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_apellidos_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_apellidos_ac" MaxLength="60" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Apellidos" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
+                            <TextBox x:Name="txt_apellidos_ac" MaxLength="60" Validation.Error="ItemError" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Apellidos" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="apellidos" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="Apellidos" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <local1:ApellidoIsValid/>
                                         </Binding.ValidationRules>
@@ -245,9 +261,9 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="EmailAdd" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_email_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_email_ac" MaxLength="254" materialDesign:HintAssist.Hint="Email" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                            <TextBox x:Name="txt_email_ac" MaxLength="254" Validation.Error="ItemError" materialDesign:HintAssist.Hint="Email" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="email" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="Email" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <local1:EmailIsValid/>
                                         </Binding.ValidationRules>
@@ -257,9 +273,9 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Telephone" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_fono_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_fono_ac" PreviewTextInput="txt_fono_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Teléfono" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
+                            <TextBox x:Name="txt_fono_ac" PreviewTextInput="txt_fono_ag_PreviewTextInput" Validation.Error="ItemError" materialDesign:HintAssist.Hint="Teléfono" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="telefono" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="Telefono" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <local1:TelefonoEsNroPositivo/>
                                         </Binding.ValidationRules>

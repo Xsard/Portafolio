@@ -18,7 +18,7 @@ namespace Vista.Pages
     public partial class PerfilDepto : Page
     {
 
-        private Departamento departamento;
+        private Departamento? departamento;
         public PerfilDepto(Departamento depto)
         {
             InitializeComponent();
@@ -249,7 +249,7 @@ namespace Vista.Pages
             e.Handled = regex.IsMatch(e.Text);
         }
         
-        Objeto objetoActualizar;
+        Objeto? objetoActualizar;
 
         private void dtgInventario_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

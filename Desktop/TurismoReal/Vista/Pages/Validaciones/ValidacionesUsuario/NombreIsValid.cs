@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace Vista.Pages.Validaciones.ValidacionesUsuario
 {
@@ -11,35 +13,16 @@ namespace Vista.Pages.Validaciones.ValidacionesUsuario
         {
             try
             {
-                var nombre = Convert.ToString(value);
-
-                if (nombre != null && nombre != string.Empty)
-                {
-                    if (!NotContainsSpecialChars(nombre))
-                    {
-                        return new ValidationResult(false, "El nombre no puede contener caracteres especiales");
-                    }
-                    if (nombre.Length >= 60)
-                    {
-                        return new ValidationResult(false, "El nombre no puede superar los 60 caracteres");
-                    }
-                }
-                else
-                {
-                    return new ValidationResult(false, "El nombre es requerido");
-                }
-                return ValidationResult.ValidResult;
+                var nombre = value.ToString();
+                return nombre == null || nombre == string.Empty || nombre.Trim().Length == 0
+                    ? new ValidationResult(false, "El nombre es un campo obligatorio")
+                    : ValidationResult.ValidResult;
             }
             catch (Exception)
             {
                 return new ValidationResult(false, "Algo anda mal");
             }
 
-            static bool NotContainsSpecialChars(string s)
-            {
-                Regex regex = new(@"^[a-zA-Z\s]*$");
-                return regex.IsMatch(s);
-            }            
         }
     }
 }

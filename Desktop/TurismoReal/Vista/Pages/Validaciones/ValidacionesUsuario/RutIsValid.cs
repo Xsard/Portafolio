@@ -17,7 +17,7 @@ namespace Vista.Pages.Validaciones.ValidacionesUsuario
             {
                 var rut = value.ToString();
 
-                if (rut == null && rut != string.Empty) return new ValidationResult(false, "El Rut es un campo obligatorio");
+                if (rut == null || rut == string.Empty) return new ValidationResult(false, "El Rut es un campo obligatorio");
                 if (rut.Length >= 2)
                 {
                     string nRut = rut.Split('-').First();
@@ -31,7 +31,7 @@ namespace Vista.Pages.Validaciones.ValidacionesUsuario
                         return ValidationResult.ValidResult;
                     }
                 }
-                return ValidationResult.ValidResult;
+                return new ValidationResult(false, "El Rut es un campo obligatorio");
             }
             catch (Exception)
             {

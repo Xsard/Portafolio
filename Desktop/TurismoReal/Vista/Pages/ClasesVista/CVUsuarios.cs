@@ -8,11 +8,11 @@ namespace Vista.Pages.ClasesVista
 {
     public class CVUsuarios
     {
-        public string rut { get; set; }
-        public string nombres { get; set; }
-        public string apellidos { get; set; }
-        public string email { get; set; }
-        public string contraseña { get; set; }
-        public int telefono { get; set; }
+        public string? Rut { get; set; }
+        public string? Nombres { get; set; }
+        public string? Apellidos { get; set; }
+        public string? Email { get; set; }
+        public string? Contraseña { get; set; }
+        public int? Telefono { get; set; }
     }
 }

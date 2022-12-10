@@ -228,7 +228,7 @@ namespace Vista.Pages
         {
             funActualizar = (Funcionario)dtgFuncionario.SelectedItem;
             dhFuncionario_ac.IsOpen = true;
-            txt_rut_ac.Content = funActualizar.Rut;
+            txt_rut_ac.Text = funActualizar.Rut;
             txt_nombres_ac.Text = funActualizar.Nombres;
             txt_apellidos_ac.Text = funActualizar.Apellidos;
             txt_fono_ac.Text = funActualizar.Telefono.ToString();
@@ -253,7 +253,7 @@ namespace Vista.Pages
 
         private void btn_Cancelar_Ac_Click(object sender, RoutedEventArgs e)
         {
-            txt_rut_ac.Content = string.Empty;
+            txt_rut_ac.Text = string.Empty;
             txt_nombres_ac.Text = string.Empty;
             txt_apellidos_ac.Text = string.Empty;
             txt_fono_ac.Text = string.Empty;
