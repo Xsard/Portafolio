@@ -213,15 +213,11 @@
                         <Label Content="Agregar Funcionario" FontSize="20"/>
                         <StackPanel  Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Group" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_rut_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_rut_ac" LostFocus="txt_rut_ag_LostFocus" PreviewTextInput="txt_rut_ag_PreviewTextInput" GotFocus="txt_rut_ag_GotFocus" materialDesign:HintAssist.Hint="Rut" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
-                                <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="rut" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <local1:RutIsValid/>
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
+                            <Label x:Name="txt_rut_ac" LostFocus="txt_rut_ag_LostFocus" PreviewTextInput="txt_rut_ag_PreviewTextInput" GotFocus="txt_rut_ag_GotFocus" materialDesign:HintAssist.Hint="Rut" Margin="10,0,0,0" Style="{StaticResource MaterialDesignLabel}"  HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" >
+                                <Label.Content>
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="rut" UpdateSourceTrigger="PropertyChanged"/>
+                                </Label.Content>
+                            </Label>
                         </StackPanel>
                         <StackPanel  Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="IdentificationCard" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombres_ag}" VerticalAlignment="Bottom"/>
@@ -272,7 +268,7 @@
                             </TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
-                            <Button x:Name="btn_Ac_Funcionario" Click="btn_Agregar_Funcionario_Click" HorizontalAlignment="Center" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0">
+                            <Button x:Name="btn_Ac_Funcionario" Click="btn_Ac_Funcionario_Click" HorizontalAlignment="Center" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0">
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                                         <Style.Resources/>
@@ -280,7 +276,6 @@
                                         <Style.Triggers>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_rut_ac}" Value="False"/>
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_nombres_ac}" Value="False"/>
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_apellidos_ac}" Value="False"/>
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_email_ac}" Value="False"/>
@@ -292,7 +287,7 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <Button x:Name="btn_Cancelar_Ac" Click="btn_Cancelar_Ag_Click" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}" VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
+                            <Button x:Name="btn_Cancelar_Ac" Click="btn_Cancelar_Ac_Click" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}" VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

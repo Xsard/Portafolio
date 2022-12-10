@@ -178,15 +178,17 @@ namespace Vista.Pages
 
         private void txt_rut_ag_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (txt_rut_ag.Text.Length >= 2)
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Text.Length >= 2)
             {
-                txt_rut_ag.Text = txt_rut_ag.Text.ToString().Insert(txt_rut_ag.Text.Length - 1, "-");
+                textBox.Text = textBox.Text.ToString().Insert(textBox.Text.Length - 1, "-");
             }
         }
 
         private void txt_rut_ag_GotFocus(object sender, RoutedEventArgs e)
         {
-            txt_rut_ag.Text = txt_rut_ag.Text.Replace("-", "");
+            TextBox textBox = (TextBox)sender;
+            textBox.Text = textBox.Text.Replace("-", "");
         }
 
         private void txt_rut_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -226,11 +228,38 @@ namespace Vista.Pages
         {
             funActualizar = (Funcionario)dtgFuncionario.SelectedItem;
             dhFuncionario_ac.IsOpen = true;
-            txt_rut_ac.Text = funActualizar.Rut;
+            txt_rut_ac.Content = funActualizar.Rut;
             txt_nombres_ac.Text = funActualizar.Nombres;
             txt_apellidos_ac.Text = funActualizar.Apellidos;
             txt_fono_ac.Text = funActualizar.Telefono.ToString();
             txt_email_ac.Text = funActualizar.Email;
+        }
+
+        private void btn_Ac_Funcionario_Click(object sender, RoutedEventArgs e)
+        {
+            funActualizar.Nombres = txt_nombres_ac.Text;
+            funActualizar.Apellidos = txt_apellidos_ac.Text;
+            funActualizar.Telefono = int.Parse(txt_fono_ac.Text);
+            funActualizar.Email = txt_email_ac.Text;
+            int estado = CFuncionario.ActualizarFuncionario(funActualizar);
+            if (estado > 0)
+            {
+                MessageBox.Show("Funcionario actualizado");
+                ListarFuncionario();
+            }
+            dhFuncionario_ac.IsOpen = false;
+            funActualizar = null;
+        }
+
+        private void btn_Cancelar_Ac_Click(object sender, RoutedEventArgs e)
+        {
+            txt_rut_ac.Content = string.Empty;
+            txt_nombres_ac.Text = string.Empty;
+            txt_apellidos_ac.Text = string.Empty;
+            txt_fono_ac.Text = string.Empty;
+            txt_email_ac.Text = string.Empty;
+            funActualizar = null;
+            dhFuncionario_ac.IsOpen = false;
         }
     }
 }
