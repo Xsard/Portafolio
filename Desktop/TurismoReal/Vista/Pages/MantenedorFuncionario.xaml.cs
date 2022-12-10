@@ -203,18 +203,6 @@ namespace Vista.Pages
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void txt_Apellidos_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
-        private void txt_Telefono_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9\"]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
         private void txt_Email_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             string pattern = @"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@" + @"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?
@@ -223,10 +211,11 @@ namespace Vista.Pages
             Regex regex = new Regex(pattern);
             e.Handled = regex.IsMatch(e.Text);
         }
-        Funcionario funActualizar;
+        Funcionario? funActualizar;
         private void dtgFuncionario_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             funActualizar = (Funcionario)dtgFuncionario.SelectedItem;
+            if (funActualizar == null) return;
             dhFuncionario_ac.IsOpen = true;
             txt_rut_ac.Text = funActualizar.Rut;
             txt_nombres_ac.Text = funActualizar.Nombres;
