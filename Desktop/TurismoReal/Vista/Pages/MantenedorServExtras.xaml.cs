@@ -139,5 +139,40 @@ namespace Vista.Pages
             Regex regex = new Regex("[^0-9\"]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
+        ServicioExtra? servEActualizar;
+        private void dtgServE_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            servEActualizar = (ServicioExtra)dtgServE.SelectedItem;
+            if (servEActualizar == null) return;
+            dhServ_ac.IsOpen = true;
+            txt_nombre_ac.Text = servEActualizar.NombreServicioExtra;
+            txt_desc_ac.Text = servEActualizar.DescripcionServicioExtra;
+            txt_precio_ac.Text = servEActualizar.ValorServicioExtra.ToString();
+        }
+
+        private void btn_Actualizar_Servicio_Click(object sender, RoutedEventArgs e)
+        {
+            servEActualizar.NombreServicioExtra = txt_nombre_ac.Text;
+            servEActualizar.DescripcionServicioExtra = txt_desc_ac.Text;
+            servEActualizar.ValorServicioExtra = int.Parse(txt_precio_ac.Text);
+            int estado = CServicioExtra.ActualizarServicio(servEActualizar);
+            if (estado > 0)
+            {
+                MessageBox.Show("Funcionario actualizado");
+                ListarSvE();
+            }
+            dhServ_ac.IsOpen = false;
+            servEActualizar = null;
+        }
+
+        private void btn_Cancelar_Ac_Click(object sender, RoutedEventArgs e)
+        {
+            txt_nombre_ac.Text = string.Empty;
+            txt_desc_ac.Text = string.Empty;
+            txt_precio_ac.Text = string.Empty;
+            servEActualizar = null;
+            dhServ_ac.IsOpen = false;
+        }
     }
 }
