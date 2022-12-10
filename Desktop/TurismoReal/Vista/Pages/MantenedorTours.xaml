@@ -10,10 +10,6 @@
       d:DesignHeight="785" d:DesignWidth="1140"
       Title="MantenedorTours">
 
-    <Page.Resources>
-        <CollectionViewSource x:Key="regiones"/>        
-    </Page.Resources>
-
     <Page.DataContext>
         <Clases:CVTour/>
     </Page.DataContext>

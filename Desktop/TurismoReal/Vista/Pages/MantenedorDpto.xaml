@@ -5,14 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:Vista.Pages" xmlns:local1="clr-namespace:Vista.Pages.Validaciones.ValidacionesDepto"
+      xmlns:Clases="clr-namespace:Vista.Pages.ClasesVista"          
       mc:Ignorable="d" 
       d:DesignHeight="785" d:DesignWidth="1140"
       Title="MantenedorDpto">
 
-    <Page.Resources>
-        <CollectionViewSource x:Key="comunas"/>
-    </Page.Resources>
-
+    <Page.DataContext>
+        <Clases:CVDepto/>
+    </Page.DataContext>
+    
     <Grid x:Name="grdDpto" Validation.Error="ItemError">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -27,7 +28,7 @@
             <Button x:Name="btnAbrirAgregarDpto" Width="150" HorizontalAlignment="Right" Content="Agregar" BorderBrush="#FF0099CC" Background="#FF0099CC" Click="btnAbrirAgregarDpto_Click"/>
         </Grid>
         <Grid Grid.Row="2" Margin="12,0">
-            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgDptos" CanUserDeleteRows="False" >
+            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgDptos" CanUserDeleteRows="False" MouseDoubleClick="dtgDptos_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Id" Width="0.35*">
                         <DataGridTemplateColumn.CellTemplate>
@@ -39,90 +40,79 @@
                     <DataGridTemplateColumn Header="Nombre Departamento" Width="0.7*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox x:Name="txt_NombreDpto" KeyDown="DtgDptosUpdate_KeyDown" PreviewTextInput="txt_NombreDpto_PreviewTextInput">
-                                    <TextBox.Text>
+                                <Label >
+                                    <Label.Content>
                                         <Binding Path="NombreDpto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules>
-                                                <local1:NombreDeptoIsValid/>
-                                            </Binding.ValidationRules>
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Tarifa Diaria" Width="0.7*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox x:Name="txt_TarifaDiaria" KeyDown="DtgDptosUpdate_KeyDown" PreviewTextInput="txt_TarifaDiaria_PreviewTextInput">
-                                    <TextBox.Text>
-                                        <Binding Path="TarifaDiara"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules>
-                                                <local1:TarifaIsValid/>
-                                            </Binding.ValidationRules>
+                                <Label >
+                                    <Label.Content>
+                                        <Binding Path="TarifaDiara" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Dirección" Width="2*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox x:Name="txt_Direccion" KeyDown="DtgDptosUpdate_KeyDown" PreviewTextInput="txt_Direccion_PreviewTextInput">
-                                    <TextBox.Text >
+                                <Label >
+                                    <Label.Content>
                                         <Binding Path="Direccion" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules >
-                                                <local1:DireccionIsValid/>
-                                            </Binding.ValidationRules>
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Número departamento" Width="1.3*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox x:Name="txt_NroDpto"  KeyDown="DtgDptosUpdate_KeyDown" PreviewTextInput="txt_NroDpto_PreviewTextInput">
-                                    <TextBox.Text >
-                                        <Binding Path="NroDpto"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules >
-                                                <local1:NroDeptoIsValid/>
-                                            </Binding.ValidationRules>
+                                <Label >
+                                    <Label.Content>
+                                        <Binding Path="NroDpto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Capacidad" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox x:Name="txt_Capacidad" KeyDown="DtgDptosUpdate_KeyDown" PreviewTextInput="txt_Capacidad_PreviewTextInput">
-                                    <TextBox.Text >
-                                        <Binding Path="Capacidad"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules >
-                                                <local1:CapacidadIsValid/>
-                                            </Binding.ValidationRules>
+                                <Label >
+                                    <Label.Content>
+                                        <Binding Path="Capacidad" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Comuna" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox IsSynchronizedWithCurrentItem="False" ItemsSource="{Binding Source={StaticResource comunas}}" SelectedItem="{Binding Comuna, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" SelectedValuePath="IdComuna" SelectedValue="{Binding Comuna.IdComuna}" DisplayMemberPath="NombreComuna" SelectionChanged="DtgDptosUpdate_SelectionChanged" />
+                                <Label >
+                                    <Label.Content>
+                                        <Binding Path="Comuna.NombreComuna" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                        </Binding>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Disponibilidad" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding Path= Disponibilidad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="CheckBoxEstado_Click">
-                                </CheckBox>
+                                <CheckBox IsChecked="{Binding Path= Disponibilidad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="CheckBoxEstado_Click"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -158,39 +148,213 @@
         <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhDpto_ag">
             <materialDesign:DialogHost.DialogContent>
                 <Grid Height="490" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="Agregar Departamento" FontSize="20"/>
                     <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
-                        <Label Content="Agregar Departamento" FontSize="20"/>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="AddressMarker" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombre_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_nombre_ag" MaxLength="100" PreviewTextInput="txt_nombre_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Nombre" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+                            <TextBox x:Name="txt_nombre_ag" MaxLength="100" PreviewTextInput="txt_nombre_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Nombre" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Path="NombreDpto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:NombreDeptoIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="Money" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_tarifa_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_tarifa_ag" PreviewTextInput="txt_tarifa_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Tarifa" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+                            <TextBox x:Name="txt_tarifa_ag" PreviewTextInput="txt_tarifa_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Tarifa" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Path="TarifaDiara" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:TarifaIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="AddressMarker" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_direccion_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox materialDesign:HintAssist.Hint="Dirección" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="txt_direccion_ag_PreviewTextInput" MaxLength="250" Margin="10,0,0,0" x:Name="txt_direccion_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+                            <TextBox materialDesign:HintAssist.Hint="Dirección" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="txt_direccion_ag_PreviewTextInput" MaxLength="250" Margin="10,0,0,0" x:Name="txt_direccion_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Path="Direccion" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:DireccionIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Numeric" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nro_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox materialDesign:HintAssist.Hint="Número departamento" PreviewTextInput="txt_nro_ag_PreviewTextInput" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_nro_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox materialDesign:HintAssist.Hint="Número departamento" PreviewTextInput="txt_nro_ag_PreviewTextInput" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_nro_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Path="NroDpto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:NroDeptoIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Group" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_cap_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox materialDesign:HintAssist.Hint="Capacidad" PreviewTextInput="txt_cap_ag_PreviewTextInput" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_cap_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox materialDesign:HintAssist.Hint="Capacidad" PreviewTextInput="txt_cap_ag_PreviewTextInput" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_cap_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Path="Capacidad" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:CapacidadIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Place" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=cbo_comuna_ag}" VerticalAlignment="Bottom"/>
                             <ComboBox DisplayMemberPath="NombreComuna" Margin="10,0,0,0" materialDesign:HintAssist.Hint="Comuna" Style="{StaticResource MaterialDesignFloatingHintComboBox}" x:Name="cbo_comuna_ag" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
-                            <Button x:Name="btn_Agregar_Dpto" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Click="btn_Agregar_Dpto_Click" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0"/>
+                            <Button x:Name="btn_Agregar_Dpto" HorizontalAlignment="Center" Click="btn_Agregar_Dpto_Click" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                        <Style.Resources/>
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_nombre_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_tarifa_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_direccion_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_nro_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_cap_ag}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </MultiDataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txt_nombre_ag}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txt_tarifa_ag}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txt_direccion_ag}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txt_nro_ag}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txt_cap_ag}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=SelectedIndex,ElementName=cbo_comuna_ag}" Value="-1">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                             <Button x:Name="btn_Cancelar_Ag" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}" Click="btn_Cancelar_Ag_Click" VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
+        <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhDpto_ac">
+            <materialDesign:DialogHost.DialogContent>
+                <Grid Height="490" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="Agregar Departamento" FontSize="20"/>
+                    <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
+                            <materialDesign:PackIcon Kind="AddressMarker" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombre_ac}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_nombre_ac" MaxLength="100" PreviewTextInput="txt_nombre_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Nombre" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Path="NombreDpto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:NombreDeptoIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
+                            <materialDesign:PackIcon Kind="Money" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_tarifa_ac}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_tarifa_ac" PreviewTextInput="txt_tarifa_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Tarifa" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Path="TarifaDiara" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:TarifaIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="AddressMarker" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_direccion_ac}" VerticalAlignment="Bottom"/>
+                            <TextBox materialDesign:HintAssist.Hint="Dirección" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="txt_direccion_ag_PreviewTextInput" MaxLength="250" Margin="10,0,0,0" x:Name="txt_direccion_ac" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Path="Direccion" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:DireccionIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="Numeric" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nro_ac}" VerticalAlignment="Bottom"/>
+                            <TextBox materialDesign:HintAssist.Hint="Número departamento" PreviewTextInput="txt_nro_ag_PreviewTextInput" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_nro_ac" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Path="NroDpto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:NroDeptoIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="Group" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_cap_ac}" VerticalAlignment="Bottom"/>
+                            <TextBox materialDesign:HintAssist.Hint="Capacidad" PreviewTextInput="txt_cap_ag_PreviewTextInput" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_cap_ac" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Path="Capacidad" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:CapacidadIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="Place" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=cbo_comuna_ac}" VerticalAlignment="Bottom"/>
+                            <ComboBox DisplayMemberPath="NombreComuna" SelectedValuePath="IdComuna" Margin="10,0,0,0" materialDesign:HintAssist.Hint="Comuna" Style="{StaticResource MaterialDesignFloatingHintComboBox}" x:Name="cbo_comuna_ac" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
+                            <Button x:Name="btn_Actualizar_Dpto" HorizontalAlignment="Center" Click="btn_Actualizar_Dpto_Click" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                        <Style.Resources/>
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_nombre_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_tarifa_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_direccion_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_nro_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_cap_ag}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <Button x:Name="btn_Cancelar_Ac" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}" Click="btn_Cancelar_Ac_Click" VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+
     </Grid>
 </Page>

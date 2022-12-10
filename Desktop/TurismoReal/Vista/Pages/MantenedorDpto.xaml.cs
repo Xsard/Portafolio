@@ -36,8 +36,8 @@ namespace Vista.Pages
                 List<Comuna> comunas = CComuna.ListarComuna();
                 if (comunas != null)
                 {
-                    (Resources["comunas"] as CollectionViewSource).Source = comunas;
                     cbo_comuna_ag.ItemsSource = comunas;
+                    cbo_comuna_ac.ItemsSource = comunas;
                 }
             }
             catch (Exception ex)
@@ -387,6 +387,50 @@ namespace Vista.Pages
                 MessageBox.Show(ex.Message, ex.StackTrace);
             }
             return false;
+        }
+
+        Departamento? dptoActualizar;
+        private void dtgDptos_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            dptoActualizar = (Departamento)dtgDptos.SelectedItem;
+            if (dptoActualizar == null) return;
+            dhDpto_ac.IsOpen = true;
+            txt_nombre_ac.Text = dptoActualizar.NombreDpto;
+            txt_direccion_ac.Text = dptoActualizar.Direccion;
+            txt_tarifa_ac.Text = dptoActualizar.TarifaDiara.ToString();
+            txt_cap_ac.Text = dptoActualizar.Capacidad.ToString();
+            txt_nro_ac.Text = dptoActualizar.NroDpto.ToString();
+            cbo_comuna_ac.SelectedValue = dptoActualizar.Comuna.IdComuna;
+        }
+
+        private void btn_Actualizar_Dpto_Click(object sender, RoutedEventArgs e)
+        {
+            dptoActualizar.NombreDpto = txt_nombre_ac.Text;
+            dptoActualizar.Direccion = txt_direccion_ac.Text;
+            dptoActualizar.TarifaDiara = int.Parse(txt_tarifa_ac.Text);
+            dptoActualizar.Capacidad = int.Parse(txt_cap_ac.Text);
+            dptoActualizar.NroDpto = int.Parse(txt_nro_ac.Text);
+            dptoActualizar.Comuna = (Comuna)cbo_comuna_ac.SelectedItem;
+            int estado = CDepartamento.ActualizarDepto(dptoActualizar);
+            if (estado > 0)
+            {
+                MessageBox.Show("Funcionario actualizado");
+                ListarDpto();
+            }
+            dhDpto_ac.IsOpen = false;
+            dptoActualizar = null;
+        }
+
+        private void btn_Cancelar_Ac_Click(object sender, RoutedEventArgs e)
+        {
+            txt_nombre_ac.Text = string.Empty;
+            txt_direccion_ac.Text = string.Empty;
+            txt_tarifa_ac.Text = string.Empty;
+            txt_cap_ac.Text = string.Empty;
+            txt_nro_ac.Text = string.Empty;
+            cbo_comuna_ac.SelectedIndex = -1;
+            dptoActualizar = null;
+            dhDpto_ac.IsOpen = false;
         }
     }
 }
