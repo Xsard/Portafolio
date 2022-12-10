@@ -88,9 +88,9 @@
         </Grid>
         <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhServ_ag" >
             <materialDesign:DialogHost.DialogContent>
-                <Grid Height="470" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label Content="Agregar Servicio Extra" FontSize="20"/>
-                    <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
+                <Grid Height="315" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="Agregar Servicio Extra" FontSize="20" HorizontalContentAlignment="Center" Padding="0 15 0 10"/>
+                    <StackPanel HorizontalAlignment="Center" Margin="0,50,0,0">
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="RoomService" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombre_ag}" VerticalAlignment="Bottom"/>
                             <TextBox materialDesign:HintAssist.Hint="Nombre del servicio" PreviewTextInput="txt_string_PreviewTextInput" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_nombre_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
@@ -163,8 +163,8 @@
         </materialDesign:DialogHost>
         <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhServ_ac" >
             <materialDesign:DialogHost.DialogContent>
-                <Grid Height="470" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label Content="Actualizar Servicio Extra" FontSize="20"/>
+                <Grid Height="315" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="Actualizar Servicio Extra" FontSize="20" HorizontalContentAlignment="Center" Padding="0 15 0 10"/>
                     <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="RoomService" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombre_ac}" VerticalAlignment="Bottom"/>

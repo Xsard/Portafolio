@@ -24,6 +24,14 @@ namespace Vista.Pages
                 MessageBox.Show(e.Error.ErrorContent.ToString());
             }
         }
+        private void MensajeError(string Mensaje)
+        {
+            MessageBox.Show(Mensaje, "Servicios Extra", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        private void MensajeOk(string Mensaje)
+        {
+            MessageBox.Show(Mensaje, "Servicios Extra", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
         #region Agregar
         private void btnAbrirAgregarServ_Click(object sender, RoutedEventArgs e)
         {
@@ -46,7 +54,7 @@ namespace Vista.Pages
                                 ValorServicioExtra = precio
                             };
                             int estado = CServicioExtra.IngresarServicio(servicioExtra);
-                            MessageBox.Show("Servicio agregado");
+                            MensajeOk("Servicio extra agregado");
                             ListarSvE();
                             Limpiar();
                         }
@@ -104,7 +112,7 @@ namespace Vista.Pages
                 try
                 {
                     int estado = CServicioExtra.ActualizarServicio(servicioExtra);
-                    MessageBox.Show("Servicio actualizado");
+                    MensajeOk("Servicio actualizado");
                     ListarSvE();
                 }
                 catch (Exception)
@@ -119,7 +127,7 @@ namespace Vista.Pages
             try
             {
                 int estado = CServicioExtra.EliminarServicio(servicioExtra.IdServicioExtra);
-                MessageBox.Show("Servicio eliminado");
+                MensajeOk("Servicio eliminado");
                 ListarSvE();
             }
             catch (Exception)
@@ -159,7 +167,7 @@ namespace Vista.Pages
             int estado = CServicioExtra.ActualizarServicio(servEActualizar);
             if (estado > 0)
             {
-                MessageBox.Show("Funcionario actualizado");
+                MensajeOk("Servicio extra actualizado");
                 ListarSvE();
             }
             dhServ_ac.IsOpen = false;
