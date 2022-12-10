@@ -159,17 +159,6 @@ namespace Vista.Pages
             }
             return false;
         }
-        private void txt_NombreServDpto_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("^[a-zA-Zá-úÁ-Ú0-9, ]*$");
-            e.Handled = !regex.IsMatch(e.Text);
-        }
-
-        private void txt_DescServDpto_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("^[a-zA-Zá-úÁ-Ú0-9, ]*$");
-            e.Handled = !regex.IsMatch(e.Text);
-        }
 
         private void txt_nombre_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -183,5 +172,36 @@ namespace Vista.Pages
             e.Handled = !regex.IsMatch(e.Text);
         }
 
+        Servicio? servActualizar;
+        private void dtgServDpto_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            servActualizar = (Servicio)dtgServDpto.SelectedItem;
+            if (servActualizar == null) return;
+            dhServDpto_ac.IsOpen = true;
+            txt_nombre_ac.Text = servActualizar.NombreServDpto;
+            txt_desc_ac.Text = servActualizar.DescServDpto;
+        }
+
+        private void btn_Actualizar_ServD_Click(object sender, RoutedEventArgs e)
+        {
+            servActualizar.NombreServDpto = txt_nombre_ac.Text;
+            servActualizar.DescServDpto = txt_desc_ac.Text;
+            int estado = CServicio.ActualizarServicioDpto(servActualizar);
+            if (estado > 0)
+            {
+                MessageBox.Show("Tour actualizado");
+                ListarServicioDpto();
+            }
+            dhServDpto_ac.IsOpen = false;
+            servActualizar = null;
+        }
+
+        private void btn_Cancelar_Ac_Click(object sender, RoutedEventArgs e)
+        {
+            txt_nombre_ac.Text = string.Empty;
+            txt_desc_ac.Text = string.Empty;
+            servActualizar = null;
+            dhServDpto_ac.IsOpen = false;
+        }
     }
 }
