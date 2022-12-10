@@ -274,7 +274,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Telephone" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_fono_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_fono_ac" PreviewTextInput="txt_fono_ag_PreviewTextInput" Validation.Error="ItemError" materialDesign:HintAssist.Hint="Teléfono" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
+                            <TextBox x:Name="txt_fono_ac" MaxLength="9" PreviewTextInput="txt_fono_ag_PreviewTextInput" Validation.Error="ItemError" materialDesign:HintAssist.Hint="Teléfono" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
                                 <TextBox.Text>
                                     <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="Telefono" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>

@@ -61,20 +61,20 @@ namespace Vista.Pages
                     {
                         if (!Regex.IsMatch(txt_pass_ag.Password, pattern) || txt_pass_ag.Password != txt_passConfirm_ag.Password)
                         {
-                            MessageBox.Show("Las contraseñas no coinciden o no son lo suficientemente seguras");
+                            MensajeError("Las contraseñas no coinciden o no son lo suficientemente seguras");
                             return;
                         }
                         string nRut = txt_rut_ag.Text.Split('-').First();
                         string dvRut = txt_rut_ag.Text.Split('-').Last();
                         if (!Rut.ValidaRut(nRut, dvRut))
                         {
-                            MessageBox.Show("El rut ingresado no es válido");
+                            MensajeError("El rut ingresado no es válido");
                             return;
                         }
                         pattern = "^\\S+@\\S+\\.\\S+$";
                         if (!Regex.IsMatch(txt_email_ag.Text, pattern))
                         {
-                            MessageBox.Show("Ingrese un correo con formato válido");
+                            MensajeError("Ingrese un correo con formato válido");
                             return;
                         }
                         Administrador userAdmin = new()
@@ -351,7 +351,7 @@ namespace Vista.Pages
             int estado = CAdmin.ActualizarAdmin(adminActualizar);
             if (estado > 0)
             {
-                MessageBox.Show("Funcionario actualizado");
+                MensajeOk("Funcionario actualizado");
                 ListarAdmin();
             }
             dhAdmin_ac.IsOpen = false;

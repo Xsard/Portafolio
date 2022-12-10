@@ -1,11 +1,10 @@
-﻿    using Controlador;
+﻿using Controlador;
 using Microsoft.Win32;
 using Modelo;
 using System;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,6 +32,14 @@ namespace Vista.Pages
             {
                 MessageBox.Show(e.Error.ErrorContent.ToString());
             }
+        }
+        private void MensajeError(string Mensaje)
+        {
+            MessageBox.Show(Mensaje, "Inventario", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        private void MensajeOk(string Mensaje)
+        {
+            MessageBox.Show(Mensaje, "Inventario", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void ListarObjetos()
         {
@@ -82,23 +89,23 @@ namespace Vista.Pages
                             ValorUnitarioObjeto = valor
                         };
                         int estado = CInventario.CrearInventario(objeto, departamento.IdDepto);
-                        MessageBox.Show("Objeto agregado al inventario");
+                        MensajeOk("Objeto agregado al inventario");
                         ListarObjetos();
                         Limpiar();
                     }
                     else
                     {
-                        MessageBox.Show("El precio unitario es requerido");
+                        MensajeError("El precio unitario es requerido");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("La cantidad es requerida");
+                    MensajeError("La cantidad es requerida");
                 }
             }
             else
             {
-                MessageBox.Show("El nombre es requerido");
+                MensajeError("El nombre es requerido");
             }
             
         }
@@ -114,7 +121,7 @@ namespace Vista.Pages
             try
             {
                 int estado = CInventario.EliminarObjeto(objeto.IdObjeto);
-                MessageBox.Show("Objeto eliminado del inventario");
+                MensajeOk("Objeto eliminado del inventario");
                 ListarObjetos();
             }
             catch (Exception)
@@ -140,9 +147,14 @@ namespace Vista.Pages
         }
         private void btn_Agregar_Img_Click(object sender, RoutedEventArgs e)
         {
-            if (txtPathFoto.Text == string.Empty || txtAltFoto.Text == string.Empty)
+            if (txtPathFoto.Text == string.Empty)
             {
-                MessageBox.Show("Falta ingresar algunos datos");
+                MensajeError("Debe ingresar una foto"); 
+                return;
+            }
+            if (txtAltFoto.Text == string.Empty)
+            {
+                MensajeError("Debe ingresar una descripción");
                 return;
             }
             string path = System.IO.Directory.GetCurrentDirectory();
@@ -199,7 +211,7 @@ namespace Vista.Pages
                             }
                             catch (Exception)
                             {
-
+                                throw;
                             }
                             Image image = new()
                             {
@@ -269,10 +281,19 @@ namespace Vista.Pages
             int estado = CInventario.ActualizarInventario(objetoActualizar);
             if (estado > 0)
             {
-                MessageBox.Show("Inventario actualizado");
+                MensajeOk("Inventario actualizado");
+                LimpiarAc();
                 ListarObjetos();
             }
         }
+
+        private void LimpiarAc()
+        {
+            txt_objeto_ac.Clear();
+            txt_cantidad_ac.Clear();
+            txt_precio_unitario_ac.Clear();
+        }
+
         private void BtnCancelarAc_Click(object sender, RoutedEventArgs e)
         {
             dhObjetoAc.IsOpen = false;
