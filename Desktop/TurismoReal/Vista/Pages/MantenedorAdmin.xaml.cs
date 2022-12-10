@@ -13,8 +13,6 @@ namespace Vista.Pages
 {
     public partial class MantenedorAdmin : Page
     {
-        bool rutValido = false;
-        bool passValida = false;
         public MantenedorAdmin()
         {
             InitializeComponent();

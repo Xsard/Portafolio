@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Vista.Pages.Validaciones.ValidacionesInventario
 {
-    internal class NombreHasta : ValidationRule
+    public class NombreHasta : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

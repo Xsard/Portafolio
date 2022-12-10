@@ -4,10 +4,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Vista.Pages" xmlns:local1="clr-namespace:Vista.Pages.Validaciones.ValidacionesUsuario" 
+      xmlns:Clases="clr-namespace:Vista.Pages.ClasesVista"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="785" d:DesignWidth="1140"
       Title="MantenedorFuncionario">
+
+    <Page.DataContext>
+        <Clases:CVUsuarios/>
+    </Page.DataContext>
 
     <Grid x:Name="grdFuncionario" Validation.Error="ItemError">
         <Grid.RowDefinitions>
@@ -23,7 +28,7 @@
             <Button x:Name="btnAbrirAgregarFuncionario" Click="btnAbrirAgregarFuncionario_Click" Width="150" HorizontalAlignment="Right" Content="Agregar" BorderBrush="#FF0099CC" Background="#FF0099CC" Cursor="Hand"/>
         </Grid>
         <Grid Grid.Row="2" Margin="12,0">
-            <DataGrid x:Name="dtgFuncionario" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" >
+            <DataGrid x:Name="dtgFuncionario" AutoGenerateColumns="False" CanUserAddRows="False" MouseDoubleClick="dtgFuncionario_MouseDoubleClick" CanUserDeleteRows="False" >
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Id Usuario" Width="0.99*" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
@@ -35,74 +40,55 @@
                     <DataGridTemplateColumn Header="Rut" Width="0.7*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox KeyDown="DtgFuncionarioUpdate_KeyDown" IsReadOnly="True">
-                                    <TextBox.Text>
-                                        <Binding Path="Rut"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules>
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                <Label>
+                                    <Label.Content>
+                                        <Binding Path="Rut"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Nombres" Width="2*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox x:Name="txt_nombres" KeyDown="DtgFuncionarioUpdate_KeyDown" PreviewTextInput="txt_nombres_PreviewTextInput">
-                                    <TextBox.Text >
-                                        <Binding Path="Nombres" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules>
-                                                <local1:NombreIsValid/>
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                <Label>
+                                    <Label.Content>
+                                        <Binding Path="Nombres"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Apellidos" Width="1.3*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox x:Name="txt_Apellidos" KeyDown="DtgFuncionarioUpdate_KeyDown" PreviewTextInput="txt_Apellidos_PreviewTextInput">
-                                    <TextBox.Text >
-                                        <Binding Path="Apellidos"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules>
-                                                <local1:ApellidoIsValid/>
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                <Label>
+                                    <Label.Content>
+                                        <Binding Path="Apellidos"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Teléfono" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox x:Name="txt_Telefono" KeyDown="DtgFuncionarioUpdate_KeyDown" PreviewTextInput="txt_Telefono_PreviewTextInput">
-                                    <TextBox.Text >
-                                        <Binding Path="Telefono"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules>
-                                                <local1:TelefonoEsNroPositivo/>
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                <Label>
+                                    <Label.Content>
+                                        <Binding Path="Telefono" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Email" Width="*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox x:Name="txt_Email" KeyDown="DtgFuncionarioUpdate_KeyDown" PreviewTextInput="txt_Email_PreviewTextInput">
-                                    <TextBox.Text >
-                                        <Binding Path="Email"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules>
-                                                <local1:EmailIsValid/>
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                <Label>
+                                    <Label.Content>
+                                        <Binding Path="Email"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -127,39 +113,186 @@
                         <Label Content="Agregar Funcionario" FontSize="20"/>
                         <StackPanel x:Name="spRut" Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Group" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_rut_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_rut_ag" LostFocus="txt_rut_ag_LostFocus" PreviewTextInput="txt_rut_ag_PreviewTextInput" GotFocus="txt_rut_ag_GotFocus" materialDesign:HintAssist.Hint="Rut" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox x:Name="txt_rut_ag" LostFocus="txt_rut_ag_LostFocus" PreviewTextInput="txt_rut_ag_PreviewTextInput" GotFocus="txt_rut_ag_GotFocus" materialDesign:HintAssist.Hint="Rut" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="rut" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:RutIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel x:Name="spNombres" Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="IdentificationCard" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombres_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_nombres_ag" MaxLength="60" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Nombres" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox x:Name="txt_nombres_ag" MaxLength="60" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Nombres" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="nombres" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:NombreIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel x:Name="spApellidos" Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="IdentificationCard" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_apellidos_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_apellidos_ag" MaxLength="60" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Apellidos" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox x:Name="txt_apellidos_ag" MaxLength="60" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Apellidos" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="apellidos" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:ApellidoIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel x:Name="spEmail" Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="EmailAdd" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_email_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_email_ag" MaxLength="254" materialDesign:HintAssist.Hint="Email" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+                            <TextBox x:Name="txt_email_ag" MaxLength="254" materialDesign:HintAssist.Hint="Email" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="email" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:EmailIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel x:Name="spFono" Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Telephone" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_fono_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_fono_ag" PreviewTextInput="txt_fono_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Teléfono" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" />
+                            <TextBox x:Name="txt_fono_ag" PreviewTextInput="txt_fono_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Teléfono" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="telefono" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:TelefonoEsNroPositivo/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel x:Name="spPassword" Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="PasswordAdd" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_pass_ag}" VerticalAlignment="Bottom"/>
-                            <PasswordBox x:Name="txt_pass_ag" MaxLength="30" materialDesign:HintAssist.Hint="Password" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="220"/>
+                            <PasswordBox x:Name="txt_pass_ag" MaxLength="30" materialDesign:HintAssist.Hint="Password" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="220" />
                         </StackPanel>
                         <StackPanel x:Name="spPasswordConfirm" Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="PasswordAdd" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_passConfirm_ag}" VerticalAlignment="Bottom"/>
                             <PasswordBox x:Name="txt_passConfirm_ag" MaxLength="30" materialDesign:HintAssist.Hint="Password" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="220"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
-                            <Button x:Name="btn_Agregar_Funcionario" Click="btn_Agregar_Funcionario_Click" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0"/>
+                            <Button x:Name="btn_Agregar_Funcionario" Click="btn_Agregar_Funcionario_Click" HorizontalAlignment="Center" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                        <Style.Resources/>
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_rut_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_nombres_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_apellidos_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_email_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_fono_ag}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                             <Button x:Name="btn_Cancelar_Ag" Click="btn_Cancelar_Ag_Click" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}" VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
+        <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhFuncionario_ac" >
+            <materialDesign:DialogHost.DialogContent>
+                <Grid Height="600" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
+                        <Label Content="Agregar Funcionario" FontSize="20"/>
+                        <StackPanel  Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="Group" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_rut_ag}" VerticalAlignment="Bottom"/>
+                            <Label x:Name="txt_rut_ac" LostFocus="txt_rut_ag_LostFocus" PreviewTextInput="txt_rut_ag_PreviewTextInput" GotFocus="txt_rut_ag_GotFocus" materialDesign:HintAssist.Hint="Rut" Margin="10,0,0,0" Style="{StaticResource MaterialDesignLabel}"  HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" >
+                                <Label.Content>
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="rut" UpdateSourceTrigger="PropertyChanged"/>
+                                </Label.Content>
+                            </Label>
+                        </StackPanel>
+                        <StackPanel  Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="IdentificationCard" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombres_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_nombres_ac" MaxLength="60" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Nombres" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="nombres" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:NombreIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel  Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="IdentificationCard" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_apellidos_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_apellidos_ac" MaxLength="60" PreviewTextInput="txt_nombres_PreviewTextInput" materialDesign:HintAssist.Hint="Apellidos" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="apellidos" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:ApellidoIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
+                            <materialDesign:PackIcon Kind="EmailAdd" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_email_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_email_ac" MaxLength="254" materialDesign:HintAssist.Hint="Email" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="email" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:EmailIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="Telephone" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_fono_ag}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txt_fono_ac" PreviewTextInput="txt_fono_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Teléfono" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="telefono" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:TelefonoEsNroPositivo/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
+                            <Button x:Name="btn_Ac_Funcionario" Click="btn_Ac_Funcionario_Click" HorizontalAlignment="Center" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                        <Style.Resources/>
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_nombres_ac}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_apellidos_ac}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_email_ac}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_fono_ac}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <Button x:Name="btn_Cancelar_Ac" Click="btn_Cancelar_Ac_Click" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}" VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+
     </Grid>
 </Page>

@@ -17,6 +17,7 @@ namespace Vista.Pages
 {
     public partial class PerfilDepto : Page
     {
+
         private Departamento departamento;
         public PerfilDepto(Departamento depto)
         {
@@ -236,24 +237,6 @@ namespace Vista.Pages
             img.Source = mainPath;
         }
 
-        private void DtgInventarioUpdate_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                Objeto objeto = (Objeto)dtgInventario.SelectedItem;
-                try
-                {
-                    int estado = CInventario.ActualizarInventario(objeto);
-                    MessageBox.Show("Inventario actualizado");
-                    ListarObjetos();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-        }
-
         private void txt_objeto_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú0-9\"]+");
@@ -265,23 +248,37 @@ namespace Vista.Pages
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+        
+        Objeto objetoActualizar;
 
-        private void txt_NombreObjeto_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void dtgInventario_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Regex regex = new Regex("^[a-zA-Zá-úÁ-Ú0-9, ]*$");
-            e.Handled = !regex.IsMatch(e.Text);
+            objetoActualizar = (Objeto)dtgInventario.SelectedItem;
+            dhObjetoAc.IsOpen = true;
+            txt_objeto_ac.Text = objetoActualizar.NombreObjeto.ToString();
+            txt_cantidad_ac.Text = objetoActualizar.CantidadObjeto.ToString();
+            txt_precio_unitario_ac.Text = objetoActualizar.ValorUnitarioObjeto.ToString();
         }
 
-        private void txt_CantidadObjeto_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void BtnActualizarObjeto_Click(object sender, RoutedEventArgs e)
         {
-            Regex regex = new Regex("[^0-9\"]+");
-            e.Handled = regex.IsMatch(e.Text);
+            objetoActualizar.NombreObjeto = txt_objeto_ac.Text;
+            objetoActualizar.CantidadObjeto = int.Parse(txt_cantidad_ac.Text);
+            objetoActualizar.ValorUnitarioObjeto = int.Parse(txt_precio_unitario_ac.Text);
+            int estado = CInventario.ActualizarInventario(objetoActualizar);
+            if (estado > 0)
+            {
+                MessageBox.Show("Inventario actualizado");
+                ListarObjetos();
+            }
         }
-
-        private void txt_ValorUnitario_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void BtnCancelarAc_Click(object sender, RoutedEventArgs e)
         {
-            Regex regex = new Regex("[^0-9\"]+");
-            e.Handled = regex.IsMatch(e.Text);
+            dhObjetoAc.IsOpen = false;
+            txt_objeto_ac.Text = string.Empty;
+            txt_cantidad_ac.Text = string.Empty;
+            txt_precio_unitario_ac.Text = string.Empty;
+            objetoActualizar = null;
         }
     }
 }
