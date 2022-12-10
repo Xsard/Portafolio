@@ -1500,7 +1500,7 @@ CREATE OR REPLACE PROCEDURE AGREGAR_RESERVA(idDepto IN RESERVA.ID_DPTO%TYPE, idC
         identificador_RES RESERVA.ID_RESERVA%TYPE;
     BEGIN
         INSERT INTO RESERVA(ID_DPTO, ID_CLIENTE, ESTADO_RESERVA, ESTADO_PAGO, CHECK_IN, CHECK_OUT, FIRMA, CANTIDAD_ACOMPAÑANTES, TRANSPORTE, VALOR_TOTAL) 
-            VALUES(idDepto, idCli, estadoRes, estadoPag, checkIn, checkOut, firmaRes, cant_acomp, transporte_reserva,    valorTotal) RETURNING rowid, ID_RESERVA INTO id_col, identificador_RES;
+            VALUES(idDepto, idCli, estadoRes, estadoPag, checkIn, checkOut, firmaRes, cant_acomp, transporte_reserva,valorTotal) RETURNING rowid, ID_RESERVA INTO id_col, identificador_RES;
         IF id_col IS NOT NULL THEN
             r:= identificador_RES;
             COMMIT;        
@@ -1540,5 +1540,5 @@ END;
 DECLARE 
     R INTEGER;
 BEGIN
-    AGREGAR_RESERVA(1, 1,'I','P' ,TO_TIMESTAMP('30-11-2022 06:14:00.742000000', 'DD-MM-YYYY HH24:MI:SS.FF'), TO_TIMESTAMP('05-12-2022 06:14:00.742000000', 'DD-MM-YYYY HH24:MI:SS.FF'), '1',3, 'y', 100000, R);
+    AGREGAR_RESERVA(1, 1,'I','A' ,TO_TIMESTAMP('06-12-2022 06:14:00.742000000', 'DD-MM-YYYY HH24:MI:SS.FF'), TO_TIMESTAMP('15-12-2022 06:14:00.742000000', 'DD-MM-YYYY HH24:MI:SS.FF'), '0',2, 'y', 100000, R);
 END;

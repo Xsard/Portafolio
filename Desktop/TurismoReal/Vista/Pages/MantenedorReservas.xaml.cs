@@ -43,6 +43,7 @@ namespace Vista.Pages
                     return;
                 }
                 Mensajeria.PlanificarTransporte(email, asunto, reserva.CantidadAcompanantes.ToString(), lugar, comuna, reserva.CheckIn.ToString(), reserva.CheckOut.ToString(), reserva.Dpto.NombreDpto, reserva.Dpto.Direccion);
+                MessageBox.Show("Correo de planificación enviado");
                 dhCorreo.IsOpen = false;
             }
         }
