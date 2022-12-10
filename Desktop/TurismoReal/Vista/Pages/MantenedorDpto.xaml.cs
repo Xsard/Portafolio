@@ -414,7 +414,7 @@ namespace Vista.Pages
             int estado = CDepartamento.ActualizarDepto(dptoActualizar);
             if (estado > 0)
             {
-                MessageBox.Show("Funcionario actualizado");
+                MensajeOk("Departamento actualizado");
                 ListarDpto();
             }
             dhDpto_ac.IsOpen = false;
