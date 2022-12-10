@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vista.Pages
+namespace Vista.Pages.ClasesVista
 {
-    internal class PotitoEmbrujado
+    public class PerfilDepto
     {
         public string nombre { get; set; }
         public int cantidad { get; set; }
