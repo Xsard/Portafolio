@@ -42,7 +42,7 @@
                             <DataTemplate>
                                 <Label>
                                     <Label.Content>
-                                        <Binding Path="Rut"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                        <Binding Path="Rut" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>

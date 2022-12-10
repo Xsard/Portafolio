@@ -34,8 +34,8 @@ namespace Vista.Pages
                 List<Region> regiones = CRegion.ListarRegion();
                 if (regiones != null)
                 {
-                    (Resources["regiones"] as CollectionViewSource).Source = regiones;
                     cbo_region_ag.ItemsSource = regiones;
+                    cbo_region_ac.ItemsSource = regiones;
                 }
             }
             catch (Exception ex)
@@ -45,10 +45,12 @@ namespace Vista.Pages
         }
         private void btnAbrirAgregarTours_Click(object sender, RoutedEventArgs e)
         {
+            Limpiar();
             dhTour_ag.IsOpen = true;
         }
         private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
         {
+            Limpiar();
             dhTour_ag.IsOpen = false;
         }
         private void Limpiar()
@@ -57,52 +59,6 @@ namespace Vista.Pages
             txt_desc_ag.Clear();
             txt_precio_ag.Clear();
             cbo_region_ag.SelectedIndex = -1;
-        }
-        private void DtgToursUpdate_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Tour tour = (Tour)dtgTours.SelectedItem;
-            if (tour != null)
-            {
-                try
-                {
-                    int estado = CTour.ActualizarTour(tour);
-                    MensajeOk("Tour actualizado");
-                    ListarTour();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
-
-        private void DtgTourUpdate_KeyDown(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                if (e.Key == Key.Enter)
-                {
-                    Tour tour = (Tour)dtgTours.SelectedItem;
-                    if (tour.ValorTour <= 0)
-                    {
-                        this.MensajeError("El valor debe ser mayor a 0");
-                        return;
-                    }
-                    try
-                    {
-                        int estado = CTour.ActualizarTour(tour);
-                        MensajeOk("Tour actualizado");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.StackTrace);
-            }
         }
 
         private void DtgTourDelete(object sender, RoutedEventArgs e)
@@ -164,71 +120,28 @@ namespace Vista.Pages
         {
             try
             {
-                if (ValidarForm())
+                if (!Int32.TryParse(txt_precio_ag.Text.Trim(), out int valor)) return;
+                if (valor <= 0)
                 {
-                    if (!Int32.TryParse(txt_precio_ag.Text.Trim(), out int valor)) return;
-                    if (valor <= 0)
-                    {
-                        this.MensajeError("El valor debe ser mayor a 0");
-                        return;
-                    }
-                    Tour tour = new()
-                    {
-                        NombreTour = txt_nombre_ag.Text.Trim(),
-                        DescripcionTour = txt_desc_ag.Text.Trim(),
-                        ValorTour = valor,
-                        Region = (Region)cbo_region_ag.SelectedItem
-                    };
-
-                    int estado = CTour.IngresarTour(tour);
-                    MensajeOk("Tour agregado");
-                    ListarTour();
-                    Limpiar();
+                    this.MensajeError("El valor debe ser mayor a 0");
+                    return;
                 }
+                Tour tour = new()
+                {
+                    NombreTour = txt_nombre_ag.Text.Trim(),
+                    DescripcionTour = txt_desc_ag.Text.Trim(),
+                    ValorTour = valor,
+                    Region = (Region)cbo_region_ag.SelectedItem
+                };
+                int estado = CTour.IngresarTour(tour);
+                MensajeOk("Tour agregado");
+                ListarTour();
+                Limpiar();
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.StackTrace);
-            }
-        }
-        private bool ValidarForm()
-        {
-            try
-            {
-                if (txt_nombre_ag.Text != string.Empty)
-                {
-                    if (txt_desc_ag.Text != string.Empty)
-                    {
-                        if (txt_precio_ag.Text != string.Empty)
-                        {
-                            if (cbo_region_ag.Text != string.Empty)
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                MensajeError("La región es requerida");
-                            }
-                        }
-                        else
-                        {
-                            MensajeError("El valor es requerido");
-                        }
-                    }
-                    else
-                    {
-                        MensajeError("La descripción es requerida");
-                    }
-                }
-                else
-                {
-                    MensajeError("El nombre es requerido");
-                }
-                return false;
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
 
@@ -244,5 +157,42 @@ namespace Vista.Pages
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        Tour? tourActualizar;
+        private void dtgTours_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            tourActualizar = (Tour)dtgTours.SelectedItem;
+            if (tourActualizar == null) return;
+            dhTour_ac.IsOpen = true;
+            txt_nombre_ac.Text = tourActualizar.NombreTour;
+            txt_desc_ac.Text = tourActualizar.DescripcionTour;
+            txt_precio_ac.Text = tourActualizar.ValorTour.ToString();
+            cbo_region_ac.SelectedValue = tourActualizar.Region.IdRegion;
+        }
+
+        private void btn_Actualizar_Tour_Click(object sender, RoutedEventArgs e)
+        {
+            tourActualizar.NombreTour = txt_nombre_ac.Text;
+            tourActualizar.DescripcionTour = txt_desc_ac.Text;
+            tourActualizar.ValorTour = int.Parse(txt_precio_ac.Text);
+            tourActualizar.Region = (Region)cbo_region_ac.SelectedItem;
+            int estado = CTour.ActualizarTour(tourActualizar);
+            if (estado > 0)
+            {
+                MessageBox.Show("Funcionario actualizado");
+                ListarTour();
+            }
+            dhTour_ac.IsOpen = false;
+            tourActualizar = null;
+        }
+
+        private void btn_Cancelar_Ac_Click(object sender, RoutedEventArgs e)
+        {
+            txt_nombre_ac.Text = string.Empty;
+            txt_desc_ac.Text = string.Empty;
+            txt_precio_ac.Text = string.Empty;            
+            cbo_region_ac.SelectedIndex = -1;
+            tourActualizar = null;
+            dhTour_ac.IsOpen = false;
+        }
     }
 }
