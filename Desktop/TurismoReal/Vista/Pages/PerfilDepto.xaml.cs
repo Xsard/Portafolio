@@ -254,6 +254,7 @@ namespace Vista.Pages
         private void dtgInventario_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             objetoActualizar = (Objeto)dtgInventario.SelectedItem;
+            if (objetoActualizar == null) return;
             dhObjetoAc.IsOpen = true;
             txt_objeto_ac.Text = objetoActualizar.NombreObjeto.ToString();
             txt_cantidad_ac.Text = objetoActualizar.CantidadObjeto.ToString();

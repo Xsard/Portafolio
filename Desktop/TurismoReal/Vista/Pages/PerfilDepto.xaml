@@ -143,7 +143,7 @@
                             <materialDesign:PackIcon Kind="Archive" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_objeto_ag}" VerticalAlignment="Bottom"/>
                             <TextBox materialDesign:HintAssist.Hint="Objeto" Validation.Error="ItemError" MaxLength="50" PreviewTextInput="txt_objeto_ag_PreviewTextInput" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_objeto_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="nombre" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding ValidatesOnDataErrors="True" Mode="TwoWay" Path="Nombre" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <local1:NombreHasta/>
                                         </Binding.ValidationRules>
@@ -155,7 +155,7 @@
                             <materialDesign:PackIcon Kind="Numeric" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_cantidad_ag}" VerticalAlignment="Bottom"/>
                             <TextBox materialDesign:HintAssist.Hint="Cantidad" Validation.Error="ItemError" PreviewTextInput="txt_numero_PreviewTextInput" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_cantidad_ag" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Path="cantidad"  Mode="OneWayToSource" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding ValidatesOnDataErrors="True" Path="Cantidad"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <local1:CantidadEsPositivo/>
                                         </Binding.ValidationRules>
@@ -167,7 +167,7 @@
                             <materialDesign:PackIcon Kind="Money" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_precio_unitario}" VerticalAlignment="Bottom"/>
                             <TextBox materialDesign:HintAssist.Hint="Precio unitario" PreviewTextInput="txt_numero_PreviewTextInput" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_precio_unitario" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Path="precio" Mode="OneWayToSource" UpdateSourceTrigger="PropertyChanged" >
+                                    <Binding ValidatesOnDataErrors="True" Path="Precio" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                                         <Binding.ValidationRules>
                                             <local1:ValorEsNroPositivo/>
                                         </Binding.ValidationRules>
@@ -190,6 +190,15 @@
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEnabled" Value="True"/>
                                             </MultiDataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txt_objeto_ag}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txt_cantidad_ag}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txt_precio_unitario}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>
@@ -210,7 +219,7 @@
                             <materialDesign:PackIcon Kind="Archive" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_objeto_ac}" VerticalAlignment="Bottom"/>
                             <TextBox materialDesign:HintAssist.Hint="Objeto" Validation.Error="ItemError" MaxLength="50" PreviewTextInput="txt_objeto_ag_PreviewTextInput" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_objeto_ac" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="nombre" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding ValidatesOnDataErrors="True" Mode="OneWayToSource" Path="Nombre" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <local1:NombreHasta/>
                                         </Binding.ValidationRules>
@@ -222,7 +231,7 @@
                             <materialDesign:PackIcon Kind="Numeric" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_cantidad_ac}" VerticalAlignment="Bottom"/>
                             <TextBox materialDesign:HintAssist.Hint="Cantidad" Validation.Error="ItemError" PreviewTextInput="txt_numero_PreviewTextInput" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_cantidad_ac" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Path="cantidad"  Mode="OneWayToSource" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding ValidatesOnDataErrors="True" Path="Cantidad"  Mode="OneWayToSource" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <local1:CantidadEsPositivo/>
                                         </Binding.ValidationRules>
@@ -234,7 +243,7 @@
                             <materialDesign:PackIcon Kind="Money" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_precio_unitario_ac}" VerticalAlignment="Bottom"/>
                             <TextBox materialDesign:HintAssist.Hint="Precio unitario" PreviewTextInput="txt_numero_PreviewTextInput" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_precio_unitario_ac" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
                                 <TextBox.Text>
-                                    <Binding ValidatesOnDataErrors="True" Path="precio" Mode="OneWayToSource" UpdateSourceTrigger="PropertyChanged" >
+                                    <Binding ValidatesOnDataErrors="True" Path="Precio" Mode="OneWayToSource" UpdateSourceTrigger="PropertyChanged" >
                                         <Binding.ValidationRules>
                                             <local1:ValorEsNroPositivo/>
                                         </Binding.ValidationRules>
