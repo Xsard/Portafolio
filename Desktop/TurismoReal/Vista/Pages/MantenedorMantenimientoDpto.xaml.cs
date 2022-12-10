@@ -117,12 +117,7 @@ namespace Vista.Pages
         {
             try
             {
-                if (txt_nombre_ag.Text == string.Empty || txt_desc_ag.Text == string.Empty || dp_inicio_ag.Text == string.Empty ||
-                    dp_termino_ag.Text == string.Empty || departamento == null)
-                {
-                    this.MensajeError("Falta ingresar algunos datos");
-                }
-                else
+                if (ValidarForm())
                 {
                     Mantencion mant = new Mantencion
                     {
@@ -143,6 +138,40 @@ namespace Vista.Pages
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.StackTrace);
+            }
+        }
+
+        private bool ValidarForm()
+        {
+            try
+            {
+                if (txt_nombre_ag.Text != string.Empty)
+                {
+                    if (txt_desc_ag.Text != string.Empty)
+                    {
+                        if (txt_costo_ag.Text != string.Empty)
+                        {
+                            return true;                            
+                        }
+                        else
+                        {
+                            MensajeError("El precio es requerido");
+                        }
+                    }
+                    else
+                    {
+                        MensajeError("La descripción es requerida");
+                    }
+                }
+                else
+                {
+                    MensajeError("El nombre es requerido");
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
         private void Limpiar()
