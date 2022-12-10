@@ -1,6 +1,7 @@
 ﻿using Controlador;
 using Modelo;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows;
@@ -34,15 +35,14 @@ namespace Vista.Pages
             Reserva reserva = (Reserva)dtgReservas.SelectedItem;
             if (reserva != null)
             {
-                string email = txt_nombre_ag.Text;
+                string email = txtEmailAg.Text;
                 string asunto = txtAsunto.Text;
                 string lugar = txtTerminal.Text;
-                string comuna = txtComuna.Text;
-                if (email == null || asunto == null || lugar == null || comuna == null)
+                if (email == null || asunto == null || lugar == null)
                 {
                     return;
                 }
-                Mensajeria.PlanificarTransporte(email, asunto, reserva.CantidadAcompanantes.ToString(), lugar, comuna, reserva.CheckIn.ToString(), reserva.CheckOut.ToString(), reserva.Dpto.NombreDpto, reserva.Dpto.Direccion);
+                Mensajeria.PlanificarTransporte(email, asunto, reserva.CantidadAcompanantes.ToString(), lugar, reserva.CheckIn.ToString(), reserva.CheckOut.ToString(), reserva.Dpto.NombreDpto, reserva.Dpto.Direccion);
                 MessageBox.Show("Correo de planificación enviado");
                 dhCorreo.IsOpen = false;
             }

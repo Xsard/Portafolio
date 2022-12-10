@@ -3,10 +3,16 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local1="clr-namespace:Vista.Pages.Validaciones.ValidacionesTransporte"
       xmlns:local="clr-namespace:Vista.Pages" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:Clases="clr-namespace:Vista.Pages.ClasesVista"          
       mc:Ignorable="d" 
       d:DesignHeight="785" d:DesignWidth="1140"
       Title="MantenedorReservas">
+
+    <Page.DataContext>
+        <Clases:CVTransporte/>
+    </Page.DataContext>
 
     <Grid x:Name="grdReservas" Validation.Error="ItemError">
         <Grid.RowDefinitions>
@@ -32,128 +38,128 @@
                     <DataGridTemplateColumn Header="id" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox IsReadOnly="True">
-                                    <TextBox.Text >
+                                <Label>
+                                    <Label.Content>
                                         <Binding Path="IdReserva" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Depto" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox IsReadOnly="True">
-                                    <TextBox.Text >
+                                <Label >
+                                    <Label.Content>
                                         <Binding Path="Dpto.NombreDpto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
                                             </Binding.ValidationRules>
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="IdCliente"  Width="*">
+                    <DataGridTemplateColumn Header="Cliente"  Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox IsReadOnly="True">
-                                    <TextBox.Text >
+                                <Label>
+                                    <Label.Content>
                                         <Binding Path="Cliente.Nombres" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Estado Reserva"  Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox IsReadOnly="True">
-                                    <TextBox.Text >
+                                <Label>
+                                    <Label.Content>
                                         <Binding Path="EstadoReserva" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Estado Pago"  Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox IsReadOnly="True">
-                                    <TextBox.Text >
+                                <Label>
+                                    <Label.Content>
                                         <Binding Path="EstadoPago" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="CheckIn" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox IsReadOnly="True">
-                                    <TextBox.Text >
+                                <Label>
+                                    <Label.Content>
                                         <Binding Path="CheckIn" StringFormat="dd/MM/yyyy" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
                                             </Binding.ValidationRules>
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="CheckOut" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox IsReadOnly="True">
-                                    <TextBox.Text >
+                                <Label>
+                                    <Label.Content>
                                         <Binding Path="CheckOut" StringFormat="dd/MM/yyyy" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
                                             </Binding.ValidationRules>
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Firma" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox IsReadOnly="True">
-                                    <TextBox.Text >
+                                <Label>
+                                    <Label.Content>
                                         <Binding Path="Firma" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
                                             </Binding.ValidationRules>
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Acompañantes" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox IsReadOnly="True">
-                                    <TextBox.Text>
+                                <Label>
+                                    <Label.Content>
                                         <Binding Path="CantidadAcompanantes" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Total" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox IsReadOnly="True">
-                                    <TextBox.Text>
+                                <Label>
+                                    <Label.Content>
                                         <Binding Path="ValorTotal" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </Label.Content>
+                                </Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="200" Header="Acciones">
+                    <DataGridTemplateColumn Width="*" Header="Acciones">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" >
@@ -173,23 +179,69 @@
                     <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
                         <Label Content="Solicitar Transporte" FontSize="20"/>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
-                            <materialDesign:PackIcon Kind="Email" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombre_ag}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txt_nombre_ag" materialDesign:HintAssist.Hint="Email empresa" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+                            <materialDesign:PackIcon Kind="Email" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txtEmailAg}" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txtEmailAg" materialDesign:HintAssist.Hint="Email empresa" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Path="Email" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:EmailIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="TextSubject" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txtAsunto}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txtAsunto" materialDesign:HintAssist.Hint="Asunto" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+                            <TextBox x:Name="txtAsunto" materialDesign:HintAssist.Hint="Asunto" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Path="Asunto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:TextoIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="BusStop" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txtTerminal}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txtTerminal" materialDesign:HintAssist.Hint="Terminal" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
-                            <materialDesign:PackIcon Kind="House" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txtComuna}" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txtComuna" materialDesign:HintAssist.Hint="Comuna" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+                            <TextBox x:Name="txtTerminal" materialDesign:HintAssist.Hint="Terminal" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
+                                <TextBox.Text>
+                                    <Binding ValidatesOnDataErrors="True" Path="Terminal" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:TextoIsValid/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
-                            <Button x:Name="btn_Enviar_Correo" Click="btn_Enviar_Correo_Click" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center"  Content="Solicitar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0"/>
+                            <Button x:Name="btn_Enviar_Correo" Click="btn_Enviar_Correo_Click" HorizontalAlignment="Center"  Content="Solicitar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                        <Style.Resources/>
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtEmailAg}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtAsunto}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtTerminal}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </MultiDataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txtEmailAg}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txtAsunto}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Text,ElementName=txtTerminal}" Value="">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                             <Button x:Name="btn_Cancelar" Click="btn_Cancelar_Click" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}"  VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
                         </StackPanel>
                     </StackPanel>
