@@ -2,26 +2,26 @@
 using System.Globalization;
 using System.Windows.Controls;
 
-namespace Vista.Pages.Validaciones.ValidacionesTour
+namespace Vista.PagesFuncionario.Validaciones
 {
-    public class NombreHasta : ValidationRule
+    public class DescHasta : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             try
             {
-                var nombre = Convert.ToString(value);
+                var descripcion = Convert.ToString(value);
 
-                if (nombre != null && nombre != string.Empty)
+                if (descripcion != null && descripcion != string.Empty)
                 {
-                    if (nombre.Length >= 50)
+                    if (descripcion.Length >= 2000)
                     {
-                        return new ValidationResult(false, "La razón no puede superar los 50 caracteres");
+                        return new ValidationResult(false, "La descripción no puede superar los 2000 caracteres");
                     }
                 }
                 else
                 {
-                    return new ValidationResult(false, "La razón es requerido");
+                    return new ValidationResult(false, "La descripción es requerida");
                 }
                 return ValidationResult.ValidResult;
             }

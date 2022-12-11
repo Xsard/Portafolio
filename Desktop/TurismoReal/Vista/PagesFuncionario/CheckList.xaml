@@ -3,17 +3,21 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Vista.PagesFuncionario"
+      xmlns:local="clr-namespace:Vista.PagesFuncionario" xmlns:local1="clr-namespace:Vista.PagesFuncionario.Validaciones"
+      xmlns:Clases="clr-namespace:Vista.PagesFuncionario.ClasesVista"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
       mc:Ignorable="d" 
       d:DesignHeight="785" d:DesignWidth="1140"
       Title="CheckList">
 
+    <Page.DataContext>
+        <Clases:CVCheckList/>
+    </Page.DataContext>
+
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
-                <RowDefinition Height="50"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -79,9 +83,25 @@
                 <Grid>
                     <StackPanel Width="500">
                         <Label Content="Razón de la multa"/>
-                        <TextBox x:Name="txtRazonMulta"/>
+                        <TextBox x:Name="txtRazonMulta">
+                            <TextBox.Text>
+                                <Binding ValidatesOnDataErrors="True" Mode="TwoWay" Path="Razon" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <local1:NombreHasta/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                         <Label Content="Descripción"/>
-                        <TextBox x:Name="txtDescripción" Height="100" HorizontalAlignment="Stretch" MaxLength="200" TextWrapping="Wrap"/>
+                        <TextBox x:Name="txtDescripción" Height="100" HorizontalAlignment="Stretch" MaxLength="200" TextWrapping="Wrap">
+                            <TextBox.Text>
+                                <Binding ValidatesOnDataErrors="True" Mode="TwoWay" Path="Descripcion" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <local1:DescHasta/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                         <Grid Margin="0,20,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -94,9 +114,17 @@
                             <Label Grid.Column="0" Content="Deuda objetos:"/>
                             <Label Grid.Column="1" x:Name="lblCostoObj" BorderThickness="0,0,0,1" BorderBrush="Black" Content="0" HorizontalContentAlignment="Center"/>
                             <Label Grid.Column="2" Content="Otras deudas:"/>
-                            <TextBox Grid.Column="3" TextAlignment="Center" Text="0" HorizontalContentAlignment="Center" GotFocus="txtOtrosCostos_GotFocus" LostFocus="txtOtrosCostos_LostFocus" x:Name="txtOtrosCostos" KeyUp="txtOtrosCostos_KeyUp" PreviewTextInput="txtOtrosCostos_PreviewTextInput"/>
+                            <TextBox Grid.Column="3" TextAlignment="Center" HorizontalContentAlignment="Center" GotFocus="txtOtrosCostos_GotFocus" LostFocus="txtOtrosCostos_LostFocus" x:Name="txtOtrosCostos" KeyUp="txtOtrosCostos_KeyUp" PreviewTextInput="txtOtrosCostos_PreviewTextInput"/>
                             <Label Grid.Column="4" Content="Deuda final:"/>
-                            <Label Grid.Column="5" x:Name="lblCostoTotal" BorderThickness="0,0,0,1" BorderBrush="Black" Content="0" HorizontalContentAlignment="Center"/>
+                            <Label Grid.Column="5" x:Name="lblCostoTotal" BorderThickness="0,0,0,1" BorderBrush="Black" HorizontalContentAlignment="Center">
+                                <Label.Content>
+                                    <Binding ValidatesOnDataErrors="True" Mode="TwoWay" Path="Valor" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local1:ValorEsNroPositivo/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </Label.Content>
+                            </Label>
                         </Grid>
 
                     </StackPanel>
@@ -111,7 +139,33 @@
                     </DataGrid>
                 </Grid>
                 <Grid Grid.Row="2">
-                    <Button Width="150" x:Name="btnGenerarMulta" Content="Generar Multa" Click="btnGenerarMulta_Click"/>
+                    <Button Width="150" x:Name="btnGenerarMulta" Content="Generar Multa" Click="btnGenerarMulta_Click">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                <Style.Resources/>
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtRazonMulta}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtDescripción}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=lblCostoTotal}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                    </MultiDataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Text,ElementName=txtRazonMulta}" Value="">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Text,ElementName=txtDescripción}" Value="">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Content,ElementName=lblCostoTotal}" Value="0">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </Grid>
             </Grid>
         </Grid>

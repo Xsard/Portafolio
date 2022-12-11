@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Controls;
 
-namespace Vista.Pages.Validaciones.ValidacionesTour
+namespace Vista.PagesFuncionario.Validaciones
 {
     public class NombreHasta : ValidationRule
     {
@@ -16,12 +16,12 @@ namespace Vista.Pages.Validaciones.ValidacionesTour
                 {
                     if (nombre.Length >= 50)
                     {
-                        return new ValidationResult(false, "La razón no puede superar los 50 caracteres");
+                        return new ValidationResult(false, "El nombre no puede superar los 50 caracteres");
                     }
                 }
                 else
                 {
-                    return new ValidationResult(false, "La razón es requerido");
+                    return new ValidationResult(false, "El nombre es requerido");
                 }
                 return ValidationResult.ValidResult;
             }

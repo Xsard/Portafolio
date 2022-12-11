@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Controls;
 
-namespace Vista.Pages.Validaciones.ValidacionesTransporte
+namespace Vista.Pages.Validaciones.ValidacionesReservaTrans
 {
     public class TextoIsValid : ValidationRule
     {

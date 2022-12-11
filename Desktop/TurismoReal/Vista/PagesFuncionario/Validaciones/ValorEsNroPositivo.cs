@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Controls;
 
-namespace Vista.Pages.Validaciones.ValidacionesServExtra
+namespace Vista.PagesFuncionario.Validaciones
 {
     public class ValorEsNroPositivo : ValidationRule
     {
@@ -14,13 +14,13 @@ namespace Vista.Pages.Validaciones.ValidacionesServExtra
 
                 if (valorServ <= 0)
                 {
-                    return new ValidationResult(false, "El valor de la multa debe ser un número positivo");
+                    return new ValidationResult(false, "El valor del servicio debe ser un número positivo");
                 }
                 return ValidationResult.ValidResult;
             }
             catch (Exception)
             {
-                return new ValidationResult(false, "El valor de la multa debe ser un número");
+                return new ValidationResult(false, "El valor del servicio debe ser un número");
             }
         }
     }

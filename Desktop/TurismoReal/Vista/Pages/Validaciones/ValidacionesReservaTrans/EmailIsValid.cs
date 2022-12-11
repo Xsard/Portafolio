@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
-namespace Vista.Pages.Validaciones.ValidacionesTransporte
+namespace Vista.Pages.Validaciones.ValidacionesReservaTrans
 {
     public class EmailIsValid : ValidationRule
     {
