@@ -62,8 +62,9 @@ const Pago_web = () => {
 
             
             MySwal.fire({
-                title: "el pago ha sido realizado con exito",
-                icon: "success"
+                title: "El pago ha sido realizado con exito",
+                icon: "success",
+                allowOutsideClick: false
             }).then((respuesta) => {
                 if (respuesta.isConfirmed) {
                     window.location.replace('/ListaReserva');
@@ -111,7 +112,7 @@ const Pago_web = () => {
                         maxLength={3} value={cv} onChange={(e) => handleCv(e.target.value)}></input></p>&nbsp;
                     </div>   
                     <br></br>
-                    <h2>El valor total a pagar es: {valorTotal}</h2>
+                    <h2>El valor total a pagar es: ${valorTotal}</h2>
                     <br></br>
                     <Button variant="primary" style={{backgroundColor: "#1687A7"}} onClick={handleUpdate}>
                         Pagar

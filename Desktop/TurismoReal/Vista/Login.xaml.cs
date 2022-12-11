@@ -13,8 +13,8 @@ namespace Vista
 
         private void Ingresar_button_Click(object sender, RoutedEventArgs e)
         {
-            string email = "desktopFun@gmail.com"; //email_txt.Text;
-            string psw =  "123"; //pass_txt.Password.ToString();
+            string email = email_txt.Text;
+            string psw = pass_txt.Password.ToString();
             DataTable dt = CUsuario.Autentificar(email, psw);
             if (dt.Rows.Count != 0)
             {
