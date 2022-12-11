@@ -211,7 +211,6 @@ namespace Vista.Pages
                             }
                             catch (Exception)
                             {
-                                throw;
                             }
                             Image image = new()
                             {
