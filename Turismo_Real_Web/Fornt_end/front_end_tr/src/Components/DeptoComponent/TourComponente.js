@@ -169,7 +169,7 @@ class TourComponent extends React.Component {
                             localStorage.getItem('ocultarBtn') == 1 ?
                                 <h1></h1> :
                                 <div className="text text-center">
-                                    <button onClick={postTours} className="btn btn-primary">Continuar</button>&nbsp;<button className="btn btn-danger" onClick={PostCancelar}>Cancelar</button>
+                                    <button onClick={postTours} style={{ backgroundColor: "#1687A7" }} className="btn btn-primary">Continuar</button>&nbsp;<button className="btn btn-danger" onClick={PostCancelar} style={{ backgroundColor: "#1687A7" }}>Cancelar</button>
                                 </div>
                         }
                     </div>
