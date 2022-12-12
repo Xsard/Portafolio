@@ -50,17 +50,6 @@
         <Grid Grid.Column="1" Grid.Row="2">
             <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" x:Name="dtgInventario" Margin="12,0,12,12" MouseDoubleClick="dtgInventario_MouseDoubleClick">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Id">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label>
-                                    <Label.Content>
-                                        <Binding Path="IdObjeto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
-                                    </Label.Content>
-                                </Label>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Item" Width="1.5*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -94,7 +83,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="1.2*" Header="Acciones">
+                    <DataGridTemplateColumn Width="0.7*" Header="Acciones">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Padding="0" Click="BtnEliminarObj_Click" Width="40" Background="#C0392B" BorderBrush="#C0392B">

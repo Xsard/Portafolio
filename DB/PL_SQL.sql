@@ -1127,7 +1127,31 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
         R SYS_REFCURSOR; 
     BEGIN 
         OPEN R FOR
-            SELECT * FROM  RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE FIRMA = 0 AND ESTADO_RESERVA = 'I' AND ESTADO_PAGO = 'A' AND SYSDATE >= CHECK_IN AND SYSDATE < CHECK_OUT;
+            SELECT ID_RESERVA,
+                ID_DPTO,
+                ID_CLIENTE,
+                ESTADO_RESERVA,
+                ESTADO_PAGO,
+                TO_CHAR(CHECK_IN,'DD/MM/YYYY'),
+                TO_CHAR(CHECK_OUT,'DD/MM/YYYY'),
+                FIRMA,
+                CANTIDAD_ACOMPAÑANTES,
+                TRANSPORTE,
+                VALOR_TOTAL,
+                ID_CLIENTE,
+                RUT_CLIENTE,
+                NOMBRES_CLIENTE,
+                APELLIDOS_CLIENTE,
+                ID_USUARIO,
+                ID_DPTO,
+                NOMBRE_DPTO,
+                TARIFA_DIARIA,
+                DIRECCION,
+                NRO_DPTO,
+                CAPACIDAD,
+                ID_COMUNA,
+                DISPONIBILIDAD
+            FROM  RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE FIRMA = 0 AND ESTADO_RESERVA = 'I' AND ESTADO_PAGO = 'A' AND SYSDATE >= CHECK_IN AND SYSDATE < CHECK_OUT;
         RETURN R;
     END;
 
@@ -1138,7 +1162,31 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
         R SYS_REFCURSOR; 
     BEGIN 
         OPEN R FOR
-            SELECT * FROM  RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE FIRMA = 1 AND ESTADO_RESERVA <> 'T';
+            SELECT ID_RESERVA,
+                ID_DPTO,
+                ID_CLIENTE,
+                ESTADO_RESERVA,
+                ESTADO_PAGO,
+                TO_CHAR(CHECK_IN,'DD/MM/YYYY'),
+                TO_CHAR(CHECK_OUT,'DD/MM/YYYY'),
+                FIRMA,
+                CANTIDAD_ACOMPAÑANTES,
+                TRANSPORTE,
+                VALOR_TOTAL,
+                ID_CLIENTE,
+                RUT_CLIENTE,
+                NOMBRES_CLIENTE,
+                APELLIDOS_CLIENTE,
+                ID_USUARIO,
+                ID_DPTO,
+                NOMBRE_DPTO,
+                TARIFA_DIARIA,
+                DIRECCION,
+                NRO_DPTO,
+                CAPACIDAD,
+                ID_COMUNA,
+                DISPONIBILIDAD
+            FROM  RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE FIRMA = 1 AND ESTADO_RESERVA <> 'T';
         RETURN R;
     END;    
     
@@ -1149,7 +1197,31 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
         R SYS_REFCURSOR; 
     BEGIN 
         OPEN R FOR
-            SELECT * FROM RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE TRANSPORTE <> 'N' AND FIRMA = 0;
+            SELECT ID_RESERVA,
+                ID_DPTO,
+                ID_CLIENTE,
+                ESTADO_RESERVA,
+                ESTADO_PAGO,
+                TO_CHAR(CHECK_IN,'DD/MM/YYYY'),
+                TO_CHAR(CHECK_OUT,'DD/MM/YYYY'),
+                FIRMA,
+                CANTIDAD_ACOMPAÑANTES,
+                TRANSPORTE,
+                VALOR_TOTAL,
+                ID_CLIENTE,
+                RUT_CLIENTE,
+                NOMBRES_CLIENTE,
+                APELLIDOS_CLIENTE,
+                ID_USUARIO,
+                ID_DPTO,
+                NOMBRE_DPTO,
+                TARIFA_DIARIA,
+                DIRECCION,
+                NRO_DPTO,
+                CAPACIDAD,
+                ID_COMUNA,
+                DISPONIBILIDAD
+            FROM RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE TRANSPORTE <> 'N' AND FIRMA = 0;
         RETURN R;
     END;    
     

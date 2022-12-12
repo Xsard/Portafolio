@@ -21,6 +21,7 @@ namespace Vista.Pages
             departamento = dpto;
             ListarServicios();
             ListarServiciosContratados();
+            lblServDpto.Content = lblServDpto.Content.ToString() + dpto.NombreDpto;
         }
         
 

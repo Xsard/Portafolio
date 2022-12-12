@@ -30,13 +30,6 @@
         <Grid Grid.Row="2" Margin="12,0">
             <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgMantDptos" CanUserDeleteRows="False" MouseDoubleClick="dtgMantDptos_MouseDoubleClick">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Id" Width="0.5*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label Content="{Binding Path=IdMantencion}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Nombre" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -122,7 +115,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="DateRange" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=dp_inicio_ag}" VerticalAlignment="Bottom"/>
-                            <DatePicker x:Name="dp_inicio_ag" materialDesign:HintAssist.Hint="Fecha Inicio" SelectedDateChanged="dp_inicio_ag_SelectedDateChanged" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="220" />
+                            <DatePicker x:Name="dp_inicio_ag"  materialDesign:HintAssist.Hint="Fecha Inicio" SelectedDateChanged="dp_inicio_ag_SelectedDateChanged" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="220" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="DateRange" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=dp_termino_ag}" VerticalAlignment="Bottom"/>

@@ -30,13 +30,6 @@
         <Grid Grid.Row="2" Margin="12,0" >
             <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgServDpto" CanUserDeleteRows="False" MouseDoubleClick="dtgServDpto_MouseDoubleClick">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Id" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label Content="{Binding Path=IdServDpto}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Nombre" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -49,7 +42,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Descripción" Width="*" >
+                    <DataGridTemplateColumn Header="Descripción" Width="3*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Label>

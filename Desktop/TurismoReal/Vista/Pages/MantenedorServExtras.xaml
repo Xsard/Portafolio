@@ -14,31 +14,23 @@
         <Clases:CVServiciosExtra/>
     </Page.DataContext>
 
-
     <Grid x:Name="grdSevEx" Validation.Error="ItemError">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Margin="40,0" Grid.Row="0">
+        <Grid Margin="12,0" Grid.Row="0">
             <Label Content="Servicios Extras" VerticalAlignment="Bottom" FontSize="40" Foreground="#532853"/>
             <Line Fill="#532853" VerticalAlignment="Bottom" Height="1" Stroke="#532853" X1="1140" Y1="1"/>
         </Grid>
-        <Grid Margin="40,0" Grid.Row="1">
+        <Grid Margin="12,0" Grid.Row="1">
             <Button x:Name="btnAbrirAgregarServ" Width="150" HorizontalAlignment="Right" Content="Agregar" BorderBrush="#FF0099CC" Background="#FF0099CC" Click="btnAbrirAgregarServ_Click"/>
         </Grid>
-        <Grid Grid.Row="2" Margin="40,0" >
+        <Grid Grid.Row="2" Margin="12,0" >
             <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgServE" MouseDoubleClick="dtgServE_MouseDoubleClick" CanUserDeleteRows="False">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Id" Width="50">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label Content="{Binding Path=IdServicioExtra}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Servicio" Width="120">
+                    <DataGridTemplateColumn Header="Servicio" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Label >
@@ -50,7 +42,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Descripción" Width="*" >
+                    <DataGridTemplateColumn Header="Descripción" Width="2.5*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Label >
@@ -62,7 +54,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Valor servicio" Width="180">
+                    <DataGridTemplateColumn Header="Valor servicio" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Label >

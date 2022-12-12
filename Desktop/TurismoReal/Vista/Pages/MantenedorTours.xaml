@@ -20,24 +20,17 @@
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Margin="40,0" Grid.Row="0">
+        <Grid Margin="12,0" Grid.Row="0">
             <Label Content="Tours" VerticalAlignment="Bottom" FontSize="40" Foreground="#532853"/>
             <Line Fill="#532853" VerticalAlignment="Bottom" Height="1" Stroke="#532853" X1="1140" Y1="1"/>
         </Grid>
-        <Grid Margin="40,0" Grid.Row="1">
+        <Grid Margin="12,0" Grid.Row="1">
             <Button x:Name="btnAbrirAgregarTours" Click="btnAbrirAgregarTours_Click" Width="150" HorizontalAlignment="Right" Content="Agregar" BorderBrush="#FF0099CC" Background="#FF0099CC"/>
         </Grid>
-        <Grid Grid.Row="2" Margin="40,0" >
+        <Grid Grid.Row="2" Margin="12,0" >
             <DataGrid x:Name="dtgTours" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" MouseDoubleClick="dtgTours_MouseDoubleClick">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Id" Width="50">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label Content="{Binding Path=IdTour}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Nombre Tour" Width="120">
+                    <DataGridTemplateColumn Header="Nombre Tour" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Label>
@@ -48,7 +41,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Descripción Tour" Width="*" >
+                    <DataGridTemplateColumn Header="Descripción Tour" Width="1.6*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Label>
@@ -59,7 +52,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Valor Tour" Width="180">
+                    <DataGridTemplateColumn Header="Valor Tour" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Label>
@@ -77,7 +70,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="70">
+                    <DataGridTemplateColumn Width=".7*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Padding="0" Click="DtgTourDelete" Background="#C0392B" BorderBrush="#C0392B">
