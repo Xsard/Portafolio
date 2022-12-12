@@ -336,6 +336,5 @@
                 </Grid>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
-
     </Grid>
 </Page>

@@ -86,9 +86,9 @@
         </Grid>
         <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhMantDpto_ag">
             <materialDesign:DialogHost.DialogContent>
-                <Grid Height="430" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label Content="Mantención Departamento" FontSize="20"/>
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid Height="400" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="Mantención Departamento" HorizontalAlignment="Center" Margin="0 15 0 0" FontSize="20"/>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 40 0 0">
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="Rename" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombre_ag}" VerticalAlignment="Bottom"/>
                             <TextBox x:Name="txt_nombre_ag" MaxLength="50" PreviewTextInput="txt_string_PreviewTextInput"  materialDesign:HintAssist.Hint="Nombre Mantenimiento" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
@@ -176,8 +176,8 @@
         </materialDesign:DialogHost>
         <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhMantDpto_ac">
             <materialDesign:DialogHost.DialogContent>
-                <Grid Height="430" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label Content="Mantención Departamento" FontSize="20"/>
+                <Grid Height="400" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="Mantención Departamento" HorizontalAlignment="Center" Margin="0 15 0 0" FontSize="20"/>
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="Rename" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombre_ac}" VerticalAlignment="Bottom"/>
@@ -225,7 +225,7 @@
                             </TextBox>
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 20">
                         <Button x:Name="btn_Actualizar_MantDpto" Click="btn_Actualizar_MantDpto_Click" Margin="0 0 10 0" VerticalAlignment="Bottom" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104">
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">

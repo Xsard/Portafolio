@@ -193,6 +193,6 @@ namespace Vista.Pages
             cbo_region_ac.SelectedIndex = -1;
             tourActualizar = null;
             dhTour_ac.IsOpen = false;
-        }
+        }        
     }
 }

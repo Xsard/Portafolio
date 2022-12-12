@@ -299,10 +299,10 @@ namespace Vista.Pages
                         count++;                      
                     }
                     table.Cell().Element(CellStyle).AlignRight().Text("");
-                    table.Cell().Element(CellStyle).AlignRight().Text(CantArriendos);
+                    table.Cell().Element(CellStyle).AlignCenter().Text(CantArriendos);
                     if (count!=0)
                     {
-                        table.Cell().MaxWidth(55).Element(CellStyle).AlignRight().Text(PromReservas / count);
+                        table.Cell().MaxWidth(55).Element(CellStyle).AlignRight().Text(Math.Truncate(PromReservas / count));
                     }
                     else
                     {
@@ -340,8 +340,7 @@ namespace Vista.Pages
 
                     header.Cell().ColumnSpan(4).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
                 }); 
-
-                
+                                
                 foreach (var item in Modelo)
                 {
                     //table.Cell().Element(CellStyle).Text(Modelo.Items.IndexOf(item) + 1);
@@ -464,7 +463,7 @@ namespace Vista.Pages
                         var TotalGralRecaudacion = 0m;
                         foreach (var item in Modelo)
                         {
-                            TotalGralCantArriendos += item.TotalDiasArriendo;
+                            TotalGralCantArriendos += item.TotalDiasMantencion;
                             TotalGralCostoMantencion += item.TotalMantencion;
                             TotalGralCostoMultas += item.TotalMultas;
                             TotalGralRecaudacion += item.TotalRecaudacion;
@@ -510,7 +509,7 @@ namespace Vista.Pages
                     foreach (var item in Modelo)
                     {
                         table.Cell().Element(CellStyle).Text(item.NombreDpto);
-                        table.Cell().Element(CellStyle).AlignRight().Text(item.TotalDiasArriendo);
+                        table.Cell().Element(CellStyle).AlignRight().Text(item.TotalDiasMantencion);
                         table.Cell().Element(CellStyle).AlignRight().Text(item.TotalMantencion);
                         table.Cell().Element(CellStyle).AlignRight().Text(item.TotalMultas);
                         table.Cell().Element(CellStyle).AlignRight().Text(item.TotalRecaudacion);
@@ -531,7 +530,7 @@ namespace Vista.Pages
                                  NombreDpto = (string)rw[0],
                                  TotalRecaudacion = (decimal)rw[1],
                                  TotalMantencion = (decimal)rw[2],
-                                 TotalDiasArriendo = (decimal)rw[3],
+                                 TotalDiasMantencion = (decimal)rw[3],
                                  TotalMultas = (decimal)rw[4],
                              }).ToList();
                 return Dptos;

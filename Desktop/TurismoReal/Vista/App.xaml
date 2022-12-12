@@ -14,7 +14,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
                 <!--  Custom Resources  -->
-                <ResourceDictionary Source="/Resources/ValidationStyle.xaml" />
+                <!--<ResourceDictionary Source="/Resources/ValidationStyle.xaml" />-->
                 <!--<ResourceDictionary Source="/Resources/Styles/ButtonStyles.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

@@ -263,7 +263,6 @@ namespace Vista.Pages
         private void BtnAgregarServicioDpto(object sender, RoutedEventArgs e, Border border, int posStk, Servicio serv, string titulo, string desc)
         {
             int resultado = CServDpto.IngresarServicioDpto(serv.IdServDpto, departamento.IdDepto, 0);
-            MessageBox.Show(posStk.ToString());
             if (resultado == -21201) return;
 
             if (posStk == 0)
@@ -292,7 +291,7 @@ namespace Vista.Pages
                 resultado = CServDpto.ActualizarServicioDpto(id, departamento.IdDepto, 1);
                 if (resultado == -21202) return;
                 estado.Content = 1;
-                button.Content = "Desctivar";
+                button.Content = "Desactivar";
             }
             else
             {
@@ -309,7 +308,6 @@ namespace Vista.Pages
             if (restulado == -21203) return;
             if (posStk == 0)
             {
-                MessageBox.Show(posStk.ToString());
                 stkServDpto1.Children.Remove(border);
                 stkServDpto1.UnregisterName(titulo);
                 stkServDpto1.UnregisterName(desc);
@@ -317,7 +315,6 @@ namespace Vista.Pages
             }
             else if (posStk == 1)
             {
-                MessageBox.Show(posStk.ToString());
                 stkServDpto2.Children.Remove(border);
                 stkServDpto2.UnregisterName(titulo);
                 stkServDpto2.UnregisterName(desc);
