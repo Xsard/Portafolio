@@ -230,6 +230,7 @@ CREATE OR REPLACE PACKAGE Mantener_Servicios_Extras
         descripcion IN SERVICIO_EXTRA.DESC_SERV_EX%TYPE, valor IN SERVICIO_EXTRA.VALOR_SERV_EX%TYPE, R OUT INTEGER);
     PROCEDURE eliminar_svextra(identificador SERVICIO_EXTRA.ID_SVC_EX%TYPE, R OUT INTEGER);
     PROCEDURE listar_svextra(Servicios_Ex OUT SYS_REFCURSOR);
+    PROCEDURE count_svextra(R OUT INT);
 
 END Mantener_Servicios_Extras;
 /
@@ -316,6 +317,11 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Servicios_Extras
     EXCEPTION
         WHEN Dpto_Error_Li THEN 
             Servicios_Ex:=NULL;
+    END;
+    PROCEDURE count_svextra(R OUT INT)
+    IS
+    BEGIN
+        SELECT COUNT(*) INTO R FROM SERVICIO_EXTRA;
     END;
 END Mantener_Servicios_Extras;
 /
@@ -1021,7 +1027,7 @@ CREATE OR REPLACE PACKAGE Mantener_Tours
     valor IN TOUR_PLAN.VALOR_TOUR%TYPE, region IN TOUR_PLAN.ID_REGION%TYPE, R OUT INTEGER);
     PROCEDURE eliminar_tour(identificador TOUR_PLAN.ID_TOUR%TYPE, R OUT INTEGER);
     PROCEDURE listar_tour(Tours OUT SYS_REFCURSOR);
-
+    PROCEDURE contar_tours(R OUT INT);
 END Mantener_Tours;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Tours
@@ -1108,6 +1114,11 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Tours
         WHEN Tour_Error_Li THEN
             Tours:= null;
     END;
+    PROCEDURE contar_tours(R OUT INT)
+    IS
+    BEGIN
+        SELECT COUNT(*) INTO R FROM TOUR_PLAN;
+    END;
 END Mantener_Tours;
 /
 CREATE OR REPLACE PACKAGE Mantener_Reserva
@@ -1115,6 +1126,8 @@ CREATE OR REPLACE PACKAGE Mantener_Reserva
     PROCEDURE listar_reserva(estadoCheck integer, Reservas OUT SYS_REFCURSOR);
     PROCEDURE actualizar_firma(identificador IN RESERVA.ID_RESERVA%TYPE, firma_func IN RESERVA.FIRMA%TYPE, estadoR RESERVA.ESTADO_RESERVA%TYPE, estadoP RESERVA.ESTADO_PAGO%TYPE, R OUT INTEGER);
     PROCEDURE buscar_reserva(valor IN VARCHAR2, reservas_encontradas OUT SYS_REFCURSOR);
+    PROCEDURE actualizar_transporte(identificador IN RESERVA.ID_RESERVA%TYPE);
+    PROCEDURE contar_reserva(R OUT INT);
 END Mantener_Reserva;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
@@ -1221,7 +1234,7 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
                 CAPACIDAD,
                 ID_COMUNA,
                 DISPONIBILIDAD
-            FROM RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE TRANSPORTE <> 'N' AND FIRMA = 0;
+            FROM RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) WHERE TRANSPORTE <> 'N' AND TRANSPORTE<> 'L' AND FIRMA = 0;
         RETURN R;
     END;    
     
@@ -1280,7 +1293,17 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Reserva
         OPEN reservas_encontradas FOR
             SELECT * FROM RESERVA JOIN CLIENTE USING(ID_CLIENTE) JOIN DEPARTAMENTO USING (ID_DPTO) 
             WHERE departamento.nombre_dpto like '%' || valor || '%';
-    END;    
+    END;
+    PROCEDURE actualizar_transporte(identificador IN RESERVA.ID_RESERVA%TYPE)
+    IS
+    BEGIN 
+        UPDATE RESERVA SET TRANSPORTE = 'L' WHERE ID_RESERVA = identificador;
+    END;
+    PROCEDURE contar_reserva(R OUT INT)
+    IS
+    BEGIN
+        SELECT COUNT(*) INTO R FROM RESERVA WHERE TRANSPORTE <> 'N' AND TRANSPORTE<> 'L' AND FIRMA = 0;
+    END;
 END Mantener_Reserva;
 /
 CREATE OR REPLACE PACKAGE Mantener_Servicios
@@ -1290,7 +1313,7 @@ CREATE OR REPLACE PACKAGE Mantener_Servicios
         descripcion IN SERVICIO.DESC_SERV%TYPE, R OUT INTEGER);
     PROCEDURE eliminar_svdpto(identificador SERVICIO.ID_SERVICIO%TYPE, R OUT INTEGER);
     PROCEDURE listar_svdpto(Servicios_dpto OUT SYS_REFCURSOR);
-
+    PROCEDURE contar_svDpto(R OUT INT);
 END Mantener_Servicios;
 /
 CREATE OR REPLACE PACKAGE BODY Mantener_Servicios
@@ -1375,6 +1398,11 @@ CREATE OR REPLACE PACKAGE BODY Mantener_Servicios
     EXCEPTION
         WHEN Svdpto_Error_Li THEN
             Servicios_dpto:= null;
+    END;
+    PROCEDURE contar_svDpto(R OUT INT)
+    IS
+    BEGIN
+        SELECT COUNT(*) INTO R FROM SERVICIO;
     END;
 END Mantener_Servicios;
 /
@@ -1579,6 +1607,13 @@ CREATE OR REPLACE PROCEDURE AGREGAR_RESERVA(idDepto IN RESERVA.ID_DPTO%TYPE, idC
         END IF;
     END;
 /
+CREATE OR REPLACE PROCEDURE contar_Usuarios(R OUT INT)
+    IS
+    BEGIN
+        SELECT COUNT(*) INTO R FROM USUARIO;
+    END;
+/
+
 /*Genenerar un admin*/
 DECLARE 
     r integer;

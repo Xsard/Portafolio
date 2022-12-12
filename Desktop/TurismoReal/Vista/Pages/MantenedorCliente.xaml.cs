@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using Vista.Pages.Validaciones;
 
 namespace Vista.Pages
@@ -54,152 +55,55 @@ namespace Vista.Pages
         {
             try
             {
-                if (validarForm())
-                {
-                    string pattern = @"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
-                    if (txt_pass_ag.Password.Length >= 8 && txt_pass_ag.Password.Length <= 30)
-                    {
-                        if (!Regex.IsMatch(txt_pass_ag.Password, pattern) || txt_pass_ag.Password != txt_passConfirm_ag.Password)
-                        {
-                            MessageBox.Show("Las contraseñas no coinciden o no son lo suficientemente seguras");
-                            return;
-                        }
-                        string nRut = txt_rut_ag.Text.Split('-').First();
-                        string dvRut = txt_rut_ag.Text.Split('-').Last();
-                        if (!Rut.ValidaRut(nRut, dvRut))
-                        {
-                            MessageBox.Show("El RUT ingresado no es válido");
-                            return;
-                        }
-                        pattern = "^\\S+@\\S+\\.\\S+$";
-                        if (!Regex.IsMatch(txt_email_ag.Text, pattern))
-                        {
-                            MessageBox.Show("Ingrese un correo con formato válido");
-                            return;
-                        }
-                        Cliente userCliente = new()
-                        {
-                            Email = txt_email_ag.Text.Trim(),
-                            Contraseña = txt_pass_ag.Password.Trim(),
-                            Telefono = Convert.ToInt32(txt_fono_ag.Text.Trim()),
-                            Rut = txt_rut_ag.Text.Trim(),
-                            Nombres = txt_nombres_ag.Text.Trim(),
-                            Apellidos = txt_apellidos_ag.Text.Trim(),
-                        };
 
-                        int estado = CCliente.CrearUsuarioCliente(userCliente);
-                        MensajeOk("Cliente agregado");
-                        ListarCliente();
-                        Limpiar();
-                    }
-                    else
-                    {
-                        MessageBox.Show("La contraseña debe tener entre 8 y 30 caracteres");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.StackTrace);
-            }            
-        }
-        private bool validarForm()
-        {
-            try
-            {
-                if (txt_rut_ag.Text != string.Empty)
+                string pattern = @"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
+                if (txt_pass_ag.Password.Length >= 8 && txt_pass_ag.Password.Length <= 30)
                 {
-                    if (txt_nombres_ag.Text != string.Empty)
+                    if (!Regex.IsMatch(txt_pass_ag.Password, pattern) || txt_pass_ag.Password != txt_passConfirm_ag.Password)
                     {
-                        if (txt_apellidos_ag.Text != string.Empty)
-                        {
-                            if (txt_email_ag.Text != string.Empty)
-                            {
-                                if (txt_fono_ag.Text != string.Empty)
-                                {
-                                    if (txt_pass_ag.Password != string.Empty)
-                                    {
-                                        if (txt_passConfirm_ag.Password != string.Empty)
-                                        {
-                                            return true;
-                                        }
-                                        else
-                                        {
-                                            MensajeError("La confirmación de contraseña es requerida");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        MensajeError("La contraseña es requerida");
-                                    }
-                                }
-                                else
-                                {
-                                    MensajeError("El teléfono es requerido");
-                                }
-                            }
-                            else
-                            {
-                                MensajeError("El correo es requerido");
-                            }
-                        }
-                        else
-                        {
-                            MensajeError("Los apellidos son requeridos");
-                        }
+                        MessageBox.Show("Las contraseñas no coinciden o no son lo suficientemente seguras");
+                        return;
                     }
-                    else
-                    {
-                        MensajeError("Los nombres son requeridos");
-                    }
-                }
-                else
-                {
-                    MensajeError("El RUT es requerido");
-                }
-                return false;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        private void DtgClienteUpdate_KeyDown(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                if (e.Key == Key.Enter)
-                {
                     string nRut = txt_rut_ag.Text.Split('-').First();
                     string dvRut = txt_rut_ag.Text.Split('-').Last();
                     if (!Rut.ValidaRut(nRut, dvRut))
                     {
-                        MessageBox.Show("El rut ingresado no es válido");
+                        MessageBox.Show("El RUT ingresado no es válido");
                         return;
                     }
-                    string pattern = "^\\S+@\\S+\\.\\S+$";
+                    pattern = "^\\S+@\\S+\\.\\S+$";
                     if (!Regex.IsMatch(txt_email_ag.Text, pattern))
                     {
                         MessageBox.Show("Ingrese un correo con formato válido");
                         return;
                     }
-                    Cliente userCliente = (Cliente)dtgCliente.SelectedItem;
-                    try
+                    Cliente userCliente = new()
                     {
-                        int estado = CCliente.ActualizarCliente(userCliente);
-                        MensajeOk("Cliente actualizado");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
+                        Email = txt_email_ag.Text.Trim(),
+                        Contraseña = txt_pass_ag.Password.Trim(),
+                        Telefono = Convert.ToInt32(txt_fono_ag.Text.Trim()),
+                        Rut = txt_rut_ag.Text.Trim(),
+                        Nombres = txt_nombres_ag.Text.Trim(),
+                        Apellidos = txt_apellidos_ag.Text.Trim(),
+                    };
+
+                    int estado = CCliente.CrearUsuarioCliente(userCliente);
+                    MensajeOk("Cliente agregado");
+                    ListarCliente();
+                    Limpiar();
                 }
+                else
+                {
+                    MessageBox.Show("La contraseña debe tener entre 8 y 30 caracteres");
+                }
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.StackTrace);
             }
         }
+
         private void DtgClienteDelete_Click(object sender, RoutedEventArgs e)
         {
             Cliente cliente = (Cliente)dtgCliente.SelectedItem;
@@ -220,13 +124,8 @@ namespace Vista.Pages
         }
         private void Limpiar()
         {
-            txt_email_ag.Clear();
-            txt_pass_ag.Clear();
-            txt_passConfirm_ag.Clear();
-            txt_fono_ag.Clear();
-            txt_rut_ag.Clear();
-            txt_nombres_ag.Clear();
-            txt_apellidos_ag.Clear();
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Refresh();
         }
         private void btnAbrirAgregarCliente_Click(object sender, RoutedEventArgs e)
         {
@@ -235,6 +134,7 @@ namespace Vista.Pages
         private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
         {
             dhCliente_ag.IsOpen = false;
+            Limpiar();
         }
         private void MensajeError(string Mensaje)
         {
@@ -311,21 +211,14 @@ namespace Vista.Pages
             if (estado > 0)
             {
                 MessageBox.Show("Funcionario actualizado");
-                ListarCliente();
+                Limpiar();
             }
-            dhCliente_ac.IsOpen = false;
-            clienteActualizar = null;
+
         }
 
         private void btn_Cancelar_Ac_Click(object sender, RoutedEventArgs e)
         {
-            txt_rut_ac.Text = string.Empty;
-            txt_nombres_ac.Text = string.Empty;
-            txt_apellidos_ac.Text = string.Empty;
-            txt_fono_ac.Text = string.Empty;
-            txt_email_ac.Text = string.Empty;
-            clienteActualizar = null;
-            dhCliente_ac.IsOpen = false;
+            Limpiar();
         }
     }
 }

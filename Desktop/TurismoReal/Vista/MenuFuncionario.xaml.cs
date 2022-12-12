@@ -37,5 +37,11 @@ namespace Vista
             PagesNavigation.Navigate(new Uri("PagesFuncionario/CheckOut.xaml", UriKind.RelativeOrAbsolute));
 
         }
+        private void BtnLogOut_Click(object sender, RoutedEventArgs e)
+        {
+            Login l = new();
+            l.Show();
+            this.Close();
+        }
     }
 }

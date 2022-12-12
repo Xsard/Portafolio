@@ -19,14 +19,14 @@
             HorizontalAlignment="Left"
             Background="#2C2C2C">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="80" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Button x:Name="btnHome"
@@ -193,6 +193,28 @@
                     <Label>
                         <TextBlock TextAlignment="Center" FontSize="10" Foreground="White" TextWrapping="Wrap">
                             Reportería
+                        </TextBlock>
+                    </Label>
+                </StackPanel>
+            </Button>
+            <Button x:Name="BtnLogOut"
+                Grid.Row="8"
+                Width="80"
+                Height="60"
+                Padding="0"
+                VerticalAlignment="Bottom"
+                Background="{x:Null}"
+                BorderThickness="0"
+                Click="BtnLogOut_Click">
+                <StackPanel>
+                    <materialDesign:PackIcon
+                        Width="33"
+                        Height="33"
+                        HorizontalAlignment="Center"
+                        Kind="Logout" />
+                    <Label>
+                        <TextBlock TextAlignment="Center" FontSize="10" Foreground="White" TextWrapping="Wrap">
+                            Cerrar Sesión
                         </TextBlock>
                     </Label>
                 </StackPanel>

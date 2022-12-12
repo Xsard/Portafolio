@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 
 namespace Vista.Pages
 {
@@ -71,6 +72,8 @@ namespace Vista.Pages
         private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
         {
             dhObjetoAg.IsOpen = false;
+            Limpiar();
+
         }
         private void btn_Agregar_Objeto_Click(object sender, RoutedEventArgs e)
         {
@@ -90,7 +93,6 @@ namespace Vista.Pages
                         };
                         int estado = CInventario.CrearInventario(objeto, departamento.IdDepto);
                         MensajeOk("Objeto agregado al inventario");
-                        ListarObjetos();
                         Limpiar();
                     }
                     else
@@ -111,9 +113,8 @@ namespace Vista.Pages
         }
         private void Limpiar()
         {
-            txt_objeto_ag.Clear();
-            txt_cantidad_ag.Clear();
-            txt_precio_unitario.Clear();
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Refresh();
         }
         private void BtnEliminarObj_Click(object sender, RoutedEventArgs e)
         {
@@ -173,12 +174,13 @@ namespace Vista.Pages
                 string copiarImg = System.IO.Path.Combine(path, r.ToString() + ".jpg");
                 System.IO.File.Copy(txtPathFoto.Text, copiarImg, true);
                 dhFotos.IsOpen = false;
-                ListarImg();
+                Limpiar();
             }
         }
         private void btn_Cancelar_AgImg_Click(object sender, RoutedEventArgs e)
         {
             dhFotos.IsOpen = false;
+            Limpiar();
         }
         private void ListarImg()
         {
@@ -250,7 +252,7 @@ namespace Vista.Pages
 
         private void txt_objeto_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú0-9\"]+");
+            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú0-9,\"]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
@@ -281,25 +283,15 @@ namespace Vista.Pages
             if (estado > 0)
             {
                 MensajeOk("Inventario actualizado");
-                LimpiarAc();
-                ListarObjetos();
+                Limpiar();
             }
         }
 
-        private void LimpiarAc()
-        {
-            txt_objeto_ac.Clear();
-            txt_cantidad_ac.Clear();
-            txt_precio_unitario_ac.Clear();
-        }
 
         private void BtnCancelarAc_Click(object sender, RoutedEventArgs e)
         {
             dhObjetoAc.IsOpen = false;
-            txt_objeto_ac.Text = string.Empty;
-            txt_cantidad_ac.Text = string.Empty;
-            txt_precio_unitario_ac.Text = string.Empty;
-            objetoActualizar = null;
+            Limpiar();
         }
     }
 }

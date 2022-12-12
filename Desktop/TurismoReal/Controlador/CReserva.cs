@@ -109,5 +109,61 @@ namespace Controlador
             }
             return resultado;
         }
+        public static int ContarTransporte()
+        {
+            int resultado = new();
+            using (OracleConnection con = Conexion.getInstance().ConexionDB())
+            {
+                OracleCommand cmd = new()
+                {
+                    Connection = con,
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "Mantener_Reserva.contar_reserva"
+                };
+                cmd.Parameters.Add("R", OracleDbType.Int32, ParameterDirection.Output);
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteReader();
+                    resultado = int.Parse(cmd.Parameters["r"].Value.ToString());
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                    cmd.Dispose();
+                }
+            }
+            return resultado;
+        }
+        public static void ActualizarTransporte(int id)
+        {
+            using (OracleConnection con = Conexion.getInstance().ConexionDB())
+            {
+                OracleCommand cmd = new()
+                {
+                    Connection = con,
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "Mantener_Reserva.actualizar_transporte"
+                };
+                cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = id;
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteReader();
+                }
+                catch (Exception)
+                {
+                }
+                finally
+                {
+                    con.Close();
+                    cmd.Dispose();
+                }
+            }
+        }
     }
 }

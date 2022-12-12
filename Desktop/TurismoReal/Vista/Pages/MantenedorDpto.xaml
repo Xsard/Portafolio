@@ -128,9 +128,9 @@
         </Grid>
         <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhDpto_ag">
             <materialDesign:DialogHost.DialogContent>
-                <Grid Height="490" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label Content="Agregar Departamento" FontSize="20"/>
+                <Grid Height="510" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
+                        <Label Content="Agregar Departamento" HorizontalContentAlignment="Center" FontSize="20"/>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="AddressMarker" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombre_ag}" VerticalAlignment="Bottom"/>
                             <TextBox x:Name="txt_nombre_ag" MaxLength="100" PreviewTextInput="txt_nombre_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Nombre" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">
@@ -242,9 +242,9 @@
         </materialDesign:DialogHost>
         <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhDpto_ac">
             <materialDesign:DialogHost.DialogContent>
-                <Grid Height="490" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label Content="Actualizar Departamento" FontSize="20" HorizontalContentAlignment="Center" Padding="0 10 0 10"/>
-                    <StackPanel HorizontalAlignment="Center" Margin="0 40 0 10">
+                <Grid Height="510" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center" Margin="0 30 0 10">
+                        <Label Content="Actualizar Departamento" FontSize="20" HorizontalContentAlignment="Center" />
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="AddressMarker" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombre_ac}" VerticalAlignment="Bottom"/>
                             <TextBox x:Name="txt_nombre_ac" MaxLength="100" PreviewTextInput="txt_nombre_ag_PreviewTextInput" materialDesign:HintAssist.Hint="Nombre" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220">

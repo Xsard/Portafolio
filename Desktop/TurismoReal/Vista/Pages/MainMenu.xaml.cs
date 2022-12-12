@@ -14,6 +14,11 @@ namespace Vista.Pages
             InitializeComponent();
             lblAdmin.Content = dt.Rows[0][0].ToString();
             lblCantidad.Content = CDepartamento.ContarDpto();
+            lblCantidadServ.Content = CServicio.ContarServ();
+            lblCantidadUsr.Content = CUsuario.ContarUsuarios();
+            lblCantidadSvE.Content = CServicioExtra.ContarServEx();
+            lblCantidadTours.Content = CTour.ContarTours();
+            lblCantidadReservas.Content = CReserva.ContarTransporte();
         }
         private void btn_Dpto_Crud_Click(object sender, RoutedEventArgs e)
         {

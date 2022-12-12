@@ -218,7 +218,7 @@
         </materialDesign:DialogHost>
         <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhAdmin_ac" >
             <materialDesign:DialogHost.DialogContent>
-                <Grid Height="600" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid Height="470" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
                         <Label Content="Agregar Funcionario" FontSize="20"/>
                         <StackPanel  Orientation="Horizontal" Height="39" Margin="0,20,0,0">

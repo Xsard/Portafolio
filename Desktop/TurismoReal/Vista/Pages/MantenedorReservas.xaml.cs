@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace Vista.Pages
 {
@@ -43,13 +44,19 @@ namespace Vista.Pages
                 }
                 Mensajeria.PlanificarTransporte(email, asunto, reserva.CantidadAcompanantes.ToString(), lugar, reserva.CheckIn.ToString(), reserva.CheckOut.ToString(), reserva.Dpto.NombreDpto, reserva.Dpto.Direccion);
                 MensajeOk("Correo de planificación enviado");
-                dhCorreo.IsOpen = false;
+                CReserva.ActualizarTransporte(reserva.IdReserva);
+                Limpiar();
             }
         }
 
+        private void Limpiar()
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Refresh();
+        }
         private void btn_Cancelar_Click(object sender, RoutedEventArgs e)
         {
-            dhCorreo.IsOpen = false;
+            Limpiar();
         }
         private void ListarReservas()
         {
@@ -85,7 +92,6 @@ namespace Vista.Pages
             }
             catch (Exception)
             {
-                throw;
             }
         }
         private void MensajeError(string Mensaje)

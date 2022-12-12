@@ -56,6 +56,13 @@ namespace Vista
         {
             PagesNavigation.Navigate(new Uri("Pages/Reportes.xaml", UriKind.RelativeOrAbsolute));
         }
+
+        private void BtnLogOut_Click(object sender, RoutedEventArgs e)
+        {
+            Login l= new();
+            l.Show();
+            this.Close();
+        }
         #endregion
 
         //private void btnSwitch_Click(object sender, RoutedEventArgs e)

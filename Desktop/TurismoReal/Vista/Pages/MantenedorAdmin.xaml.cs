@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using Vista.Pages.Validaciones;
 
 namespace Vista.Pages
@@ -89,7 +90,6 @@ namespace Vista.Pages
 
                         int estado = CAdmin.CrearUsuarioAdmin(userAdmin);
                         MensajeOk("Administrador agregado");
-                        ListarAdmin();
                         Limpiar();
                     }
                     else
@@ -166,82 +166,6 @@ namespace Vista.Pages
                 throw;
             }
         }
-        private void DtgAdminUpdate_KeyDown(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                Administrador userAdmin = (Administrador)dtgAdmin.SelectedItem;
-                if (e.Key == Key.Enter && ValidarCamposDataGrid(userAdmin))
-                {
-                    try
-                    {
-                        string pattern = "^\\S+@\\S+\\.\\S+$";
-                        if (!Regex.IsMatch(userAdmin.Email, pattern))
-                        {
-                            MessageBox.Show("Ingrese un correo con formato válido");
-                            return;
-                        }
-                        if (userAdmin.Nombres.Length > 0 || userAdmin.Nombres != null)
-                        {
-                            int estado = CAdmin.ActualizarAdmin(userAdmin);
-                            MensajeOk("Administrador actualizado");
-                        }
-                        else
-                        {
-                            MensajeError("El nombre es requerido");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.StackTrace);
-            }
-        }
-        private bool ValidarCamposDataGrid(Administrador userAdmin)
-        {
-            try
-            {
-                if (userAdmin.Nombres.Trim() != string.Empty)
-                {
-                    if (userAdmin.Apellidos.Trim() != string.Empty)
-                    {
-                        if (userAdmin.Telefono > 0)
-                        {
-                            if (userAdmin.Email.Trim() != string.Empty)
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                this.MensajeError("El correo es requerido");
-                            }                        
-                        }
-                        else
-                        {
-                            this.MensajeError("El teléfono requerido");
-                        }
-                    }
-                    else
-                    {
-                        this.MensajeError("Los apellidos requeridos");
-                    }
-                }
-                else
-                {
-                    this.MensajeError("Los nombres son requeridos");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.StackTrace);
-            }
-            return false;
-        }
         private void DtgAdminDelete_Click(object sender, RoutedEventArgs e)
         {
             Administrador admin = (Administrador)dtgAdmin.SelectedItem;
@@ -262,13 +186,8 @@ namespace Vista.Pages
         }
         private void Limpiar()
         {
-            txt_email_ag.Clear();
-            txt_pass_ag.Clear();
-            txt_passConfirm_ag.Clear();
-            txt_fono_ag.Clear();
-            txt_rut_ag.Clear();
-            txt_nombres_ag.Clear();
-            txt_apellidos_ag.Clear();
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Refresh();
         }
         private void btnAbrirAgregarAdmin_Click(object sender, RoutedEventArgs e)
         {
@@ -277,6 +196,7 @@ namespace Vista.Pages
         private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
         {
             dhAdmin_ag.IsOpen = false;
+            Limpiar();
         }       
         private void MensajeError(string Mensaje)
         {
@@ -352,21 +272,13 @@ namespace Vista.Pages
             if (estado > 0)
             {
                 MensajeOk("Funcionario actualizado");
-                ListarAdmin();
+                Limpiar();
             }
-            dhAdmin_ac.IsOpen = false;
-            adminActualizar = null;
         }
 
         private void btn_Cancelar_Ac_Click(object sender, RoutedEventArgs e)
         {
-            txt_rut_ac.Text = string.Empty;
-            txt_nombres_ac.Text = string.Empty;
-            txt_apellidos_ac.Text = string.Empty;
-            txt_fono_ac.Text = string.Empty;
-            txt_email_ac.Text = string.Empty;
-            adminActualizar = null;
-            dhAdmin_ac.IsOpen = false;
+            Limpiar();
         }
     }
 }

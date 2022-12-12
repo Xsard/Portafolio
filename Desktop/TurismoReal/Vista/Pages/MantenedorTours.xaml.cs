@@ -9,6 +9,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
+using System.Windows.Navigation;
 
 namespace Vista.Pages
 {
@@ -45,7 +46,6 @@ namespace Vista.Pages
         }
         private void btnAbrirAgregarTours_Click(object sender, RoutedEventArgs e)
         {
-            Limpiar();
             dhTour_ag.IsOpen = true;
         }
         private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
@@ -55,10 +55,8 @@ namespace Vista.Pages
         }
         private void Limpiar()
         {
-            txt_nombre_ag.Clear();
-            txt_desc_ag.Clear();
-            txt_precio_ag.Clear();
-            cbo_region_ag.SelectedIndex = -1;
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Refresh();
         }
 
         private void DtgTourDelete(object sender, RoutedEventArgs e)
@@ -71,7 +69,7 @@ namespace Vista.Pages
                 {
                     int estado = CTour.EliminarTour(tour.IdTour);
                     MensajeOk("Tour eliminado");
-                    ListarTour();
+                    Limpiar();
                 }
             }
             catch (Exception ex)
@@ -179,7 +177,7 @@ namespace Vista.Pages
             if (estado > 0)
             {
                 MessageBox.Show("Tour actualizado");
-                ListarTour();
+                Limpiar();
             }
             dhTour_ac.IsOpen = false;
             tourActualizar = null;
@@ -187,12 +185,7 @@ namespace Vista.Pages
 
         private void btn_Cancelar_Ac_Click(object sender, RoutedEventArgs e)
         {
-            txt_nombre_ac.Text = string.Empty;
-            txt_desc_ac.Text = string.Empty;
-            txt_precio_ac.Text = string.Empty;            
-            cbo_region_ac.SelectedIndex = -1;
-            tourActualizar = null;
-            dhTour_ac.IsOpen = false;
+            Limpiar();
         }        
     }
 }

@@ -85,6 +85,7 @@ namespace Vista.Pages
         private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
         {
             dhDpto_ag.IsOpen = false;
+            Limpiar();
         }
         private void btn_Agregar_Dpto_Click(object sender, RoutedEventArgs e)
         {
@@ -114,7 +115,7 @@ namespace Vista.Pages
                                         };
                                         int estado = CDepartamento.CrearDepto(dpto);
                                         MensajeOk("Departamento agregado");
-                                        ListarDpto();
+                                        dhDpto_ac.IsOpen= false;
                                         Limpiar();
                                     }
                                     else
@@ -154,12 +155,8 @@ namespace Vista.Pages
         }
         private void Limpiar()
         {
-            txt_nombre_ag.Clear();
-            txt_tarifa_ag.Clear();
-            txt_direccion_ag.Clear();
-            txt_nro_ag.Clear();
-            txt_cap_ag.Clear();
-            cbo_comuna_ag.SelectedIndex = -1;
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Refresh();
         }
         private void MensajeError(string Mensaje)
         {
@@ -169,54 +166,7 @@ namespace Vista.Pages
         {
             MessageBox.Show(Mensaje, "Departamentos", MessageBoxButton.OK, MessageBoxImage.Information);
         }        
-        private void DtgDptosUpdate_KeyDown(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                Departamento departamento = (Departamento)dtgDptos.SelectedItem;
-                if (e.Key == Key.Enter && ValidarCamposDataGrid(departamento))
-                {
-                    try
-                    {
-                        if (departamento.NombreDpto.Length > 0 || departamento.NombreDpto != null)
-                        {
-                            int estado = CDepartamento.ActualizarDepto(departamento);
-                            MensajeOk("Departamento actualizado");
-                        }
-                        else
-                        {
-                            MensajeError("Debe ingresar un nombre de departamento");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.StackTrace);
-            }
-        }
-        private void DtgDptosUpdate_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Departamento departamento = (Departamento)dtgDptos.SelectedItem;
-            if (departamento != null && ValidarCamposDataGrid(departamento))
-            {
-                try
-                {
-                    MessageBox.Show(departamento.Disponibilidad.ToString());
-                    int estado = CDepartamento.ActualizarDepto(departamento);
-                    MensajeOk("Departamento actualizado");
-                    ListarDpto();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
+
         private void CheckBoxEstado_Click(object sender, RoutedEventArgs e)
         {
             Departamento departamento = (Departamento)dtgDptos.SelectedItem;
@@ -415,22 +365,14 @@ namespace Vista.Pages
             if (estado > 0)
             {
                 MensajeOk("Departamento actualizado");
-                ListarDpto();
+                dhDpto_ac.IsOpen= false;
+                Limpiar();
             }
-            dhDpto_ac.IsOpen = false;
-            dptoActualizar = null;
         }
 
         private void btn_Cancelar_Ac_Click(object sender, RoutedEventArgs e)
         {
-            txt_nombre_ac.Text = string.Empty;
-            txt_direccion_ac.Text = string.Empty;
-            txt_tarifa_ac.Text = string.Empty;
-            txt_cap_ac.Text = string.Empty;
-            txt_nro_ac.Text = string.Empty;
-            cbo_comuna_ac.SelectedIndex = -1;
-            dptoActualizar = null;
-            dhDpto_ac.IsOpen = false;
+            Limpiar();
         }
     }
 }

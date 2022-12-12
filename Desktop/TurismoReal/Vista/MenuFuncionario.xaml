@@ -13,7 +13,7 @@
             <ColumnDefinition Width="80"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="gridMenu" Width="80" HorizontalAlignment="Left" Background="Gray">
+        <Grid x:Name="gridMenu" Width="80" HorizontalAlignment="Left" Background="#2C2C2C">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="80"/>
@@ -36,6 +36,28 @@
                 <StackPanel>
                     <materialDesign:PackIcon Kind="ExitToApp" Width="40" Height="40"/>
                     <Label Content="Check-Out" FontSize="9" HorizontalAlignment="Center" Padding="0"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="BtnLogOut"
+                Grid.Row="3"
+                Width="80"
+                Height="60"
+                Padding="0"
+                VerticalAlignment="Bottom"
+                Background="{x:Null}"
+                BorderThickness="0"
+                Click="BtnLogOut_Click">
+                <StackPanel>
+                    <materialDesign:PackIcon
+                        Width="33"
+                        Height="33"
+                        HorizontalAlignment="Center"
+                        Kind="Logout" />
+                    <Label>
+                        <TextBlock TextAlignment="Center" FontSize="10" Foreground="White" TextWrapping="Wrap">
+                            Cerrar Sesión
+                        </TextBlock>
+                    </Label>
                 </StackPanel>
             </Button>
         </Grid>

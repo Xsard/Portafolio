@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace Vista.Pages
 {
@@ -55,7 +56,6 @@ namespace Vista.Pages
                             };
                             int estado = CServicioExtra.IngresarServicio(servicioExtra);
                             MensajeOk("Servicio extra agregado");
-                            ListarSvE();
                             Limpiar();
                         }
                         catch (Exception)
@@ -68,14 +68,14 @@ namespace Vista.Pages
         }
         private void Limpiar()
         {
-            txt_nombre_ag.Clear();
-            txt_desc_ag.Clear();
-            txt_precio_ag.Clear();
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Refresh();
         }
 
         private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
         {
             dhServ_ag.IsOpen = false;
+            Limpiar();
         }
         #endregion
         #region Listar
@@ -103,24 +103,6 @@ namespace Vista.Pages
             }
         }
         #endregion
-        private void DtgServUpdate_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                ServicioExtra servicioExtra = (ServicioExtra)dtgServE.SelectedItem;
-                if (servicioExtra.ValorServicioExtra <= 0) return;
-                try
-                {
-                    int estado = CServicioExtra.ActualizarServicio(servicioExtra);
-                    MensajeOk("Servicio actualizado");
-                    ListarSvE();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-        }
         private void DtgServDelete(object sender, RoutedEventArgs e)
         {
             ServicioExtra servicioExtra = (ServicioExtra)dtgServE.SelectedItem;
@@ -132,13 +114,12 @@ namespace Vista.Pages
             }
             catch (Exception)
             {
-                throw;
             }
         }
 
         private void txt_string_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú0-9]+");
+            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú0-9,]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
@@ -168,7 +149,7 @@ namespace Vista.Pages
             if (estado > 0)
             {
                 MensajeOk("Servicio extra actualizado");
-                ListarSvE();
+                Limpiar();
             }
             dhServ_ac.IsOpen = false;
             servEActualizar = null;
@@ -176,11 +157,8 @@ namespace Vista.Pages
 
         private void btn_Cancelar_Ac_Click(object sender, RoutedEventArgs e)
         {
-            txt_nombre_ac.Text = string.Empty;
-            txt_desc_ac.Text = string.Empty;
-            txt_precio_ac.Text = string.Empty;
-            servEActualizar = null;
-            dhServ_ac.IsOpen = false;
+            Limpiar();
+
         }
     }
 }

@@ -141,5 +141,35 @@ namespace Controlador
             }
             return resultado;
         }
+        public static int ContarServ()
+        {
+            int resultado = new();
+            using (OracleConnection con = Conexion.getInstance().ConexionDB())
+            {
+                OracleCommand cmd = new()
+                {
+                    Connection = con,
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "Mantener_Servicios.contar_svDpto"
+                };
+                cmd.Parameters.Add("R", OracleDbType.Int32, ParameterDirection.Output);
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteReader();
+                    resultado = int.Parse(cmd.Parameters["r"].Value.ToString());
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                    cmd.Dispose();
+                }
+            }
+            return resultado;
+        }
     }
 }
