@@ -139,11 +139,10 @@ namespace Vista.Pages
             int id = 0;
             int nivel = 0;
 
-            if (dp_Fecinicio.SelectedDate != null || dp_FecTermino.SelectedDate != null)
+            if (dp_Fecinicio.SelectedDate != null && dp_FecTermino.SelectedDate != null)
             {
                 DateTime fecha_inicio = (DateTime)dp_Fecinicio.SelectedDate;
                 DateTime fecha_termino = (DateTime)dp_FecTermino.SelectedDate;
-
                 if (cbo_Dptos.SelectedIndex > 0)
                 {
                     Departamento departamento = (Departamento)cbo_Dptos.SelectedItem;
