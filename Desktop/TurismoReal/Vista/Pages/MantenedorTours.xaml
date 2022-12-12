@@ -226,9 +226,9 @@
                                         <Style.Triggers>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_nombre_ag}" Value="False"/>
-                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_desc_ag}" Value="False"/>
-                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_precio_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_nombre_ac}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_desc_ac}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_precio_ac}" Value="False"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEnabled" Value="True"/>
                                             </MultiDataTrigger>
