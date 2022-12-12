@@ -196,7 +196,7 @@
                                 <TextBox.Text>
                                     <Binding ValidatesOnDataErrors="True" Path="Asunto" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
-                                            <local1:TextoIsValid/>
+                                            <local1:AsuntoIsValid/>
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
@@ -208,7 +208,7 @@
                                 <TextBox.Text>
                                     <Binding ValidatesOnDataErrors="True" Path="Terminal" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
-                                            <local1:TextoIsValid/>
+                                            <local1:TerminalIsValid/>
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
