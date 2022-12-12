@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Vista.Pages.Validaciones;
+using System.Windows.Navigation;
 
 namespace Vista.Pages
 {
@@ -17,6 +18,7 @@ namespace Vista.Pages
         {
             InitializeComponent();
             ListarFuncionario();
+
         }
         private void ItemError(object sender, ValidationErrorEventArgs e)
         {
@@ -75,7 +77,6 @@ namespace Vista.Pages
 
                     int estado = CFuncionario.CrearUsuarioFuncionario(userFuncionario);
                     MensajeOk("Funcionario agregado");
-                    ListarFuncionario();
                     Limpiar();
                 }
                 else
@@ -83,42 +84,6 @@ namespace Vista.Pages
                     MessageBox.Show("La contraseña debe tener entre 8 y 30 caracteres");
                 }
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.StackTrace);
-            }
-        }
-        private void DtgFuncionarioUpdate_KeyDown(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                if (e.Key == Key.Enter)
-                {
-                    string nRut = txt_rut_ag.Text.Split('-').First();
-                    string dvRut = txt_rut_ag.Text.Split('-').Last();
-                    if (!Rut.ValidaRut(nRut, dvRut))
-                    {
-                        MessageBox.Show("El rut ingresado no es válido");
-                        return;
-                    }
-                    string pattern = "^\\S+@\\S+\\.\\S+$";
-                    if (!Regex.IsMatch(txt_email_ag.Text, pattern))
-                    {
-                        MessageBox.Show("Ingrese un correo con formato válido");
-                        return;
-                    }
-                    Funcionario userFuncionario = (Funcionario)dtgFuncionario.SelectedItem;
-                    try
-                    {
-                        int estado = CFuncionario.ActualizarFuncionario(userFuncionario);
-                        MensajeOk("Funcionario actualizado");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                }
             }
             catch (Exception ex)
             {
@@ -145,13 +110,8 @@ namespace Vista.Pages
         }
         private void Limpiar()
         {
-            txt_email_ag.Clear();
-            txt_pass_ag.Clear();
-            txt_passConfirm_ag.Clear();
-            txt_fono_ag.Clear();
-            txt_rut_ag.Clear();
-            txt_nombres_ag.Clear();
-            txt_apellidos_ag.Clear();
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Refresh();
         }
         private void btnAbrirAgregarFuncionario_Click(object sender, RoutedEventArgs e)
         {
@@ -159,7 +119,7 @@ namespace Vista.Pages
         }
         private void btn_Cancelar_Ag_Click(object sender, RoutedEventArgs e)
         {
-            dhFuncionario_ag.IsOpen = false;
+            Limpiar();
         }
         private void MensajeError(string Mensaje)
         {
@@ -234,21 +194,14 @@ namespace Vista.Pages
             if (estado > 0)
             {
                 MessageBox.Show("Funcionario actualizado");
-                ListarFuncionario();
+                Limpiar();
             }
-            dhFuncionario_ac.IsOpen = false;
-            funActualizar = null;
         }
 
         private void btn_Cancelar_Ac_Click(object sender, RoutedEventArgs e)
         {
-            txt_rut_ac.Text = string.Empty;
-            txt_nombres_ac.Text = string.Empty;
-            txt_apellidos_ac.Text = string.Empty;
-            txt_fono_ac.Text = string.Empty;
-            txt_email_ac.Text = string.Empty;
-            funActualizar = null;
-            dhFuncionario_ac.IsOpen = false;
+            Limpiar();
+
         }
     }
 }

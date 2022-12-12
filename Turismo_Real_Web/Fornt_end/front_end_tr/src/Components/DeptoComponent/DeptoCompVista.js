@@ -292,7 +292,7 @@ const DeptoVista = () => {
                             <p className="card-text">
                                 <br></br>
                                 <img src={depto} height="50" width="50" alt="" /> Numero: {NumeroDepto}<br /><br></br>
-                                <img src={cap} height="50" width="50" alt="" /> para {capacidad} personas<br /><br></br>
+                                <img src={cap} height="50" width="50" alt="" /> Para {capacidad} personas<br /><br></br>
                                 <img src={ubi} height="50" width="50" alt="" /> {direccion}, {nombreComuna} <br /><br></br>
                                 <img src={tar} height="50" width="50" alt="" /> ${tarifa} CLP por noche<br /><br />
 

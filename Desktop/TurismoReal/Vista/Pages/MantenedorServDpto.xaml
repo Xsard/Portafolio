@@ -68,7 +68,7 @@
         </Grid>
         <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhServDpto_ag" >
             <materialDesign:DialogHost.DialogContent>
-                <Grid Height="470" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid Height="300" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
                         <Label Content="Agregar Servicio Departamento" FontSize="20"/>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
@@ -127,7 +127,7 @@
         </materialDesign:DialogHost>
         <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhServDpto_ac">
             <materialDesign:DialogHost.DialogContent>
-                <Grid Height="470" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid Height="300" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
                         <Label Content="Actualizar Tour" FontSize="20"/>
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">

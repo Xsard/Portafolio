@@ -217,9 +217,9 @@
         </materialDesign:DialogHost>
         <materialDesign:DialogHost Grid.RowSpan="3" x:Name="dhFuncionario_ac" >
             <materialDesign:DialogHost.DialogContent>
-                <Grid Height="600" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid Height="470" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
-                        <Label Content="Agregar Funcionario" FontSize="20"/>
+                        <Label Content="Agregar Funcionario" FontSize="20" HorizontalAlignment="Center"/>
                         <StackPanel  Orientation="Horizontal" Height="39" Margin="0,20,0,0">
                             <materialDesign:PackIcon Kind="Group" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_rut_ac}" VerticalAlignment="Bottom"/>
                             <TextBox IsReadOnly="True" x:Name="txt_rut_ac" VerticalContentAlignment="Bottom" materialDesign:HintAssist.Hint="Rut" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" >

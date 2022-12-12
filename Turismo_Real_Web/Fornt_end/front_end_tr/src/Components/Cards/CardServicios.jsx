@@ -8,11 +8,11 @@ export const CardServicio = ({ id_servicio, nombre_servicio, descripcion}) => {
   return (
     <>
       <Col>
-        <div className="card mt-3" style={{background: "#F6F5F5", color: "#000000", borderColor: "#1687A7"}} >
+        <div className="card mt-3" style={{background: "#F6F5F5", color: "#000000", borderColor: "#1687A7", minHeight: "180px"}} >
           <div className="card-body text text-right">
             <h4>{nombre_servicio}</h4>
             <p className="card-text">
-              Descripción: {descripcion} <br />
+              {descripcion} <br />
               <br />
               <br />
             </p>

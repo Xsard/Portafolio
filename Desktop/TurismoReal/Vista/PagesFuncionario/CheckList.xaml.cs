@@ -66,14 +66,15 @@ namespace Vista.PagesFuncionario
                     {
                         auxObj.CantidadObjeto = (int)cb.SelectedValue;
                         int costo = objeto.ValorUnitarioObjeto * (int)cb.SelectedValue;
-                        PrecioTotal(costo - auxObj.ValorUnitarioObjeto);
                         auxObj.ValorUnitarioObjeto = costo;
+                        PrecioTotal();
                         dtgObjetosAfectados.Items.Refresh();
                         return;
                     }
                     else
                     {
                         dtgObjetosAfectados.Items.Remove(auxObj);
+                        PrecioTotal();
                         return;
                     }
                 }
@@ -86,13 +87,18 @@ namespace Vista.PagesFuncionario
                 ValorUnitarioObjeto = objeto.ValorUnitarioObjeto * (int)cb.SelectedValue
             };
             dtgObjetosAfectados.Items.Add(multaObjeto);
-            PrecioTotal(multaObjeto.ValorUnitarioObjeto);
+            PrecioTotal();
 
         }
-        private void PrecioTotal(int valor)
+        private void PrecioTotal()
         {
-            int valorObjetos = int.Parse( lblCostoObj.Content.ToString());
-            lblCostoObj.Content = valorObjetos + valor;
+            int costo = 0;
+            foreach (var item in dtgObjetosAfectados.Items)
+            {
+                Objeto objeto = (Objeto)item;
+                costo += objeto.ValorUnitarioObjeto;
+            }
+            lblCostoObj.Content = costo;
             lblCostoTotal.Content = int.Parse(txtOtrosCostos.Text) + int.Parse(lblCostoObj.Content.ToString());
         }
         private void txtOtrosCostos_PreviewTextInput(object sender, TextCompositionEventArgs e)
