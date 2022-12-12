@@ -127,7 +127,7 @@
                                 </TextBox.Text>
                             </TextBox>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Margin="0 40,0,0" HorizontalAlignment="Center">
                             <Button x:Name="btn_Agregar_Servicio" HorizontalAlignment="Center" Click="btn_Agregar_Servicio_Click" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0">
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
@@ -165,7 +165,7 @@
             <materialDesign:DialogHost.DialogContent>
                 <Grid Height="315" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Label Content="Actualizar Servicio Extra" FontSize="20" HorizontalContentAlignment="Center" Padding="0 15 0 10"/>
-                    <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0">
+                    <StackPanel HorizontalAlignment="Center" Margin="0,50,0,0">
                         <StackPanel Orientation="Horizontal" Height="39" Margin="0,10,0,0">
                             <materialDesign:PackIcon Kind="RoomService" Width="20" Height="20" Foreground="{Binding BorderBrush, ElementName=txt_nombre_ac}" VerticalAlignment="Bottom"/>
                             <TextBox materialDesign:HintAssist.Hint="Nombre del servicio" PreviewTextInput="txt_string_PreviewTextInput" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" x:Name="txt_nombre_ac" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" >
@@ -202,8 +202,8 @@
                                 </TextBox.Text>
                             </TextBox>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
-                            <Button x:Name="btn_Actualizar_Servicio" HorizontalAlignment="Center" Click="btn_Actualizar_Servicio_Click" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0">
+                        <StackPanel Orientation="Horizontal" Margin="0,40,0,0" HorizontalAlignment="Center">
+                            <Button x:Name="btn_Actualizar_Servicio" HorizontalAlignment="Center" Click="btn_Actualizar_Servicio_Click" Content="Actualizar"  FontSize="14" FontWeight="SemiBold" Width="104" Margin="0,0,10,0">
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                                         <Style.Resources/>
@@ -221,7 +221,7 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <Button x:Name="btn_Cancelar_Ac" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}" Click="btn_Cancelar_Ac_Click" VerticalAlignment="Top"  FontSize="14" Width="104" Margin="10,0,0,0"/>
+                            <Button x:Name="btn_Cancelar_Ac" Content="Cancelar" Style="{StaticResource MaterialDesignRaisedButton}" Click="btn_Cancelar_Ac_Click" VerticalAlignment="Top" FontSize="14" Width="104" Margin="10,0,0,0"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
