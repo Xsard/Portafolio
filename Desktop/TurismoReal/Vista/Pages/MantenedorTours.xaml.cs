@@ -147,13 +147,13 @@ namespace Vista.Pages
 
         private void txt_string_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú0-9\"]+");
+            Regex regex = new Regex("[^a-zA-Zá-úÁ-Ú0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
         private void txt_int_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9\"]+");
+            Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 

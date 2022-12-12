@@ -171,7 +171,7 @@ namespace Vista.Pages
         }
         private void txt_fono_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9\"]+");
+            Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
@@ -193,7 +193,7 @@ namespace Vista.Pages
 
         private void txt_rut_ag_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9k\"]+");
+            Regex regex = new Regex("[^0-9k]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
