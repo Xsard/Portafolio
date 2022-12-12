@@ -1,4 +1,5 @@
 ﻿using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 using System.Data;
 
 namespace Controlador
@@ -16,8 +17,8 @@ namespace Controlador
                     CommandType = CommandType.StoredProcedure,
                     CommandText = "reporte_reserva"
                 };
-                cmd.Parameters.Add("fecha_inicio", OracleDbType.TimeStamp, ParameterDirection.Input).Value = fecha_inicio;
-                cmd.Parameters.Add("fecha_termino", OracleDbType.TimeStamp, ParameterDirection.Input).Value = fecha_termino;
+                cmd.Parameters.Add("fecha_inicio", OracleDbType.Date, ParameterDirection.Input).Value = fecha_inicio;
+                cmd.Parameters.Add("fecha_termino", OracleDbType.Date, ParameterDirection.Input).Value = fecha_termino;
                 cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = id;
                 cmd.Parameters.Add("nivel", OracleDbType.Int32, ParameterDirection.Input).Value = nivel;
                 cmd.Parameters.Add("R", OracleDbType.RefCursor, ParameterDirection.Output);
@@ -54,8 +55,8 @@ namespace Controlador
                     CommandType = CommandType.StoredProcedure,
                     CommandText = "reporte_stats"
                 };
-                cmd.Parameters.Add("fecha_inicio", OracleDbType.TimeStamp, ParameterDirection.Input).Value = fecha_inicio;
-                cmd.Parameters.Add("fecha_termino", OracleDbType.TimeStamp, ParameterDirection.Input).Value = fecha_termino;
+                cmd.Parameters.Add("fecha_inicio", OracleDbType.Date, ParameterDirection.Input).Value = fecha_inicio;
+                cmd.Parameters.Add("fecha_termino", OracleDbType.Date, ParameterDirection.Input).Value = fecha_termino;
                 cmd.Parameters.Add("identificador", OracleDbType.Int32, ParameterDirection.Input).Value = id;
                 cmd.Parameters.Add("nivel", OracleDbType.Int32, ParameterDirection.Input).Value = nivel;
                 cmd.Parameters.Add("R", OracleDbType.RefCursor, ParameterDirection.Output);

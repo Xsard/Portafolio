@@ -24,6 +24,14 @@ namespace Vista.Pages
                 MessageBox.Show(e.Error.ErrorContent.ToString());
             }
         }
+        private void MensajeError(string Mensaje)
+        {
+            MessageBox.Show(Mensaje, "Servicios Departamento", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        private void MensajeOk(string Mensaje)
+        {
+            MessageBox.Show(Mensaje, "Servicios Departamento", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
         private void Limpiar()
         {
             txt_nombre_ag.Clear();
@@ -40,7 +48,7 @@ namespace Vista.Pages
             try
             {
                 int estado = CServicio.EliminarServicio(servicioDpto.IdServDpto);
-                MessageBox.Show("Servicio eliminado");
+                MensajeOk("Servicio eliminado");
                 ListarServicioDpto();
             }
             catch (Exception)
@@ -63,7 +71,7 @@ namespace Vista.Pages
                             DescServDpto = txt_desc_ag.Text.Trim()
                         };
                         int estado = CServicio.IngresarServicioDpto(servicioDpto);
-                        MessageBox.Show("Servicio agregado");
+                        MensajeOk("Servicio agregado");
                         ListarServicioDpto();
                         Limpiar();
                     }
@@ -74,12 +82,12 @@ namespace Vista.Pages
                 }
                 else
                 {
-                    MessageBox.Show("La descripción es requerida");
+                    MensajeError("La descripción es requerida");
                 }
             }
             else
             {
-                MessageBox.Show("El nombre es requerido");
+                MensajeError("El nombre es requerido");
             }
         }
         private void ListarServicioDpto()
@@ -119,7 +127,7 @@ namespace Vista.Pages
                     try
                     {
                         int estado = CServicio.ActualizarServicioDpto(servicio);
-                        MessageBox.Show("Servicio actualizado");
+                        MensajeOk("Servicio actualizado");
                         ListarServicioDpto();
                     }
                     catch (Exception)
@@ -145,12 +153,12 @@ namespace Vista.Pages
                     }
                     else
                     {
-                        MessageBox.Show("Descripción es un campo requerido");
+                        MensajeError("Descripción es un campo requerido");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Nombre es un campo requerido");
+                    MensajeError("Nombre es un campo requerido");
                 }
             }
             catch (Exception ex)
@@ -189,7 +197,7 @@ namespace Vista.Pages
             int estado = CServicio.ActualizarServicioDpto(servActualizar);
             if (estado > 0)
             {
-                MessageBox.Show("Tour actualizado");
+                MensajeOk("Servicio actualizado");
                 ListarServicioDpto();
             }
             dhServDpto_ac.IsOpen = false;

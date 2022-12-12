@@ -96,7 +96,7 @@
                                 <TextBox.Text>
                                     <Binding ValidatesOnDataErrors="True" Path="Descripcion" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
-                                            <local1:NombreHasta/>
+                                            <local1:DescHasta/>
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>

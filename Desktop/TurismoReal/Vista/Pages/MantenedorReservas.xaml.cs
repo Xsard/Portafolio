@@ -1,7 +1,6 @@
 ﻿using Controlador;
 using Modelo;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows;
@@ -43,7 +42,7 @@ namespace Vista.Pages
                     return;
                 }
                 Mensajeria.PlanificarTransporte(email, asunto, reserva.CantidadAcompanantes.ToString(), lugar, reserva.CheckIn.ToString(), reserva.CheckOut.ToString(), reserva.Dpto.NombreDpto, reserva.Dpto.Direccion);
-                MessageBox.Show("Correo de planificación enviado");
+                MensajeOk("Correo de planificación enviado");
                 dhCorreo.IsOpen = false;
             }
         }
