@@ -318,11 +318,11 @@
                                         <Style.Triggers>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_nombre_ag}" Value="False"/>
-                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_tarifa_ag}" Value="False"/>
-                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_direccion_ag}" Value="False"/>
-                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_nro_ag}" Value="False"/>
-                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_cap_ag}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_nombre_ac}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_tarifa_ac}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_direccion_ac}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_nro_ac}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt_cap_ac}" Value="False"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEnabled" Value="True"/>
                                             </MultiDataTrigger>
