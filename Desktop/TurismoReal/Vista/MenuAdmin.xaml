@@ -17,7 +17,7 @@
         <Grid x:Name="gridMenu"
             Width="80"
             HorizontalAlignment="Left"
-            Background="Gray">
+            Background="#2C2C2C">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -39,14 +39,14 @@
                 Click="btnHome_Click">
                 <StackPanel>
                     <materialDesign:PackIcon
-                        Width="40"
-                        Height="40"
+                        Width="33"
+                        Height="33"
                         Kind="Home" />
-                    <Label
-                        Padding="0"
-                        HorizontalAlignment="Center"
-                        Content="Inicio"
-                        FontSize="9" />
+                    <Label>
+                        <TextBlock TextAlignment="Center" Foreground="White" FontSize="10">
+                            Inicio
+                        </TextBlock>
+                    </Label>
                 </StackPanel>
             </Button>
             <Button x:Name="btnReservas"
@@ -59,14 +59,15 @@
                 Click="btnReservas_Click">
                 <StackPanel>
                     <materialDesign:PackIcon
-                        Width="40"
-                        Height="40"
+                        Width="33"
+                        Height="33"
                         HorizontalAlignment="Center"
                         Kind="BookmarkAdd" />
-                    <Label
-                        HorizontalAlignment="Center"
-                        Content="Reservas"
-                        FontSize="9" />
+                    <Label>
+                        <TextBlock TextAlignment="Center" Foreground="White" FontSize="10">
+                            Reservas
+                        </TextBlock>
+                    </Label>
                 </StackPanel>
             </Button>
             <Button x:Name="btnDpto"
@@ -79,35 +80,37 @@
                 Click="btnDpto_Click">
                 <StackPanel>
                     <materialDesign:PackIcon
-                        Width="40"
-                        Height="40"
+                        Width="33"
+                        Height="33"
                         HorizontalAlignment="Center"
                         Kind="Building" />
-                    <Label
-                        Padding="0"
-                        HorizontalAlignment="Center"
-                        Content="Departamentos"
-                        FontSize="9" />
+                    <Label>
+                        <TextBlock TextAlignment="Center" Foreground="White" FontSize="10">
+                            Departamentos
+                        </TextBlock>
+                    </Label>
                 </StackPanel>
             </Button>
             <Button x:Name="btnServDpto"
                 Grid.Row="3"
                 Width="80"
-                Height="60"
+                Height="75"
                 Padding="0"
                 Background="{x:Null}"
                 BorderThickness="0"
                 Click="btnServDpto_Click">
                 <StackPanel>
                     <materialDesign:PackIcon
-                        Width="40"
-                        Height="40"
+                        Width="33"
+                        Height="33"
                         HorizontalAlignment="Center"
                         Kind="ServiceToolbox" />
                     <Label
-                        HorizontalAlignment="Center"
-                        Content="Servicios Departamento"
-                        FontSize="9" />
+                        HorizontalAlignment="Center">
+                        <TextBlock TextAlignment="Center" FontSize="10" Foreground="White" TextWrapping="Wrap">
+                            Servicios Departamento    
+                        </TextBlock>
+                    </Label>
                 </StackPanel>
             </Button>
             <Button x:Name="btnUsuario"
@@ -120,14 +123,15 @@
                 Click="btnUsuario_Click">
                 <StackPanel>
                     <materialDesign:PackIcon
-                        Width="40"
-                        Height="40"
+                        Width="33"
+                        Height="33"
                         HorizontalAlignment="Center"
                         Kind="User" />
-                    <Label
-                        HorizontalAlignment="Center"
-                        Content="Usuarios"
-                        FontSize="9" />
+                    <Label>
+                        <TextBlock TextAlignment="Center" FontSize="10" Foreground="White" TextWrapping="Wrap">
+                            Usuarios
+                        </TextBlock>
+                    </Label>
                 </StackPanel>
             </Button>
             <Button x:Name="btnServE"
@@ -140,14 +144,15 @@
                 Click="btnServE_Click">
                 <StackPanel>
                     <materialDesign:PackIcon
-                        Width="40"
-                        Height="40"
+                        Width="33"
+                        Height="33"
                         HorizontalAlignment="Center"
                         Kind="RoomServiceOutline" />
-                    <Label
-                        HorizontalAlignment="Center"
-                        Content="Servicios Extras"
-                        FontSize="9" />
+                    <Label>
+                        <TextBlock TextAlignment="Center" FontSize="10" Foreground="White" TextWrapping="Wrap">
+                            Servicios Extras
+                        </TextBlock>
+                    </Label>
                 </StackPanel>
             </Button>
             <Button x:Name="btnTour"
@@ -160,14 +165,15 @@
                 Click="btnTour_Click">
                 <StackPanel>
                     <materialDesign:PackIcon
-                        Width="40"
-                        Height="40"
+                        Width="33"
+                        Height="33"
                         HorizontalAlignment="Center"
                         Kind="Voyager" />
-                    <Label
-                        HorizontalAlignment="Center"
-                        Content="Tours"
-                        FontSize="9" />
+                    <Label>
+                        <TextBlock TextAlignment="Center" FontSize="10" Foreground="White" TextWrapping="Wrap">
+                            Tours
+                        </TextBlock>
+                    </Label>
                 </StackPanel>
             </Button>
             <Button x:Name="BtnReporteria"
@@ -180,14 +186,15 @@
                 Click="BtnReporteria_Click">
                 <StackPanel>
                     <materialDesign:PackIcon
-                        Width="40"
-                        Height="40"
+                        Width="33"
+                        Height="33"
                         HorizontalAlignment="Center"
                         Kind="ReportTree" />
-                    <Label
-                        HorizontalAlignment="Center"
-                        Content="Reportería"
-                        FontSize="9" />
+                    <Label>
+                        <TextBlock TextAlignment="Center" FontSize="10" Foreground="White" TextWrapping="Wrap">
+                            Reportería
+                        </TextBlock>
+                    </Label>
                 </StackPanel>
             </Button>
             <!--<Button x:Name="btnSwitch" Click="btnSwitch_Click" Width="80" Height="60" Grid.Row="8" Background="{x:Null}" BorderThickness="0">

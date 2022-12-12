@@ -1,8 +1,11 @@
 ﻿<Page x:Class="Vista.Pages.Reportes"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Vista.Pages"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     xmlns:local="clr-namespace:Vista.Pages"
+    d:DesignHeight="785" d:DesignWidth="1140"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d" 
     Title="Reportería">
 
     <Grid x:Name="grdDpto"
@@ -47,107 +50,59 @@
                 Content="Generar Reporte de Reservas" />
         </Grid>
         <Grid
+            Width="300"
+            Height="320"
             Grid.Row="2"
             Margin="12,0"
             Background="White">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
-            <StackPanel
-                Grid.Row="0"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Margin="20,20,0,0"
+            <StackPanel VerticalAlignment="Center">
+                <StackPanel
+                Margin="20,0,20,0"
                 VerticalAlignment="Top"
-                Orientation="Horizontal">
-                <Border BorderBrush="Black">
-                    <Label
-                        Margin="0,0,20,0"
-                        Content="Fecha Inicio" />
-                </Border>
-                <DatePicker x:Name="dp_Fecinicio"
-                    Width="100"
+                Orientation="Vertical">
+                    <DatePicker x:Name="dp_Fecinicio"
+                    Width="260"
+                    HorizontalAlignment="Center"
                     materialDesign:HintAssist.Hint="Fecha Inicio" />
             </StackPanel>
-            <StackPanel
-                Grid.Row="0"
-                Grid.Column="2"
-                Grid.ColumnSpan="5"
-                Margin="20,20,0,0"
+                <StackPanel
+                Margin="20,20,20,0"
                 VerticalAlignment="Top"
-                Orientation="Horizontal">
-                <Border BorderBrush="Black">
-                    <Label
-                        Margin="0,0,20,0"
-                        Content="Fecha Termino" />
-                </Border>
-                <DatePicker x:Name="dp_FecTermino"
-                    Width="100"
+                Orientation="Vertical">
+                    <DatePicker x:Name="dp_FecTermino"
+                    Width="260"
+                    HorizontalAlignment="Center"
                     materialDesign:HintAssist.Hint="Fecha Inicio" />
             </StackPanel>
-            <StackPanel
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="4"
-                Margin="20,0,0,0"
+                <StackPanel
+                Margin="20,20,20,0"
                 VerticalAlignment="Top"
-                Orientation="Horizontal">
-                <Border BorderBrush="Black">
-                    <Label
-                        Margin="0,0,20,0"
-                        Content="Seleccione una región" />
-                </Border>
-                <ComboBox x:Name="cbo_Regiones"
-                    Width="200"
-                    DisplayMemberPath="NombreRegion"
-                    SelectedIndex="0" />
+                Orientation="Vertical">
+                    <ComboBox x:Name="cbo_Regiones"
+                        Width="260" DisplayMemberPath="NombreRegion" materialDesign:HintAssist.Hint="Región" Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    SelectedIndex="-1" />
             </StackPanel>
-            <StackPanel
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="4"
-                Margin="20,0,0,0"
+                <StackPanel
+                Margin="20,20,20,0"
                 VerticalAlignment="Center"
-                Orientation="Horizontal">
-                <Border BorderBrush="Black">
-                    <Label
-                        Margin="0,0,20,0"
-                        Content="Seleccione una comuna" />
-                </Border>
-                <ComboBox x:Name="cbo_Comunas"
-                    Width="200"
+                Orientation="Vertical">
+                    <ComboBox x:Name="cbo_Comunas"
+                    Width="260"
+                              materialDesign:HintAssist.Hint="Comuna" Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                     DisplayMemberPath="NombreComuna"
-                    SelectedIndex="0" />
+                    SelectedIndex="-1" />
             </StackPanel>
-            <StackPanel
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="4"
-                Margin="20,0,0,0"
+                <StackPanel
+                Margin="20,20,20,0"
                 VerticalAlignment="Bottom"
-                Orientation="Horizontal">
-                <Border BorderBrush="Black">
-                    <Label
-                        Margin="0,0,20,0"
-                        Content="Seleccione un departamento" />
-                </Border>
-                <ComboBox x:Name="cbo_Dptos"
-                    Width="200"
+                Orientation="Vertical">
+                    <ComboBox x:Name="cbo_Dptos"
+                    Width="260"
+                    materialDesign:HintAssist.Hint="Departamento" Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                              
                     DisplayMemberPath="NombreDpto"
-                    SelectedIndex="0" />
+                    SelectedIndex="-1" />
+            </StackPanel>
             </StackPanel>
         </Grid>
     </Grid>
