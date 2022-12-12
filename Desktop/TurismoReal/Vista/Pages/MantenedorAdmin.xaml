@@ -4,14 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Vista.Pages" xmlns:local1="clr-namespace:Vista.Pages.Validaciones.ValidacionesUsuario"
-      xmlns:Clases="clr-namespace:Vista.PagesFuncionario.ClasesVista"
+      xmlns:Clases="clr-namespace:Vista.Pages.ClasesVista"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="785" d:DesignWidth="1140"
       Title="MantenedorAdmin">
 
     <Page.DataContext>
-        <Clases:CVCheckList/>
+        <Clases:CVUsuarios/>
     </Page.DataContext>
 
     <Grid x:Name="grdAdmin" Validation.Error="ItemError">
@@ -30,13 +30,6 @@
         <Grid Grid.Row="2" Margin="12,0">
             <DataGrid x:Name="dtgAdmin" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" MouseDoubleClick="dtgAdmin_MouseDoubleClick">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Id Usuario" Width="0.99*" IsReadOnly="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label Content="{Binding Path=IdUsuario}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Rut" Width="0.7*" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
