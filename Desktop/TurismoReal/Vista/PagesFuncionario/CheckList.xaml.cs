@@ -154,7 +154,7 @@ namespace Vista.PagesFuncionario
                 {
                     Objeto objeto = (Objeto)item;
                     int estado2 = CMulta.ObjetoAfectado(estado, objeto.IdObjeto, objeto.CantidadObjeto);
-                    if (estado2 > 0) MessageBox.Show("Ag");
+                    if (estado2 > 0) MessageBox.Show("Multa generada");
                 }
             }
         }

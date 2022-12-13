@@ -20,7 +20,7 @@ namespace Vista.Pages.Validaciones.ValidacionesServExtra
             }
             catch (Exception)
             {
-                return new ValidationResult(false, "El valor de la multa debe ser un número");
+                return new ValidationResult(false, "El valor del servicio es requerido");
             }
         }
     }

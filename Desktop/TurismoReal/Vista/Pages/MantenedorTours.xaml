@@ -211,7 +211,7 @@
                                       VerticalAlignment="Top" Width="220" DisplayMemberPath="NombreRegion" SelectedValuePath="IdRegion" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,50,0,0" HorizontalAlignment="Center">
-                            <Button x:Name="btn_Actualizar_Tour" Click="btn_Actualizar_Tour_Click" HorizontalAlignment="Center" Content="Agregar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0">
+                            <Button x:Name="btn_Actualizar_Tour" Click="btn_Actualizar_Tour_Click" HorizontalAlignment="Center" Content="Actualizar"  FontSize="14" FontWeight="Normal" Width="104" Margin="0,0,10,0">
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                                         <Style.Resources/>
@@ -225,7 +225,6 @@
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEnabled" Value="True"/>
                                             </MultiDataTrigger>
-
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>

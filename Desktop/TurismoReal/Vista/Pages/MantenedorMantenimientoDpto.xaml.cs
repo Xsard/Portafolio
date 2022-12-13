@@ -244,7 +244,7 @@ namespace Vista.Pages
             int estado = CMantenimientoDpto.ActualizarMantDepto(mantActualizar);
             if (estado > 0)
             {
-                MessageBox.Show("Tour actualizado");
+                MessageBox.Show("Mantención actualizada");
                 ListarMantencion();
             }
             dhMantDpto_ac.IsOpen = false;
