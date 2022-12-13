@@ -22,17 +22,6 @@
         <Grid Grid.Row="2" Margin="12,0">
             <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgReservas">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="id" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label>
-                                    <Label.Content >
-                                        <Binding Path="IdReserva" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
-                                    </Label.Content>
-                                </Label>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Departamento" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -51,28 +40,6 @@
                                 <Label >
                                     <Label.Content >
                                         <Binding Path="Cliente.Nombres" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
-                                    </Label.Content>
-                                </Label>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Estado Reserva"  Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label>
-                                    <Label.Content >
-                                        <Binding Path="EstadoReserva" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
-                                    </Label.Content>
-                                </Label>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Estado Pago"  Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label>
-                                    <Label.Content >
-                                        <Binding Path="EstadoPago" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>

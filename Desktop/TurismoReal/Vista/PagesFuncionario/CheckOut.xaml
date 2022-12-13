@@ -22,17 +22,7 @@
         <Grid Grid.Row="2" Margin="12,0">
             <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dtgReservas">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="id" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label>
-                                    <Label.Content >
-                                        <Binding Path="IdReserva" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
-                                    </Label.Content>
-                                </Label>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+
                     <DataGridTemplateColumn Header="Departamento" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -56,34 +46,12 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Estado Reserva"  Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label>
-                                    <Label.Content >
-                                        <Binding Path="EstadoReserva" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
-                                    </Label.Content>
-                                </Label>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Estado Pago"  Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label>
-                                    <Label.Content >
-                                        <Binding Path="EstadoPago" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
-                                    </Label.Content>
-                                </Label>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="CheckIn" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Label>
+                                <Label ContentStringFormat="dd/MM/yyyy">
                                     <Label.Content >
-                                        <Binding Path="CheckIn" StringFormat="dd/MM/yyyy" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                        <Binding Path="CheckIn" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                         </Binding>
                                     </Label.Content>
                                 </Label>
@@ -93,23 +61,9 @@
                     <DataGridTemplateColumn Header="CheckOut" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Label>
+                                <Label ContentStringFormat="dd/MM/yyyy">
                                     <Label.Content >
-                                        <Binding Path="CheckOut" StringFormat="dd/MM/yyyy" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                            <Binding.ValidationRules>
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </Label.Content>
-                                </Label>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Firma" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label>
-                                    <Label.Content >
-                                        <Binding Path="Firma" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                        <Binding Path="CheckOut" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                                             <Binding.ValidationRules>
                                             </Binding.ValidationRules>
                                         </Binding>

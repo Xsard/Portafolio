@@ -68,9 +68,9 @@ namespace Vista.PagesFuncionario
                     var reservas = (from rw in dataTable.AsEnumerable()
                                     select new Reserva()
                                     {
-                                        IdReserva = Convert.ToInt32(rw[2]),
-                                        IdDepto = Convert.ToInt32(rw[0]),
-                                        IdCliente = Convert.ToInt32(rw[1]),
+                                        IdReserva = Convert.ToInt32(rw[0]),
+                                        IdDepto = Convert.ToInt32(rw[1]),
+                                        IdCliente = Convert.ToInt32(rw[2]),
                                         EstadoReserva = rw[3].ToString(),
                                         EstadoPago = rw[4].ToString(),
                                         CheckIn = DateTime.Parse(rw[5].ToString()),
